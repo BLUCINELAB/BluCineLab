@@ -10,6 +10,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <meta name="apple-mobile-web-app-title" content="Camera Obscura" />
+  <meta name="theme-color" content="#050510" />
 
   <style>
     * {
@@ -83,7 +84,8 @@
       margin-bottom: 4px;
       opacity: 0.85;
     }
-    textarea, select {
+    textarea,
+    select {
       width: 100%;
       border-radius: 12px;
       border: 1px solid rgba(150, 150, 200, 0.4);
@@ -93,7 +95,8 @@
       font-size: 0.9rem;
       outline: none;
     }
-    textarea:focus, select:focus {
+    textarea:focus,
+    select:focus {
       border-color: #c9a3ff;
       box-shadow: 0 0 0 1px rgba(201, 163, 255, 0.4);
     }
@@ -180,7 +183,8 @@
       max-height: 200px;
     }
     code {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
       white-space: pre;
     }
     .card-footer {
@@ -214,7 +218,10 @@
   <div class="shell">
     <header>
       <h1>Camera Obscura dei Prototipi</h1>
-      <p>Inserisci un seme e ottieni tre varianti di prototipo: chiara, ibrida, mutante. Nessun tracking, solo luce e forma.</p>
+      <p>
+        Inserisci un seme e ottieni tre varianti di prototipo: chiara, ibrida,
+        mutante. Nessun tracking, solo luce e forma.
+      </p>
     </header>
 
     <main>
@@ -223,8 +230,14 @@
 
         <div>
           <label for="seedInput">Parola, frase o suggestione</label>
-          <textarea id="seedInput" placeholder="Esempi: &quot;timer che respira&quot;, &quot;dashboard di produzione&quot;, &quot;neon blu lento&quot;"></textarea>
-          <p class="hint">Questo testo non viene salvato da nessuna parte. Vive solo in questa pagina.</p>
+          <textarea
+            id="seedInput"
+            placeholder='Esempi: "timer che respira", "dashboard di produzione", "neon blu lento"'
+          ></textarea>
+          <p class="hint">
+            Questo testo non viene salvato da nessuna parte. Vive solo in questa
+            pagina.
+          </p>
         </div>
 
         <div>
@@ -242,19 +255,27 @@
           <button id="generateBtn" type="button">
             ✶ Genera i 3 prototipi
           </button>
-          <span class="hint">Dopo la generazione puoi copiare il codice e incollarlo in un nuovo <code>index.html</code>.</span>
+          <span class="hint">
+            Dopo la generazione puoi copiare il codice e incollarlo in un nuovo
+            <code>index.html</code>.
+          </span>
         </div>
       </section>
 
       <section class="panel">
         <h2 class="panel-title">Output</h2>
-        <p class="hint">Ogni card è un file HTML completo. Copia, incolla in un nuovo repository GitHub Pages e lancialo come micro–app.</p>
+        <p class="hint">
+          Ogni card è un file HTML completo. Copia, incolla in un nuovo
+          repository GitHub Pages e lancialo come micro–app.
+        </p>
 
         <div id="results" class="results-grid hidden">
           <article class="card">
             <div class="badge">Variante 1</div>
             <h2>Chiara</h2>
-            <p id="desc-chiara">Versione minima, didascalica, pensata per capire la struttura.</p>
+            <p id="desc-chiara">
+              Versione minima, didascalica, pensata per capire la struttura.
+            </p>
             <pre><code id="code-chiara"></code></pre>
             <div class="card-footer">
               <button class="copy-btn" data-target="chiara">Copia codice</button>
@@ -265,7 +286,9 @@
           <article class="card">
             <div class="badge">Variante 2</div>
             <h2>Ibrida</h2>
-            <p id="desc-ibrida">Versione con un piccolo twist estetico/funzionale.</p>
+            <p id="desc-ibrida">
+              Versione con un piccolo twist estetico/funzionale.
+            </p>
             <pre><code id="code-ibrida"></code></pre>
             <div class="card-footer">
               <button class="copy-btn" data-target="ibrida">Copia codice</button>
@@ -276,7 +299,9 @@
           <article class="card">
             <div class="badge">Variante 3</div>
             <h2>Mutante</h2>
-            <p id="desc-mutante">Versione più sperimentale, da piegare al tuo stile.</p>
+            <p id="desc-mutante">
+              Versione più sperimentale, da piegare al tuo stile.
+            </p>
             <pre><code id="code-mutante"></code></pre>
             <div class="card-footer">
               <button class="copy-btn" data-target="mutante">Copia codice</button>
@@ -289,13 +314,7 @@
   </div>
 
   <script>
-    function slugify(text) {
-      return text
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)/g, "") || "prototipo";
-    }
-
+    // --- Utilità base -------------------------------------------------------
     function baseHtml(title, bodyContent, seedNote) {
       return `<!DOCTYPE html>
 <html lang="it">
@@ -363,10 +382,12 @@ ${bodyContent}
 </html>`;
     }
 
+    // --- Varianti: TIMER ----------------------------------------------------
     function generateTimerVariant(seed, variant) {
       const seedNote = seed
         ? `Seme sorgente: “${seed}”`
         : "Seme sorgente: non specificato";
+
       if (variant === "chiara") {
         const title = "Timer chiaro – " + (seed || "senza titolo");
         const bodyContent = `
@@ -423,7 +444,7 @@ ${bodyContent}
         });
 
         updateDisplay();
-      </script>`;
+      <\/script>`;
         return baseHtml(title, bodyContent, seedNote);
       }
 
@@ -485,7 +506,7 @@ ${bodyContent}
         });
 
         render();
-      </script>`;
+      <\/script>`;
         return baseHtml(title, bodyContent, seedNote);
       }
 
@@ -528,14 +549,16 @@ ${bodyContent}
         });
 
         render();
-      </script>`;
+      <\/script>`;
       return baseHtml(title, bodyContent, seedNote);
     }
 
+    // --- Varianti: TACCUINO -------------------------------------------------
     function generateNotebookVariant(seed, variant) {
       const seedNote = seed
         ? `Seme sorgente: “${seed}”`
         : "Seme sorgente: taccuino senza titolo";
+
       if (variant === "chiara") {
         const title = "Taccuino lineare – " + (seed || "appunti");
         const bodyContent = `
@@ -578,7 +601,7 @@ ${bodyContent}
         });
 
         load();
-      </script>`;
+      <\/script>`;
         return baseHtml(title, bodyContent, seedNote);
       }
 
@@ -622,7 +645,7 @@ ${bodyContent}
         });
 
         load();
-      </script>`;
+      <\/script>`;
         return baseHtml(title, bodyContent, seedNote);
       }
 
@@ -640,15 +663,17 @@ ${bodyContent}
           const lines = stream.value.split(/\\n+/).filter(Boolean);
           screen.textContent = lines.slice(-3).join(" / ");
         });
-      </script>`;
+      <\/script>`;
       return baseHtml(title, bodyContent, seedNote);
     }
 
+    // --- Varianti: ABSTRACT -------------------------------------------------
     function generateAbstractVariant(seed, variant) {
       const seedNote = seed
         ? "Seme sorgente: “" + seed + "”"
         : "Seme sorgente: atmosfera generica";
       const baseTitle = seed || "Camera astratta";
+
       if (variant === "chiara") {
         const title = "Schermo di atmosfera – " + baseTitle;
         const body = `
@@ -676,7 +701,7 @@ ${bodyContent}
           requestAnimationFrame(frame);
         }
         frame();
-      </script>`;
+      <\/script>`;
         return baseHtml(title, body, seedNote);
       }
 
@@ -700,13 +725,17 @@ ${bodyContent}
           requestAnimationFrame(loop);
         }
         loop();
-      </script>`;
+      <\/script>`;
       return baseHtml(title, body, seedNote);
     }
 
+    // --- Varianti: TRE PANNELLI --------------------------------------------
     function generateThreePanelsVariant(seed, variant) {
-      const seedNote = seed ? "Seme sorgente: “" + seed + "”" : "Seme sorgente: tre pannelli neutri";
+      const seedNote = seed
+        ? "Seme sorgente: “" + seed + "”"
+        : "Seme sorgente: tre pannelli neutri";
       const baseTitle = seed || "Tre pannelli";
+
       if (variant === "chiara") {
         const title = "Layout a tre pannelli – " + baseTitle;
         const body = `
@@ -733,15 +762,17 @@ ${bodyContent}
         const body = `
       <p>Ogni pannello può essere marcato come “completo”.</p>
       <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
-        ${["Ingresso", "Centro", "Uscita"].map((label, i) => {
-          return `<div style="flex:1;min-width:120px;border-radius:12px;background:#050513;padding:10px;">
+        ${["Ingresso", "Centro", "Uscita"]
+          .map((label, i) => {
+            return `<div style="flex:1;min-width:120px;border-radius:12px;background:#050513;padding:10px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
             <p style="font-size:0.8rem;opacity:0.8;margin:0;">${label}</p>
             <input type="checkbox" data-panel="${i}" />
           </div>
           <textarea style="width:100%;min-height:80px;border-radius:10px;border:none;padding:6px 8px;"></textarea>
         </div>`;
-        }).join("")}
+          })
+          .join("")}
       </div>
       <script>
         const checks = document.querySelectorAll("input[type=checkbox][data-panel]");
@@ -752,7 +783,7 @@ ${bodyContent}
             box.style.border = chk.checked ? "1px solid rgba(150,255,150,0.6)" : "none";
           });
         });
-      </script>`;
+      <\/script>`;
         return baseHtml(title, body, seedNote);
       }
 
@@ -760,19 +791,25 @@ ${bodyContent}
       const body = `
       <p>Tre pannelli orizzontali, pensati come inquadrature.</p>
       <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px;">
-        ${["Inquadratura 1", "Inquadratura 2", "Inquadratura 3"].map(label => {
-          return `<div style="border-radius:14px;background:#050513;padding:10px 10px 6px;">
+        ${["Inquadratura 1", "Inquadratura 2", "Inquadratura 3"]
+          .map(label => {
+            return `<div style="border-radius:14px;background:#050513;padding:10px 10px 6px;">
           <p style="font-size:0.8rem;opacity:0.8;margin:0 0 4px;">${label}</p>
           <textarea style="width:100%;min-height:60px;border-radius:10px;border:none;padding:6px 8px;"></textarea>
         </div>`;
-        }).join("")}
+          })
+          .join("")}
       </div>`;
       return baseHtml(title, body, seedNote);
     }
 
+    // --- Varianti: DASHBOARD ------------------------------------------------
     function generateDashboardVariant(seed, variant) {
-      const seedNote = seed ? "Seme sorgente: “" + seed + "”" : "Seme sorgente: dashboard neutra";
+      const seedNote = seed
+        ? "Seme sorgente: “" + seed + "”"
+        : "Seme sorgente: dashboard neutra";
       const baseTitle = seed || "Dashboard di produzione";
+
       if (variant === "chiara") {
         const title = "Dashboard lista – " + baseTitle;
         const body = `
@@ -794,7 +831,7 @@ ${bodyContent}
 
         function addRow() {
           const tr = document.createElement("tr");
-          ["Titolo", "Stato", "Prossima azione"].forEach((placeholder, i) => {
+          ["Titolo", "Stato", "Prossima azione"].forEach((placeholder) => {
             const td = document.createElement("td");
             td.style.padding = "4px 0";
             const input = document.createElement("input");
@@ -812,7 +849,7 @@ ${bodyContent}
 
         addBtn.addEventListener("click", addRow);
         addRow();
-      </script>`;
+      <\/script>`;
         return baseHtml(title, body, seedNote);
       }
 
@@ -821,12 +858,16 @@ ${bodyContent}
         const body = `
       <p>Kanban minimale: tre colonne (Backlog, In corso, Fatto).</p>
       <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
-        ${["Backlog", "In corso", "Fatto"].map(label => {
-          return `<div style="flex:1;min-width:120px;border-radius:12px;background:#050513;padding:10px;">
+        ${["Backlog", "In corso", "Fatto"]
+          .map(label => {
+            return `<div style="flex:1;min-width:120px;border-radius:12px;background:#050513;padding:10px;">
           <p style="font-size:0.8rem;opacity:0.8;margin:0 0 6px;">${label}</p>
-          <ul style="margin:0;padding-left:14px;font-size:0.8rem;" data-col="${label.toLowerCase().replace(/ /g,"-")}"></ul>
+          <ul style="margin:0;padding-left:14px;font-size:0.8rem;" data-col="${label
+            .toLowerCase()
+            .replace(/ /g, "-")}"></ul>
         </div>`;
-        }).join("")}
+          })
+          .join("")}
       </div>
       <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
         <input id="taskInput" placeholder="Nuovo task" style="flex:1;min-width:160px;padding:6px 8px;border-radius:10px;border:none;" />
@@ -852,7 +893,7 @@ ${bodyContent}
           col.appendChild(li);
           input.value = "";
         });
-      </script>`;
+      <\/script>`;
         return baseHtml(title, body, seedNote);
       }
 
@@ -912,10 +953,11 @@ ${bodyContent}
 
         addBtn.addEventListener("click", () => addProject(""));
         addProject("Progetto 1");
-      </script>`;
+      <\/script>`;
       return baseHtml(title, body, seedNote);
     }
 
+    // --- Dispatcher ---------------------------------------------------------
     function generatePrototypes(seed, type) {
       if (type === "timer") {
         return {
@@ -945,6 +987,7 @@ ${bodyContent}
           mutante: generateThreePanelsVariant(seed, "mutante")
         };
       }
+      // default: dashboard
       return {
         chiara: generateDashboardVariant(seed, "chiara"),
         ibrida: generateDashboardVariant(seed, "ibrida"),
@@ -952,6 +995,7 @@ ${bodyContent}
       };
     }
 
+    // --- Wiring UI principale -----------------------------------------------
     const seedInput = document.getElementById("seedInput");
     const typeSelect = document.getElementById("typeSelect");
     const resultsEl = document.getElementById("results");
@@ -962,13 +1006,9 @@ ${bodyContent}
       const type = typeSelect.value;
       const generated = generatePrototypes(seed, type);
 
-      const codeChiara = document.getElementById("code-chiara");
-      const codeIbrida = document.getElementById("code-ibrida");
-      const codeMutante = document.getElementById("code-mutante");
-
-      codeChiara.textContent = generated.chiara;
-      codeIbrida.textContent = generated.ibrida;
-      codeMutante.textContent = generated.mutante;
+      document.getElementById("code-chiara").textContent = generated.chiara;
+      document.getElementById("code-ibrida").textContent = generated.ibrida;
+      document.getElementById("code-mutante").textContent = generated.mutante;
 
       resultsEl.classList.remove("hidden");
     });
@@ -978,17 +1018,20 @@ ${bodyContent}
         const target = btn.getAttribute("data-target");
         const codeEl = document.getElementById("code-" + target);
         const statusEl = document.getElementById("status-" + target);
-        const text = codeEl.textContent;
+        const text = codeEl.textContent || "";
         try {
           await navigator.clipboard.writeText(text);
           statusEl.textContent = "Copiato.";
         } catch (e) {
           statusEl.textContent = "Copia non riuscita.";
         }
-        setTimeout(() => { statusEl.textContent = ""; }, 2000);
+        setTimeout(() => {
+          statusEl.textContent = "";
+        }, 2000);
       });
     });
 
+    // Service worker minimale (già pronto per futuri upgrade offline)
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("sw.js").catch(() => {});
     }
