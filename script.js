@@ -1,7 +1,8 @@
-self.addEventListener("install", () => {
-  // Service worker minimale: pronto per futuri usi offline.
-});
-
-self.addEventListener("fetch", () => {
-  // Per ora non intercetta nulla; lascia passare tutte le richieste.
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('contact-form');
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    alert('Grazie per il tuo messaggio! Ti risponderemo al più presto.');
+    form.reset();
+  });
 });
