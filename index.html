@@ -6,12 +6,11 @@
 
   <title>BluCineLab – Laboratorio cinematografico sperimentale</title>
 
-  <!-- SEO base -->
   <meta name="description" content="BluCineLab è un laboratorio cinematografico sperimentale: immagini in movimento, luce e suono tra cinema, arte digitale e ricerca visiva." />
   <link rel="canonical" href="https://blucinelab.it" />
   <meta name="theme-color" content="#050816" />
 
-  <!-- Open Graph / Social -->
+  <!-- Social Meta -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="BluCineLab" />
   <meta property="og:title" content="BluCineLab – Laboratorio cinematografico sperimentale" />
@@ -22,12 +21,12 @@
   <meta name="twitter:title" content="BluCineLab – Laboratorio cinematografico sperimentale" />
   <meta name="twitter:description" content="Laboratorio visivo tra cinema, arte digitale e installazioni." />
 
-  <!-- Font -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
 
-  <!-- Stili principali -->
+  <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -38,15 +37,11 @@
       <source src="hero-video.mp4" type="video/mp4" />
       Il tuo browser non supporta i video HTML5.
     </video>
-
     <div class="hero-gradient" aria-hidden="true"></div>
-
     <div class="hero-overlay">
       <p class="hero-kicker">Laboratorio cinematografico sperimentale</p>
       <h1>BluCineLab</h1>
-      <p class="hero-subtitle">
-        Immagini in movimento, luce e suono tra cinema, arte digitale e ricerca visiva.
-      </p>
+      <p class="hero-subtitle">Immagini in movimento, luce e suono tra cinema, arte digitale e ricerca visiva.</p>
       <div class="hero-actions">
         <a href="#works" class="btn btn-primary">Guarda i lavori</a>
         <a href="#lab" class="btn btn-ghost">Entra nel Lab</a>
@@ -64,7 +59,6 @@
   </header>
 
   <main id="main-content">
-    <!-- Works -->
     <section id="works" class="section section-works" aria-labelledby="works-title">
       <div class="section-inner">
         <h2 id="works-title">Works</h2>
@@ -89,7 +83,6 @@
       </div>
     </section>
 
-    <!-- Studio -->
     <section id="studio" class="section section-studio" aria-labelledby="studio-title">
       <div class="section-inner">
         <h2 id="studio-title">Studio</h2>
@@ -117,7 +110,6 @@
       </div>
     </section>
 
-    <!-- Lab -->
     <section id="lab" class="section section-lab" aria-labelledby="lab-title">
       <div class="section-inner">
         <h2 id="lab-title">Lab</h2>
@@ -130,7 +122,6 @@
           piccoli esperimenti audiovisivi e dispositivi narrativi in tempo reale.
         </p>
 
-        <!-- Immagini inserite -->
         <div class="lab-images">
           <img src="assets/img/task_01kbe3xe14f45r3k5eb4k8grn0-1764631724_img_0.webp" alt="Still da Sora – immagine 1" loading="lazy" />
           <img src="assets/img/task_01kbe3yattfc0sk0t1erafpgv4-1764631760_img_1.webp" alt="Still da Sora – immagine 2" loading="lazy" />
@@ -138,38 +129,35 @@
       </div>
     </section>
 
-    <!-- Contact -->
     <section id="contact" class="section section-contact" aria-labelledby="contact-title">
       <div class="section-inner">
         <h2 id="contact-title">Contact</h2>
         <p class="section-lead">
-          Vuoi collaborare o saperne di più? Compila il modulo qui sotto
-          o scrivici a <a href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a>.
+          Vuoi collaborare o saperne di più? Scrivici a
+          <a href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a>.
         </p>
         <form id="contact-form" class="contact-form" novalidate>
           <div class="form-field">
             <label for="name">Nome</label>
-            <input type="text" id="name" name="name" placeholder="Inserisci il tuo nome" required autocomplete="name" />
+            <input type="text" id="name" name="name" placeholder="Il tuo nome" required />
           </div>
           <div class="form-field">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Inserisci la tua email" required autocomplete="email" />
+            <input type="email" id="email" name="email" placeholder="La tua email" required />
           </div>
           <div class="form-field">
             <label for="message">Messaggio</label>
-            <textarea id="message" name="message" placeholder="Scrivi il tuo messaggio" required rows="4"></textarea>
+            <textarea id="message" name="message" rows="4" placeholder="Scrivi il tuo messaggio" required></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Invia</button>
           <p class="form-note">
-            Il modulo è attualmente in modalità anteprima: il messaggio viene registrato localmente nel browser.
-            L’integrazione con il sistema di invio avverrà nelle prossime versioni.
+            Il modulo è in anteprima e non invia ancora messaggi reali.
           </p>
         </form>
       </div>
     </section>
   </main>
 
-  <!-- Script -->
   <script src="script.js"></script>
 </body>
 </html>
