@@ -5,18 +5,22 @@
   --bg: #050816;
   --bg-alt: #070b1a;
   --surface: rgba(15, 23, 42, 0.9);
+  --surface-soft: rgba(15, 23, 42, 0.75);
   --text: #f5f5f5;
   --muted: #a0a3b1;
   --accent: #3df5ff;
   --accent-soft: #6c63ff;
   --border-soft: rgba(255, 255, 255, 0.08);
-  --radius-lg: 16px;
+  --radius-lg: 18px;
   --radius-md: 12px;
   --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.6);
+  --shadow-card: 0 18px 45px rgba(0, 0, 0, 0.55);
   --max-width: 960px;
 }
 
-/* Reset essenziale */
+/* ==============================
+   Reset essenziale
+   ============================== */
 *,
 *::before,
 *::after {
@@ -39,6 +43,23 @@ body {
     radial-gradient(circle at top, #0b1021 0, #050816 55%, #02010b 100%);
   min-height: 100vh;
   line-height: 1.6;
+}
+
+/* Piccolo fade in globale */
+body {
+  opacity: 0;
+  animation: bodyFadeIn 0.7s ease-out forwards;
+}
+
+@keyframes bodyFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ==============================
@@ -72,6 +93,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  isolation: isolate;
 }
 
 #hero-video {
@@ -88,7 +110,12 @@ body {
 .hero-gradient {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at top, rgba(61, 245, 255, 0.16), transparent 55%);
+  background: radial-gradient(
+      circle at top,
+      rgba(61, 245, 255, 0.18),
+      transparent 55%
+    ),
+    radial-gradient(circle at bottom, rgba(0, 0, 0, 0.7), transparent 60%);
   z-index: -1;
 }
 
@@ -110,7 +137,7 @@ body {
 
 .hero-overlay h1 {
   font-family: "Space Grotesk", system-ui, sans-serif;
-  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
   margin-bottom: 0.6rem;
 }
 
@@ -134,7 +161,7 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.7rem 1.4rem;
+  padding: 0.7rem 1.5rem;
   border-radius: 999px;
   font-size: 0.95rem;
   font-weight: 600;
@@ -145,7 +172,8 @@ body {
     background 0.2s ease,
     color 0.2s ease,
     border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.25s ease,
+    transform 0.18s ease;
 }
 
 .btn-primary {
@@ -156,65 +184,83 @@ body {
 
 .btn-primary:hover,
 .btn-primary:focus-visible {
-  box-shadow: 0 0 0 1px rgba(61, 245, 255, 0.5);
+  box-shadow: 0 0 24px rgba(61, 245, 255, 0.45);
+  transform: translateY(-1px);
 }
 
 .btn-ghost {
-  border-color: rgba(245, 245, 245, 0.3);
+  border-color: rgba(245, 245, 245, 0.28);
   color: var(--text);
-  background: transparent;
+  background: rgba(2, 1, 11, 0.15);
 }
 
 .btn-ghost:hover,
 .btn-ghost:focus-visible {
   border-color: var(--accent-soft);
+  background: rgba(2, 1, 11, 0.3);
 }
 
 /* ==============================
-   Navigazione
+   Navigazione (versione "floating cinematic")
    ============================== */
 .main-nav {
-  position: relative;
-  z-index: 10;
-  margin-top: auto;
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0.75rem 0.5rem;
   background: linear-gradient(
-    to bottom,
-    rgba(5, 8, 22, 0.85),
-    rgba(5, 8, 22, 0.96)
-  );
-  backdrop-filter: blur(12px);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+      to bottom,
+      rgba(5, 8, 22, 0.88),
+      rgba(5, 8, 22, 0.9)
+    );
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  animation: navFade 0.7s ease-out forwards;
+}
+
+@keyframes navFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .main-nav ul {
   list-style: none;
   display: flex;
-  gap: 1.5rem;
-  justify-content: center;
-  padding: 0.9rem 1.5rem 1.1rem;
+  gap: 2.1rem;
+  padding: 0;
   margin: 0;
-  max-width: var(--max-width);
-  margin-inline: auto;
 }
 
 .main-nav a {
   color: var(--text);
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 0.96rem;
   position: relative;
-  padding-bottom: 0.1rem;
+  padding-bottom: 0.15rem;
+  letter-spacing: 0.03em;
 }
 
 .main-nav a::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -0.15rem;
+  bottom: -0.2rem;
   width: 0;
   height: 2px;
   background: linear-gradient(90deg, var(--accent), var(--accent-soft));
-  transition: width 0.2s ease;
+  border-radius: 999px;
+  transition: width 0.22s ease-out;
 }
 
 .main-nav a:hover::after,
@@ -223,7 +269,7 @@ body {
 }
 
 /* ==============================
-   Sezioni
+   Sezioni generali
    ============================== */
 .section {
   padding: 4.5rem 1.5rem;
@@ -254,7 +300,9 @@ body {
   max-width: 38rem;
 }
 
-/* Works */
+/* ==============================
+   Works
+   ============================== */
 .works-grid {
   display: grid;
   gap: 1.2rem;
@@ -266,7 +314,28 @@ body {
   border-radius: var(--radius-md);
   padding: 1.1rem 1.1rem 1.2rem;
   border: 1px solid var(--border-soft);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.18s ease-out,
+    box-shadow 0.22s ease-out,
+    border-color 0.18s ease-out,
+    background 0.22s ease-out;
+}
+
+.work-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at top left,
+    rgba(61, 245, 255, 0.18),
+    transparent 55%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-out;
 }
 
 .work-card h3 {
@@ -279,11 +348,24 @@ body {
   color: var(--muted);
 }
 
-/* Studio */
+.work-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
+  border-color: rgba(61, 245, 255, 0.45);
+  background: var(--surface-soft);
+}
+
+.work-card:hover::before {
+  opacity: 1;
+}
+
+/* ==============================
+   Studio
+   ============================== */
 .studio-layout {
   display: grid;
   gap: 1.6rem;
-  grid-template-columns: 1.1fr 1.1fr;
+  grid-template-columns: 1.05fr 1.05fr;
   align-items: flex-start;
 }
 
@@ -302,13 +384,17 @@ body {
   margin-bottom: 0.35rem;
 }
 
-/* Lab */
+/* ==============================
+   Lab
+   ============================== */
 .section-lab .section-body {
   color: var(--muted);
   max-width: 40rem;
 }
 
-/* Contact */
+/* ==============================
+   Contact
+   ============================== */
 .section-contact {
   padding-bottom: 5rem;
 }
@@ -354,6 +440,7 @@ body {
 .form-field textarea:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 1px rgba(61, 245, 255, 0.4);
+  background: rgba(15, 23, 42, 0.98);
 }
 
 .form-note {
@@ -377,7 +464,7 @@ body {
 
 @media (max-width: 640px) {
   .hero-overlay {
-    padding: 3.5rem 1.25rem 4rem;
+    padding: 3.2rem 1.25rem 3.8rem;
   }
 
   .hero-actions {
@@ -386,7 +473,7 @@ body {
 
   .main-nav ul {
     flex-wrap: wrap;
-    gap: 0.9rem;
+    gap: 1.1rem;
     justify-content: center;
   }
 
