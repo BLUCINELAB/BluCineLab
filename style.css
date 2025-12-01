@@ -670,3 +670,26 @@ body {
   .hero-actions { flex-direction:column; }
   .works-grid { grid-template-columns:1fr; }
 }
+/* ==============================
+   Lab images (sezione Lab)
+   ============================== */
+.lab-images {
+  display: flex;
+  gap: 1.4rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.lab-images img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.lab-images img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.7);
+}
