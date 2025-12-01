@@ -527,7 +527,7 @@ ${bodyContent}
         function render() {
           const mins = Math.floor(seconds / 60);
           label.textContent = mins + (mins === 1 ? " minuto" : " minuti");
-          document.body.style.background = "radial-gradient(circle at top, #120b33 0, #04030b " + Math.max(40, 100 - mins) + "%, #000000 100%)";
+          document.body.style.background = "radial-gradient(circle at top, #120b33 0, #04030b " + Math.max(40, 100 - mins) + "% , #000000 100%)";
         }
 
         range.addEventListener("input", () => {
