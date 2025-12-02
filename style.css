@@ -338,7 +338,6 @@ body {
   max-width: 40rem;
 }
 
-/* Immagini nel Lab */
 .lab-images {
   display: flex;
   gap: 1.4rem;
