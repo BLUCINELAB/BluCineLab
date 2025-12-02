@@ -268,49 +268,6 @@ body {
 }
 
 /* ==============================
-   REEL SECTION
-   ============================== */
-.section-reel {
-  padding: 3.2rem 1.5rem 3.6rem;
-  background: radial-gradient(circle at top, #070b1a 0, #050816 55%);
-}
-
-.section-reel .section-inner {
-  max-width: var(--max-width);
-}
-
-.reel-video {
-  width: 100%;
-  display: block;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-soft);
-  box-shadow: var(--shadow-soft);
-  background: #000;
-  overflow: hidden;
-}
-
-.reel-cta {
-  text-align: center;
-  margin-top: 0.9rem;
-  font-size: 0.9rem;
-  color: var(--muted);
-}
-
-.reel-cta a {
-  color: var(--muted);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  padding-bottom: 1px;
-  transition: border-color 0.18s ease, color 0.18s ease;
-}
-
-.reel-cta a:hover,
-.reel-cta a:focus-visible {
-  color: var(--accent);
-  border-color: var(--accent);
-}
-
-/* ==============================
    WORKS GRID
    ============================== */
 .works-grid {
@@ -634,10 +591,6 @@ body {
 
   .section {
     padding: 3.2rem 1.25rem;
-  }
-
-  .section-reel {
-    padding: 2.8rem 1.25rem 3.2rem;
   }
 
   .footer-inner {
