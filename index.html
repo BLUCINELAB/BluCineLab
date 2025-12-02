@@ -5,23 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>BluCineLab – Laboratorio cinematografico sperimentale</title>
-
   <meta name="description" content="BluCineLab è un laboratorio cinematografico sperimentale: immagini in movimento, luce e suono tra cinema, arte digitale e ricerca visiva.">
   <link rel="canonical" href="https://blucinelab.it">
   <meta name="theme-color" content="#050816">
 
-  <!-- Open Graph / Social -->
+  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="BluCineLab">
   <meta property="og:title" content="BluCineLab – Laboratorio cinematografico sperimentale">
   <meta property="og:description" content="Cinema indipendente, videoarte e ricerca audiovisiva tra analogico e digitale.">
   <meta property="og:url" content="https://blucinelab.it">
-  <meta property="og:image" content="https://blucinelab.it/assets/img/task_01kbe3xe14f45r3k5eb4k8grn0-1764631724_img_0.webp">
+  <meta property="og:image" content="https://blucinelab.it/assets/img/og-preview.webp">
 
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="BluCineLab – Laboratorio cinematografico sperimentale">
   <meta name="twitter:description" content="Laboratorio visivo tra cinema, arte digitale e installazioni.">
-  <meta name="twitter:image" content="https://blucinelab.it/assets/img/task_01kbe3xe14f45r3k5eb4k8grn0-1764631724_img_0.webp">
+  <meta name="twitter:image" content="https://blucinelab.it/assets/img/og-preview.webp">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,15 +37,18 @@
 
   <!-- HERO -->
   <header class="hero" role="banner">
-    <video autoplay muted loop playsinline id="hero-video" aria-hidden="true" poster="assets/img/task_01kbe3xe14f45r3k5eb4k8grn0-1764631724_img_0.webp">
-      <source src="hero-video.mp4" type="video/mp4">
+    <video autoplay muted loop playsinline id="hero-video" aria-hidden="true" poster="assets/img/hero-fallback.webp">
+      <source src="assets/video/hero.mp4" type="video/mp4">
       Il tuo browser non supporta i video HTML5.
     </video>
     <div class="hero-gradient" aria-hidden="true"></div>
+
     <div class="hero-overlay">
       <p class="hero-kicker">Laboratorio cinematografico sperimentale</p>
       <h1>BluCineLab</h1>
-      <p class="hero-subtitle">Immagini in movimento, luce e suono tra cinema, arte digitale e ricerca visiva.</p>
+      <p class="hero-subtitle">
+        Immagini in movimento, luce e suono tra cinema, arte digitale e ricerca visiva.
+      </p>
       <div class="hero-actions">
         <a href="#works" class="btn btn-primary">Guarda i lavori</a>
         <a href="#lab" class="btn btn-ghost">Entra nel Lab</a>
@@ -62,6 +65,7 @@
     </nav>
   </header>
 
+  <!-- MAIN -->
   <main id="main-content">
 
     <!-- WORKS -->
@@ -126,10 +130,9 @@
         </p>
 
         <div class="lab-images">
-          <img src="assets/img/task_01kbe3xe14f45r3k5eb4k8grn0-1764631724_img_0.webp" alt="Still astratto: figura in nebbia blu" loading="lazy">
-          <img src="assets/img/task_01kbe3yattfc0sk0t1erafpgv4-1764631760_img_1.webp" alt="Still astratto: cielo e luce soft" loading="lazy">
+          <img src="assets/img/lab-still-01.webp" alt="Figura nella nebbia blu, immagine sperimentale" loading="lazy">
+          <img src="assets/img/lab-still-02.webp" alt="Riflessi liquidi con luce ciano e magenta su acqua" loading="lazy">
         </div>
-
       </div>
     </section>
 
@@ -143,11 +146,11 @@
         <form id="contact-form" class="contact-form" novalidate>
           <div class="form-field">
             <label for="name">Nome</label>
-            <input type="text" id="name" name="name" placeholder="Il tuo nome" autocomplete="name" required>
+            <input type="text" id="name" name="name" placeholder="Il tuo nome" required autocomplete="name">
           </div>
           <div class="form-field">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="La tua email" autocomplete="email" required>
+            <input type="email" id="email" name="email" placeholder="La tua email" required autocomplete="email">
           </div>
           <div class="form-field">
             <label for="message">Messaggio</label>
