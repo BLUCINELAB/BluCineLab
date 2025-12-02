@@ -268,6 +268,49 @@ body {
 }
 
 /* ==============================
+   REEL SECTION
+   ============================== */
+.section-reel {
+  padding: 3.2rem 1.5rem 3.6rem;
+  background: radial-gradient(circle at top, #070b1a 0, #050816 55%);
+}
+
+.section-reel .section-inner {
+  max-width: var(--max-width);
+}
+
+.reel-video {
+  width: 100%;
+  display: block;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-soft);
+  background: #000;
+  overflow: hidden;
+}
+
+.reel-cta {
+  text-align: center;
+  margin-top: 0.9rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.reel-cta a {
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  transition: border-color 0.18s ease, color 0.18s ease;
+}
+
+.reel-cta a:hover,
+.reel-cta a:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ==============================
    WORKS GRID
    ============================== */
 .works-grid {
@@ -322,9 +365,32 @@ body {
   color: var(--muted);
 }
 
+.works-more {
+  margin-top: 1.8rem;
+  font-size: 0.9rem;
+}
+
+.works-more a {
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  transition: border-color 0.18s ease, color 0.18s ease;
+}
+
+.works-more a:hover,
+.works-more a:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
 /* ==============================
    STUDIO
    ============================== */
+.section-studio .section-lead strong {
+  font-weight: 600;
+}
+
 .studio-layout {
   display: grid;
   gap: 1.6rem;
@@ -352,6 +418,25 @@ body {
   color: var(--muted);
 }
 
+.studio-cta {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+}
+
+.studio-cta a {
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  transition: border-color 0.18s ease, color 0.18s ease;
+}
+
+.studio-cta a:hover,
+.studio-cta a:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
 /* ==============================
    LAB – SFONDO ACQUA
    ============================== */
@@ -375,7 +460,7 @@ body {
   z-index: -2;
 }
 
-/* leggera velatura scura sopra l’acqua per mantenere leggibilità */
+/* velatura scura sopra l’acqua per leggibilità */
 .section-lab::after {
   content: "";
   position: absolute;
@@ -394,11 +479,44 @@ body {
   max-width: 42rem;
 }
 
+.lab-cta {
+  margin-top: 1.8rem;
+  font-size: 0.9rem;
+}
+
+.lab-cta a {
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  transition: border-color 0.18s ease, color 0.18s ease;
+}
+
+.lab-cta a:hover,
+.lab-cta a:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
 /* ==============================
    CONTACT
    ============================== */
 .section-contact {
   padding-bottom: 5rem;
+}
+
+.section-contact .section-lead a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 1px;
+  transition: border-color 0.18s ease, color 0.18s ease;
+}
+
+.section-contact .section-lead a:hover,
+.section-contact .section-lead a:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 .contact-form {
@@ -452,6 +570,37 @@ body {
 }
 
 /* ==============================
+   FOOTER
+   ============================== */
+.site-footer {
+  border-top: 1px solid rgba(148, 163, 184, 0.3);
+  background: radial-gradient(circle at top, #070b1a 0, #050816 55%);
+  padding: 1.4rem 1.5rem 1.6rem;
+}
+
+.footer-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-brand {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.footer-meta {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* ==============================
    RESPONSIVE
    ============================== */
 @media (max-width: 900px) {
@@ -485,5 +634,15 @@ body {
 
   .section {
     padding: 3.2rem 1.25rem;
+  }
+
+  .section-reel {
+    padding: 2.8rem 1.25rem 3.2rem;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
   }
 }
