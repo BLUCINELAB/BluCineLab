@@ -355,6 +355,31 @@ body {
 /* ==============================
    LAB
    ============================== */
+.section-lab {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-lab::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background-image: url("assets/img/task_01kbe3yattfc0sk0t1erafpgv4-1764631760_img_1.webp");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.24;
+  filter: blur(18px);
+  transform: scale(1.08);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.section-lab .section-inner {
+  position: relative;
+  z-index: 1;
+}
+
 .section-lab .section-body {
   color: var(--muted);
   max-width: 40rem;
@@ -368,7 +393,7 @@ body {
 }
 
 .lab-study {
-  background: var(--surface);
+  background: rgba(15, 23, 42, 0.94);
   border-radius: var(--radius-lg);
   padding: 1.4rem 1.35rem 1.5rem;
   border: 1px solid var(--border-soft);
