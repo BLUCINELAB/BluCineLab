@@ -1,0 +1,14 @@
+[
+  {
+    "id": "project-01",
+    "title": "Ombre Blu",
+    "description": "Installazione audiovisiva in 4 atti.",
+    "cover": "https://blucinelab.it/assets/img/ombre-blu.jpg"
+  },
+  {
+    "id": "project-02",
+    "title": "Frame Notturni",
+    "description": "Studio sul movimento lento in ambienti oscuri.",
+    "cover": "https://blucinelab.it/assets/img/frame-notturni.jpg"
+  }
+]
