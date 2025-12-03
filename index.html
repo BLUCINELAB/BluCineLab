@@ -3,24 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BluCineLab – Studio di cinema e arti visive</title>
+  <title>BluCineLab – Film studio & visual lab</title>
 
-  <!-- META -->
-  <meta name="description" content="BluCineLab è uno studio indipendente fondato da Anton Likht e Sonia Giudici. Cinema, ricerca visiva e intelligenza artificiale applicata all’immagine." />
+  <!-- META BASE -->
+  <meta name="description" content="BluCineLab è uno studio creativo indipendente sul confine tra cinema e arti visive. Lavoriamo sul limite dell’immagine: ricerca, luce, forma." />
   <meta name="theme-color" content="#02030a" />
+  <meta name="author" content="BluCineLab" />
 
   <!-- OPEN GRAPH -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="BluCineLab – Studio di cinema e arti visive" />
-  <meta property="og:description" content="Film studio & visual lab: ricerca, luce, immagine." />
+  <meta property="og:title" content="BluCineLab – Film studio & visual lab" />
+  <meta property="og:description" content="Studio indipendente dedicato alla ricerca visiva. Film, luce, forma, processi lenti." />
   <meta property="og:url" content="https://blucinelab.it" />
-  <meta property="og:image" content="https://blucinelab.it/assets/img/cover.jpg" />
+  <meta property="og:image" content="https://blucinelab.it/assets/cover.jpg" />
 
   <!-- TWITTER -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="BluCineLab – Studio di cinema e arti visive" />
-  <meta name="twitter:description" content="Studio indipendente tra cinema, arte digitale e forme visive sperimentali." />
-  <meta name="twitter:image" content="https://blucinelab.it/assets/img/cover.jpg" />
+  <meta name="twitter:title" content="BluCineLab – Film studio & visual lab" />
+  <meta name="twitter:description" content="Studio creativo sul limite dell’immagine: cinema, arti visive, ricerca sulla forma." />
+  <meta name="twitter:image" content="https://blucinelab.it/assets/cover.jpg" />
 
   <!-- FONTS -->
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet">
@@ -30,98 +31,122 @@
 </head>
 
 <body>
-
   <!-- SFONDO ANIMATO -->
-  <canvas id="hero-canvas"></canvas>
-  <div id="grain-overlay"></div>
-  <div class="fade-cover"></div>
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div id="grain-overlay" aria-hidden="true"></div>
+  <div class="fade-cover" aria-hidden="true"></div>
 
-  <!-- HERO -->
-  <section id="hero" class="hero">
-    <h1>BluCineLab</h1>
-    <p>Film studio & visual lab</p>
-    <p>
-      Lavoriamo sul limite dell’immagine.<br>
-      Uno spazio in cui la luce prende forma,<br>
-      e la forma diventa linguaggio.<br>
-      Ricerca, sensibilità, processi che scorrono come un fotogramma lento.
-    </p>
-    <p class="scroll-hint">scroll to enter</p>
-  </section>
+  <!-- CONTENUTO PRINCIPALE -->
+  <main>
+    <!-- HERO -->
+    <section id="hero" class="hero" aria-labelledby="hero-title">
+      <h1 id="hero-title">BluCineLab</h1>
+      <p class="hero-subtitle">Film studio &amp; visual lab</p>
+      <p>
+        Lavoriamo sul limite dell’immagine.<br>
+        Uno spazio in cui la luce prende forma,<br>
+        e la forma diventa linguaggio.<br>
+        Ricerca, sensibilità, processi che scorrono come un fotogramma lento.
+      </p>
+      <p class="scroll-hint" aria-hidden="true">scroll to enter</p>
+    </section>
 
-  <!-- STUDIO -->
-  <section id="studio" class="scene">
-    <div class="scene-inner">
-      <div class="scene-text">
-        <h2>Lo studio</h2>
-        <p>
-          BluCineLab è un luogo di lavoro e visione.<br>
-          Uno spazio che nasce dal cinema e si espande nelle arti visive,<br>
-          in dialogo silenzioso con il digitale.
-        </p>
-        <p>
-          Trattiamo l’immagine come un territorio condiviso.<br>
-          Qui la forma si studia, si costruisce, si mette alla prova.<br>
-          Ogni progetto è un passaggio, ogni passaggio una scoperta.
-        </p>
+    <!-- STUDIO -->
+    <section id="studio" class="scene" aria-labelledby="studio-title">
+      <div class="scene-inner">
+        <div class="scene-text">
+          <h2 id="studio-title">Lo studio</h2>
+          <p>
+            BluCineLab è un luogo di lavoro e visione.<br>
+            Uno spazio che nasce dal cinema e si espande nelle arti visive,<br>
+            in dialogo silenzioso con il digitale.
+          </p>
+          <p>
+            Trattiamo l’immagine come un territorio condiviso.<br>
+            Qui la forma si studia, si costruisce, si mette alla prova.<br>
+            Ogni progetto è un passaggio, ogni passaggio una scoperta.
+          </p>
+        </div>
+
+        <figure class="scene-image">
+          <img
+            src="assets/nocturnal-artistic-workspace_simple_compose.webp"
+            alt="Tavolo di lavoro notturno con quaderno di storyboard e strumenti di ripresa"
+            loading="lazy"
+          />
+        </figure>
       </div>
-      <figure class="scene-image">
-        <img src="assets/img/nocturnal-artistic-workspace.webp" alt="Tavolo di lavoro notturno con quaderno di storyboard e strumenti di ripresa" loading="lazy">
-      </figure>
-    </div>
-  </section>
+    </section>
 
-  <!-- LAB -->
-  <section id="lab" class="scene">
-    <div class="scene-inner scene-inner--reverse">
-      <div class="scene-text">
-        <h2>Il laboratorio</h2>
-        <p>
-          Il laboratorio è la nostra zona franca:<br>
-          processi aperti, tentativi, materiali che cambiano stato.<br>
-          Immagini grezze, suoni, gesti, appunti visivi.<br>
-          Tutto è in movimento, tutto può diventare qualcos’altro.
-        </p>
-        <p>
-          Qui la ricerca non è un metodo: è un modo di stare dentro alla forma.
-        </p>
-      </div>
-      <figure class="scene-image">
-        <img src="assets/img/cinematic-still-life.webp" alt="Still life cinematografico con pellicola, matita e prisma di vetro" loading="lazy">
-      </figure>
-    </div>
-  </section>
+    <!-- LAB -->
+    <section id="lab" class="scene" aria-labelledby="lab-title">
+      <div class="scene-inner scene-inner--reverse">
+        <div class="scene-text">
+          <h2 id="lab-title">Il laboratorio</h2>
+          <p>
+            Il laboratorio è la nostra zona franca:<br>
+            processi aperti, tentativi, materiali che cambiano stato.<br>
+            Immagini grezze, suoni, gesti, appunti visivi.<br>
+            Tutto è in movimento, tutto può diventare qualcos’altro.
+          </p>
+          <p>
+            Qui la ricerca non è un metodo: è un modo di stare dentro alla forma.
+          </p>
+        </div>
 
-  <!-- APPROACH -->
-  <section id="approach" class="scene">
-    <div class="scene-inner">
-      <div class="scene-text">
-        <h2>Approach</h2>
-        <p>
-          Crediamo nella pazienza della luce.<br>
-          Nel margine tra ciò che è definito e ciò che sta per accadere.<br>
-          Il nostro lavoro unisce intuizione e costruzione:<br>
-          un equilibrio sottile tra disciplina e sensibilità.
-        </p>
-        <p>
-          Ogni immagine è un incontro.<br>
-          Ogni incontro, una possibilità.
-        </p>
+        <figure class="scene-image">
+          <img
+            src="assets/cinematic-still-life-setup_simple_compose.webp"
+            alt="Still life cinematografico con pellicola, matita e prisma di vetro su tavolo scuro"
+            loading="lazy"
+          />
+        </figure>
       </div>
-      <figure class="scene-image">
-        <img src="assets/img/cyan-light-study.webp" alt="Fasci di luce ciano che attraversano il buio" loading="lazy">
-      </figure>
-    </div>
-  </section>
+    </section>
+
+    <!-- APPROACH -->
+    <section id="approach" class="scene" aria-labelledby="approach-title">
+      <div class="scene-inner">
+        <div class="scene-text">
+          <h2 id="approach-title">Approach</h2>
+          <p>
+            Crediamo nella pazienza della luce.<br>
+            Nel margine tra ciò che è definito e ciò che sta per accadere.<br>
+            Il nostro lavoro unisce intuizione e costruzione:<br>
+            un equilibrio sottile tra disciplina e sensibilità.
+          </p>
+          <p>
+            Ogni immagine è un incontro.<br>
+            Ogni incontro, una possibilità.
+          </p>
+        </div>
+
+        <figure class="scene-image">
+          <img
+            src="assets/cyan-light-study_simple_compose.webp"
+            alt="Fasci di luce ciano che attraversano il buio come in una camera oscura"
+            loading="lazy"
+          />
+        </figure>
+      </div>
+    </section>
+  </main>
 
   <!-- FOOTER -->
   <footer>
-    <p><strong>BluCineLab</strong><br>Studio creativo indipendente dedicato all’immagine e alla sua forma.</p>
-    <p class="credit">Sonia Giudici · Anton Likht · BluCineLab</p>
+    <p>
+      <strong>BluCineLab</strong><br>
+      Studio creativo indipendente dedicato all’immagine e alla sua forma.
+    </p>
+    <p class="credit">
+      Sonia Giudici · Anton Likht · BluCineLab
+    </p>
   </footer>
 
-  <!-- AUDIO -->
-  <audio id="ambient" src="https://cdn.pixabay.com/download/audio/2021/09/29/audio_7f7a3cb3f8.mp3?filename=drone-dark-room-ambient-12267.mp3" loop></audio>
+  <!-- LIBRERIE CORE -->
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
 
   <!-- SCRIPT PRINCIPALE -->
   <script type="module" src="script.js"></script>
