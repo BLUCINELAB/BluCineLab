@@ -1,17 +1,20 @@
 /* ======================================================
-   BLUCINELAB – SCRIPT JS DEFINITIVO
-   by Taky × Sev7nSword | 2025
+   BLUCINELAB – SCRIPT JS DEFINITIVO v2
+   by Taky × Sev7nSword | 2025 (no-audio edition)
    ====================================================== */
 
 /* ==============================
    IMPORT
    ============================== */
-// Da includere nel <head> o prima di questo script:
+// Le librerie vanno incluse PRIMA di questo file in index.html:
 // <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
 // <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
 // <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
 
 gsap.registerPlugin(ScrollTrigger);
+
+const prefersReducedMotion = window.matchMedia &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* ==============================
    SHADER HERO — CAMERA OSCURA
@@ -27,7 +30,6 @@ const geometry = new THREE.PlaneGeometry(2, 2);
 
 const uniforms = {
   uTime: { value: 0 },
-  uAudio: { value: 0.4 },
   uRes: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
 };
 
@@ -42,7 +44,6 @@ const material = new THREE.ShaderMaterial({
   `,
   fragmentShader: `
     uniform float uTime;
-    uniform float uAudio;
     uniform vec2 uRes;
     varying vec2 vUv;
 
@@ -51,14 +52,15 @@ const material = new THREE.ShaderMaterial({
       float aspect = uRes.x / uRes.y;
       uv.x = (uv.x - 0.5) * aspect + 0.5;
 
+      // base blu tungsteno
       vec3 base = mix(vec3(0.01, 0.03, 0.10), vec3(0.02, 0.12, 0.25), uv.y);
 
-      // Bande lente di luce
+      // bande lente di luce cyan
       float bands = 0.5 + 0.5 * sin(uv.x * 9.0 + uTime * 0.15);
       vec3 lightColor = vec3(0.0, 0.65, 0.9);
-      vec3 color = base + lightColor * bands * (0.25 + uAudio * 0.45);
+      vec3 color = base + lightColor * bands * 0.35;
 
-      // Vignetta + flicker
+      // vignetta + flicker morbido
       float dist = length(uv - 0.5);
       float vignette = smoothstep(0.8, 0.45, dist);
       float flicker = 0.97 + 0.03 * sin(uTime * 0.6);
@@ -82,119 +84,104 @@ window.addEventListener("resize", resize);
 resize();
 
 let start = performance.now();
-function animate() {
-  uniforms.uTime.value = (performance.now() - start) / 1000;
+
+function renderFrame(time) {
+  uniforms.uTime.value = (time - start) / 1000;
   renderer.render(scene, camera);
+}
+
+function animate(now) {
+  renderFrame(now);
   requestAnimationFrame(animate);
 }
-animate();
+
+// se l’utente chiede meno motion, render una volta sola
+if (prefersReducedMotion) {
+  renderFrame(performance.now());
+} else {
+  requestAnimationFrame(animate);
+}
 
 /* ==============================
    FADE-IN CINEMATIC
    ============================== */
 
-gsap.to(".fade-cover", {
-  opacity: 0,
-  duration: 4,
-  ease: "power2.out",
-  delay: 1,
-});
+const fadeCover = document.querySelector(".fade-cover");
+const hero = document.querySelector(".hero");
 
-gsap.fromTo(
-  ".hero",
-  { opacity: 0, y: 60 },
-  { opacity: 1, y: 0, duration: 3.5, ease: "power3.out", delay: 2 }
-);
+if (prefersReducedMotion) {
+  if (fadeCover) fadeCover.style.opacity = 0;
+  if (hero) {
+    hero.style.opacity = 1;
+    hero.style.transform = "none";
+  }
+} else {
+  gsap.to(".fade-cover", {
+    opacity: 0,
+    duration: 3.2,
+    ease: "power2.out",
+    delay: 1,
+  });
 
-/* ==============================
-   AUDIO AMBIENTE REATTIVO
-   ============================== */
-
-const audio = document.getElementById("ambient");
-audio.volume = 0.6;
-
-window.addEventListener(
-  "click",
-  async () => {
-    try {
-      await audio.play();
-    } catch (e) {
-      console.log("Audio interaction required.");
-    }
-  },
-  { once: true }
-);
-
-const ctx = new (window.AudioContext || window.webkitAudioContext)();
-const src = ctx.createMediaElementSource(audio);
-const analyser = ctx.createAnalyser();
-src.connect(analyser);
-analyser.connect(ctx.destination);
-analyser.fftSize = 256;
-const data = new Uint8Array(analyser.frequencyBinCount);
-
-function analyseAudio() {
-  analyser.getByteFrequencyData(data);
-  let avg = data.reduce((a, b) => a + b, 0) / data.length / 255;
-  uniforms.uAudio.value = avg * 1.5;
-  requestAnimationFrame(analyseAudio);
+  gsap.fromTo(
+    ".hero",
+    { opacity: 0, y: 60 },
+    { opacity: 1, y: 0, duration: 3.2, ease: "power3.out", delay: 2 }
+  );
 }
-analyseAudio();
 
 /* ==============================
    SCROLL ANIMATIONS
    ============================== */
 
-document.querySelectorAll(".scene").forEach((section) => {
-  gsap.fromTo(
-    section,
-    { opacity: 0, y: 80 },
-    {
-      opacity: 1,
-      y: 0,
-      duration: 1.8,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: section,
-        start: "top 85%",
-        end: "top 25%",
-        scrub: false,
-      },
-    }
-  );
-});
+const scenes = document.querySelectorAll(".scene");
 
-/* ==============================
-   TEXTURE “RESPIRO” DINAMICO
-   ============================== */
-
-gsap.utils.toArray(".scene").forEach((scene, i) => {
-  const texture = scene.querySelector("::before");
-  gsap.to(scene, {
-    opacity: 1,
-    duration: 3,
-    ease: "sine.inOut",
-    repeat: -1,
-    yoyo: true,
-    delay: i * 0.5,
+if (prefersReducedMotion) {
+  scenes.forEach((section) => {
+    section.classList.add("visible");
+    section.style.opacity = 1;
+    section.style.transform = "none";
   });
-});
+} else {
+  scenes.forEach((section) => {
+    gsap.fromTo(
+      section,
+      { opacity: 0, y: 80 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: section,
+          start: "top 85%",
+          end: "top 25%",
+          scrub: false,
+        },
+        onStart: () => section.classList.add("visible"),
+      }
+    );
+  });
+}
 
 /* ==============================
    MICROINTERAZIONI TESTUALI
    ============================== */
 
-gsap.utils.toArray("h1, h2").forEach((el) => {
-  gsap.to(el, {
-    opacity: 0.9,
-    duration: 3.2,
-    repeat: -1,
-    yoyo: true,
-    ease: "sine.inOut",
-    delay: Math.random() * 2,
+if (!prefersReducedMotion) {
+  gsap.utils.toArray("h1, h2").forEach((el) => {
+    gsap.to(el, {
+      opacity: 0.9,
+      duration: 3.2,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      delay: Math.random() * 2,
+    });
   });
-});
+}
 
+// hover morbido sui paragrafi (ok anche con reduced motion)
 gsap.utils.toArray("p").forEach((el) => {
   el.style.transition = "color 0.4s ease";
   el.addEventListener("mouseenter", () => {
@@ -209,4 +196,4 @@ gsap.utils.toArray("p").forEach((el) => {
    LOG FINALE
    ============================== */
 
-console.log("🎞 BluCineLab cinematic experience ready.");
+console.log("🎞 BluCineLab cinematic experience ready (no audio, v2).");
