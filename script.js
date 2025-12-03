@@ -6,7 +6,7 @@
 /* ==============================
    IMPORT
    ============================== */
-// Carica librerie globali da CDN nel tuo HTML:
+// Da includere nel <head> o prima di questo script:
 // <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
 // <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
 // <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
@@ -17,20 +17,20 @@ gsap.registerPlugin(ScrollTrigger);
    SHADER HERO — CAMERA OSCURA
    ============================== */
 
-const canvas = document.getElementById('hero-canvas');
+const canvas = document.getElementById("hero-canvas");
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
 const scene = new THREE.Scene();
 const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-
 const geometry = new THREE.PlaneGeometry(2, 2);
+
 const uniforms = {
   uTime: { value: 0 },
   uAudio: { value: 0.4 },
   uRes: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
 };
 
-// GLSL shader: luce viva, bande lente, flicker, vignettatura
 const material = new THREE.ShaderMaterial({
   uniforms,
   vertexShader: `
@@ -51,15 +51,14 @@ const material = new THREE.ShaderMaterial({
       float aspect = uRes.x / uRes.y;
       uv.x = (uv.x - 0.5) * aspect + 0.5;
 
-      // base blu tungsteno
       vec3 base = mix(vec3(0.01, 0.03, 0.10), vec3(0.02, 0.12, 0.25), uv.y);
 
-      // bande verticali di luce
+      // Bande lente di luce
       float bands = 0.5 + 0.5 * sin(uv.x * 9.0 + uTime * 0.15);
       vec3 lightColor = vec3(0.0, 0.65, 0.9);
       vec3 color = base + lightColor * bands * (0.25 + uAudio * 0.45);
 
-      // vignette + flicker
+      // Vignetta + flicker
       float dist = length(uv - 0.5);
       float vignette = smoothstep(0.8, 0.45, dist);
       float flicker = 0.97 + 0.03 * sin(uTime * 0.6);
@@ -79,7 +78,7 @@ function resize() {
   renderer.setSize(w, h, false);
   uniforms.uRes.value.set(w, h);
 }
-window.addEventListener('resize', resize);
+window.addEventListener("resize", resize);
 resize();
 
 let start = performance.now();
@@ -91,7 +90,7 @@ function animate() {
 animate();
 
 /* ==============================
-   CINEMATIC FADE IN
+   FADE-IN CINEMATIC
    ============================== */
 
 gsap.to(".fade-cover", {
@@ -101,28 +100,30 @@ gsap.to(".fade-cover", {
   delay: 1,
 });
 
-gsap.to(".hero", {
-  opacity: 1,
-  y: 0,
-  duration: 3.5,
-  ease: "power3.out",
-  delay: 2,
-});
+gsap.fromTo(
+  ".hero",
+  { opacity: 0, y: 60 },
+  { opacity: 1, y: 0, duration: 3.5, ease: "power3.out", delay: 2 }
+);
 
 /* ==============================
-   AUDIO AMBIENT + REATTIVO
+   AUDIO AMBIENTE REATTIVO
    ============================== */
 
 const audio = document.getElementById("ambient");
 audio.volume = 0.6;
 
-window.addEventListener("click", async () => {
-  try {
-    await audio.play();
-  } catch (e) {
-    console.log("Audio interaction required.");
-  }
-}, { once: true });
+window.addEventListener(
+  "click",
+  async () => {
+    try {
+      await audio.play();
+    } catch (e) {
+      console.log("Audio interaction required.");
+    }
+  },
+  { once: true }
+);
 
 const ctx = new (window.AudioContext || window.webkitAudioContext)();
 const src = ctx.createMediaElementSource(audio);
@@ -141,22 +142,22 @@ function analyseAudio() {
 analyseAudio();
 
 /* ==============================
-   SCROLLTRIGGER – FADE TRA SEZIONI
+   SCROLL ANIMATIONS
    ============================== */
 
-document.querySelectorAll(".scene").forEach((section, i) => {
+document.querySelectorAll(".scene").forEach((section) => {
   gsap.fromTo(
     section,
-    { opacity: 0, y: 60 },
+    { opacity: 0, y: 80 },
     {
       opacity: 1,
       y: 0,
-      duration: 1.6,
-      ease: "power2.out",
+      duration: 1.8,
+      ease: "power3.out",
       scrollTrigger: {
         trigger: section,
-        start: "top 80%",
-        end: "top 30%",
+        start: "top 85%",
+        end: "top 25%",
         scrub: false,
       },
     }
@@ -164,13 +165,29 @@ document.querySelectorAll(".scene").forEach((section, i) => {
 });
 
 /* ==============================
-   MICROINTERAZIONI – RESPIRO TIPO
+   TEXTURE “RESPIRO” DINAMICO
    ============================== */
 
-gsap.utils.toArray("h2, h1").forEach((el) => {
-  gsap.to(el, {
-    opacity: 0.92,
+gsap.utils.toArray(".scene").forEach((scene, i) => {
+  const texture = scene.querySelector("::before");
+  gsap.to(scene, {
+    opacity: 1,
     duration: 3,
+    ease: "sine.inOut",
+    repeat: -1,
+    yoyo: true,
+    delay: i * 0.5,
+  });
+});
+
+/* ==============================
+   MICROINTERAZIONI TESTUALI
+   ============================== */
+
+gsap.utils.toArray("h1, h2").forEach((el) => {
+  gsap.to(el, {
+    opacity: 0.9,
+    duration: 3.2,
     repeat: -1,
     yoyo: true,
     ease: "sine.inOut",
@@ -189,6 +206,7 @@ gsap.utils.toArray("p").forEach((el) => {
 });
 
 /* ==============================
-   THE END — REGIA COMPLETATA
+   LOG FINALE
    ============================== */
+
 console.log("🎞 BluCineLab cinematic experience ready.");
