@@ -13,7 +13,8 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
-const prefersReducedMotion = window.matchMedia &&
+const prefersReducedMotion =
+  window.matchMedia &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* ==============================
@@ -126,7 +127,13 @@ if (prefersReducedMotion) {
   gsap.fromTo(
     ".hero",
     { opacity: 0, y: 60 },
-    { opacity: 1, y: 0, duration: 3.2, ease: "power3.out", delay: 2 }
+    {
+      opacity: 1,
+      y: 0,
+      duration: 3.2,
+      ease: "power3.out",
+      delay: 2,
+    }
   );
 }
 
@@ -181,7 +188,7 @@ if (!prefersReducedMotion) {
   });
 }
 
-// hover morbido sui paragrafi (ok anche con reduced motion)
+// hover morbido sui paragrafi
 gsap.utils.toArray("p").forEach((el) => {
   el.style.transition = "color 0.4s ease";
   el.addEventListener("mouseenter", () => {
@@ -193,7 +200,28 @@ gsap.utils.toArray("p").forEach((el) => {
 });
 
 /* ==============================
+   PARALLASSE CINEMATICO LEGGERO
+   ============================== */
+
+if (!prefersReducedMotion) {
+  document.querySelectorAll(".scene-image img").forEach((img) => {
+    gsap.to(img, {
+      yPercent: 8,
+      ease: "none",
+      scrollTrigger: {
+        trigger: img,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1.2,
+        anticipatePin: 1,
+      },
+    });
+  });
+}
+
+/* ==============================
    LOG FINALE
    ============================== */
 
 console.log("🎞 BluCineLab cinematic experience ready (no audio, v2).");
+
