@@ -13,42 +13,43 @@
   <!-- OPEN GRAPH -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="BluCineLab – Film studio & visual lab" />
-  <meta property="og:description" content="Studio indipendente dedicato alla ricerca visiva. Film, luce, forma, processi lenti." />
+  <meta property="og:description" content="Studio indipendente dedicato alla ricerca visiva. Film, luce e forme in divenire." />
   <meta property="og:url" content="https://blucinelab.it" />
-  <meta property="og:image" content="https://blucinelab.it/assets/cover.jpg" />
+  <meta property="og:image" content="https://blucinelab.it/assets/minimal-cosmic-restfulness.webp" />
 
   <!-- TWITTER -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="BluCineLab – Film studio & visual lab" />
-  <meta name="twitter:description" content="Studio creativo sul limite dell’immagine: cinema, arti visive, ricerca sulla forma." />
-  <meta name="twitter:image" content="https://blucinelab.it/assets/cover.jpg" />
+  <meta name="twitter:description" content="Una pratica visiva che nasce dal cinema e si espande nelle arti." />
+  <meta name="twitter:image" content="https://blucinelab.it/assets/minimal-cosmic-restfulness.webp" />
 
   <!-- FONTS -->
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet">
 
-  <!-- STILE PRINCIPALE -->
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <!-- SFONDO ANIMATO -->
-  <canvas id="hero-canvas" aria-hidden="true"></canvas>
-  <div id="grain-overlay" aria-hidden="true"></div>
-  <div class="fade-cover" aria-hidden="true"></div>
 
-  <!-- CONTENUTO PRINCIPALE -->
+  <!-- SFONDO SHADER -->
+  <canvas id="hero-canvas"></canvas>
+  <div id="grain-overlay"></div>
+  <div class="fade-cover"></div>
+
   <main>
+
     <!-- HERO -->
     <section id="hero" class="hero" aria-labelledby="hero-title">
       <h1 id="hero-title">BluCineLab</h1>
-      <p class="hero-subtitle">Film studio &amp; visual lab</p>
+      <p class="hero-subtitle">Film studio & visual lab</p>
       <p>
         Lavoriamo sul limite dell’immagine.<br>
         Uno spazio in cui la luce prende forma,<br>
         e la forma diventa linguaggio.<br>
-        Ricerca, sensibilità, processi che scorrono come un fotogramma lento.
+        Processi lenti, ricerca, sensibilità.
       </p>
-      <p class="scroll-hint" aria-hidden="true">scroll to enter</p>
+      <p class="scroll-hint">scroll to enter</p>
     </section>
 
     <!-- STUDIO -->
@@ -69,11 +70,9 @@
         </div>
 
         <figure class="scene-image">
-          <img
-            src="assets/nocturnal-artistic-workspace_simple_compose.webp"
-            alt="Tavolo di lavoro notturno con quaderno di storyboard e strumenti di ripresa"
-            loading="lazy"
-          />
+          <img src="assets/nocturnal-artistic-workspace.webp"
+               alt="Tavolo di lavoro notturno con quaderno, lente e strumenti visivi"
+               loading="lazy">
         </figure>
       </div>
     </section>
@@ -86,8 +85,7 @@
           <p>
             Il laboratorio è la nostra zona franca:<br>
             processi aperti, tentativi, materiali che cambiano stato.<br>
-            Immagini grezze, suoni, gesti, appunti visivi.<br>
-            Tutto è in movimento, tutto può diventare qualcos’altro.
+            Immagini grezze, suoni, gesti, appunti visivi.
           </p>
           <p>
             Qui la ricerca non è un metodo: è un modo di stare dentro alla forma.
@@ -95,11 +93,9 @@
         </div>
 
         <figure class="scene-image">
-          <img
-            src="assets/cinematic-still-life-setup_simple_compose.webp"
-            alt="Still life cinematografico con pellicola, matita e prisma di vetro su tavolo scuro"
-            loading="lazy"
-          />
+          <img src="assets/cinematic-stilllife.webp"
+               alt="Still life cinematografico con pellicola, prisma e strumenti"
+               loading="lazy">
         </figure>
       </div>
     </section>
@@ -122,14 +118,13 @@
         </div>
 
         <figure class="scene-image">
-          <img
-            src="assets/cyan-light-study_simple_compose.webp"
-            alt="Fasci di luce ciano che attraversano il buio come in una camera oscura"
-            loading="lazy"
-          />
+          <img src="assets/cyan-light-study.webp"
+               alt="Fasci di luce ciano che attraversano l’oscurità"
+               loading="lazy">
         </figure>
       </div>
     </section>
+
   </main>
 
   <!-- FOOTER -->
@@ -143,12 +138,13 @@
     </p>
   </footer>
 
-  <!-- LIBRERIE CORE -->
+  <!-- LIBRERIE -->
   <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
   <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
   <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
 
-  <!-- SCRIPT PRINCIPALE -->
+  <!-- SCRIPT -->
   <script type="module" src="script.js"></script>
+
 </body>
 </html>
