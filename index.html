@@ -3,243 +3,256 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BluCineLab – Laboratorio cinematografico sperimentale</title>
+  <title>BluCineLab – Studio di cinema e arti visive</title>
+  <meta name="description" content="BluCineLab è uno studio indipendente di cinema e arti visive fondato da Anton Likht e Sonia Giudici. Ricerca visiva, sperimentazione e immagini in movimento." />
 
-  <meta name="description" content="BluCineLab è uno studio fondato da Anton Likht e Sonia Giudici. Produzione, progettazione visiva e ricerca audiovisiva tra cinema, arte digitale e forme in movimento." />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://blucinelab.it" />
-  <meta name="theme-color" content="#050816" />
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet">
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="BluCineLab" />
-  <meta property="og:title" content="BluCineLab – Laboratorio cinematografico sperimentale" />
-  <meta property="og:description" content="Immagini in movimento, luce e suono tra cinema indipendente, videoarte e ricerca visiva." />
-  <meta property="og:url" content="https://blucinelab.it" />
-  <meta property="og:image" content="https://blucinelab.it/assets/img/task_01kbe3xe14f45r3k5eb4k8grn0-1764631724_img_0.webp" />
+  <style>
+    :root {
+      --bg: #02030a;
+      --bg-alt: #070b1a;
+      --text: #f5f5f5;
+      --muted: rgba(220,230,255,0.65);
+      --accent: #3df5ff;
+    }
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="BluCineLab – Laboratorio cinematografico sperimentale" />
-  <meta name="twitter:description" content="Studio indipendente tra cinema, arte digitale e forme visive sperimentali." />
-  <meta name="twitter:image" content="https://blucinelab.it/assets/img/task_01kbe3xe14f45r3k5eb4k8grn0-1764631724_img_0.webp" />
+    html, body {
+      margin: 0; padding: 0;
+      font-family: "Inter Tight", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      scroll-behavior: smooth;
+    }
 
-  <!-- Fonts & CSS -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+    /* Hero Scene */
+    #hero-canvas { position: fixed; inset: 0; z-index: -2; display: block; }
+    #grain-overlay {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX///+nxBvIAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg==');
+      background-size: 2px 2px;
+      opacity: 0.12;
+      mix-blend-mode: soft-light;
+      z-index: -1;
+      animation: grain 0.5s steps(2) infinite;
+    }
+
+    @keyframes grain {
+      0%{transform:translate(0,0);}25%{transform:translate(-2px,1px);}
+      50%{transform:translate(1px,-1px);}75%{transform:translate(-1px,1px);}
+      100%{transform:translate(0,0);}
+    }
+
+    .fade-cover {
+      position: fixed; inset: 0;
+      background: #000;
+      z-index: 999;
+      opacity: 1;
+    }
+
+    section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(60px);
+      transition: opacity 1s ease, transform 1s ease;
+      padding: 5rem 1.5rem;
+    }
+
+    h1, h2 {
+      font-family: "EB Garamond", serif;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      max-width: 40rem;
+      margin: 0 auto 1.2rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .scroll-hint {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      color: rgba(180,210,255,0.5);
+      margin-top: 2rem;
+    }
+
+    footer {
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 2rem 1.5rem;
+      background: var(--bg-alt);
+    }
+
+    footer p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    footer .credit {
+      margin-top: 1rem;
+      color: rgba(180,210,255,0.6);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.8rem;
+    }
+  </style>
 </head>
 
 <body>
-  <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
+  <canvas id="hero-canvas"></canvas>
+  <div id="grain-overlay"></div>
+  <div class="fade-cover"></div>
 
   <!-- HERO -->
-  <header class="hero" role="banner">
-    <video
-      autoplay
-      muted
-      loop
-      playsinline
-      id="hero-video"
-      aria-hidden="true"
-      poster="assets/img/task_01kbe3xe14f45r3k5eb4k8grn0-1764631724_img_0.webp">
-      <source src="hero-video.mp4" type="video/mp4" />
-      Il tuo browser non supporta i video HTML5.
-    </video>
+  <section id="hero">
+    <h1>BluCineLab</h1>
+    <p>Film studio & visual lab</p>
+    <p>Lavoriamo sul limite dell’immagine.<br>
+    Uno spazio in cui la luce prende forma,<br>
+    e la forma diventa linguaggio.<br>
+    Ricerca, sensibilità, processi che scorrono come un fotogramma lento.</p>
+    <p class="scroll-hint">scroll to enter</p>
+  </section>
 
-    <div class="hero-gradient" aria-hidden="true"></div>
+  <!-- STUDIO -->
+  <section id="studio">
+    <h2>Lo studio</h2>
+    <p>BluCineLab è un luogo di lavoro e visione.<br>
+    Uno spazio che nasce dal cinema e si espande nelle arti visive,<br>
+    in dialogo silenzioso con il digitale.<br>
+    Qui la forma si studia, si costruisce, si mette alla prova.</p>
+  </section>
 
-    <div class="hero-overlay">
-      <p class="hero-kicker">Laboratorio cinematografico sperimentale</p>
-      <h1>BluCineLab</h1>
-      <p class="hero-subtitle">
-        Immagini in movimento, luce e suono tra cinema e ricerca visiva.
-      </p>
+  <!-- LAB -->
+  <section id="lab">
+    <h2>Il laboratorio</h2>
+    <p>Processi aperti, tentativi, materiali che cambiano stato.<br>
+    Immagini grezze, suoni, gesti, appunti visivi.<br>
+    Tutto è in movimento, tutto può diventare qualcos’altro.<br>
+    Qui la ricerca non è un metodo: è un modo di stare dentro alla forma.</p>
+  </section>
 
-      <div class="hero-actions">
-        <a href="#works" class="btn btn-primary">Guarda i lavori</a>
-      </div>
-      <p class="hero-secondary-link">
-        oppure <a href="#lab">entra nel Lab</a>
-      </p>
-    </div>
+  <!-- APPROACH -->
+  <section id="approach">
+    <h2>Approach</h2>
+    <p>Crediamo nella pazienza della luce.<br>
+    Nel margine tra ciò che è definito e ciò che sta per accadere.<br>
+    Il nostro lavoro unisce intuizione e costruzione:<br>
+    un equilibrio tra disciplina e sensibilità.<br>
+    Ogni immagine è un incontro.</p>
+  </section>
 
-    <nav class="main-nav" aria-label="Navigazione principale">
-      <ul>
-        <li><a href="#works">Lavori</a></li>
-        <li><a href="#studio">Studio</a></li>
-        <li><a href="#lab">Lab</a></li>
-        <li><a href="#contact">Contatti</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main id="main-content">
-
-    <!-- WORKS -->
-    <section id="works" class="section section-works" aria-labelledby="works-title">
-      <div class="section-inner">
-        <h2 id="works-title">Lavori</h2>
-        <p class="section-lead">
-          Una selezione di progetti audiovisivi — film, frammenti, studi.
-          Immagini costruite lentamente, una alla volta.
-        </p>
-
-        <div class="works-grid">
-          <article class="work-card">
-            <h3>Isole in equilibrio</h3>
-            <p>Documentario ibrido · Comunità, soglie e paesaggio.</p>
-          </article>
-
-          <article class="work-card">
-            <h3>Film in lavorazione</h3>
-            <p>Progetto narrativo in sviluppo.</p>
-          </article>
-
-          <article class="work-card">
-            <h3>Installazione X</h3>
-            <p>Videoarte · Luce, riflessi, suono immersivo.</p>
-          </article>
-        </div>
-
-        <p class="works-more">
-          <a href="#works">Selected Works →</a>
-        </p>
-      </div>
-    </section>
-
-    <!-- STUDIO -->
-    <section id="studio" class="section section-studio" aria-labelledby="studio-title">
-      <div class="section-inner">
-        <h2 id="studio-title">Studio</h2>
-        <p class="section-lead">
-          BluCineLab è uno studio fondato da
-          <strong>Anton Likht</strong> e <strong>Sonia Giudici</strong>.
-          Ci occupiamo di produzione, progettazione visiva e sviluppo dei progetti —
-          tra cinema contemporaneo e ricerca audiovisiva.
-        </p>
-
-        <p class="section-body">
-          Lavoriamo con musei, festival, scuole, brand culturali e studi creativi
-          che cercano un linguaggio visivo più libero dei format standard.
-        </p>
-
-        <div class="studio-layout">
-          <div class="studio-column">
-            <h3>Cosa facciamo</h3>
-            <ul>
-              <li>Produzione &amp; direzione creativa</li>
-              <li>Montaggio, color grading, sound design</li>
-              <li>Progettazione visiva per cinema e media</li>
-            </ul>
-          </div>
-
-          <div class="studio-column">
-            <h3>Approccio</h3>
-            <p>
-              Lavoriamo tra analogico e digitale, tra narrazione e astrazione.
-              Scegliamo pochi progetti alla volta, quando c’è spazio per cura
-              e rischio estetico.
-            </p>
-          </div>
-        </div>
-
-        <p class="studio-cta">
-          <a href="#contact">Progetti su richiesta →</a>
-        </p>
-      </div>
-    </section>
-
-    <!-- LAB -->
-    <section id="lab" class="section section-lab" aria-labelledby="lab-title">
-      <div class="section-inner">
-        <h2 id="lab-title">Lab</h2>
-        <p class="section-lead">
-          Spazio di ricerca: appunti, studi, test, materiali in divenire.
-          Processi più che risultati.
-        </p>
-        <p class="section-body">
-          Il Lab raccoglie frammenti di lavorazione, esercizi di luce, loop,
-          texture, prototipi audiovisivi. Una camera oscura aperta: immagini non
-          finite, piste di lavoro, tentativi. Se ti interessa vedere i lavori prima
-          che siano finiti, il Lab è il posto giusto.
-        </p>
-
-        <p class="lab-cta">
-          <a href="#contact">Ricevi nuovi materiali →</a>
-        </p>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="section section-contact" aria-labelledby="contact-title">
-      <div class="section-inner">
-        <h2 id="contact-title">Contatti</h2>
-        <p class="section-lead">
-          Per progetti, collaborazioni e workshop:<br />
-          <a href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a>
-        </p>
-
-        <form id="contact-form" class="contact-form" novalidate>
-          <div class="form-field">
-            <label for="name">Nome</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Il tuo nome"
-              autocomplete="name"
-              required />
-          </div>
-
-          <div class="form-field">
-            <label for="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="La tua email"
-              autocomplete="email"
-              required />
-          </div>
-
-          <div class="form-field">
-            <label for="message">Messaggio</label>
-            <textarea
-              id="message"
-              name="message"
-              rows="4"
-              placeholder="Scrivi il tuo messaggio"
-              required></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary">Invia</button>
-          <p id="form-status" class="form-status" aria-live="polite"></p>
-        </form>
-      </div>
-    </section>
-
-  </main>
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2>Contatti</h2>
+    <p>Per progetti, collaborazioni e workshop:<br>
+    <a href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a></p>
+  </section>
 
   <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <span class="footer-brand">BluCineLab</span>
-      <span class="footer-meta">
-        Studio indipendente fondato da Anton Likht e Sonia Giudici
-      </span>
-
-      <div class="footer-social">
-        <a href="https://www.instagram.com/seliphant" target="_blank" rel="noopener noreferrer">Sonia</a>
-        <span class="dot">·</span>
-        <a href="https://www.instagram.com/anton_zip" target="_blank" rel="noopener noreferrer">Anton</a>
-        <span class="dot">·</span>
-        <a href="https://www.instagram.com/blucinelab" target="_blank" rel="noopener noreferrer">BluCineLab</a>
-      </div>
-    </div>
+  <footer>
+    <p><strong>BluCineLab</strong><br>
+    Studio creativo indipendente dedicato all’immagine e alla sua forma.</p>
+    <p>Guidato da<br>Sonia Giudici · Anton Likht</p>
+    <p class="credit">© BluCineLab 2025 — Coded with light</p>
   </footer>
 
-  <script src="script.js" defer></script>
+  <audio id="ambient" src="https://cdn.pixabay.com/download/audio/2021/09/29/audio_7f7a3cb3f8.mp3?filename=drone-dark-room-ambient-12267.mp3" loop></audio>
+
+  <!-- SCRIPTS -->
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+  <script>
+    /* ========== THREE.JS SHADER SCENE ========== */
+    const canvas = document.getElementById('hero-canvas');
+    const renderer = new THREE.WebGLRenderer({canvas, antialias:true});
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+    const geo = new THREE.PlaneGeometry(2,2);
+    const uniforms = {
+      uTime: {value:0},
+      uAudio: {value:0.5},
+      uRes: {value: new THREE.Vector2(window.innerWidth, window.innerHeight)}
+    };
+
+    const mat = new THREE.ShaderMaterial({
+      uniforms,
+      vertexShader: `varying vec2 vUv; void main(){vUv=uv; gl_Position=vec4(position,1.0);}`,
+      fragmentShader: `
+        uniform float uTime; uniform float uAudio; uniform vec2 uRes; varying vec2 vUv;
+        void main(){
+          vec2 uv=vUv;
+          float a=uRes.x/uRes.y;
+          uv.x=(uv.x-.5)*a+.5;
+          vec3 base=mix(vec3(0.01,0.03,0.10),vec3(0.04,0.08,0.22),uv.y);
+          float bands=0.5+0.5*sin(uv.x*8.0+uTime*0.15);
+          vec3 light=mix(vec3(0.0,0.5,0.9),vec3(1.0,0.55,0.3),0.3+0.3*sin(uTime*0.1)); // tungsteno shift
+          vec3 color=base+light*bands*(0.15+uAudio*0.35);
+          float dist=length(uv-0.5);
+          float vig=smoothstep(0.8,0.45,dist);
+          float flick=0.96+0.04*sin(uTime*0.5);
+          gl_FragColor=vec4(color*vig*flick,1.0);
+        }`
+    });
+
+    scene.add(new THREE.Mesh(geo, mat));
+    function resize(){ const w=innerWidth,h=innerHeight; renderer.setSize(w,h,false); uniforms.uRes.value.set(w,h); }
+    window.addEventListener('resize', resize);
+    resize();
+
+    let start=performance.now();
+    function loop(){
+      uniforms.uTime.value=(performance.now()-start)/1000;
+      renderer.render(scene,camera);
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    /* ========== INTRO & SCROLL MOTION ========== */
+    gsap.to(".fade-cover", {opacity:0, duration:4, ease:"power2.out", delay:1});
+    gsap.to("#hero", {opacity:1, y:0, duration:3, ease:"power3.out", delay:2});
+
+    gsap.utils.toArray("section").forEach((sec,i)=>{
+      gsap.fromTo(sec,{opacity:0,y:40},{opacity:1,y:0,duration:1.4,ease:"power2.out",
+        scrollTrigger:{trigger:sec,start:"top 85%",toggleActions:"play none none reverse"}});
+    });
+
+    /* ========== AUDIO REACTIVE ========== */
+    const audio=document.getElementById("ambient");
+    audio.volume=0.5;
+    window.addEventListener('click', async()=>{try{await audio.play();}catch(e){}},{once:true});
+    const ctx=new (window.AudioContext||window.webkitAudioContext)();
+    const src=ctx.createMediaElementSource(audio);
+    const analyser=ctx.createAnalyser();
+    src.connect(analyser); analyser.connect(ctx.destination);
+    analyser.fftSize=256; const data=new Uint8Array(analyser.frequencyBinCount);
+    function analyse(){
+      analyser.getByteFrequencyData(data);
+      let avg=data.reduce((a,b)=>a+b)/data.length/255;
+      uniforms.uAudio.value=avg;
+      requestAnimationFrame(analyse);
+    }
+    analyse();
+
+    /* ========== FADE OUT FINALE (SIGNATURE) ========== */
+    setTimeout(()=>{
+      gsap.to("footer", {opacity:1, duration:3, ease:"power2.inOut"});
+      gsap.to(audio, {volume:0, duration:5, ease:"sine.inOut"});
+    }, 20000); // dopo ~20s si “chiude” lentamente
+  </script>
 </body>
 </html>
