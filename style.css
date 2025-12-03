@@ -1,5 +1,5 @@
 /* ======================================================
-   BLUCINELAB – STYLE v1.1
+   BLUCINELAB – STYLE v1.2
    Mood: cinematic midnight, studio visivo
    Font: GT Sectra Fine (titles) + Neue Haas Grotesk (text)
    ====================================================== */
@@ -73,7 +73,7 @@
   --shadow-soft: 0 28px 80px rgba(0, 0, 0, 0.85);
   --radius-lg: 18px;
   --radius-md: 12px;
-  --radius-sm: 999px;
+  --radius-pill: 999px;
   --transition: 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
   --max-width: 1040px;
 }
@@ -331,7 +331,7 @@ p {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   padding: 0.4rem 0.9rem;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   border: 1px solid rgba(106, 142, 255, 0.4);
   background: radial-gradient(circle at top, rgba(34, 54, 110, 0.7), rgba(9, 13, 32, 0.8));
   color: rgba(224, 234, 255, 0.9);
@@ -383,7 +383,7 @@ p {
 .beam-scene {
   position: relative;
   min-height: 55vh;
-  isolatioN: isolate;
+  isolation: isolate;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -634,6 +634,29 @@ p {
   padding-bottom: 5.5rem;
 }
 
+.scene--contact .scene-text p:nth-of-type(2),
+.scene--contact .scene-text p:nth-of-type(3) {
+  font-family: "IBM Plex Mono", "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(195, 210, 240, 0.9);
+}
+
+.scene--contact .scene-text p:nth-of-type(2) a,
+.scene--contact .scene-text p:nth-of-type(3) a {
+  font-family: inherit;
+  text-transform: none;
+  letter-spacing: 0.03em;
+  color: var(--accent-soft);
+}
+
+.scene--contact .scene-text p:last-of-type {
+  margin-top: 1.6rem;
+  font-size: 0.92rem;
+  color: rgba(205, 218, 245, 0.82);
+}
+
 /* ------------------------------
    FOOTER
    ------------------------------ */
@@ -745,5 +768,18 @@ p {
   p {
     font-size: 0.94rem;
     line-height: 1.7;
+  }
+}
+
+/* ------------------------------
+   MOTION REDUCE
+   ------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
