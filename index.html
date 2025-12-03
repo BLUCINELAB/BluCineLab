@@ -1,141 +1,200 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BluCineLab – Film studio & visual lab</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="stylesheet" href="style.css">
+  <title>BluCineLab – Film studio & visual lab</title>
+  <meta name="description" content="BluCineLab è uno studio di cinema indipendente e laboratorio visivo con base a Bologna. Progetti per brand, istituzioni, artisti e produzioni che cercano uno sguardo cinematografico e rigoroso.">
+  <meta name="theme-color" content="#02030a" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="BluCineLab – Film studio & visual lab">
-  <meta property="og:description" content="Lavoriamo sul limite dell’immagine. Uno spazio in cui la luce prende forma.">
-  <meta property="og:image" content="assets/minimal-cosmic-restfulness.webp">
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="BluCineLab – Film studio & visual lab" />
+  <meta property="og:description" content="Studio di cinema indipendente e laboratorio visivo. Film, installazioni, ricerca d’immagine e progetti per brand e istituzioni." />
+  <meta property="og:url" content="https://blucinelab.it" />
+  <meta property="og:image" content="https://blucinelab.it/assets/fog.webp" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="BluCineLab – Film studio & visual lab" />
+  <meta name="twitter:description" content="Studio di cinema indipendente e laboratorio visivo tra film, arte e ricerca d’immagine." />
+  <meta name="twitter:image" content="https://blucinelab.it/assets/fog.webp" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-
-  <!-- Fade -->
+  <!-- Fade nero iniziale -->
   <div class="fade-cover"></div>
 
-  <!-- Shader -->
+  <!-- Shader di sfondo -->
   <canvas id="hero-canvas"></canvas>
+  <div id="grain-overlay"></div>
 
-  <!-- Hero -->
+  <!-- HERO – Omino nella nebbia -->
   <section id="hero" class="hero">
-    <h1>BluCineLab</h1>
-    <p>Film studio & visual lab</p>
-    <p>
-      Lavoriamo sul limite dell’immagine.<br>
-      Uno spazio in cui la luce prende forma,<br>
-      e la forma diventa linguaggio.<br>
-      Processi lenti, ricerca, sensibilità.
-    </p>
-    <p class="scroll-hint">SCROLL TO ENTER</p>
+    <div class="hero-inner">
+      <div class="hero-text">
+        <p class="hero-label">film studio & visual lab</p>
+        <h1>BluCineLab</h1>
+        <p class="hero-copy">
+          Studio di cinema indipendente e laboratorio d’immagine.<br>
+          Progettiamo film, ritratti visivi e installazioni<br>
+          per chi vuole uno sguardo preciso, lento e cinematografico.
+        </p>
+        <p class="hero-subcopy">
+          Lavoriamo tra set, paesaggi reali e sperimentazione digitale.<br>
+          Dalla regia alla post, fino alla ricerca con AI applicata all’immagine.
+        </p>
+        <p class="scroll-hint">SCROLL PER ENTRARE</p>
+      </div>
+
+      <div class="hero-image">
+        <img src="assets/fog.webp" alt="Figura nella nebbia, still cinematografico" loading="lazy" />
+      </div>
+    </div>
   </section>
 
-  <!-- SCENE 1 — Lo studio -->
-  <section class="scene">
+  <!-- SCENA 1 – Lo studio -->
+  <section id="studio" class="scene">
     <div class="scene-inner">
       <div class="scene-text">
         <h2>Lo studio</h2>
         <p>
-          BluCineLab è un luogo di lavoro e visione.<br>
-          Uno spazio che nasce dal cinema e si espande nelle arti visive,<br>
-          in dialogo silenzioso con il digitale.
+          BluCineLab nasce da un lavoro quotidiano tra set, montaggio e ricerca visiva.
+          Uno studio piccolo, indipendente, che tiene insieme regia, direzione della fotografia,
+          montaggio e produzione leggera.
         </p>
         <p>
-          Trattiamo l'immagine come un territorio condiviso.<br>
-          Qui la forma si studia, si costruisce, si mette alla prova.<br>
-          Ogni progetto è un passaggio, ogni passaggio una scoperta.
+          Siamo operativi su film, documentari, progetti per brand, istituzioni culturali
+          e artisti che cercano un linguaggio visivo preciso, non standardizzato.
         </p>
       </div>
+
       <div class="scene-image">
-        <img src="assets/nocturnal-artistic-workspace.webp" alt="workspace">
+        <img src="assets/nocturnal-artistic-workspace.webp" alt="Studio di lavoro notturno con monitor e luci" loading="lazy" />
       </div>
     </div>
   </section>
 
-  <!-- SCENE 2 — Processi -->
-  <section class="scene">
+  <!-- SCENA 2 – Cosa facciamo -->
+  <section id="services" class="scene">
     <div class="scene-inner scene-inner--reverse">
       <div class="scene-text">
-        <h2>Processi</h2>
+        <h2>Cosa facciamo</h2>
         <p>
-          Ogni lavoro nasce da una domanda di luce, ritmo e presenza.<br>
-          Costruiamo immagini come si costruiscono storie: lentamente.
+          Progettiamo e realizziamo:
         </p>
         <p>
-          Tra cinema, fotografia, moda e installazioni,<br>
-          attraversiamo linguaggi e li rimontiamo in forma nuova.
+          • film brevi e medi per brand, progetti culturali e artisti<br>
+          • documentari e ritratti d’autore in location reali<br>
+          • campagne visive e contenuti seriali per piattaforme digitali<br>
+          • still e video per installazioni, mostre e spazi espositivi
+        </p>
+        <p>
+          Ogni lavoro parte da un bisogno concreto: raccontare un luogo, un gesto, un processo,
+          senza sovraccaricare l’immagine. L’attenzione è sulla luce, sui corpi, sul ritmo.
         </p>
       </div>
 
       <div class="scene-image">
-        <img src="assets/cinematic-stilllife.webp" alt="still life tools">
+        <img src="assets/cinematic-stilllife.webp" alt="Still life cinematografico di strumenti di lavoro" loading="lazy" />
       </div>
     </div>
   </section>
 
-  <!-- SCENE 3 — Atmosfere -->
-  <section class="scene">
+  <!-- SCENA 3 – Metodo -->
+  <section id="method" class="scene">
     <div class="scene-inner">
       <div class="scene-text">
-        <h2>Atmosfere</h2>
+        <h2>Metodo</h2>
         <p>
-          La luce è materia. Il tempo è una superficie.<br>
-          Cerchiamo tensioni morbide, gradienti emotivi, spazi sospesi.
+          Lavoriamo con una produzione essenziale: troupe ridotte, tempi misurati,
+          grande cura per l’ascolto delle persone e dei luoghi.
+        </p>
+        <p>
+          Prima osserviamo, poi progettiamo in modo chiaro: struttura, inquadrature, suono,
+          ritmo del montaggio. La tecnologia è al servizio della scena, non il contrario.
+        </p>
+        <p>
+          In fase di post integriamo color grading avanzato e strumenti AI in modo controllato,
+          per pulire il flusso di lavoro e aprire possibilità estetiche senza perdere il lato umano.
         </p>
       </div>
 
       <div class="scene-image">
-        <img src="assets/fog.webp" alt="fog figure">
+        <img src="assets/analog-digital-texture.webp" alt="Texture tra analogico e digitale" loading="lazy" />
       </div>
     </div>
   </section>
 
-  <!-- SCENE 4 — Ricerca -->
-  <section class="scene">
+  <!-- SCENA 4 – Per chi lavoriamo -->
+  <section id="clients" class="scene">
     <div class="scene-inner scene-inner--reverse">
       <div class="scene-text">
-        <h2>Ricerca</h2>
+        <h2>Per chi lavoriamo</h2>
         <p>
-          L'immagine è un laboratorio aperto.<br>
-          Un confine dove il gesto artigianale incontra la tecnologia.
+          Collaboriamo con ristoranti e realtà gastronomiche, gallerie, scuole,
+          festival e piccole imprese che vedono l’immagine come parte del proprio linguaggio,
+          non solo come promozione.
         </p>
         <p>
-          Lavoriamo tra analogico e digitale,<br>
-          come due superfici che dialogano senza mai sovrapporsi.
+          Possiamo entrare in progetti già avviati oppure costruire da zero:
+          dalla prima idea visiva alla consegna dei file pronti per web, sala o installazione.
+        </p>
+        <p>
+          Usiamo l’AI come strumento di supporto per ricerca, previsualizzazione, montaggio
+          e scrittura, sempre in dialogo con la materia concreta delle riprese.
         </p>
       </div>
 
       <div class="scene-image">
-        <img src="assets/analog-digital-texture.webp" alt="texture">
+        <img src="assets/watercyber.webp" alt="Riflessi d’acqua e luce digitale" loading="lazy" />
       </div>
     </div>
   </section>
 
-  <!-- SCENE 5 — Elementi -->
-  <section class="scene">
+  <!-- SCENA 5 – Contatto -->
+  <section id="contact" class="scene">
     <div class="scene-inner">
       <div class="scene-text">
-        <h2>Elementi</h2>
+        <h2>Contatto</h2>
         <p>
-          Acqua, luce, movimento: la grammatica minima del nostro lavoro.<br>
-          Ogni forma nasce da un gesto elementare.
+          Stiamo lavorando tra Bologna e altre città, spesso in movimento tra set, aule e gallerie.
+          Se hai un progetto che ha bisogno di uno sguardo cinematografico, scrivici.
+        </p>
+        <p>
+          • mail: <a href="mailto:info@blucinelab.it">info@blucinelab.it</a><br>
+          • Instagram studio: <a href="https://www.instagram.com/blucinelab" target="_blank" rel="noreferrer">@blucinelab</a><br>
+          • Instagram Anton: <a href="https://www.instagram.com/anton_zip" target="_blank" rel="noreferrer">@anton_zip</a>
+        </p>
+        <p>
+          Preferiamo poche conversazioni chiare a tanti preventivi generici.
+          Se ti va, raccontaci in poche righe cosa vuoi ottenere con le immagini.
         </p>
       </div>
 
       <div class="scene-image">
-        <img src="assets/watercyber.webp" alt="water light">
+        <img src="assets/minimal-cosmic-restfulness.webp" alt="Paesaggio notturno minimale, atmosfera blu" loading="lazy" />
       </div>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    © BluCineLab · Film studio & visual lab
-    <div class="credit">Website by Taky × Sev7nSword</div>
+    <div class="footer-inner">
+      <p>© BluCineLab · film studio & visual lab</p>
+      <p class="credit">
+        website design · Taky × Sev7nSword
+      </p>
+    </div>
   </footer>
 
   <!-- SCRIPT -->
@@ -143,6 +202,5 @@
   <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
   <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
   <script src="script.js"></script>
-
 </body>
 </html>
