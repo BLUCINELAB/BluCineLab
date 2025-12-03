@@ -2,23 +2,23 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>BluCineLab – Film studio & visual lab</title>
-  <meta name="description" content="BluCineLab è uno studio di cinema indipendente e laboratorio visivo con base a Bologna. Progetti per brand, istituzioni, artisti e produzioni che cercano uno sguardo cinematografico e rigoroso.">
+  <title>BluCineLab – Studio visivo indipendente</title>
+  <meta name="description" content="BluCineLab è uno studio visivo indipendente con base a Bologna. Film, fotografia, installazioni e contenuti digitali per brand, istituzioni e progetti culturali.">
   <meta name="theme-color" content="#02030a" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="BluCineLab – Film studio & visual lab" />
-  <meta property="og:description" content="Studio di cinema indipendente e laboratorio visivo. Film, installazioni, ricerca d’immagine e progetti per brand e istituzioni." />
+  <meta property="og:title" content="BluCineLab – Studio visivo indipendente" />
+  <meta property="og:description" content="Studio di regia e immagine: film, fotografia, installazioni e contenuti digitali con approccio cinematografico.">
   <meta property="og:url" content="https://blucinelab.it" />
   <meta property="og:image" content="https://blucinelab.it/assets/fog.webp" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="BluCineLab – Film studio & visual lab" />
-  <meta name="twitter:description" content="Studio di cinema indipendente e laboratorio visivo tra film, arte e ricerca d’immagine." />
+  <meta name="twitter:title" content="BluCineLab – Studio visivo indipendente" />
+  <meta name="twitter:description" content="Progetti visivi per brand, istituzioni e progetti culturali. Film, fotografia, installazioni e contenuti digitali.">
   <meta name="twitter:image" content="https://blucinelab.it/assets/fog.webp" />
 
   <!-- Fonts -->
@@ -38,162 +38,248 @@
   <canvas id="hero-canvas"></canvas>
   <div id="grain-overlay"></div>
 
-  <!-- HERO – Omino nella nebbia -->
-  <section id="hero" class="hero">
-    <div class="hero-inner">
-      <div class="hero-text">
-        <p class="hero-label">film studio & visual lab</p>
-        <h1>BluCineLab</h1>
-        <p class="hero-copy">
-          Studio di cinema indipendente e laboratorio d’immagine.<br>
-          Progettiamo film, ritratti visivi e installazioni<br>
-          per chi vuole uno sguardo preciso, lento e cinematografico.
-        </p>
-        <p class="hero-subcopy">
-          Lavoriamo tra set, paesaggi reali e sperimentazione digitale.<br>
-          Dalla regia alla post, fino alla ricerca con AI applicata all’immagine.
-        </p>
-        <p class="scroll-hint">SCROLL PER ENTRARE</p>
-      </div>
-
-      <div class="hero-image">
-        <img src="assets/fog.webp" alt="Figura nella nebbia, still cinematografico" loading="lazy" />
-      </div>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <span class="site-logo">BluCineLab</span>
+      <nav class="site-nav">
+        <a href="#studio">studio</a>
+        <a href="#services">servizi</a>
+        <a href="#works">lavori</a>
+        <a href="#method">metodo</a>
+        <a href="#contact">contatti</a>
+      </nav>
     </div>
-  </section>
+  </header>
 
-  <!-- SCENA 1 – Lo studio -->
-  <section id="studio" class="scene">
-    <div class="scene-inner">
-      <div class="scene-text">
-        <h2>Lo studio</h2>
-        <p>
-          BluCineLab nasce da un lavoro quotidiano tra set, montaggio e ricerca visiva.
-          Uno studio piccolo, indipendente, che tiene insieme regia, direzione della fotografia,
-          montaggio e produzione leggera.
-        </p>
-        <p>
-          Siamo operativi su film, documentari, progetti per brand, istituzioni culturali
-          e artisti che cercano un linguaggio visivo preciso, non standardizzato.
+  <main>
+    <!-- HERO – figura nella nebbia -->
+    <section id="hero" class="hero">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <p class="hero-label">studio visivo indipendente · bologna</p>
+          <h1>BluCineLab</h1>
+          <p class="hero-copy">
+            Studio di regia e immagine che lavora con film, fotografia,
+            installazioni e contenuti digitali.
+          </p>
+          <p class="hero-subcopy">
+            Seguiamo i progetti dall’idea alla consegna: sviluppo, riprese,
+            montaggio, color grading e declinazioni per web, sala e spazi espositivi.
+          </p>
+          <div class="hero-tags">
+            <span>film & documentari</span>
+            <span>fotografia</span>
+            <span>contenuti digitali</span>
+            <span>installazioni video</span>
+          </div>
+          <p class="scroll-hint">SCROLL PER CONTINUARE</p>
+        </div>
+
+        <div class="hero-image hero-image--fog" data-depth="0.12">
+          <img src="assets/fog.webp" alt="Figura nella nebbia, atmosfera blu" loading="eager" />
+        </div>
+      </div>
+    </section>
+
+    <!-- FASCIA LUMINOSA – cyan-light-study full screen -->
+    <section class="scene beam-scene" aria-hidden="true">
+      <div class="beam-layer">
+        <img src="assets/cyan-light-study.webp" alt="" loading="lazy" />
+      </div>
+      <div class="beam-text-wrap">
+        <p class="beam-text">
+          Un unico punto di riferimento per l’immagine:<br>
+          sviluppo, produzione e post nello stesso studio.
         </p>
       </div>
+    </section>
 
-      <div class="scene-image">
-        <img src="assets/nocturnal-artistic-workspace.webp" alt="Studio di lavoro notturno con monitor e luci" loading="lazy" />
+    <!-- STUDIO -->
+    <section id="studio" class="scene scene--studio">
+      <div class="scene-inner">
+        <div class="scene-text">
+          <h2>Studio</h2>
+          <p>
+            BluCineLab è uno studio visivo indipendente con base a Bologna,
+            fondato da Anton Likht e Sonia Giudici.
+          </p>
+          <p>
+            Lavoriamo su scala contenuta, con una rete di collaboratori attivabile
+            in base ai progetti. Ci muoviamo tra produzioni per brand,
+            istituzioni culturali, ristorazione, formazione e lavori autoriali.
+          </p>
+          <p>
+            Possiamo seguire l’intero flusso visivo di una produzione oppure
+            integrarci in team preesistenti come regia, direzione della fotografia
+            o supervisione immagini.
+          </p>
+        </div>
+
+        <div class="scene-image" data-depth="0.08">
+          <img src="assets/nocturnal-artistic-workspace.webp" alt="Postazione di lavoro in ambiente notturno" loading="lazy" />
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- SCENA 2 – Cosa facciamo -->
-  <section id="services" class="scene">
-    <div class="scene-inner scene-inner--reverse">
-      <div class="scene-text">
-        <h2>Cosa facciamo</h2>
-        <p>
-          Progettiamo e realizziamo:
-        </p>
-        <p>
-          • film brevi e medi per brand, progetti culturali e artisti<br>
-          • documentari e ritratti d’autore in location reali<br>
-          • campagne visive e contenuti seriali per piattaforme digitali<br>
-          • still e video per installazioni, mostre e spazi espositivi
-        </p>
-        <p>
-          Ogni lavoro parte da un bisogno concreto: raccontare un luogo, un gesto, un processo,
-          senza sovraccaricare l’immagine. L’attenzione è sulla luce, sui corpi, sul ritmo.
-        </p>
-      </div>
-
-      <div class="scene-image">
-        <img src="assets/cinematic-stilllife.webp" alt="Still life cinematografico di strumenti di lavoro" loading="lazy" />
-      </div>
-    </div>
-  </section>
-
-  <!-- SCENA 3 – Metodo -->
-  <section id="method" class="scene">
-    <div class="scene-inner">
-      <div class="scene-text">
-        <h2>Metodo</h2>
-        <p>
-          Lavoriamo con una produzione essenziale: troupe ridotte, tempi misurati,
-          grande cura per l’ascolto delle persone e dei luoghi.
-        </p>
-        <p>
-          Prima osserviamo, poi progettiamo in modo chiaro: struttura, inquadrature, suono,
-          ritmo del montaggio. La tecnologia è al servizio della scena, non il contrario.
-        </p>
-        <p>
-          In fase di post integriamo color grading avanzato e strumenti AI in modo controllato,
-          per pulire il flusso di lavoro e aprire possibilità estetiche senza perdere il lato umano.
-        </p>
+    <!-- SERVIZI -->
+    <section id="services" class="scene scene--services">
+      <div class="scene-inner">
+        <div class="scene-text">
+          <h2>Servizi</h2>
+          <p>
+            Progettiamo e realizziamo contenuti visivi end-to-end.
+            Le principali aree di lavoro:
+          </p>
+        </div>
       </div>
 
-      <div class="scene-image">
-        <img src="assets/analog-digital-texture.webp" alt="Texture tra analogico e digitale" loading="lazy" />
-      </div>
-    </div>
-  </section>
+      <div class="services-grid">
+        <article class="service-card">
+          <div class="service-image">
+            <img src="assets/cinematic-stilllife.webp" alt="Still life di strumenti analogici" loading="lazy" />
+          </div>
+          <div class="service-body">
+            <h3>Film & documentari</h3>
+            <p>
+              Regia, direzione della fotografia e montaggio per film brevi,
+              documentari e ritratti. Struttura narrativa chiara, attenzione
+              alla luce e al lavoro con le persone.
+            </p>
+          </div>
+        </article>
 
-  <!-- SCENA 4 – Per chi lavoriamo -->
-  <section id="clients" class="scene">
-    <div class="scene-inner scene-inner--reverse">
-      <div class="scene-text">
-        <h2>Per chi lavoriamo</h2>
-        <p>
-          Collaboriamo con ristoranti e realtà gastronomiche, gallerie, scuole,
-          festival e piccole imprese che vedono l’immagine come parte del proprio linguaggio,
-          non solo come promozione.
-        </p>
-        <p>
-          Possiamo entrare in progetti già avviati oppure costruire da zero:
-          dalla prima idea visiva alla consegna dei file pronti per web, sala o installazione.
-        </p>
-        <p>
-          Usiamo l’AI come strumento di supporto per ricerca, previsualizzazione, montaggio
-          e scrittura, sempre in dialogo con la materia concreta delle riprese.
-        </p>
+        <article class="service-card">
+          <div class="service-image">
+            <img src="assets/analog-digital-texture.webp" alt="Texture blu tra analogico e digitale" loading="lazy" />
+          </div>
+          <div class="service-body">
+            <h3>Fotografia</h3>
+            <p>
+              Ritratti, editoriali, still life e reportage per brand,
+              progetti culturali e spazi indipendenti. Immagini pensate
+              per identità visive e campagne a lungo termine.
+            </p>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-image">
+            <img src="assets/minimal-cosmic-restfulness.webp" alt="Spazio scuro con alone di luce" loading="lazy" />
+          </div>
+          <div class="service-body">
+            <h3>Installazioni & spazi</h3>
+            <p>
+              Video e contenuti per mostre, festival e ambienti ibridi.
+              Progettiamo il rapporto tra schermo, suono e architettura
+              in dialogo con curatori e progettisti.
+            </p>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-image">
+            <img src="assets/watercyber.webp" alt="Riflessi d’acqua con luce ciano e magenta" loading="lazy" />
+          </div>
+          <div class="service-body">
+            <h3>Contenuti digitali & AI</h3>
+            <p>
+              Format video, clip seriali e materiali per piattaforme online.
+              Usiamo strumenti AI per ricerca, previsualizzazione e post-produzione,
+              mantenendo centrale il girato reale.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- LAVORI – fascia tipo bobina -->
+    <section id="works" class="scene scene--works">
+      <div class="scene-inner works-header">
+        <div class="scene-text">
+          <h2>Lavori</h2>
+          <p>
+            Stiamo costruendo un archivio consultabile di progetti.
+            Per ora il sito funziona come una mappa: mostra ciò che facciamo
+            e come lavoriamo, più che un elenco completo di case study.
+          </p>
+          <p>
+            In ambito concreto: produzioni per ristoranti e ospitalità,
+            comunicazione per progetti culturali, campagne per brand
+            e progetti di ricerca in ambito educativo.
+          </p>
+        </div>
       </div>
 
-      <div class="scene-image">
-        <img src="assets/watercyber.webp" alt="Riflessi d’acqua e luce digitale" loading="lazy" />
+      <div class="works-reel" aria-hidden="true">
+        <div class="reel-strip" data-reel>
+          <figure class="reel-frame">
+            <img src="assets/cinematic-stilllife.webp" alt="" loading="lazy" />
+          </figure>
+          <figure class="reel-frame">
+            <img src="assets/nocturnal-artistic-workspace.webp" alt="" loading="lazy" />
+          </figure>
+          <figure class="reel-frame">
+            <img src="assets/cyan-light-study.webp" alt="" loading="lazy" />
+          </figure>
+          <figure class="reel-frame">
+            <img src="assets/watercyber.webp" alt="" loading="lazy" />
+          </figure>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- SCENA 5 – Contatto -->
-  <section id="contact" class="scene">
-    <div class="scene-inner">
-      <div class="scene-text">
-        <h2>Contatto</h2>
-        <p>
-          Stiamo lavorando tra Bologna e altre città, spesso in movimento tra set, aule e gallerie.
-          Se hai un progetto che ha bisogno di uno sguardo cinematografico, scrivici.
-        </p>
-        <p>
-          • mail: <a href="mailto:info@blucinelab.it">info@blucinelab.it</a><br>
-          • Instagram studio: <a href="https://www.instagram.com/blucinelab" target="_blank" rel="noreferrer">@blucinelab</a><br>
-          • Instagram Anton: <a href="https://www.instagram.com/anton_zip" target="_blank" rel="noreferrer">@anton_zip</a>
-        </p>
-        <p>
-          Preferiamo poche conversazioni chiare a tanti preventivi generici.
-          Se ti va, raccontaci in poche righe cosa vuoi ottenere con le immagini.
-        </p>
+    <!-- METODO -->
+    <section id="method" class="scene scene--method">
+      <div class="scene-inner">
+        <div class="scene-text">
+          <h2>Metodo</h2>
+          <p>
+            Produzione essenziale, comunicazione chiara. Preferiamo troupe ridotte,
+            tempi definiti e un dialogo costante con chi commissiona il lavoro.
+          </p>
+          <p>
+            Ogni progetto segue tre fasi: analisi e definizione degli obiettivi,
+            progettazione visiva (struttura, inquadrature, calendario),
+            produzione e post con consegna di materiali pronti all’uso.
+          </p>
+          <p>
+            Gli strumenti AI vengono integrati in modo ragionato per organizzare,
+            ottimizzare e sperimentare, senza sostituire la relazione con luoghi,
+            persone e processi reali.
+          </p>
+        </div>
       </div>
+    </section>
 
-      <div class="scene-image">
-        <img src="assets/minimal-cosmic-restfulness.webp" alt="Paesaggio notturno minimale, atmosfera blu" loading="lazy" />
+    <!-- CONTATTI -->
+    <section id="contact" class="scene scene--contact">
+      <div class="scene-inner">
+        <div class="scene-text">
+          <h2>Contatti</h2>
+          <p>
+            Lavoriamo principalmente da Bologna, operativi su progetti in Italia.
+            Per valutare una collaborazione è sufficiente una descrizione sintetica
+            del contesto, dei tempi e della destinazione dei materiali.
+          </p>
+          <p>
+            • mail: <a href="mailto:info@blucinelab.it">info@blucinelab.it</a><br>
+            • Instagram studio: <a href="https://www.instagram.com/blucinelab" target="_blank" rel="noreferrer">@blucinelab</a><br>
+            • Instagram Anton: <a href="https://www.instagram.com/anton_zip" target="_blank" rel="noreferrer">@anton_zip</a>
+          </p>
+          <p>
+            Nella prima risposta non inviamo listini generici ma una proposta di lavoro
+            in linea con ciò che serve davvero al progetto.
+          </p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <!-- FOOTER -->
-  <footer>
+  <footer class="site-footer">
     <div class="footer-inner">
-      <p>© BluCineLab · film studio & visual lab</p>
-      <p class="credit">
-        website design · Taky × Sev7nSword
-      </p>
+      <p>© BluCineLab · studio visivo indipendente</p>
     </div>
   </footer>
 
