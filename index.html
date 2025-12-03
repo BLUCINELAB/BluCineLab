@@ -1,150 +1,148 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BluCineLab – Film studio & visual lab</title>
 
-  <!-- META BASE -->
-  <meta name="description" content="BluCineLab è uno studio creativo indipendente sul confine tra cinema e arti visive. Lavoriamo sul limite dell’immagine: ricerca, luce, forma." />
-  <meta name="theme-color" content="#02030a" />
-  <meta name="author" content="BluCineLab" />
+  <link rel="stylesheet" href="style.css">
 
-  <!-- OPEN GRAPH -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="BluCineLab – Film studio & visual lab" />
-  <meta property="og:description" content="Studio indipendente dedicato alla ricerca visiva. Film, luce e forme in divenire." />
-  <meta property="og:url" content="https://blucinelab.it" />
-  <meta property="og:image" content="https://blucinelab.it/assets/minimal-cosmic-restfulness.webp" />
-
-  <!-- TWITTER -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="BluCineLab – Film studio & visual lab" />
-  <meta name="twitter:description" content="Una pratica visiva che nasce dal cinema e si espande nelle arti." />
-  <meta name="twitter:image" content="https://blucinelab.it/assets/minimal-cosmic-restfulness.webp" />
-
-  <!-- FONTS -->
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet">
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="BluCineLab – Film studio & visual lab">
+  <meta property="og:description" content="Lavoriamo sul limite dell’immagine. Uno spazio in cui la luce prende forma.">
+  <meta property="og:image" content="assets/minimal-cosmic-restfulness.webp">
 </head>
 
 <body>
 
-  <!-- SFONDO SHADER -->
-  <canvas id="hero-canvas"></canvas>
-  <div id="grain-overlay"></div>
+  <!-- Fade -->
   <div class="fade-cover"></div>
 
-  <main>
+  <!-- Shader -->
+  <canvas id="hero-canvas"></canvas>
 
-    <!-- HERO -->
-    <section id="hero" class="hero" aria-labelledby="hero-title">
-      <h1 id="hero-title">BluCineLab</h1>
-      <p class="hero-subtitle">Film studio & visual lab</p>
-      <p>
-        Lavoriamo sul limite dell’immagine.<br>
-        Uno spazio in cui la luce prende forma,<br>
-        e la forma diventa linguaggio.<br>
-        Processi lenti, ricerca, sensibilità.
-      </p>
-      <p class="scroll-hint">scroll to enter</p>
-    </section>
+  <!-- Hero -->
+  <section id="hero" class="hero">
+    <h1>BluCineLab</h1>
+    <p>Film studio & visual lab</p>
+    <p>
+      Lavoriamo sul limite dell’immagine.<br>
+      Uno spazio in cui la luce prende forma,<br>
+      e la forma diventa linguaggio.<br>
+      Processi lenti, ricerca, sensibilità.
+    </p>
+    <p class="scroll-hint">SCROLL TO ENTER</p>
+  </section>
 
-    <!-- STUDIO -->
-    <section id="studio" class="scene" aria-labelledby="studio-title">
-      <div class="scene-inner">
-        <div class="scene-text">
-          <h2 id="studio-title">Lo studio</h2>
-          <p>
-            BluCineLab è un luogo di lavoro e visione.<br>
-            Uno spazio che nasce dal cinema e si espande nelle arti visive,<br>
-            in dialogo silenzioso con il digitale.
-          </p>
-          <p>
-            Trattiamo l’immagine come un territorio condiviso.<br>
-            Qui la forma si studia, si costruisce, si mette alla prova.<br>
-            Ogni progetto è un passaggio, ogni passaggio una scoperta.
-          </p>
-        </div>
-
-        <figure class="scene-image">
-          <img src="assets/nocturnal-artistic-workspace.webp"
-               alt="Tavolo di lavoro notturno con quaderno, lente e strumenti visivi"
-               loading="lazy">
-        </figure>
+  <!-- SCENE 1 — Lo studio -->
+  <section class="scene">
+    <div class="scene-inner">
+      <div class="scene-text">
+        <h2>Lo studio</h2>
+        <p>
+          BluCineLab è un luogo di lavoro e visione.<br>
+          Uno spazio che nasce dal cinema e si espande nelle arti visive,<br>
+          in dialogo silenzioso con il digitale.
+        </p>
+        <p>
+          Trattiamo l'immagine come un territorio condiviso.<br>
+          Qui la forma si studia, si costruisce, si mette alla prova.<br>
+          Ogni progetto è un passaggio, ogni passaggio una scoperta.
+        </p>
       </div>
-    </section>
-
-    <!-- LAB -->
-    <section id="lab" class="scene" aria-labelledby="lab-title">
-      <div class="scene-inner scene-inner--reverse">
-        <div class="scene-text">
-          <h2 id="lab-title">Il laboratorio</h2>
-          <p>
-            Il laboratorio è la nostra zona franca:<br>
-            processi aperti, tentativi, materiali che cambiano stato.<br>
-            Immagini grezze, suoni, gesti, appunti visivi.
-          </p>
-          <p>
-            Qui la ricerca non è un metodo: è un modo di stare dentro alla forma.
-          </p>
-        </div>
-
-        <figure class="scene-image">
-          <img src="assets/cinematic-stilllife.webp"
-               alt="Still life cinematografico con pellicola, prisma e strumenti"
-               loading="lazy">
-        </figure>
+      <div class="scene-image">
+        <img src="assets/nocturnal-artistic-workspace.webp" alt="workspace">
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- APPROACH -->
-    <section id="approach" class="scene" aria-labelledby="approach-title">
-      <div class="scene-inner">
-        <div class="scene-text">
-          <h2 id="approach-title">Approach</h2>
-          <p>
-            Crediamo nella pazienza della luce.<br>
-            Nel margine tra ciò che è definito e ciò che sta per accadere.<br>
-            Il nostro lavoro unisce intuizione e costruzione:<br>
-            un equilibrio sottile tra disciplina e sensibilità.
-          </p>
-          <p>
-            Ogni immagine è un incontro.<br>
-            Ogni incontro, una possibilità.
-          </p>
-        </div>
-
-        <figure class="scene-image">
-          <img src="assets/cyan-light-study.webp"
-               alt="Fasci di luce ciano che attraversano l’oscurità"
-               loading="lazy">
-        </figure>
+  <!-- SCENE 2 — Processi -->
+  <section class="scene">
+    <div class="scene-inner scene-inner--reverse">
+      <div class="scene-text">
+        <h2>Processi</h2>
+        <p>
+          Ogni lavoro nasce da una domanda di luce, ritmo e presenza.<br>
+          Costruiamo immagini come si costruiscono storie: lentamente.
+        </p>
+        <p>
+          Tra cinema, fotografia, moda e installazioni,<br>
+          attraversiamo linguaggi e li rimontiamo in forma nuova.
+        </p>
       </div>
-    </section>
 
-  </main>
+      <div class="scene-image">
+        <img src="assets/cinematic-stilllife.webp" alt="still life tools">
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 3 — Atmosfere -->
+  <section class="scene">
+    <div class="scene-inner">
+      <div class="scene-text">
+        <h2>Atmosfere</h2>
+        <p>
+          La luce è materia. Il tempo è una superficie.<br>
+          Cerchiamo tensioni morbide, gradienti emotivi, spazi sospesi.
+        </p>
+      </div>
+
+      <div class="scene-image">
+        <img src="assets/fog.webp" alt="fog figure">
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 4 — Ricerca -->
+  <section class="scene">
+    <div class="scene-inner scene-inner--reverse">
+      <div class="scene-text">
+        <h2>Ricerca</h2>
+        <p>
+          L'immagine è un laboratorio aperto.<br>
+          Un confine dove il gesto artigianale incontra la tecnologia.
+        </p>
+        <p>
+          Lavoriamo tra analogico e digitale,<br>
+          come due superfici che dialogano senza mai sovrapporsi.
+        </p>
+      </div>
+
+      <div class="scene-image">
+        <img src="assets/analog-digital-texture.webp" alt="texture">
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 5 — Elementi -->
+  <section class="scene">
+    <div class="scene-inner">
+      <div class="scene-text">
+        <h2>Elementi</h2>
+        <p>
+          Acqua, luce, movimento: la grammatica minima del nostro lavoro.<br>
+          Ogni forma nasce da un gesto elementare.
+        </p>
+      </div>
+
+      <div class="scene-image">
+        <img src="assets/watercyber.webp" alt="water light">
+      </div>
+    </div>
+  </section>
 
   <!-- FOOTER -->
   <footer>
-    <p>
-      <strong>BluCineLab</strong><br>
-      Studio creativo indipendente dedicato all’immagine e alla sua forma.
-    </p>
-    <p class="credit">
-      Sonia Giudici · Anton Likht · BluCineLab
-    </p>
+    © BluCineLab · Film studio & visual lab
+    <div class="credit">Website by Taky × Sev7nSword</div>
   </footer>
 
-  <!-- LIBRERIE -->
+  <!-- SCRIPT -->
   <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
   <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
   <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
-
-  <!-- SCRIPT -->
-  <script type="module" src="script.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>
