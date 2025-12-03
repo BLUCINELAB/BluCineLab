@@ -1,207 +1,111 @@
-/* ======================================
-   BLUCINELAB — STYLE.CSS
-   Midnight Core / Cinematic Edition
-   ====================================== */
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BluCineLab – Studio di cinema e arti visive</title>
 
-/* --- VARIABLES --- */
-:root {
-  --bg: #02030a;
-  --bg-alt: #070b1a;
-  --surface: rgba(20, 30, 55, 0.35);
-  --surface-deep: rgba(10, 15, 30, 0.75);
-  --text: #f5f5f5;
-  --muted: rgba(210,220,250,0.65);
-  --accent: #3df5ff;
-  --warm: #ffb88e;
-  --font-body: "Inter Tight", system-ui, sans-serif;
-  --font-serif: "EB Garamond", serif;
-  --font-mono: "IBM Plex Mono", monospace;
-  --radius: 14px;
-  --shadow-soft: 0 24px 60px rgba(0,0,0,0.7);
-  --transition: 0.35s ease;
-}
+  <!-- META -->
+  <meta name="description" content="BluCineLab è uno studio indipendente fondato da Anton Likht e Sonia Giudici. Cinema, ricerca visiva e intelligenza artificiale applicata all’immagine." />
+  <meta name="theme-color" content="#02030a" />
 
-/* --- RESET --- */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+  <!-- OPEN GRAPH -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="BluCineLab – Studio di cinema e arti visive" />
+  <meta property="og:description" content="Film studio & visual lab: ricerca, luce, immagine." />
+  <meta property="og:url" content="https://blucinelab.it" />
+  <meta property="og:image" content="https://blucinelab.it/assets/img/cover.jpg" />
 
-html {
-  scroll-behavior: smooth;
-  background: var(--bg);
-}
+  <!-- TWITTER -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="BluCineLab – Studio di cinema e arti visive" />
+  <meta name="twitter:description" content="Studio indipendente tra cinema, arte digitale e forme visive sperimentali." />
+  <meta name="twitter:image" content="https://blucinelab.it/assets/img/cover.jpg" />
 
-body {
-  font-family: var(--font-body);
-  color: var(--text);
-  background: radial-gradient(circle at top, #0b1020 0%, #02030a 80%);
-  overflow-x: hidden;
-  line-height: 1.6;
-}
+  <!-- FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet">
 
-/* --- TYPOGRAPHY --- */
-h1, h2 {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  color: var(--text);
-}
+  <!-- STILE PRINCIPALE -->
+  <link rel="stylesheet" href="style.css" />
+</head>
 
-h1 {
-  font-size: clamp(2.8rem, 4vw, 3.6rem);
-}
+<body>
 
-h2 {
-  font-size: clamp(1.8rem, 3vw, 2.3rem);
-  margin-bottom: 1.2rem;
-}
+  <!-- SFONDO ANIMATO -->
+  <canvas id="hero-canvas"></canvas>
+  <div id="grain-overlay"></div>
+  <div class="fade-cover"></div>
 
-p {
-  color: var(--muted);
-  font-size: 1rem;
-  line-height: 1.7;
-}
+  <!-- HERO -->
+  <section id="hero" class="hero">
+    <h1>BluCineLab</h1>
+    <p>Film studio & visual lab</p>
+    <p>
+      Lavoriamo sul limite dell’immagine.<br>
+      Uno spazio in cui la luce prende forma,<br>
+      e la forma diventa linguaggio.<br>
+      Ricerca, sensibilità, processi che scorrono come un fotogramma lento.
+    </p>
+    <p class="scroll-hint">scroll to enter</p>
+  </section>
 
-a {
-  color: var(--accent);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: color var(--transition), border-color var(--transition);
-}
+  <!-- STUDIO -->
+  <section id="studio" class="scene">
+    <h2>Lo studio</h2>
+    <p>
+      BluCineLab è un luogo di lavoro e visione.<br>
+      Uno spazio che nasce dal cinema e si espande nelle arti visive,<br>
+      in dialogo silenzioso con il digitale.
+    </p>
+    <p>
+      Trattiamo l’immagine come un territorio condiviso.<br>
+      Qui la forma si studia, si costruisce, si mette alla prova.<br>
+      Ogni progetto è un passaggio, ogni passaggio una scoperta.
+    </p>
+  </section>
 
-a:hover,
-a:focus-visible {
-  border-color: var(--accent);
-}
+  <!-- LAB -->
+  <section id="lab" class="scene">
+    <h2>Il laboratorio</h2>
+    <p>
+      Il laboratorio è la nostra zona franca:<br>
+      processi aperti, tentativi, materiali che cambiano stato.<br>
+      Immagini grezze, suoni, gesti, appunti visivi.<br>
+      Tutto è in movimento, tutto può diventare qualcos’altro.
+    </p>
+    <p>
+      Qui la ricerca non è un metodo: è un modo di stare dentro alla forma.
+    </p>
+  </section>
 
-/* --- HERO --- */
-#hero {
-  position: relative;
-  z-index: 2;
-  padding: 0 1.5rem;
-}
+  <!-- APPROACH -->
+  <section id="approach" class="scene">
+    <h2>Approach</h2>
+    <p>
+      Crediamo nella pazienza della luce.<br>
+      Nel margine tra ciò che è definito e ciò che sta per accadere.<br>
+      Il nostro lavoro unisce intuizione e costruzione:<br>
+      un equilibrio sottile tra disciplina e sensibilità.
+    </p>
+    <p>
+      Ogni immagine è un incontro.<br>
+      Ogni incontro, una possibilità.
+    </p>
+  </section>
 
-#hero h1 {
-  margin-bottom: 0.8rem;
-  text-shadow: 0 0 25px rgba(60, 255, 255, 0.2);
-}
+  <!-- FOOTER -->
+  <footer>
+    <p><strong>BluCineLab</strong><br>
+    Studio creativo indipendente dedicato all’immagine e alla sua forma.</p>
+    <p class="credit">
+      Sonia Giudici · Anton Likht · BluCineLab
+    </p>
+  </footer>
 
-#hero p {
-  max-width: 38rem;
-}
+  <!-- AUDIO -->
+  <audio id="ambient" src="https://cdn.pixabay.com/download/audio/2021/09/29/audio_7f7a3cb3f8.mp3?filename=drone-dark-room-ambient-12267.mp3" loop></audio>
 
-.scroll-hint {
-  margin-top: 2rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
-  color: rgba(180,210,255,0.55);
-  animation: hintBlink 3s ease-in-out infinite;
-}
-
-@keyframes hintBlink {
-  0%,100% { opacity: 0.4; }
-  50% { opacity: 1; }
-}
-
-/* --- SECTION BASE --- */
-section {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 5rem 1.5rem;
-  opacity: 0;
-  transform: translateY(40px);
-}
-
-section.visible {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 1s ease, transform 1s ease;
-}
-
-/* --- SECTION ALTERNATE --- */
-#studio, #approach {
-  background: linear-gradient(to bottom, var(--bg-alt), var(--bg));
-}
-
-#lab {
-  background: radial-gradient(circle at top, rgba(30,45,80,0.2), transparent 70%);
-  backdrop-filter: blur(12px);
-}
-
-#contact {
-  background: radial-gradient(circle at bottom, rgba(10,20,40,0.45), var(--bg) 90%);
-}
-
-/* --- FOOTER --- */
-footer {
-  text-align: center;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  background: radial-gradient(circle at top, var(--bg-alt), #01020a);
-  padding: 3rem 1.5rem;
-  opacity: 0;
-  transition: opacity 2s ease;
-}
-
-footer p {
-  font-size: 0.88rem;
-  color: var(--muted);
-  line-height: 1.6;
-}
-
-footer strong {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  color: var(--text);
-}
-
-footer .credit {
-  margin-top: 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: rgba(180,210,255,0.6);
-}
-
-/* --- CINEMATIC ELEMENTS --- */
-.fade-cover {
-  background: #000;
-  animation: fadeInCover 1s ease forwards;
-}
-@keyframes fadeInCover {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-/* --- INTERACTIVE GESTURE --- */
-section:hover h2 {
-  color: var(--accent);
-  transition: color 0.6s ease;
-}
-
-section:hover p {
-  color: rgba(220,240,255,0.8);
-}
-
-/* --- RESPONSIVE --- */
-@media (max-width: 900px) {
-  h1 { font-size: 2.6rem; }
-  h2 { font-size: 1.8rem; }
-  p { font-size: 0.95rem; }
-}
-
-@media (max-width: 640px) {
-  section {
-    padding: 3.5rem 1.2rem;
-  }
-  #hero h1 {
-    font-size: 2.2rem;
-  }
-}
+  <!-- SCRIPT PRINCIPALE -->
+  <script type="module" src="script.js"></script>
+</body>
+</html>
