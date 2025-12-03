@@ -5,26 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BluCineLab – Studio di cinema e arti visive</title>
 
-  <!-- Meta base -->
+  <!-- META -->
   <meta name="description" content="BluCineLab è uno studio indipendente fondato da Anton Likht e Sonia Giudici. Cinema, ricerca visiva e intelligenza artificiale applicata all’immagine." />
   <meta name="theme-color" content="#02030a" />
 
-  <!-- Open Graph -->
+  <!-- OPEN GRAPH -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="BluCineLab – Studio di cinema e arti visive" />
   <meta property="og:description" content="Film studio & visual lab: ricerca, luce, immagine." />
+  <meta property="og:url" content="https://blucinelab.it" />
   <meta property="og:image" content="https://blucinelab.it/assets/img/cover.jpg" />
 
-  <!-- Fonts -->
+  <!-- TWITTER -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="BluCineLab – Studio di cinema e arti visive" />
+  <meta name="twitter:description" content="Studio indipendente tra cinema, arte digitale e forme visive sperimentali." />
+  <meta name="twitter:image" content="https://blucinelab.it/assets/img/cover.jpg" />
+
+  <!-- FONTS -->
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet">
 
-  <!-- Style -->
+  <!-- STILE PRINCIPALE -->
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-  <!-- Canvas shader background -->
+  <!-- SFONDO ANIMATO -->
   <canvas id="hero-canvas"></canvas>
   <div id="grain-overlay"></div>
   <div class="fade-cover"></div>
@@ -43,7 +50,7 @@
   </section>
 
   <!-- STUDIO -->
-  <section id="studio">
+  <section id="studio" class="scene">
     <h2>Lo studio</h2>
     <p>
       BluCineLab è un luogo di lavoro e visione.<br>
@@ -58,7 +65,7 @@
   </section>
 
   <!-- LAB -->
-  <section id="lab">
+  <section id="lab" class="scene">
     <h2>Il laboratorio</h2>
     <p>
       Il laboratorio è la nostra zona franca:<br>
@@ -72,7 +79,7 @@
   </section>
 
   <!-- APPROACH -->
-  <section id="approach">
+  <section id="approach" class="scene">
     <h2>Approach</h2>
     <p>
       Crediamo nella pazienza della luce.<br>
@@ -95,118 +102,10 @@
     </p>
   </footer>
 
-  <!-- Audio -->
+  <!-- AUDIO -->
   <audio id="ambient" src="https://cdn.pixabay.com/download/audio/2021/09/29/audio_7f7a3cb3f8.mp3?filename=drone-dark-room-ambient-12267.mp3" loop></audio>
 
-  <!-- Scripts -->
-  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
-  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
-
-  <script>
-    // --- Three.js Shader (Darkroom Light) ---
-    const canvas = document.getElementById('hero-canvas');
-    const renderer = new THREE.WebGLRenderer({canvas, antialias:true});
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-    const scene = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(-1,1,1,-1,0,1);
-    const geo = new THREE.PlaneGeometry(2,2);
-    const uniforms = {
-      uTime:{value:0},
-      uAudio:{value:0.5},
-      uRes:{value:new THREE.Vector2(window.innerWidth,window.innerHeight)}
-    };
-    const mat = new THREE.ShaderMaterial({
-      uniforms,
-      vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position,1.0);}`,
-      fragmentShader:`
-        uniform float uTime;
-        uniform float uAudio;
-        uniform vec2 uRes;
-        varying vec2 vUv;
-        void main(){
-          vec2 uv=vUv;
-          float a=uRes.x/uRes.y;
-          uv.x=(uv.x-.5)*a+.5;
-
-          // base blu profondo
-          vec3 base=mix(vec3(0.01,0.03,0.10),vec3(0.02,0.10,0.25),uv.y);
-
-          // bande verticali da pellicola
-          float bands=0.5+0.5*sin(uv.x*8.0+uTime*0.15);
-
-          // accenti ciano tungsteno
-          vec3 light=vec3(0.0,0.6,0.9);
-          vec3 color=base+light*bands*(0.15+uAudio*0.35);
-
-          // vignettatura + flicker
-          float dist=length(uv-0.5);
-          float vig=smoothstep(0.8,0.45,dist);
-          float flick=0.95+0.05*sin(uTime*0.4);
-
-          gl_FragColor=vec4(color*vig*flick,1.0);
-        }`
-    });
-    scene.add(new THREE.Mesh(geo,mat));
-
-    function resize(){
-      const w=window.innerWidth,h=window.innerHeight;
-      renderer.setSize(w,h,false);
-      uniforms.uRes.value.set(w,h);
-    }
-    window.addEventListener('resize',resize);
-    resize();
-
-    let start=performance.now();
-    function loop(){
-      uniforms.uTime.value=(performance.now()-start)/1000;
-      renderer.render(scene,camera);
-      requestAnimationFrame(loop);
-    }
-    loop();
-
-    // --- Cinematic fade intro ---
-    gsap.to(".fade-cover", {opacity:0, duration:3.5, ease:"power2.out", delay:1});
-    gsap.to(".hero", {opacity:1, y:0, duration:2.8, ease:"power3.out", delay:2});
-
-    // --- Scroll fade for sections ---
-    gsap.registerPlugin(ScrollTrigger);
-    document.querySelectorAll("section").forEach((sec) => {
-      gsap.to(sec, {
-        opacity: 1,
-        y: 0,
-        duration: 1.6,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: sec,
-          start: "top 80%",
-          end: "top 30%",
-          toggleActions: "play none none reverse"
-        }
-      });
-    });
-
-    // --- Audio reactive system ---
-    const audio = document.getElementById("ambient");
-    audio.volume = 0.6;
-    window.addEventListener('click', async ()=>{
-      try { await audio.play(); } catch(e){}
-    }, {once:true});
-
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const src = ctx.createMediaElementSource(audio);
-    const analyser = ctx.createAnalyser();
-    src.connect(analyser);
-    analyser.connect(ctx.destination);
-    analyser.fftSize = 256;
-    const data = new Uint8Array(analyser.frequencyBinCount);
-    function analyse(){
-      analyser.getByteFrequencyData(data);
-      let avg = data.reduce((a,b)=>a+b)/data.length/255;
-      uniforms.uAudio.value = avg;
-      requestAnimationFrame(analyse);
-    }
-    analyse();
-  </script>
+  <!-- SCRIPT PRINCIPALE -->
+  <script type="module" src="script.js"></script>
 </body>
 </html>
