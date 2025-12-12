@@ -8,45 +8,42 @@
   <meta name="google-site-verification" content="V-XpkSs33mqErdOKUVPIZujq_U5vqKqXUZQAxkGOQrI" />
 
   <title>BluCineLab – Boutique visiva autoriale</title>
-  <meta name="description" content="BluCineLab è una boutique visiva autoriale con base a Bologna. Progettiamo e realizziamo fotografie, video e identità visive per brand, artisti e realtà culturali, con metodo, cura e una forte direzione estetica.">
-  <meta name="theme-color" content="#02030a" />
+  <meta name="description" content="BluCineLab è una boutique visiva autoriale con base a Bologna. Fotografia, video e direzione creativa per brand, artisti e realtà culturali. Immagini con carattere, metodo e cura.">
+  <meta name="theme-color" content="#050814" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="BluCineLab – Boutique visiva autoriale" />
-  <meta property="og:description" content="Studio visivo selettivo che unisce fotografia, video e direzione creativa. Contenuti per brand, moda, cultura ed esperienze autoriali, con un’estetica riconoscibile e un metodo preciso." />
+  <meta property="og:description" content="Studio visivo selettivo che unisce fotografia, video e ricerca estetica. Progetti per brand, moda, cultura ed esperienze autoriali.">
   <meta property="og:url" content="https://blucinelab.it" />
   <meta property="og:image" content="https://blucinelab.it/assets/watercyber.webp" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="BluCineLab – Boutique visiva autoriale" />
-  <meta name="twitter:description" content="Boutique visiva autoriale con base a Bologna. Fotografia, video e identità visive per brand, artisti e progetti culturali, con direzione creativa e ricerca estetica integrate." />
+  <meta name="twitter:description" content="Boutique visiva autoriale con base a Bologna. Immagini per brand, artisti e progetti culturali.">
   <meta name="twitter:image" content="https://blucinelab.it/assets/watercyber.webp" />
-
-  <!-- Fonts -->
-  <!-- (caricati via CSS) -->
 
   <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <!-- Fade nero iniziale -->
-  <div class="fade-cover"></div>
-
-  <!-- Shader di sfondo -->
-  <canvas id="hero-canvas"></canvas>
-  <div id="grain-overlay"></div>
+  <!-- Shader / grain hook (opzionale, gestito da script.js se lo usi) -->
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div id="grain-overlay" aria-hidden="true"></div>
 
   <!-- HEADER -->
   <header class="site-header">
-    <div class="site-header-inner">
-      <span class="site-logo">BluCineLab</span>
+    <div class="container header-inner">
+      <div class="logo-block">
+        <span class="logo-mark">BluCineLab</span>
+        <span class="logo-tagline">boutique visiva autoriale</span>
+      </div>
       <nav class="site-nav">
         <a href="#studio">studio</a>
         <a href="#services">servizi</a>
-        <a href="#works">lavori</a>
+        <a href="#project">progetto</a>
         <a href="#method">metodo</a>
         <a href="#contact">contatti</a>
       </nav>
@@ -55,249 +52,238 @@
 
   <main>
     <!-- HERO -->
-    <section id="hero" class="hero">
-      <div class="hero-inner">
+    <section id="hero" class="section hero">
+      <div class="container hero-inner">
         <div class="hero-text">
-          <p class="hero-label">boutique visiva autoriale · bologna</p>
+          <p class="eyebrow">bologna · studio visivo indipendente</p>
           <h1>BluCineLab</h1>
-          <p class="hero-copy">
-            BluCineLab è una boutique visiva autoriale. Progettiamo e realizziamo immagini per brand, artisti e realtà culturali, tra fotografia, video e identità visive.
+          <p class="hero-lead">
+            Boutique visiva autoriale che lavora tra fotografia, video e direzione creativa
+            per brand, artisti e realtà culturali. Immagini con carattere, ritmo e cura.
           </p>
-          <p class="hero-subcopy">
-            Seguiamo pochi progetti alla volta, dall’intuizione alla consegna: concept, direzione creativa, organizzazione, riprese, montaggio e declinazioni per web, stampa e spazi fisici.
+          <p class="hero-sub">
+            Seguiamo pochi progetti alla volta, dall’idea alla consegna: concept, set-up,
+            produzione e materiali pronti per web, stampa e spazi fisici.
           </p>
           <div class="hero-tags">
-            <span>boutique visiva</span>
             <span>fotografia & video</span>
             <span>direzione creativa</span>
             <span>identità visive</span>
           </div>
-          <p class="scroll-hint">SCROLL</p>
         </div>
 
-        <div class="hero-image hero-image--fog" data-depth="0.12">
-          <img src="assets/watercyber.webp" alt="Riflessi d’acqua ciano e magenta in atmosfera notturna" loading="eager" />
-        </div>
-      </div>
-    </section>
-
-    <!-- FASCIA LUMINOSA -->
-    <section class="scene beam-scene" aria-hidden="true">
-      <div class="beam-layer">
-        <img src="assets/cyan-light-study.webp" alt="" loading="lazy" />
-      </div>
-      <div class="beam-text-wrap">
-        <p class="beam-text">
-          Dove l’immagine diventa identità.<br>
-          Estetica, metodo e produzione nello stesso studio.
-        </p>
+        <figure class="hero-media">
+          <img src="assets/watercyber.webp" alt="Texture d’acqua in luce notturna, palette ciano-magenta" loading="eager" />
+        </figure>
       </div>
     </section>
 
     <!-- STUDIO -->
-    <section id="studio" class="scene scene--studio">
-      <div class="scene-inner">
-        <div class="scene-text">
+    <section id="studio" class="section">
+      <div class="container split">
+        <div class="split-text">
           <h2>Studio</h2>
           <p>
-            BluCineLab è una boutique visiva autoriale con base a Bologna, fondata da Anton Likht e Sonia Giudici.
+            BluCineLab è una boutique visiva autoriale fondata da Anton Likht e Sonia Giudici.
+            Lavoriamo con brand, artisti e realtà culturali che cercano immagini riconoscibili,
+            coerenti e costruite con attenzione.
           </p>
           <p>
-            Lavoriamo con brand, artisti e realtà culturali che cercano immagini curate, coerenti e riconoscibili. Ci muoviamo tra fotografia, video, moda, eventi e progetti di comunicazione visiva, scegliendo in modo selettivo i lavori su cui ha senso investire sguardo e tempo.
+            Ci muoviamo tra fotografia, video, moda, eventi e progetti editoriali. Uniamo direzione
+            creativa, regia, fotografia e coordinamento di produzione, scegliendo solo i progetti
+            in cui possiamo portare un contributo reale allo sguardo.
           </p>
           <p>
-            Uniamo direzione creativa, regia, fotografia, project management e supervisione estetica. Possiamo seguire l’intero flusso o inserirci in team esistenti con un ruolo autoriale, operativo o consulenziale.
+            Preferiamo pochi lavori seguiti bene a molte consegne veloci. Ogni progetto è una
+            collaborazione: ascolto, proposta, definizione di un linguaggio visivo preciso.
           </p>
         </div>
-
-        <div class="scene-image" data-depth="0.08">
-          <img src="assets/fog.webp" alt="Figura nella nebbia in ambiente blu, atmosfera sospesa" loading="lazy" />
-        </div>
+        <figure class="split-media">
+          <img src="assets/fog.webp" alt="Figura immersa in una luce blu soffusa, atmosfera sospesa" loading="lazy" />
+        </figure>
       </div>
     </section>
 
     <!-- SERVIZI -->
-    <section id="services" class="scene scene--services">
-      <div class="scene-inner">
-        <div class="scene-text">
+    <section id="services" class="section section-soft">
+      <div class="container">
+        <header class="section-header">
           <h2>Servizi</h2>
           <p>
-            Disegniamo ecosistemi visivi: fotografie, video e contenuti integrati che mettono d’accordo estetica, obiettivi e identità. Ogni progetto nasce da un confronto diretto e da una direzione creativa chiara.
+            Progettiamo contenuti visivi e sistemi di immagini. Dal singolo progetto alla
+            costruzione di un linguaggio visivo continuativo per brand e realtà culturali.
           </p>
+        </header>
+
+        <div class="cards-grid">
+          <article class="card">
+            <div class="card-media">
+              <img src="assets/cinematic-stilllife.webp" alt="Still life di strumenti da set in luce blu" loading="lazy" />
+            </div>
+            <div class="card-body">
+              <h3>Produzioni video</h3>
+              <p>
+                Regia, fotografia e montaggio per progetti narrativi, campagne, ritratti d’autore
+                ed eventi. Lavoriamo su ritmo, luce e presenza più che sull’effetto.
+              </p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media">
+              <img src="assets/analog-digital-texture.webp" alt="Texture tra analogico e digitale in toni blu" loading="lazy" />
+            </div>
+            <div class="card-body">
+              <h3>Fotografia & immagine</h3>
+              <p>
+                Ritratti, editoriali, still life e reportage per identità visive, cataloghi,
+                progetti culturali e comunicazione contemporanea.
+              </p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media">
+              <img src="assets/minimal-cosmic-restfulness.webp" alt="Spazio scuro con alone di luce morbida" loading="lazy" />
+            </div>
+            <div class="card-body">
+              <h3>Moda & prodotto</h3>
+              <p>
+                Shooting per collezioni, e-commerce e campagne. Set essenziali, attenzione a
+                tessuti, texture e modo in cui i capi vivono nello spazio.
+              </p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media">
+              <img src="assets/analog-digital-texture.webp" alt="Dettaglio astratto di luce e ombra" loading="lazy" />
+            </div>
+            <div class="card-body">
+              <h3>Ricerca visiva & AI</h3>
+              <p>
+                Usiamo strumenti AI per previsualizzare, esplorare piste estetiche e strutturare
+                i flussi di lavoro. La materia resta reale: persone, luoghi, luce.
+              </p>
+            </div>
+          </article>
         </div>
-      </div>
-
-      <div class="services-grid">
-        <article class="service-card">
-          <div class="service-image">
-            <img src="assets/cinematic-stilllife.webp" alt="Still life di taccuini e strumenti da set in luce blu" loading="lazy" />
-          </div>
-          <div class="service-body">
-            <h3>Produzioni video</h3>
-            <p>
-              Video per brand, moda, aziende, cultura ed eventi, con una regia che privilegia ritmo, luce e presenza. Dall’idea al montaggio finale, ogni dettaglio è pensato per dare al progetto una voce visiva definita.
-            </p>
-          </div>
-        </article>
-
-        <article class="service-card">
-          <div class="service-image">
-            <img src="assets/analog-digital-texture.webp" alt="Texture blu tra analogico e digitale" loading="lazy" />
-          </div>
-          <div class="service-body">
-            <h3>Fotografia & immagine</h3>
-            <p>
-              Ritratti, editoriali, still life e reportage per identità visive, campagne e comunicazione. Lavoriamo su luce, atmosfera e composizione per costruire immagini che non sono solo “belle”, ma coerenti con chi le commissiona.
-            </p>
-          </div>
-        </article>
-
-        <article class="service-card">
-          <div class="service-image">
-            <img src="assets/minimal-cosmic-restfulness.webp" alt="Spazio scuro con alone di luce morbida" loading="lazy" />
-          </div>
-          <div class="service-body">
-            <h3>Moda, e-commerce & cataloghi</h3>
-            <p>
-              Shooting per collezioni, capsule, lookbook e prodotti. Progettiamo set, sequenze e inquadrature perché ogni capo e ogni oggetto dialoghino con l’identità del brand e con i canali in cui verranno pubblicati.
-            </p>
-          </div>
-        </article>
-
-        <article class="service-card">
-          <div class="service-image">
-            <img src="assets/analog-digital-texture.webp" alt="Texture tra luce e ombra in toni blu" loading="lazy" />
-          </div>
-          <div class="service-body">
-            <h3>Ricerca visiva & AI integrata</h3>
-            <p>
-              Usiamo strumenti AI come taccuino visivo: per previsualizzare, esplorare piste estetiche e organizzare i flussi. La materia resta reale — persone, luoghi, luce — l’AI è un supporto per rendere le scelte più consapevoli e mirate.
-            </p>
-          </div>
-        </article>
       </div>
     </section>
 
-    <!-- LAVORI -->
-    <section id="works" class="scene scene--works">
-      <div class="scene-inner works-header">
-        <div class="scene-text">
-          <h2>Lavori</h2>
-          <p>
-            Stiamo organizzando un archivio ragionato dei progetti. Per ora il sito funziona come una mappa: offre uno sguardo sul nostro modo di lavorare, più che un catalogo completo.
-          </p>
-          <p>
-            Ci muoviamo tra moda, brand contemporanei, aziende, cultura, eventi, formazione e lavori autoriali. Cambiano i contesti, resta coerente la direzione visiva.
-          </p>
-        </div>
-      </div>
-
-      <!-- PROGETTO SELEZIONATO -->
-      <section class="works-feature">
-        <div class="works-feature-inner">
-          <div class="works-feature-video">
-            <div class="video-frame">
-              <iframe
-                src="https://player.vimeo.com/video/871143269?title=0&byline=0&portrait=0"
-                frameborder="0"
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowfullscreen
-                loading="lazy"
-              ></iframe>
-            </div>
-          </div>
-
-          <div class="works-feature-text">
-            <h3>Progetto selezionato</h3>
-            <p>
-              Estratto dal nostro lavoro più vicino al linguaggio BluCineLab: ritmo, luce e presenza
-              costruiti attraverso una regia essenziale e una fotografia che privilegia atmosfera e gesto.
-            </p>
-            <p>
-              È il tipo di progetto in cui ci riconosciamo di più: spazio creativo, fiducia,
-              attenzione alla composizione e un’estetica che nasce dalla cura dei dettagli.
-            </p>
+    <!-- PROGETTO SELEZIONATO -->
+    <section id="project" class="section">
+      <div class="container split split-reverse">
+        <div class="split-media">
+          <div class="video-frame">
+            <iframe
+              src="https://player.vimeo.com/video/871143269?title=0&byline=0&portrait=0"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
           </div>
         </div>
-      </section>
-
-      <!-- REEL ORIGINALE -->
-      <div class="works-reel" aria-hidden="true">
-        <div class="reel-strip" data-reel>
-          <figure class="reel-frame">
-            <img src="assets/cinematic-stilllife.webp" alt="" loading="lazy" />
-          </figure>
-          <figure class="reel-frame">
-            <img src="assets/nocturnal-artistic-workspace.webp" alt="" loading="lazy" />
-          </figure>
-          <figure class="reel-frame">
-            <img src="assets/cyan-light-study.webp" alt="" loading="lazy" />
-          </figure>
-          <figure class="reel-frame">
-            <img src="assets/minimal-cosmic-restfulness.webp" alt="" loading="lazy" />
-          </figure>
+        <div class="split-text">
+          <h2>Progetto selezionato</h2>
+          <p>
+            Un estratto del nostro lavoro più vicino alla sensibilità BluCineLab: un racconto
+            costruito su ritmo, luce e dettagli, con una regia essenziale e una fotografia che
+            privilegia atmosfera e gesto.
+          </p>
+          <p>
+            È il tipo di contesto in cui funzioniamo meglio: spazio creativo reale, fiducia,
+            poche linee guida chiare e un’estetica da definire insieme, passo dopo passo.
+          </p>
         </div>
       </div>
     </section>
 
     <!-- METODO -->
-    <section id="method" class="scene scene--method">
-      <div class="scene-inner">
-        <div class="scene-text">
+    <section id="method" class="section section-soft">
+      <div class="container">
+        <header class="section-header">
           <h2>Metodo</h2>
           <p>
-            Processi chiari, selezione accurata, dialogo continuo. È il modo in cui trasformiamo un’esigenza in un’immagine che tiene insieme estetica e funzione.
+            Processi chiari, comunicazione semplice, attenzione al tempo di tutti. Dal primo
+            confronto alla consegna finale, il percorso è lineare.
           </p>
-          <p>
-            Ogni progetto attraversa tre fasi: analisi di obiettivi e contesto; progettazione visiva e organizzativa (linguaggio, mood, formati, calendario, team, attrezzatura); produzione e post con consegna di materiali pronti per web, stampa, social, sala o installazioni.
-          </p>
-          <p>
-            L’AI entra come supporto interno per ricerca, previsualizzazione e ordine nei processi. Il nucleo resta sempre umano: relazioni, decisioni, sensibilità.
-          </p>
+        </header>
+
+        <div class="steps">
+          <article class="step">
+            <span class="step-number">01</span>
+            <h3>Ascolto & contesto</h3>
+            <p>
+              Capire chi sei, cosa ti serve e dove vivranno le immagini: sito, social,
+              campagna, stampa, sala, installazioni. Prima la destinazione, poi la forma.
+            </p>
+          </article>
+
+          <article class="step">
+            <span class="step-number">02</span>
+            <h3>Progetto & linguaggio</h3>
+            <p>
+              Definiamo mood, palette, inquadrature, ritmi e materiali. Organizziamo set,
+              team e calendario in modo compatto, senza sovrastrutture inutili.
+            </p>
+          </article>
+
+          <article class="step">
+            <span class="step-number">03</span>
+            <h3>Produzione & consegna</h3>
+            <p>
+              Giriamo, selezioniamo, montiamo, rifiniamo. Consegniamo file pronti per
+              l’uso reale, con versioni pensate per i diversi canali.
+            </p>
+          </article>
         </div>
       </div>
     </section>
 
     <!-- CONTATTI -->
-    <section id="contact" class="scene scene--contact">
-      <div class="scene-inner">
-        <div class="scene-text">
-          <h2>Contatti</h2>
-          <p>
-            Siamo a Bologna e lavoriamo su progetti in tutta Italia. Per capire se possiamo essere il partner giusto, ci basta una breve descrizione del contesto, dei tempi e della destinazione dei materiali.
-          </p>
+    <section id="contact" class="section">
+      <div class="container narrow">
+        <h2>Contatti</h2>
+        <p>
+          Siamo a Bologna e lavoriamo su progetti in tutta Italia. Per valutare una
+          collaborazione ci basta una breve descrizione del contesto, dei tempi e della
+          destinazione dei materiali.
+        </p>
 
-          <p>
-            mail<br>
+        <div class="contact-block">
+          <div class="contact-item">
+            <span class="contact-label">mail</span>
             <a href="mailto:BluCineLab@gmail.com">BluCineLab@gmail.com</a>
-          </p>
+          </div>
 
-          <p>
-            instagram<br>
-            studio — <a href="https://www.instagram.com/blucinelab" target="_blank" rel="noreferrer">@blucinelab</a><br>
-            anton — <a href="https://www.instagram.com/anton_zip" target="_blank" rel="noreferrer">@anton_zip</a><br>
-            sonia — <a href="https://www.instagram.com/seliphant" target="_blank" rel="noreferrer">@seliphant</a>
-          </p>
-
-          <p>
-            Non lavoriamo con listini standard: ogni proposta nasce dal progetto concreto, dai suoi obiettivi e dal livello di cura richiesto.
-          </p>
+          <div class="contact-item">
+            <span class="contact-label">instagram</span>
+            <p class="contact-links">
+              <a href="https://www.instagram.com/blucinelab" target="_blank" rel="noreferrer">@blucinelab</a><br>
+              <a href="https://www.instagram.com/anton_zip" target="_blank" rel="noreferrer">@anton_zip</a><br>
+              <a href="https://www.instagram.com/seliphant" target="_blank" rel="noreferrer">@seliphant</a>
+            </p>
+          </div>
         </div>
+
+        <p class="contact-note">
+          Non usiamo listini standard: ogni proposta nasce dal progetto concreto e dal livello
+          di cura necessario per farlo bene.
+        </p>
       </div>
     </section>
   </main>
 
   <!-- FOOTER -->
   <footer class="site-footer">
-    <div class="footer-inner">
+    <div class="container footer-inner">
       <p>© BluCineLab — boutique visiva autoriale</p>
     </div>
   </footer>
 
-  <!-- SCRIPT -->
-  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
-  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+  <!-- JS (opzionale, se già lo usi) -->
   <script src="script.js"></script>
 </body>
 </html>
