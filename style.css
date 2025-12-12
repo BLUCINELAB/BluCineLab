@@ -1,6 +1,6 @@
 /* ======================================================
-   BLUCINELAB – STYLE v1.2
-   Mood: cinematic midnight, studio visivo
+   BLUCINELAB – STYLE v1.3
+   Mood: boutique visiva autoriale, cinematic midnight
    Font: GT Sectra Fine (titles) + Neue Haas Grotesk (text)
    ====================================================== */
 
@@ -358,6 +358,8 @@ p {
     transform: translateY(4px);
   }
 }
+
+/* HERO IMAGE */
 
 .hero-image {
   position: relative;
