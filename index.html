@@ -5,23 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BluCineLab — work in progress</title>
 
-  <meta name="description" content="BluCineLab — studio visivo autoriale tra fotografia, video e direzione creativa. Sito in costruzione, work in progress.">
+  <meta name="description" content="BluCineLab — boutique visiva autoriale. Sito work in progress, un esperimento cinematografico tra luce e tempo.">
   <meta name="theme-color" content="#050814">
-
-  <!-- OG / SOCIAL -->
-  <meta property="og:title" content="BluCineLab — work in progress">
-  <meta property="og:description" content="Studio visivo autoriale in costruzione.">
-  <meta property="og:image" content="https://blucinelab.it/assets/watercyber.webp">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://blucinelab.it">
 
   <!-- FONT -->
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
     /* =====================================================
-       BLUCINELAB – WORK IN PROGRESS EDITION
-       Mood: cinematic midnight · autoriale
+       BLUCINELAB – WORK IN PROGRESS v2
+       Mood: cinematic · lens opening
        ===================================================== */
 
     :root {
@@ -31,18 +24,16 @@
       --accent: #79ecff;
       --accent-warm: #ff8a4a;
       --radius: 14px;
-      --transition: 0.5s ease-out;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     html, body {
-      background: radial-gradient(circle at top, #070b1c 0%, #02040b 55%, #000 100%);
+      background: radial-gradient(circle at top, #070b1c 0%, #02040b 60%, #000 100%);
       color: var(--text);
       font-family: "Space Grotesk", sans-serif;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
-      scroll-behavior: smooth;
     }
 
     h1, h2 {
@@ -77,11 +68,8 @@
       color: var(--accent);
       text-decoration: none;
     }
-    a:hover {
-      opacity: 0.8;
-    }
+    a:hover { opacity: 0.8; }
 
-    /* LAYOUT */
     .hero, .section, footer {
       padding: 6rem 1.5rem;
       max-width: 900px;
@@ -129,7 +117,6 @@
       opacity: 0.6;
     }
 
-    /* WORK IN PROGRESS LABEL */
     .wip {
       position: fixed;
       top: 1.2rem;
@@ -141,9 +128,36 @@
       color: var(--accent);
       opacity: 0.7;
       pointer-events: none;
+      z-index: 100;
     }
 
-    /* GRAIN */
+    /* LENS OPENING OVERLAY */
+    .lens {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      clip-path: circle(0% at center);
+      animation: openLens 3s ease-out forwards;
+    }
+
+    .lens::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+      mix-blend-mode: screen;
+    }
+
+    @keyframes openLens {
+      0% { clip-path: circle(0% at center); }
+      80% { clip-path: circle(130% at center); }
+      100% { clip-path: circle(140% at center); opacity: 0; }
+    }
+
     body::after {
       content: "";
       position: fixed;
@@ -155,7 +169,6 @@
       z-index: 0;
     }
 
-    /* FADE REVEAL JS HOOK */
     .reveal-visible {
       opacity: 1 !important;
       transform: translateY(0) !important;
@@ -169,6 +182,7 @@
 </head>
 
 <body>
+  <div class="lens"></div>
   <div class="wip">work in progress</div>
 
   <header class="hero">
@@ -202,10 +216,10 @@
   </footer>
 
   <script>
-    // Anno dinamico
+    // Data dinamica
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Fade-in scroll cinematico (no dipendenze)
+    // Fade scroll cinematico
     const sections = document.querySelectorAll(".section figure");
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -215,7 +229,6 @@
         }
       });
     }, { threshold: 0.2 });
-
     sections.forEach((fig) => observer.observe(fig));
   </script>
 </body>
