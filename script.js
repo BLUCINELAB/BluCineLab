@@ -1,75 +1,119 @@
 /* ======================================================
-   BLUCINELAB – SCRIPT v2.0
-   Fade-in · Scroll reveal
-   Nessuna dipendenza esterna
+   BLUCINELAB – SCRIPT v2.1
+   Mood: cinematic midnight · lens opening
    ====================================================== */
 
+/* Preferenze utente */
 const prefersReducedMotion =
   window.matchMedia &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/* ==============================
-   HERO FADE-IN
-   ============================== */
-
+/* ==========================================
+   1. INTRO LENS OPENING
+   ========================================== */
 document.addEventListener("DOMContentLoaded", () => {
-  const hero = document.querySelector(".hero-inner");
+  const lens = document.querySelector(".lens");
 
-  if (!hero) return;
+  if (!lens) return;
 
-  if (prefersReducedMotion) {
-    hero.style.opacity = "1";
-    hero.style.transform = "none";
-    return;
+  // Rimuove l’overlay dopo l’apertura
+  lens.addEventListener("animationend", () => {
+    lens.style.display = "none";
+  });
+
+  // Optional: aggiunge una dissolvenza sonora se presente
+  const introSound = document.getElementById("intro-sound");
+  if (introSound && !prefersReducedMotion) {
+    introSound.volume = 0;
+    introSound.play().catch(() => {});
+    let vol = 0;
+    const fade = setInterval(() => {
+      vol += 0.02;
+      introSound.volume = vol;
+      if (vol >= 0.3) clearInterval(fade);
+    }, 100);
   }
+});
+
+/* ==========================================
+   2. HERO INTRO FADE
+   ========================================== */
+window.addEventListener("load", () => {
+  const hero = document.querySelector(".hero");
+  if (!hero || prefersReducedMotion) return;
 
   hero.style.opacity = "0";
   hero.style.transform = "translateY(32px)";
+  hero.style.transition = "opacity 1.6s ease-out, transform 1.6s ease-out";
 
   requestAnimationFrame(() => {
-    hero.style.transition = "opacity 1.2s ease-out, transform 1.2s ease-out";
     hero.style.opacity = "1";
     hero.style.transform = "translateY(0)";
   });
 });
 
-/* ==============================
-   SCROLL REVEAL SEZIONI
-   ============================== */
-
-(function initSectionReveal() {
-  const sections = document.querySelectorAll(".section");
-  if (!sections.length) return;
+/* ==========================================
+   3. SCROLL REVEAL – cinematic rise
+   ========================================== */
+(function initCinematicReveal() {
+  const targets = document.querySelectorAll(".section figure, .section .fade-in");
+  if (!targets.length) return;
 
   if (prefersReducedMotion) {
-    sections.forEach((section) => {
-      section.style.opacity = "1";
-      section.style.transform = "none";
+    targets.forEach((el) => {
+      el.style.opacity = "1";
+      el.style.transform = "none";
     });
     return;
   }
 
-  sections.forEach((section) => {
-    section.style.opacity = "0";
-    section.style.transform = "translateY(40px)";
-    section.style.transition = "opacity 0.9s ease-out, transform 0.9s ease-out";
-  });
-
   const observer = new IntersectionObserver(
-    (entries) => {
+    (entries, obs) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.style.opacity = "1";
-          entry.target.style.transform = "translateY(0)";
-          observer.unobserve(entry.target);
+          const el = entry.target;
+          const delay = 150 + Math.random() * 300; // micro-jitter naturale
+          el.style.transition = `opacity 1.8s ease-out ${delay}ms, transform 1.8s ease-out ${delay}ms`;
+          el.classList.add("reveal-visible");
+          obs.unobserve(el);
         }
       });
     },
-    {
-      root: null,
-      threshold: 0.12,
-    }
+    { threshold: 0.15 }
   );
 
-  sections.forEach((section) => observer.observe(section));
+  targets.forEach((el) => observer.observe(el));
 })();
+
+/* ==========================================
+   4. LIGHT BREATH EFFECT (opzionale)
+   ========================================== */
+(function initLightBreathing() {
+  const highlights = document.querySelectorAll(".accent, .highlight, .tagline");
+  if (!highlights.length || prefersReducedMotion) return;
+
+  highlights.forEach((el, i) => {
+    const delay = i * 1200 + Math.random() * 800;
+    el.animate(
+      [
+        { filter: "brightness(0.9)" },
+        { filter: "brightness(1.15)" },
+        { filter: "brightness(0.9)" },
+      ],
+      {
+        duration: 5000 + Math.random() * 2000,
+        iterations: Infinity,
+        easing: "ease-in-out",
+        delay,
+      }
+    );
+  });
+})();
+
+/* ==========================================
+   5. YEAR FOOTER UPDATE
+   ========================================== */
+document.addEventListener("DOMContentLoaded", () => {
+  const year = document.getElementById("year");
+  if (year) year.textContent = new Date().getFullYear();
+});
