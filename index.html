@@ -3,287 +3,220 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BluCineLab — work in progress</title>
 
-  <!-- Google Search Console -->
-  <meta name="google-site-verification" content="V-XpkSs33mqErdOKUVPIZujq_U5vqKqXUZQAxkGOQrI" />
+  <meta name="description" content="BluCineLab — studio visivo autoriale tra fotografia, video e direzione creativa. Sito in costruzione, work in progress.">
+  <meta name="theme-color" content="#050814">
 
-  <title>BluCineLab – Boutique visiva autoriale</title>
-  <meta name="description" content="BluCineLab è una boutique visiva autoriale con base a Bologna. Fotografia, video e direzione creativa per brand, artisti e realtà culturali. Immagini con carattere, metodo e cura.">
-  <meta name="theme-color" content="#050814" />
+  <!-- OG / SOCIAL -->
+  <meta property="og:title" content="BluCineLab — work in progress">
+  <meta property="og:description" content="Studio visivo autoriale in costruzione.">
+  <meta property="og:image" content="https://blucinelab.it/assets/watercyber.webp">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://blucinelab.it">
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="BluCineLab – Boutique visiva autoriale" />
-  <meta property="og:description" content="Studio visivo selettivo che unisce fotografia, video e ricerca estetica. Progetti per brand, moda, cultura ed esperienze autoriali.">
-  <meta property="og:url" content="https://blucinelab.it" />
-  <meta property="og:image" content="https://blucinelab.it/assets/watercyber.webp" />
+  <!-- FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="BluCineLab – Boutique visiva autoriale" />
-  <meta name="twitter:description" content="Boutique visiva autoriale con base a Bologna. Immagini per brand, artisti e progetti culturali.">
-  <meta name="twitter:image" content="https://blucinelab.it/assets/watercyber.webp" />
+  <style>
+    /* =====================================================
+       BLUCINELAB – WORK IN PROGRESS EDITION
+       Mood: cinematic midnight · autoriale
+       ===================================================== */
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css" />
+    :root {
+      --bg: #050814;
+      --text: #e6e6e6;
+      --muted: rgba(210, 210, 220, 0.65);
+      --accent: #79ecff;
+      --accent-warm: #ff8a4a;
+      --radius: 14px;
+      --transition: 0.5s ease-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      background: radial-gradient(circle at top, #070b1c 0%, #02040b 55%, #000 100%);
+      color: var(--text);
+      font-family: "Space Grotesk", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    h1, h2 {
+      font-family: "EB Garamond", serif;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 8vw, 4.4rem);
+      background: linear-gradient(90deg, var(--accent), var(--accent-warm));
+      -webkit-background-clip: text;
+      color: transparent;
+      mix-blend-mode: screen;
+    }
+
+    h2 {
+      color: var(--accent);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      margin-bottom: 1rem;
+    }
+
+    p {
+      margin-bottom: 1.2rem;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    a:hover {
+      opacity: 0.8;
+    }
+
+    /* LAYOUT */
+    .hero, .section, footer {
+      padding: 6rem 1.5rem;
+      max-width: 900px;
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero p {
+      max-width: 520px;
+      margin-inline: auto;
+    }
+
+    .tagline {
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      font-size: 0.85rem;
+      opacity: 0.7;
+      margin-top: 0.8rem;
+    }
+
+    .section figure {
+      opacity: 0;
+      transform: translateY(60px);
+      transition: opacity 1.6s ease-out, transform 1.6s ease-out;
+    }
+
+    .section img {
+      width: 100%;
+      border-radius: var(--radius);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+
+    /* WORK IN PROGRESS LABEL */
+    .wip {
+      position: fixed;
+      top: 1.2rem;
+      right: 1.2rem;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    /* GRAIN */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: url("https://grainy-gradients.vercel.app/noise.png");
+      opacity: 0.08;
+      mix-blend-mode: overlay;
+      z-index: 0;
+    }
+
+    /* FADE REVEAL JS HOOK */
+    .reveal-visible {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+
+    @media (max-width: 600px) {
+      .hero, .section { padding: 4rem 1rem; }
+      h1 { font-size: 2.4rem; }
+    }
+  </style>
 </head>
 
 <body>
-  <!-- Shader / grain hook (opzionale, gestito da script.js se lo usi) -->
-  <canvas id="hero-canvas" aria-hidden="true"></canvas>
-  <div id="grain-overlay" aria-hidden="true"></div>
+  <div class="wip">work in progress</div>
 
-  <!-- HEADER -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <div class="logo-block">
-        <span class="logo-mark">BluCineLab</span>
-        <span class="logo-tagline">boutique visiva autoriale</span>
-      </div>
-      <nav class="site-nav">
-        <a href="#studio">studio</a>
-        <a href="#services">servizi</a>
-        <a href="#project">progetto</a>
-        <a href="#method">metodo</a>
-        <a href="#contact">contatti</a>
-      </nav>
-    </div>
+  <header class="hero">
+    <h1>BluCineLab</h1>
+    <p class="tagline">boutique visiva autoriale</p>
+    <p>Studio visivo indipendente che lavora tra fotografia, video e direzione creativa.<br>
+      Questo sito è in costruzione, ma già parte del nostro processo.</p>
   </header>
 
   <main>
-    <!-- HERO -->
-    <section id="hero" class="section hero">
-      <div class="container hero-inner">
-        <div class="hero-text">
-          <p class="eyebrow">bologna · studio visivo indipendente</p>
-          <h1>BluCineLab</h1>
-          <p class="hero-lead">
-            Boutique visiva autoriale che lavora tra fotografia, video e direzione creativa
-            per brand, artisti e realtà culturali. Immagini con carattere, ritmo e cura.
-          </p>
-          <p class="hero-sub">
-            Seguiamo pochi progetti alla volta, dall’idea alla consegna: concept, set-up,
-            produzione e materiali pronti per web, stampa e spazi fisici.
-          </p>
-          <div class="hero-tags">
-            <span>fotografia & video</span>
-            <span>direzione creativa</span>
-            <span>identità visive</span>
-          </div>
-        </div>
-
-        <figure class="hero-media">
-          <img src="assets/watercyber.webp" alt="Texture d’acqua in luce notturna, palette ciano-magenta" loading="eager" />
-        </figure>
-      </div>
+    <section class="section">
+      <h2>In costruzione</h2>
+      <p>Stiamo ridefinendo lo spazio digitale di BluCineLab.<br>
+         Le nuove pagine arriveranno gradualmente: immagini, frammenti, processi.</p>
+      <figure>
+        <img src="assets/watercyber.webp" alt="Texture d’acqua in luce notturna">
+        <figcaption>Water / Cyber — still frame · WIP</figcaption>
+      </figure>
     </section>
 
-    <!-- STUDIO -->
-    <section id="studio" class="section">
-      <div class="container split">
-        <div class="split-text">
-          <h2>Studio</h2>
-          <p>
-            BluCineLab è una boutique visiva autoriale fondata da Anton Likht e Sonia Giudici.
-            Lavoriamo con brand, artisti e realtà culturali che cercano immagini riconoscibili,
-            coerenti e costruite con attenzione.
-          </p>
-          <p>
-            Ci muoviamo tra fotografia, video, moda, eventi e progetti editoriali. Uniamo direzione
-            creativa, regia, fotografia e coordinamento di produzione, scegliendo solo i progetti
-            in cui possiamo portare un contributo reale allo sguardo.
-          </p>
-          <p>
-            Preferiamo pochi lavori seguiti bene a molte consegne veloci. Ogni progetto è una
-            collaborazione: ascolto, proposta, definizione di un linguaggio visivo preciso.
-          </p>
-        </div>
-        <figure class="split-media">
-          <img src="assets/fog.webp" alt="Figura immersa in una luce blu soffusa, atmosfera sospesa" loading="lazy" />
-        </figure>
-      </div>
-    </section>
-
-    <!-- SERVIZI -->
-    <section id="services" class="section section-soft">
-      <div class="container">
-        <header class="section-header">
-          <h2>Servizi</h2>
-          <p>
-            Progettiamo contenuti visivi e sistemi di immagini. Dal singolo progetto alla
-            costruzione di un linguaggio visivo continuativo per brand e realtà culturali.
-          </p>
-        </header>
-
-        <div class="cards-grid">
-          <article class="card">
-            <div class="card-media">
-              <img src="assets/cinematic-stilllife.webp" alt="Still life di strumenti da set in luce blu" loading="lazy" />
-            </div>
-            <div class="card-body">
-              <h3>Produzioni video</h3>
-              <p>
-                Regia, fotografia e montaggio per progetti narrativi, campagne, ritratti d’autore
-                ed eventi. Lavoriamo su ritmo, luce e presenza più che sull’effetto.
-              </p>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card-media">
-              <img src="assets/analog-digital-texture.webp" alt="Texture tra analogico e digitale in toni blu" loading="lazy" />
-            </div>
-            <div class="card-body">
-              <h3>Fotografia & immagine</h3>
-              <p>
-                Ritratti, editoriali, still life e reportage per identità visive, cataloghi,
-                progetti culturali e comunicazione contemporanea.
-              </p>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card-media">
-              <img src="assets/minimal-cosmic-restfulness.webp" alt="Spazio scuro con alone di luce morbida" loading="lazy" />
-            </div>
-            <div class="card-body">
-              <h3>Moda & prodotto</h3>
-              <p>
-                Shooting per collezioni, e-commerce e campagne. Set essenziali, attenzione a
-                tessuti, texture e modo in cui i capi vivono nello spazio.
-              </p>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card-media">
-              <img src="assets/analog-digital-texture.webp" alt="Dettaglio astratto di luce e ombra" loading="lazy" />
-            </div>
-            <div class="card-body">
-              <h3>Ricerca visiva & AI</h3>
-              <p>
-                Usiamo strumenti AI per previsualizzare, esplorare piste estetiche e strutturare
-                i flussi di lavoro. La materia resta reale: persone, luoghi, luce.
-              </p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROGETTO SELEZIONATO -->
-    <section id="project" class="section">
-      <div class="container split split-reverse">
-        <div class="split-media">
-          <div class="video-frame">
-            <iframe
-              src="https://player.vimeo.com/video/871143269?title=0&byline=0&portrait=0"
-              frameborder="0"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowfullscreen
-              loading="lazy"
-            ></iframe>
-          </div>
-        </div>
-        <div class="split-text">
-          <h2>Progetto selezionato</h2>
-          <p>
-            Un estratto del nostro lavoro più vicino alla sensibilità BluCineLab: un racconto
-            costruito su ritmo, luce e dettagli, con una regia essenziale e una fotografia che
-            privilegia atmosfera e gesto.
-          </p>
-          <p>
-            È il tipo di contesto in cui funzioniamo meglio: spazio creativo reale, fiducia,
-            poche linee guida chiare e un’estetica da definire insieme, passo dopo passo.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- METODO -->
-    <section id="method" class="section section-soft">
-      <div class="container">
-        <header class="section-header">
-          <h2>Metodo</h2>
-          <p>
-            Processi chiari, comunicazione semplice, attenzione al tempo di tutti. Dal primo
-            confronto alla consegna finale, il percorso è lineare.
-          </p>
-        </header>
-
-        <div class="steps">
-          <article class="step">
-            <span class="step-number">01</span>
-            <h3>Ascolto & contesto</h3>
-            <p>
-              Capire chi sei, cosa ti serve e dove vivranno le immagini: sito, social,
-              campagna, stampa, sala, installazioni. Prima la destinazione, poi la forma.
-            </p>
-          </article>
-
-          <article class="step">
-            <span class="step-number">02</span>
-            <h3>Progetto & linguaggio</h3>
-            <p>
-              Definiamo mood, palette, inquadrature, ritmi e materiali. Organizziamo set,
-              team e calendario in modo compatto, senza sovrastrutture inutili.
-            </p>
-          </article>
-
-          <article class="step">
-            <span class="step-number">03</span>
-            <h3>Produzione & consegna</h3>
-            <p>
-              Giriamo, selezioniamo, montiamo, rifiniamo. Consegniamo file pronti per
-              l’uso reale, con versioni pensate per i diversi canali.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTATTI -->
-    <section id="contact" class="section">
-      <div class="container narrow">
-        <h2>Contatti</h2>
-        <p>
-          Siamo a Bologna e lavoriamo su progetti in tutta Italia. Per valutare una
-          collaborazione ci basta una breve descrizione del contesto, dei tempi e della
-          destinazione dei materiali.
-        </p>
-
-        <div class="contact-block">
-          <div class="contact-item">
-            <span class="contact-label">mail</span>
-            <a href="mailto:BluCineLab@gmail.com">BluCineLab@gmail.com</a>
-          </div>
-
-          <div class="contact-item">
-            <span class="contact-label">instagram</span>
-            <p class="contact-links">
-              <a href="https://www.instagram.com/blucinelab" target="_blank" rel="noreferrer">@blucinelab</a><br>
-              <a href="https://www.instagram.com/anton_zip" target="_blank" rel="noreferrer">@anton_zip</a><br>
-              <a href="https://www.instagram.com/seliphant" target="_blank" rel="noreferrer">@seliphant</a>
-            </p>
-          </div>
-        </div>
-
-        <p class="contact-note">
-          Non usiamo listini standard: ogni proposta nasce dal progetto concreto e dal livello
-          di cura necessario per farlo bene.
-        </p>
-      </div>
+    <section class="section">
+      <h2>Contatto</h2>
+      <p>Per collaborazioni, conversazioni o anteprime:</p>
+      <p><a href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a></p>
+      <p><a href="https://instagram.com/blucinelab" target="_blank">@blucinelab</a></p>
     </section>
   </main>
 
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <p>© BluCineLab — boutique visiva autoriale</p>
-    </div>
+  <footer>
+    © <span id="year"></span> BluCineLab — work in progress
   </footer>
 
-  <!-- JS (opzionale, se già lo usi) -->
-  <script src="script.js"></script>
+  <script>
+    // Anno dinamico
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Fade-in scroll cinematico (no dipendenze)
+    const sections = document.querySelectorAll(".section figure");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("reveal-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    sections.forEach((fig) => observer.observe(fig));
+  </script>
 </body>
 </html>
