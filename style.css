@@ -1,7 +1,8 @@
 :root {
   --bg: #050816;
   --bg-deep: #02040a;
-  --bg-mid: #0a1020;
+  --bg-mid: #0b1121;
+  --bg-soft: #10192d;
 
   --panel: rgba(11, 16, 29, 0.58);
   --panel-strong: rgba(10, 16, 28, 0.82);
@@ -13,7 +14,6 @@
   --accent: #87efff;
   --accent-cold: #7281ff;
   --accent-warm: #cf8a5c;
-  --accent-soft: #e3e8f3;
 
   --line: rgba(255, 255, 255, 0.08);
   --line-strong: rgba(135, 239, 255, 0.18);
@@ -46,39 +46,62 @@ html {
 
 body {
   min-height: 100%;
-  background:
-    radial-gradient(1200px 720px at 14% -12%, rgba(135, 239, 255, 0.10), transparent 58%),
-    radial-gradient(900px 520px at 88% 8%, rgba(114, 129, 255, 0.08), transparent 54%),
-    radial-gradient(820px 480px at 82% 72%, rgba(207, 138, 92, 0.05), transparent 52%),
-    linear-gradient(180deg, #0a1020 0%, #060a14 26%, #03050d 62%, #010204 100%);
   color: var(--text);
   font-family: "IBM Plex Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
   position: relative;
+  background:
+    radial-gradient(1300px 760px at 12% -14%, rgba(135, 239, 255, 0.11), transparent 56%),
+    radial-gradient(980px 560px at 88% 10%, rgba(114, 129, 255, 0.09), transparent 54%),
+    radial-gradient(780px 420px at 82% 72%, rgba(207, 138, 92, 0.05), transparent 50%),
+    linear-gradient(180deg, #0d1425 0%, #09101d 18%, #060b16 42%, #040811 70%, #02040a 100%);
 }
 
+/* Pelle / trama di fondo */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.24;
+  opacity: 0.42;
   background:
-    radial-gradient(circle at 20% 18%, rgba(255,255,255,0.028) 0 1px, transparent 2px),
-    radial-gradient(circle at 78% 64%, rgba(255,255,255,0.02) 0 1px, transparent 2px),
-    linear-gradient(
+    radial-gradient(circle at 12% 18%, rgba(255,255,255,0.035) 0 1px, transparent 2px),
+    radial-gradient(circle at 78% 30%, rgba(255,255,255,0.02) 0 1px, transparent 2px),
+    radial-gradient(circle at 32% 74%, rgba(255,255,255,0.018) 0 1px, transparent 2px),
+    repeating-linear-gradient(
       115deg,
-      rgba(255,255,255,0.018) 0%,
-      transparent 18%,
-      rgba(255,255,255,0.012) 36%,
-      transparent 54%,
-      rgba(255,255,255,0.014) 72%,
-      transparent 100%
+      rgba(255,255,255,0.018) 0px,
+      rgba(255,255,255,0.018) 1px,
+      transparent 2px,
+      transparent 11px
+    ),
+    repeating-linear-gradient(
+      25deg,
+      rgba(255,255,255,0.012) 0px,
+      rgba(255,255,255,0.012) 1px,
+      transparent 2px,
+      transparent 15px
+    ),
+    linear-gradient(
+      125deg,
+      rgba(255,255,255,0.025) 0%,
+      transparent 14%,
+      rgba(255,255,255,0.012) 28%,
+      transparent 42%,
+      rgba(255,255,255,0.015) 58%,
+      transparent 74%,
+      rgba(255,255,255,0.012) 100%
     );
-  background-size: 180px 180px, 220px 220px, 100% 100%;
+  background-size:
+    220px 220px,
+    260px 260px,
+    240px 240px,
+    320px 320px,
+    420px 420px,
+    100% 100%;
   mix-blend-mode: soft-light;
 }
 
@@ -88,17 +111,11 @@ body::after {
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.08;
+  opacity: 0.1;
   background:
     url("https://grainy-gradients.vercel.app/noise.png"),
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,0.012) 0px,
-      rgba(255,255,255,0.012) 1px,
-      transparent 2px,
-      transparent 5px
-    );
-  mix-blend-mode: soft-light;
+    radial-gradient(circle at center, rgba(255,255,255,0.016) 0%, transparent 64%);
+  mix-blend-mode: overlay;
 }
 
 img {
@@ -251,7 +268,6 @@ figcaption {
 
 .brand-name {
   color: var(--text);
-  font-family: "IBM Plex Sans", sans-serif;
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -793,6 +809,10 @@ footer {
     right: -26vw;
     top: 16vh;
     opacity: 0.42;
+  }
+
+  body::before {
+    opacity: 0.28;
   }
 }
 
