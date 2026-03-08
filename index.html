@@ -3,43 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BluCineLab — visual studio</title>
+  <title>BLUCINELAB — visual studio</title>
 
   <meta
     name="description"
-    content="BluCineLab — studio visivo indipendente tra immagine, direzione creativa, editoria e costruzione di atmosfere."
+    content="BLUCINELAB — studio visivo indipendente tra immagine, direzione creativa, editoria e costruzione di atmosfere."
   />
   <meta name="theme-color" content="#050814" />
 
-  <!-- Fonts -->
   <link
-    href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Manrope:wght@300;400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=Oswald:wght@400;500;600&display=swap"
     rel="stylesheet"
   />
 
   <style>
-    /* =====================================================
-       BLUCINELAB — MANIFEST SITE v4
-       Mood: cinematic gas · editorial rigour · living archive
-       ===================================================== */
-
     :root {
-      --bg: #04060c;
-      --bg-deep: #020308;
-      --panel: rgba(10, 14, 24, 0.56);
-      --panel-strong: rgba(10, 14, 24, 0.8);
+      --bg: #050816;
+      --bg-deep: #02040a;
+      --bg-mid: #0a1020;
 
-      --text: #f2eee6;
-      --text-soft: rgba(242, 238, 230, 0.78);
-      --muted: rgba(190, 198, 214, 0.62);
+      --panel: rgba(11, 16, 29, 0.58);
+      --panel-strong: rgba(10, 16, 28, 0.82);
 
-      --accent: #86ecff;
-      --accent-cold: #6f7dff;
-      --accent-warm: #d08a58;
-      --accent-soft: #dfe6f2;
+      --text: #f1eee8;
+      --text-soft: rgba(241, 238, 232, 0.78);
+      --muted: rgba(188, 197, 214, 0.62);
+
+      --accent: #87efff;
+      --accent-cold: #7281ff;
+      --accent-warm: #cf8a5c;
+      --accent-soft: #e3e8f3;
 
       --line: rgba(255, 255, 255, 0.08);
-      --line-strong: rgba(134, 236, 255, 0.18);
+      --line-strong: rgba(135, 239, 255, 0.18);
 
       --radius-sm: 14px;
       --radius-md: 22px;
@@ -55,9 +51,6 @@
       --transition: 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    /* ======================================
-       RESET
-       ====================================== */
     *,
     *::before,
     *::after {
@@ -73,12 +66,12 @@
     body {
       min-height: 100%;
       background:
-        radial-gradient(1100px 650px at 16% -10%, rgba(134, 236, 255, 0.1), transparent 60%),
-        radial-gradient(760px 460px at 86% 10%, rgba(208, 138, 88, 0.08), transparent 56%),
-        radial-gradient(920px 540px at 50% 118%, rgba(111, 125, 255, 0.06), transparent 52%),
-        linear-gradient(180deg, #060a14 0%, #03050b 58%, #010204 100%);
+        radial-gradient(1200px 720px at 14% -12%, rgba(135, 239, 255, 0.10), transparent 58%),
+        radial-gradient(900px 520px at 88% 8%, rgba(114, 129, 255, 0.08), transparent 54%),
+        radial-gradient(820px 480px at 82% 72%, rgba(207, 138, 92, 0.05), transparent 52%),
+        linear-gradient(180deg, #0a1020 0%, #060a14 26%, #03050d 62%, #010204 100%);
       color: var(--text);
-      font-family: "Manrope", sans-serif;
+      font-family: "IBM Plex Sans", sans-serif;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
       overflow-x: hidden;
@@ -90,13 +83,22 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      background:
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 68px 68px;
-      mask-image: radial-gradient(circle at center, black 34%, transparent 100%);
-      opacity: 0.15;
       z-index: 0;
+      opacity: 0.24;
+      background:
+        radial-gradient(circle at 20% 18%, rgba(255,255,255,0.028) 0 1px, transparent 2px),
+        radial-gradient(circle at 78% 64%, rgba(255,255,255,0.02) 0 1px, transparent 2px),
+        linear-gradient(
+          115deg,
+          rgba(255,255,255,0.018) 0%,
+          transparent 18%,
+          rgba(255,255,255,0.012) 36%,
+          transparent 54%,
+          rgba(255,255,255,0.014) 72%,
+          transparent 100%
+        );
+      background-size: 180px 180px, 220px 220px, 100% 100%;
+      mix-blend-mode: soft-light;
     }
 
     body::after {
@@ -104,10 +106,18 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      background: url("https://grainy-gradients.vercel.app/noise.png");
-      opacity: 0.065;
-      mix-blend-mode: soft-light;
       z-index: 0;
+      opacity: 0.08;
+      background:
+        url("https://grainy-gradients.vercel.app/noise.png"),
+        repeating-linear-gradient(
+          0deg,
+          rgba(255,255,255,0.012) 0px,
+          rgba(255,255,255,0.012) 1px,
+          transparent 2px,
+          transparent 5px
+        );
+      mix-blend-mode: soft-light;
     }
 
     img {
@@ -121,54 +131,57 @@
     }
 
     ::selection {
-      background: rgba(134, 236, 255, 0.18);
+      background: rgba(135, 239, 255, 0.18);
       color: var(--text);
     }
 
-    /* ======================================
-       TYPOGRAPHY
-       ====================================== */
     h1,
     h2,
     h3 {
-      font-family: "Bodoni Moda", serif;
-      font-weight: 400;
-      letter-spacing: 0.01em;
-      line-height: 0.96;
+      font-family: "Oswald", sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      line-height: 0.94;
+      text-transform: uppercase;
     }
 
     h1 {
-      font-size: clamp(4.8rem, 10vw, 8.4rem);
-      line-height: 0.9;
-      letter-spacing: 0.005em;
-      max-width: 10ch;
+      font-size: clamp(5.1rem, 10vw, 8.8rem);
+      line-height: 0.88;
+      letter-spacing: 0.04em;
+      max-width: 11ch;
       background: linear-gradient(
-        92deg,
-        #79e8ff 0%,
-        #e6ebf2 26%,
-        #96a5ff 58%,
+        94deg,
+        #79ebff 0%,
+        #e4ebf5 24%,
+        #99a6ff 56%,
         #d08a58 100%
       );
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      filter: drop-shadow(0 0 22px rgba(121, 232, 255, 0.08));
+      filter:
+        drop-shadow(0 0 18px rgba(121, 235, 255, 0.12))
+        drop-shadow(0 0 34px rgba(121, 235, 255, 0.06));
     }
 
     h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: clamp(1.85rem, 4vw, 2.7rem);
       color: var(--text);
+      letter-spacing: 0.04em;
     }
 
     h3 {
-      font-size: clamp(1.2rem, 2vw, 1.45rem);
+      font-size: clamp(1.12rem, 2vw, 1.3rem);
       color: var(--text);
+      letter-spacing: 0.05em;
     }
 
     p {
       font-size: 1rem;
       line-height: 1.8;
       color: var(--text-soft);
+      font-family: "IBM Plex Sans", sans-serif;
     }
 
     .eyebrow,
@@ -181,7 +194,9 @@
     .contact-link,
     .wip,
     figcaption {
+      font-family: "IBM Plex Sans", sans-serif;
       font-size: 0.72rem;
+      font-weight: 500;
       letter-spacing: 0.18em;
       text-transform: uppercase;
     }
@@ -202,9 +217,6 @@
       margin-bottom: 1rem;
     }
 
-    /* ======================================
-       LAYOUT
-       ====================================== */
     .site-shell {
       position: relative;
       z-index: 1;
@@ -220,9 +232,6 @@
       margin-inline: auto;
     }
 
-    /* ======================================
-       TOP BAR
-       ====================================== */
     .site-topbar {
       position: fixed;
       top: 0;
@@ -261,6 +270,10 @@
 
     .brand-name {
       color: var(--text);
+      font-family: "IBM Plex Sans", sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
     }
 
     .topnav {
@@ -296,9 +309,6 @@
       transform: scaleX(1);
     }
 
-    /* ======================================
-       HERO
-       ====================================== */
     .hero {
       min-height: 100vh;
       display: grid;
@@ -311,7 +321,7 @@
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 1.05fr 0.95fr;
       gap: 2.5rem;
       align-items: center;
       position: relative;
@@ -319,9 +329,9 @@
 
     .hero-copy {
       display: grid;
-      gap: 1.1rem;
+      gap: 1rem;
       position: relative;
-      max-width: 760px;
+      max-width: 700px;
       z-index: 2;
     }
 
@@ -332,7 +342,7 @@
       top: 8%;
       width: 52%;
       height: 44%;
-      background: radial-gradient(circle, rgba(134, 236, 255, 0.1), transparent 74%);
+      background: radial-gradient(circle, rgba(134, 236, 255, 0.10), transparent 74%);
       filter: blur(34px);
       z-index: -1;
     }
@@ -343,11 +353,12 @@
     }
 
     .hero-claim {
-      font-family: "Manrope", sans-serif;
-      font-size: clamp(0.95rem, 1.45vw, 1.22rem);
-      line-height: 1.15;
-      color: rgba(242, 238, 230, 0.72);
-      max-width: 28ch;
+      font-size: clamp(0.84rem, 1.15vw, 1rem);
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: 0.22em;
+      color: rgba(241, 238, 232, 0.72);
+      max-width: 34ch;
       margin: 0;
     }
 
@@ -356,7 +367,7 @@
       max-width: 40ch;
       font-size: clamp(1rem, 1.3vw, 1.12rem);
       line-height: 1.75;
-      color: rgba(242, 238, 230, 0.82);
+      color: rgba(241, 238, 232, 0.82);
     }
 
     .hero-meta {
@@ -395,19 +406,16 @@
       font-size: 0.95rem;
     }
 
-    /* ======================================
-       GAS MASS
-       ====================================== */
     .hero-orbit {
       position: absolute;
-      right: -12vw;
-      top: 10vh;
-      width: min(44vw, 620px);
+      right: -11vw;
+      top: 6vh;
+      width: min(48vw, 700px);
       aspect-ratio: 1;
       pointer-events: none;
-      opacity: 0.78;
+      opacity: 1;
       z-index: 1;
-      filter: blur(0.2px);
+      filter: blur(0.15px);
     }
 
     .hero-orbit::before,
@@ -420,77 +428,113 @@
 
     .hero-orbit::before {
       background:
-        radial-gradient(circle at 52% 48%, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.08) 8%, transparent 18%),
-        radial-gradient(circle at 45% 52%, rgba(126,236,255,0.30) 0%, rgba(126,236,255,0.18) 16%, transparent 38%),
-        radial-gradient(circle at 60% 44%, rgba(111,125,255,0.20) 0%, transparent 34%),
-        radial-gradient(circle at 40% 62%, rgba(208,138,88,0.12) 0%, transparent 28%),
-        radial-gradient(circle at center, rgba(126,236,255,0.08) 0%, rgba(126,236,255,0.02) 44%, transparent 72%);
-      filter: blur(24px);
-      transform: scale(1.02);
-      animation: gasPulseA 9s ease-in-out infinite alternate;
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.08) 8%, transparent 16%),
+        radial-gradient(circle at 45% 48%, rgba(135,239,255,0.38) 0%, rgba(135,239,255,0.24) 14%, transparent 36%),
+        radial-gradient(circle at 57% 43%, rgba(114,129,255,0.28) 0%, transparent 30%),
+        radial-gradient(circle at 42% 60%, rgba(207,138,92,0.18) 0%, transparent 24%),
+        radial-gradient(circle at 50% 50%, rgba(135,239,255,0.10) 0%, rgba(135,239,255,0.04) 42%, transparent 74%);
+      filter: blur(28px);
+      transform: scale(1);
+      animation: gasPulseA 5.2s ease-in-out infinite alternate;
     }
 
     .hero-orbit::after {
       background:
-        radial-gradient(circle at 50% 50%, transparent 0 34%, rgba(126,236,255,0.08) 46%, transparent 62%),
-        radial-gradient(circle at 56% 46%, rgba(255,255,255,0.10), transparent 18%),
-        radial-gradient(circle at 43% 58%, rgba(126,236,255,0.10), transparent 24%);
+        radial-gradient(circle at 50% 50%, transparent 0 28%, rgba(135,239,255,0.18) 40%, transparent 58%),
+        radial-gradient(circle at 55% 45%, rgba(255,255,255,0.18), transparent 16%),
+        radial-gradient(circle at 43% 58%, rgba(135,239,255,0.15), transparent 22%),
+        radial-gradient(circle at 62% 56%, rgba(114,129,255,0.12), transparent 18%);
       mix-blend-mode: screen;
-      filter: blur(34px);
-      animation: gasPulseB 12s ease-in-out infinite alternate;
+      filter: blur(38px);
+      animation: gasPulseB 7.2s ease-in-out infinite alternate;
     }
 
     .hero-core {
       position: absolute;
-      inset: 34%;
+      inset: 32%;
       border-radius: 50%;
       background:
-        radial-gradient(circle at 45% 42%, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.22) 12%, rgba(126,236,255,0.18) 24%, transparent 66%);
-      filter: blur(12px);
+        radial-gradient(circle at 46% 42%, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.40) 10%, rgba(135,239,255,0.34) 22%, rgba(114,129,255,0.16) 38%, transparent 66%);
+      filter: blur(10px);
       box-shadow:
-        0 0 60px rgba(126,236,255,0.18),
-        0 0 120px rgba(111,125,255,0.08);
-      animation: corePulse 7s ease-in-out infinite alternate;
+        0 0 60px rgba(135,239,255,0.30),
+        0 0 110px rgba(135,239,255,0.20),
+        0 0 180px rgba(114,129,255,0.10);
+      animation: corePulse 3.8s ease-in-out infinite alternate;
+    }
+
+    .gas-ring {
+      position: absolute;
+      inset: 16%;
+      border-radius: 50%;
+      border: 1px solid rgba(135,239,255,0.08);
+      filter: blur(3px);
+      animation: ringBreath 6.4s ease-in-out infinite;
     }
 
     @keyframes gasPulseA {
       0% {
-        transform: scale(0.98) translate3d(0, 0, 0);
-        filter: blur(22px);
-        opacity: 0.78;
+        transform: scale(0.96) translate3d(0, 0, 0);
+        filter: blur(24px);
+        opacity: 0.76;
       }
-      100% {
-        transform: scale(1.05) translate3d(-1.5%, 1.2%, 0);
+      50% {
+        transform: scale(1.03) translate3d(-1%, 1%, 0);
         filter: blur(30px);
         opacity: 1;
+      }
+      100% {
+        transform: scale(1.08) translate3d(1.2%, -1.4%, 0);
+        filter: blur(36px);
+        opacity: 0.88;
       }
     }
 
     @keyframes gasPulseB {
       0% {
-        transform: scale(1) translate3d(0, 0, 0);
-        opacity: 0.52;
+        transform: scale(0.98);
+        opacity: 0.42;
+      }
+      50% {
+        transform: scale(1.06);
+        opacity: 0.82;
       }
       100% {
-        transform: scale(1.08) translate3d(1.2%, -1.4%, 0);
-        opacity: 0.82;
+        transform: scale(1.12);
+        opacity: 0.56;
       }
     }
 
     @keyframes corePulse {
       0% {
-        transform: scale(0.94);
+        transform: scale(0.9);
         opacity: 0.72;
       }
-      100% {
+      50% {
         transform: scale(1.08);
         opacity: 1;
       }
+      100% {
+        transform: scale(0.96);
+        opacity: 0.86;
+      }
     }
 
-    /* ======================================
-       SECTIONS
-       ====================================== */
+    @keyframes ringBreath {
+      0% {
+        transform: scale(0.94);
+        opacity: 0.18;
+      }
+      50% {
+        transform: scale(1.06);
+        opacity: 0.34;
+      }
+      100% {
+        transform: scale(1.14);
+        opacity: 0.08;
+      }
+    }
+
     .section {
       padding: 6.5rem 0;
       position: relative;
@@ -600,9 +644,6 @@
       color: var(--text);
     }
 
-    /* ======================================
-       FOOTER
-       ====================================== */
     footer {
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       padding: 2rem 0 3rem;
@@ -624,9 +665,6 @@
       color: var(--muted);
     }
 
-    /* ======================================
-       WIP LABEL
-       ====================================== */
     .wip {
       position: fixed;
       top: 1rem;
@@ -642,9 +680,6 @@
       pointer-events: none;
     }
 
-    /* ======================================
-       LENS OPENING
-       ====================================== */
     .lens {
       position: fixed;
       inset: 0;
@@ -692,9 +727,6 @@
       }
     }
 
-    /* ======================================
-       REVEAL
-       ====================================== */
     .reveal {
       opacity: 0;
       transform: translateY(34px);
@@ -708,9 +740,6 @@
       transform: translateY(0) !important;
     }
 
-    /* ======================================
-       RESPONSIVE
-       ====================================== */
     @media (max-width: 980px) {
       .hero-grid,
       .manifest-grid {
@@ -804,9 +833,9 @@
 
   <header class="site-topbar">
     <div class="site-topbar-inner">
-      <a href="#" class="brand" aria-label="BluCineLab home">
+      <a href="#" class="brand" aria-label="BLUCINELAB home">
         <span class="brand-dot"></span>
-        <span class="brand-name">BluCineLab</span>
+        <span class="brand-name">BLUCINELAB</span>
       </a>
 
       <nav class="topnav" aria-label="Primary navigation">
@@ -824,7 +853,7 @@
           <span class="eyebrow">image / space / direction</span>
 
           <div class="hero-heading">
-            <h1>BluCineLab</h1>
+            <h1>BLUCINELAB</h1>
             <p class="hero-claim">build visual atmospheres</p>
           </div>
 
@@ -850,6 +879,7 @@
         </aside>
 
         <div class="hero-orbit" aria-hidden="true">
+          <div class="gas-ring"></div>
           <div class="hero-core"></div>
         </div>
       </div>
@@ -861,7 +891,7 @@
           <span class="section-index">01 / Studio</span>
           <h2>Un laboratorio visivo, non una semplice vetrina.</h2>
           <p>
-            BluCineLab è uno spazio indipendente in cui immagine, direzione e
+            BLUCINELAB è uno spazio indipendente in cui immagine, direzione e
             struttura convivono. Non si lavora solo su output grafici, ma su
             ritmo, atmosfera, presenza e leggibilità.
           </p>
@@ -930,7 +960,7 @@
 
   <footer>
     <div class="footer-inner">
-      <p>© <span id="year"></span> BluCineLab</p>
+      <p>© <span id="year"></span> BLUCINELAB</p>
       <p>Visual systems, atmospheres, direction.</p>
     </div>
   </footer>
@@ -951,4 +981,4 @@
     reveals.forEach((el) => observer.observe(el));
   </script>
 </body>
-</html></html>
+</html>
