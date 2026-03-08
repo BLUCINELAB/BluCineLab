@@ -5,43 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BluCineLab — visual studio</title>
 
-  <meta name="description" content="BluCineLab — studio visivo indipendente tra immagine, spazio, editoria e direzione creativa.">
-  <meta name="theme-color" content="#050814">
+  <meta
+    name="description"
+    content="BluCineLab — studio visivo indipendente tra immagine, direzione creativa, editoria e costruzione di atmosfere."
+  />
+  <meta name="theme-color" content="#050814" />
 
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Manrope:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
 
   <style>
+    /* =====================================================
+       BLUCINELAB — MANIFEST SITE v4
+       Mood: cinematic gas · editorial rigour · living archive
+       ===================================================== */
+
     :root {
       --bg: #04060c;
       --bg-deep: #020308;
-      --panel: rgba(9, 14, 24, 0.62);
-      --panel-strong: rgba(9, 14, 24, 0.82);
+      --panel: rgba(10, 14, 24, 0.56);
+      --panel-strong: rgba(10, 14, 24, 0.8);
 
-      --text: #f3efe8;
-      --text-soft: rgba(243, 239, 232, 0.78);
-      --muted: rgba(196, 202, 216, 0.62);
+      --text: #f2eee6;
+      --text-soft: rgba(242, 238, 230, 0.78);
+      --muted: rgba(190, 198, 214, 0.62);
 
-      --accent: #8cecff;
-      --accent-cold: #7c89ff;
-      --accent-warm: #c98956;
+      --accent: #86ecff;
+      --accent-cold: #6f7dff;
+      --accent-warm: #d08a58;
+      --accent-soft: #dfe6f2;
 
-      --line: rgba(255,255,255,0.08);
-      --line-strong: rgba(140,236,255,0.18);
+      --line: rgba(255, 255, 255, 0.08);
+      --line-strong: rgba(134, 236, 255, 0.18);
 
       --radius-sm: 14px;
       --radius-md: 22px;
       --radius-lg: 34px;
 
       --max-width: 1180px;
-      --content-width: 760px;
+      --content-width: 780px;
 
-      --shadow-soft: 0 18px 48px rgba(0,0,0,0.28);
-      --shadow-deep: 0 30px 100px rgba(0,0,0,0.66);
+      --shadow-soft: 0 18px 48px rgba(0, 0, 0, 0.28);
+      --shadow-deep: 0 30px 100px rgba(0, 0, 0, 0.66);
 
       --transition-fast: 0.28s ease;
       --transition: 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
+    /* ======================================
+       RESET
+       ====================================== */
     *,
     *::before,
     *::after {
@@ -57,13 +73,14 @@
     body {
       min-height: 100%;
       background:
-        radial-gradient(1000px 600px at 18% -8%, rgba(140,236,255,0.10), transparent 60%),
-        radial-gradient(700px 420px at 88% 10%, rgba(201,137,86,0.08), transparent 55%),
-        radial-gradient(900px 520px at 50% 120%, rgba(124,137,255,0.06), transparent 50%),
+        radial-gradient(1100px 650px at 16% -10%, rgba(134, 236, 255, 0.1), transparent 60%),
+        radial-gradient(760px 460px at 86% 10%, rgba(208, 138, 88, 0.08), transparent 56%),
+        radial-gradient(920px 540px at 50% 118%, rgba(111, 125, 255, 0.06), transparent 52%),
         linear-gradient(180deg, #060a14 0%, #03050b 58%, #010204 100%);
       color: var(--text);
-      font-family: "Space Grotesk", sans-serif;
+      font-family: "Manrope", sans-serif;
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
       overflow-x: hidden;
       position: relative;
     }
@@ -74,11 +91,11 @@
       inset: 0;
       pointer-events: none;
       background:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 64px 64px;
-      mask-image: radial-gradient(circle at center, black 35%, transparent 100%);
-      opacity: 0.18;
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 68px 68px;
+      mask-image: radial-gradient(circle at center, black 34%, transparent 100%);
+      opacity: 0.15;
       z-index: 0;
     }
 
@@ -93,41 +110,9 @@
       z-index: 0;
     }
 
-    h1, h2, h3 {
-      font-family: "EB Garamond", serif;
-      font-weight: 400;
-      letter-spacing: 0.015em;
-      line-height: 0.98;
-    }
-
-    h1 {
-      font-size: clamp(4rem, 10vw, 7.8rem);
-      color: var(--text);
-      max-width: 9ch;
-      text-wrap: balance;
-      position: relative;
-    }
-
-    h1 .stroke {
+    img {
       display: block;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(243, 239, 232, 0.42);
-    }
-
-    h2 {
-      font-size: clamp(2rem, 4vw, 3.1rem);
-      color: var(--text);
-    }
-
-    h3 {
-      font-size: clamp(1.2rem, 2vw, 1.5rem);
-      color: var(--text);
-    }
-
-    p {
-      color: var(--text-soft);
-      line-height: 1.8;
-      font-size: 1rem;
+      max-width: 100%;
     }
 
     a {
@@ -135,11 +120,91 @@
       text-decoration: none;
     }
 
-    img {
-      display: block;
-      max-width: 100%;
+    ::selection {
+      background: rgba(134, 236, 255, 0.18);
+      color: var(--text);
     }
 
+    /* ======================================
+       TYPOGRAPHY
+       ====================================== */
+    h1,
+    h2,
+    h3 {
+      font-family: "Bodoni Moda", serif;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      line-height: 0.96;
+    }
+
+    h1 {
+      font-size: clamp(4.8rem, 10vw, 8.4rem);
+      line-height: 0.9;
+      letter-spacing: 0.005em;
+      max-width: 10ch;
+      background: linear-gradient(
+        92deg,
+        #79e8ff 0%,
+        #e6ebf2 26%,
+        #96a5ff 58%,
+        #d08a58 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 22px rgba(121, 232, 255, 0.08));
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--text);
+    }
+
+    h3 {
+      font-size: clamp(1.2rem, 2vw, 1.45rem);
+      color: var(--text);
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-soft);
+    }
+
+    .eyebrow,
+    .section-index,
+    .brand-name,
+    .topnav a,
+    .meta-chip,
+    .small-label,
+    .hero-claim,
+    .contact-link,
+    .wip,
+    figcaption {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow,
+    .section-index {
+      color: var(--accent);
+      opacity: 0.9;
+    }
+
+    .small-label,
+    figcaption {
+      color: var(--muted);
+    }
+
+    .section-index {
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    /* ======================================
+       LAYOUT
+       ====================================== */
     .site-shell {
       position: relative;
       z-index: 1;
@@ -155,36 +220,9 @@
       margin-inline: auto;
     }
 
-    .eyebrow,
-    .section-index,
-    .meta-chip,
-    figcaption,
-    .wip,
-    .topnav a,
-    .brand-name,
-    .contact-link,
-    .small-label {
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-    }
-
-    .eyebrow,
-    .section-index {
-      color: var(--accent);
-      opacity: 0.9;
-    }
-
-    .section-index {
-      display: inline-block;
-      margin-bottom: 1rem;
-    }
-
-    .small-label,
-    figcaption {
-      color: var(--muted);
-    }
-
+    /* ======================================
+       TOP BAR
+       ====================================== */
     .site-topbar {
       position: fixed;
       top: 0;
@@ -192,8 +230,8 @@
       width: 100%;
       z-index: 30;
       backdrop-filter: blur(14px);
-      background: linear-gradient(to bottom, rgba(3,5,10,0.72), rgba(3,5,10,0.16));
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      background: linear-gradient(to bottom, rgba(3, 5, 10, 0.72), rgba(3, 5, 10, 0.14));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .site-topbar-inner {
@@ -217,7 +255,7 @@
       height: 10px;
       border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #fff, var(--accent));
-      box-shadow: 0 0 20px rgba(140,236,255,0.5);
+      box-shadow: 0 0 20px rgba(134, 236, 255, 0.5);
       flex: 0 0 auto;
     }
 
@@ -258,119 +296,201 @@
       transform: scaleX(1);
     }
 
+    /* ======================================
+       HERO
+       ====================================== */
     .hero {
       min-height: 100vh;
       display: grid;
       align-items: center;
-      padding-top: 7rem;
-      padding-bottom: 4rem;
+      padding-top: 8rem;
+      padding-bottom: 5rem;
       position: relative;
       overflow: clip;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 2rem;
-      align-items: end;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 2.5rem;
+      align-items: center;
+      position: relative;
     }
 
     .hero-copy {
       display: grid;
-      gap: 1.4rem;
+      gap: 1.1rem;
       position: relative;
+      max-width: 760px;
+      z-index: 2;
     }
 
     .hero-copy::before {
       content: "";
       position: absolute;
       left: -4%;
-      top: 14%;
-      width: 48%;
-      height: 36%;
-      background: radial-gradient(circle, rgba(140,236,255,0.12), transparent 72%);
-      filter: blur(30px);
+      top: 8%;
+      width: 52%;
+      height: 44%;
+      background: radial-gradient(circle, rgba(134, 236, 255, 0.1), transparent 74%);
+      filter: blur(34px);
       z-index: -1;
     }
 
+    .hero-heading {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .hero-claim {
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(0.95rem, 1.45vw, 1.22rem);
+      line-height: 1.15;
+      color: rgba(242, 238, 230, 0.72);
+      max-width: 28ch;
+      margin: 0;
+    }
+
     .hero-lead {
-      max-width: 42ch;
-      font-size: clamp(1.06rem, 1.5vw, 1.2rem);
-      color: rgba(243, 239, 232, 0.82);
+      margin-top: 0.8rem;
+      max-width: 40ch;
+      font-size: clamp(1rem, 1.3vw, 1.12rem);
+      line-height: 1.75;
+      color: rgba(242, 238, 230, 0.82);
     }
 
     .hero-meta {
       display: flex;
-      gap: 0.7rem;
       flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 0.35rem;
     }
 
     .meta-chip {
-      padding: 0.7rem 0.95rem;
+      padding: 0.72rem 0.95rem;
       border: 1px solid var(--line-strong);
       border-radius: 999px;
       color: var(--text-soft);
-      background: rgba(10,16,28,0.42);
+      background: rgba(10, 16, 28, 0.42);
     }
 
     .hero-panel {
       width: min(100%, 360px);
       justify-self: end;
-      padding: 1.4rem;
+      padding: 1.45rem;
       border-radius: var(--radius-md);
       border: 1px solid var(--line);
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.012)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.012)),
         var(--panel);
       backdrop-filter: blur(14px);
       box-shadow: var(--shadow-soft);
       display: grid;
-      gap: 1rem;
+      gap: 0.85rem;
+      position: relative;
+      z-index: 2;
     }
 
     .hero-panel p {
       font-size: 0.95rem;
     }
 
+    /* ======================================
+       GAS MASS
+       ====================================== */
     .hero-orbit {
       position: absolute;
-      right: -8vw;
-      top: 16vh;
-      width: min(42vw, 540px);
+      right: -12vw;
+      top: 10vh;
+      width: min(44vw, 620px);
       aspect-ratio: 1;
-      border-radius: 50%;
-      border: 1px solid rgba(140,236,255,0.12);
-      box-shadow:
-        inset 0 0 80px rgba(140,236,255,0.04),
-        0 0 120px rgba(140,236,255,0.05);
       pointer-events: none;
-      opacity: 0.9;
+      opacity: 0.78;
+      z-index: 1;
+      filter: blur(0.2px);
     }
 
     .hero-orbit::before,
     .hero-orbit::after {
       content: "";
       position: absolute;
+      inset: 0;
       border-radius: 50%;
-      inset: 12%;
-      border: 1px dashed rgba(255,255,255,0.07);
+    }
+
+    .hero-orbit::before {
+      background:
+        radial-gradient(circle at 52% 48%, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.08) 8%, transparent 18%),
+        radial-gradient(circle at 45% 52%, rgba(126,236,255,0.30) 0%, rgba(126,236,255,0.18) 16%, transparent 38%),
+        radial-gradient(circle at 60% 44%, rgba(111,125,255,0.20) 0%, transparent 34%),
+        radial-gradient(circle at 40% 62%, rgba(208,138,88,0.12) 0%, transparent 28%),
+        radial-gradient(circle at center, rgba(126,236,255,0.08) 0%, rgba(126,236,255,0.02) 44%, transparent 72%);
+      filter: blur(24px);
+      transform: scale(1.02);
+      animation: gasPulseA 9s ease-in-out infinite alternate;
     }
 
     .hero-orbit::after {
-      inset: 30%;
-      border-style: solid;
-      border-color: rgba(201,137,86,0.14);
+      background:
+        radial-gradient(circle at 50% 50%, transparent 0 34%, rgba(126,236,255,0.08) 46%, transparent 62%),
+        radial-gradient(circle at 56% 46%, rgba(255,255,255,0.10), transparent 18%),
+        radial-gradient(circle at 43% 58%, rgba(126,236,255,0.10), transparent 24%);
+      mix-blend-mode: screen;
+      filter: blur(34px);
+      animation: gasPulseB 12s ease-in-out infinite alternate;
     }
 
     .hero-core {
       position: absolute;
-      inset: 39%;
+      inset: 34%;
       border-radius: 50%;
       background:
-        radial-gradient(circle at 40% 40%, rgba(255,255,255,0.7), rgba(140,236,255,0.16) 35%, transparent 72%);
-      box-shadow: 0 0 100px rgba(140,236,255,0.14);
+        radial-gradient(circle at 45% 42%, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.22) 12%, rgba(126,236,255,0.18) 24%, transparent 66%);
+      filter: blur(12px);
+      box-shadow:
+        0 0 60px rgba(126,236,255,0.18),
+        0 0 120px rgba(111,125,255,0.08);
+      animation: corePulse 7s ease-in-out infinite alternate;
     }
 
+    @keyframes gasPulseA {
+      0% {
+        transform: scale(0.98) translate3d(0, 0, 0);
+        filter: blur(22px);
+        opacity: 0.78;
+      }
+      100% {
+        transform: scale(1.05) translate3d(-1.5%, 1.2%, 0);
+        filter: blur(30px);
+        opacity: 1;
+      }
+    }
+
+    @keyframes gasPulseB {
+      0% {
+        transform: scale(1) translate3d(0, 0, 0);
+        opacity: 0.52;
+      }
+      100% {
+        transform: scale(1.08) translate3d(1.2%, -1.4%, 0);
+        opacity: 0.82;
+      }
+    }
+
+    @keyframes corePulse {
+      0% {
+        transform: scale(0.94);
+        opacity: 0.72;
+      }
+      100% {
+        transform: scale(1.08);
+        opacity: 1;
+      }
+    }
+
+    /* ======================================
+       SECTIONS
+       ====================================== */
     .section {
       padding: 6.5rem 0;
       position: relative;
@@ -397,7 +517,7 @@
       border-radius: var(--radius-md);
       border: 1px solid var(--line);
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
         var(--panel);
       box-shadow: var(--shadow-soft);
       backdrop-filter: blur(14px);
@@ -418,7 +538,7 @@
 
     .image-card:hover {
       transform: translateY(-6px);
-      border-color: rgba(140,236,255,0.18);
+      border-color: rgba(134, 236, 255, 0.18);
     }
 
     .image-card img {
@@ -440,17 +560,13 @@
       gap: 0.45rem;
     }
 
-    figcaption {
-      margin-top: 0;
-    }
-
     .contact-panel {
       padding: 2rem;
       border-radius: var(--radius-lg);
       border: 1px solid var(--line);
       background:
-        radial-gradient(circle at top left, rgba(140,236,255,0.08), transparent 32%),
-        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)),
+        radial-gradient(circle at top left, rgba(134, 236, 255, 0.08), transparent 32%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
         var(--panel);
       box-shadow: var(--shadow-soft);
       backdrop-filter: blur(14px);
@@ -479,13 +595,16 @@
 
     .contact-link:hover {
       transform: translateY(-2px);
-      border-color: rgba(140,236,255,0.22);
-      background: rgba(140,236,255,0.05);
+      border-color: rgba(134, 236, 255, 0.22);
+      background: rgba(134, 236, 255, 0.05);
       color: var(--text);
     }
 
+    /* ======================================
+       FOOTER
+       ====================================== */
     footer {
-      border-top: 1px solid rgba(255,255,255,0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
       padding: 2rem 0 3rem;
       position: relative;
       z-index: 1;
@@ -505,13 +624,16 @@
       color: var(--muted);
     }
 
+    /* ======================================
+       WIP LABEL
+       ====================================== */
     .wip {
       position: fixed;
       top: 1rem;
       right: 1rem;
       z-index: 40;
       padding: 0.45rem 0.7rem;
-      border: 1px solid rgba(140,236,255,0.16);
+      border: 1px solid rgba(134, 236, 255, 0.16);
       border-radius: 999px;
       background: rgba(4, 8, 16, 0.52);
       backdrop-filter: blur(10px);
@@ -520,11 +642,14 @@
       pointer-events: none;
     }
 
+    /* ======================================
+       LENS OPENING
+       ====================================== */
     .lens {
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(circle at center, rgba(255,255,255,0.04), transparent 34%),
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.04), transparent 34%),
         #010203;
       display: flex;
       justify-content: center;
@@ -539,15 +664,15 @@
       width: 24vmin;
       aspect-ratio: 1;
       border-radius: 50%;
-      border: 1px solid rgba(140,236,255,0.12);
-      box-shadow: 0 0 60px rgba(140,236,255,0.08);
+      border: 1px solid rgba(134, 236, 255, 0.12);
+      box-shadow: 0 0 60px rgba(134, 236, 255, 0.08);
     }
 
     .lens::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle, rgba(140,236,255,0.06) 0%, transparent 60%);
+      background: radial-gradient(circle, rgba(134, 236, 255, 0.06) 0%, transparent 60%);
       mix-blend-mode: screen;
     }
 
@@ -567,6 +692,9 @@
       }
     }
 
+    /* ======================================
+       REVEAL
+       ====================================== */
     .reveal {
       opacity: 0;
       transform: translateY(34px);
@@ -580,6 +708,9 @@
       transform: translateY(0) !important;
     }
 
+    /* ======================================
+       RESPONSIVE
+       ====================================== */
     @media (max-width: 980px) {
       .hero-grid,
       .manifest-grid {
@@ -593,10 +724,10 @@
       }
 
       .hero-orbit {
-        width: 50vw;
-        top: 10vh;
+        width: 52vw;
         right: -10vw;
-        opacity: 0.55;
+        top: 10vh;
+        opacity: 0.58;
       }
     }
 
@@ -611,12 +742,30 @@
 
       .hero {
         min-height: auto;
-        padding-top: 7rem;
+        padding-top: 7.4rem;
         padding-bottom: 4rem;
       }
 
       h1 {
-        font-size: clamp(3rem, 16vw, 5rem);
+        font-size: clamp(3.6rem, 16vw, 5.4rem);
+      }
+
+      .hero-claim {
+        font-size: 0.82rem;
+        max-width: 30ch;
+      }
+
+      .hero-lead {
+        max-width: 34ch;
+      }
+
+      .hero-meta {
+        gap: 0.55rem;
+      }
+
+      .meta-chip {
+        padding: 0.66rem 0.82rem;
+        font-size: 0.66rem;
       }
 
       .section {
@@ -624,18 +773,16 @@
       }
 
       .panel,
-      .contact-panel {
+      .contact-panel,
+      .hero-panel {
         padding: 1.35rem;
       }
 
       .hero-orbit {
-        width: 72vw;
-        right: -22vw;
-        top: 12vh;
-      }
-
-      .contact-links {
-        gap: 0.65rem;
+        width: 78vw;
+        right: -26vw;
+        top: 16vh;
+        opacity: 0.42;
       }
     }
 
@@ -657,13 +804,13 @@
 
   <header class="site-topbar">
     <div class="site-topbar-inner">
-      <a href="#" class="brand">
+      <a href="#" class="brand" aria-label="BluCineLab home">
         <span class="brand-dot"></span>
         <span class="brand-name">BluCineLab</span>
       </a>
 
-      <nav class="topnav">
-        <a href="#manifesto">Studio</a>
+      <nav class="topnav" aria-label="Primary navigation">
+        <a href="#studio">Studio</a>
         <a href="#frame">Frame</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -674,15 +821,16 @@
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <span class="eyebrow">Visual studio / cinema driven / editorial presence</span>
+          <span class="eyebrow">image / space / direction</span>
 
-          <h1>
-            BluCineLab
-            <span class="stroke">builds visual atmospheres</span>
-          </h1>
+          <div class="hero-heading">
+            <h1>BluCineLab</h1>
+            <p class="hero-claim">build visual atmospheres</p>
+          </div>
 
           <p class="hero-lead">
-            Studio visivo indipendente che lavora tra immagine, direzione creativa, composizione editoriale e costruzione di presenza.
+            Studio visivo indipendente che lavora tra immagine, direzione creativa,
+            composizione editoriale e costruzione di presenza.
           </p>
 
           <div class="hero-meta">
@@ -695,33 +843,39 @@
         <aside class="hero-panel">
           <span class="small-label">Studio note</span>
           <p>
-            Questo sito non presenta solo un’identità. Mostra un metodo: osservare, tradurre, costruire immagini e sistemi visivi con rigore e tensione estetica.
+            Questo sito non mostra solo un’identità. Mostra un metodo:
+            osservare, tradurre, costruire immagini e sistemi visivi con
+            rigore e tensione estetica.
           </p>
         </aside>
-      </div>
 
-      <div class="hero-orbit" aria-hidden="true">
-        <div class="hero-core"></div>
+        <div class="hero-orbit" aria-hidden="true">
+          <div class="hero-core"></div>
+        </div>
       </div>
     </section>
 
-    <section id="manifesto" class="section">
+    <section id="studio" class="section">
       <div class="container manifest-grid">
         <div class="panel reveal">
           <span class="section-index">01 / Studio</span>
           <h2>Un laboratorio visivo, non una semplice vetrina.</h2>
           <p>
-            BluCineLab è uno spazio indipendente in cui immagine, direzione e struttura convivono. Non si lavora solo su output grafici, ma su ritmo, atmosfera, presenza e leggibilità.
+            BluCineLab è uno spazio indipendente in cui immagine, direzione e
+            struttura convivono. Non si lavora solo su output grafici, ma su
+            ritmo, atmosfera, presenza e leggibilità.
           </p>
           <p>
-            Il sito segue la stessa logica: pochi elementi, ma calibrati; una superficie scura, attraversata da segni di luce, come un set ancora attivo.
+            Il sito segue la stessa logica: pochi elementi, ma calibrati; una
+            superficie scura attraversata da luce, pressione e materia.
           </p>
         </div>
 
         <div class="panel reveal">
           <span class="section-index">02 / Processo</span>
           <p>
-            Le pagine arriveranno come frammenti coerenti: immagini, lavori, identità, editoria, costruzioni visive, appunti di metodo.
+            Le pagine arriveranno come frammenti coerenti: immagini, lavori,
+            identità, editoria, costruzioni visive, appunti di metodo.
           </p>
           <p>
             Non un portfolio neutro. Un archivio vivo, selettivo, con carattere.
@@ -738,11 +892,12 @@
         </div>
 
         <figure class="image-card reveal">
-          <img src="assets/watercyber.webp" alt="Texture d’acqua in luce notturna">
+          <img src="assets/watercyber.webp" alt="Texture d’acqua in luce notturna" />
           <div class="image-card-caption">
             <figcaption>Water / Cyber — still frame · WIP</figcaption>
             <p>
-              Un’immagine-soglia: luce, superficie, materia, riflesso. Un riferimento di tono più che una semplice illustrazione.
+              Un’immagine-soglia: luce, superficie, materia, riflesso.
+              Un riferimento di tono, non una semplice illustrazione.
             </p>
           </div>
         </figure>
@@ -755,12 +910,18 @@
           <span class="section-index">04 / Contact</span>
           <h2>Collaborazioni, committenze, dialoghi visivi.</h2>
           <p>
-            Per progetti di identità, direzione creativa, impaginazione, immagini, allestimenti e sistemi visivi.
+            Per progetti di identità, direzione creativa, impaginazione,
+            immagini, allestimenti e sistemi visivi.
           </p>
 
           <div class="contact-links">
             <a class="contact-link" href="mailto:blucinelab@gmail.com">Email</a>
-            <a class="contact-link" href="https://instagram.com/blucinelab" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a
+              class="contact-link"
+              href="https://instagram.com/blucinelab"
+              target="_blank"
+              rel="noopener noreferrer"
+            >Instagram</a>
           </div>
         </div>
       </div>
@@ -790,4 +951,4 @@
     reveals.forEach((el) => observer.observe(el));
   </script>
 </body>
-</html>
+</html></html>
