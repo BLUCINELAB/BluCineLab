@@ -1,67 +1,86 @@
-const cursor = document.querySelector(".cursor");
+var cursor = document.querySelector(".cursor");
 
-/* ================= CURSOR + MANY SMALL SPARKS ================= */
+/* ================= CURSOR + SPARKS ================= */
 
 if (cursor) {
-  document.addEventListener("mousemove", (e) => {
+  document.addEventListener("mousemove", function (e) {
     cursor.style.left = e.clientX + "px";
     cursor.style.top = e.clientY + "px";
     createSparkBurst(e.clientX, e.clientY);
   });
 
   function createSparkBurst(x, y) {
-    const amount = 12 + Math.floor(Math.random() * 14);
+    var amount = 12 + Math.floor(Math.random() * 14);
 
-    for (let i = 0; i < amount; i++) {
-      const spark = document.createElement("div");
+    for (var i = 0; i < amount; i++) {
+      var spark = document.createElement("div");
       spark.className = "spark";
       spark.style.left = x + "px";
       spark.style.top = y + "px";
-      spark.style.setProperty("--dx", (Math.random() - 0.5) * 42 + "px");
-      spark.style.setProperty("--dy", (-6 - Math.random() * 30) + "px");
+      spark.style.setProperty("--dx", ((Math.random() - 0.5) * 42) + "px");
+      spark.style.setProperty("--dy", ((-6 - Math.random() * 30)) + "px");
 
       document.body.appendChild(spark);
 
-      setTimeout(() => {
-        spark.remove();
-      }, 950);
+      setTimeout(function (el) {
+        return function () {
+          if (el && el.parentNode) {
+            el.parentNode.removeChild(el);
+          }
+        };
+      }(spark), 950);
     }
   }
 }
 
 /* ================= REVEAL SECTIONS ================= */
 
-const revealSections = document.querySelectorAll(".reveal-section, .section, .archive-section");
+var revealSections = document.querySelectorAll(".reveal-section, .section, .archive-section");
 
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("is-visible", "visible");
-    }
+if (typeof IntersectionObserver !== "undefined") {
+  var revealObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        entry.target.classList.add("visible");
+      }
+    });
+  }, {
+    threshold: 0.16
   });
-}, {
-  threshold: 0.16
-});
 
-revealSections.forEach((section) => revealObserver.observe(section));
+  revealSections.forEach(function (section) {
+    revealObserver.observe(section);
+  });
+} else {
+  revealSections.forEach(function (section) {
+    section.classList.add("is-visible");
+    section.classList.add("visible");
+  });
+}
 
 /* ================= MAGNETIC / POP CARDS ================= */
 
-const magneticCards = document.querySelectorAll(".magnetic-card");
+var magneticCards = document.querySelectorAll(".magnetic-card");
 
-magneticCards.forEach((card) => {
+magneticCards.forEach(function (card) {
   function onMove(e) {
-    const rect = card.getBoundingClientRect();
-    const px = ((e.clientX - rect.left) / rect.width) * 100;
-    const py = ((e.clientY - rect.top) / rect.height) * 100;
+    var rect = card.getBoundingClientRect();
+    var px = ((e.clientX - rect.left) / rect.width) * 100;
+    var py = ((e.clientY - rect.top) / rect.height) * 100;
 
-    const ry = ((px / 100) - 0.5) * 7;
-    const rx = (0.5 - (py / 100)) * 7;
+    var ry = ((px / 100) - 0.5) * 7;
+    var rx = (0.5 - (py / 100)) * 7;
 
-    card.style.setProperty("--mx", `${px}%`);
-    card.style.setProperty("--my", `${py}%`);
+    card.style.setProperty("--mx", px + "%");
+    card.style.setProperty("--my", py + "%");
     card.classList.add("is-hovered");
-    card.style.transform = `translateY(-8px) scale(1.018) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+    card.style.transform =
+      "translateY(-8px) scale(1.018) rotateX(" +
+      rx.toFixed(2) +
+      "deg) rotateY(" +
+      ry.toFixed(2) +
+      "deg)";
   }
 
   function onLeave() {
@@ -75,13 +94,13 @@ magneticCards.forEach((card) => {
 
 /* ================= HOME TITLE DOCK ================= */
 
-const homeTitleDock = document.getElementById("homeTitleDock");
-const homeHero = document.getElementById("homeHero");
+var homeTitleDock = document.getElementById("homeTitleDock");
+var homeHero = document.getElementById("homeHero");
 
 if (homeTitleDock && homeHero) {
   function updateHomeDock() {
-    const rect = homeHero.getBoundingClientRect();
-    const trigger = rect.bottom < window.innerHeight * 0.42;
+    var rect = homeHero.getBoundingClientRect();
+    var trigger = rect.bottom < window.innerHeight * 0.42;
 
     if (trigger) {
       homeTitleDock.classList.add("is-visible");
@@ -96,13 +115,14 @@ if (homeTitleDock && homeHero) {
 
 /* ================= PARALLAX SECTION ================= */
 
-const parallaxSections = document.querySelectorAll(".parallax-section");
+var parallaxSections = document.querySelectorAll(".parallax-section");
 
 function updateParallax() {
-  parallaxSections.forEach((section) => {
-    const rect = section.getBoundingClientRect();
-    const progress = (window.innerHeight - rect.top) * 0.03;
-    section.style.transform = `translateY(${Math.max(0, Math.min(18, progress))}px)`;
+  parallaxSections.forEach(function (section) {
+    var rect = section.getBoundingClientRect();
+    var progress = (window.innerHeight - rect.top) * 0.03;
+    var translateY = Math.max(0, Math.min(18, progress));
+    section.style.transform = "translateY(" + translateY + "px)";
   });
 }
 
@@ -111,13 +131,13 @@ window.addEventListener("scroll", updateParallax, { passive: true });
 
 /* ================= BG CANVAS ================= */
 
-const canvas = document.getElementById("bgCanvas");
+var canvas = document.getElementById("bgCanvas");
 
 if (canvas) {
-  const ctx = canvas.getContext("2d");
+  var ctx = canvas.getContext("2d");
 
   function resizeCanvas() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.floor(window.innerWidth * dpr);
     canvas.height = Math.floor(window.innerHeight * dpr);
     canvas.style.width = window.innerWidth + "px";
@@ -128,9 +148,9 @@ if (canvas) {
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
 
-  const blobs = [];
+  var blobs = [];
 
-  for (let i = 0; i < 12; i++) {
+  for (var i = 0; i < 12; i++) {
     blobs.push({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
@@ -141,21 +161,30 @@ if (canvas) {
     });
   }
 
-  function drawBackground(t = 0) {
+  function drawBackground(t) {
+    if (typeof t === "undefined") {
+      t = 0;
+    }
+
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
     ctx.globalCompositeOperation = "screen";
 
-    for (const b of blobs) {
+    blobs.forEach(function (b) {
       b.x += b.dx;
       b.y += b.dy;
 
-      if (b.x < -b.r || b.x > window.innerWidth + b.r) b.dx *= -1;
-      if (b.y < -b.r || b.y > window.innerHeight + b.r) b.dy *= -1;
+      if (b.x < -b.r || b.x > window.innerWidth + b.r) {
+        b.dx *= -1;
+      }
 
-      const wobbleX = Math.sin(t * 0.00025 + b.drift) * 12;
-      const wobbleY = Math.cos(t * 0.00018 + b.drift) * 10;
+      if (b.y < -b.r || b.y > window.innerHeight + b.r) {
+        b.dy *= -1;
+      }
 
-      const g = ctx.createRadialGradient(
+      var wobbleX = Math.sin(t * 0.00025 + b.drift) * 12;
+      var wobbleY = Math.cos(t * 0.00018 + b.drift) * 10;
+
+      var g = ctx.createRadialGradient(
         b.x + wobbleX,
         b.y + wobbleY,
         0,
@@ -173,22 +202,25 @@ if (canvas) {
       ctx.beginPath();
       ctx.arc(b.x + wobbleX, b.y + wobbleY, b.r, 0, Math.PI * 2);
       ctx.fill();
-    }
+    });
 
-    for (let i = 0; i < 6; i++) {
-      const x = window.innerWidth * (0.12 + i * 0.16) + Math.sin(t * 0.00022 + i) * 26;
-      const y = window.innerHeight * (0.26 + Math.sin(i + t * 0.00016) * 0.08);
-      const rx = 180 + Math.sin(i + t * 0.0003) * 16;
-      const ry = 26 + Math.cos(i + t * 0.00027) * 5;
+    for (var j = 0; j < 6; j++) {
+      var x =
+        window.innerWidth * (0.12 + j * 0.16) +
+        Math.sin(t * 0.00022 + j) * 26;
+      var y =
+        window.innerHeight * (0.26 + Math.sin(j + t * 0.00016) * 0.08);
+      var rx = 180 + Math.sin(j + t * 0.0003) * 16;
+      var ry = 26 + Math.cos(j + t * 0.00027) * 5;
 
-      const g = ctx.createRadialGradient(x, y, 0, x, y, rx);
-      g.addColorStop(0, "rgba(255,248,236,0.028)");
-      g.addColorStop(0.22, "rgba(175,220,255,0.022)");
-      g.addColorStop(1, "transparent");
+      var g2 = ctx.createRadialGradient(x, y, 0, x, y, rx);
+      g2.addColorStop(0, "rgba(255,248,236,0.028)");
+      g2.addColorStop(0.22, "rgba(175,220,255,0.022)");
+      g2.addColorStop(1, "transparent");
 
-      ctx.fillStyle = g;
+      ctx.fillStyle = g2;
       ctx.beginPath();
-      ctx.ellipse(x, y, rx, ry, Math.sin(i) * 0.2, 0, Math.PI * 2);
+      ctx.ellipse(x, y, rx, ry, Math.sin(j) * 0.2, 0, Math.PI * 2);
       ctx.fill();
     }
 
