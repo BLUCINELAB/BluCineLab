@@ -1,571 +1,339 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BLUCINELAB</title>
-  <meta
-    name="description"
-    content="BluCineLab — laboratorio visivo tra immagine, spazio, direzione, set design e sistemi digitali."
-  />
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Inter:wght@300;400;500&display=swap"
-    rel="stylesheet"
-  />
-
-  <style>
-    :root {
-      --bg: #04070c;
-      --bg-deep: #010307;
-      --bg-soft: #0a1119;
-      --panel: rgba(14, 20, 28, 0.58);
-      --panel-2: rgba(18, 25, 36, 0.68);
-
-      --text: #e8e1d5;
-      --text-soft: rgba(225, 216, 201, 0.82);
-      --text-dim: rgba(191, 183, 170, 0.62);
-
-      --gold: rgba(206, 176, 120, 0.42);
-      --gold-strong: rgba(229, 198, 140, 0.76);
-      --gold-line: rgba(247, 222, 168, 0.16);
-
-      --white-metal: rgba(255, 251, 243, 0.82);
-      --cyan-soft: rgba(164, 220, 255, 0.22);
-      --violet-soft: rgba(132, 124, 190, 0.18);
-
-      --shadow-soft: 0 24px 80px rgba(0, 0, 0, 0.22);
-      --shadow-deep: 0 40px 120px rgba(0, 0, 0, 0.38);
-
-      --max: 1260px;
-      --content: 1080px;
-      --radius: 18px;
-      --radius-lg: 28px;
-
-      --topbar-h: 74px;
-      --dock-progress: 0;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: Inter, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-      cursor: none;
-      min-height: 100vh;
-    }
-
-    /* =========================
-       BACKGROUND
-       ========================= */
-
-    .bg-shell {
-      position: fixed;
-      inset: 0;
-      z-index: -10;
-      pointer-events: none;
-      overflow: hidden;
-      background:
-        linear-gradient(180deg, #07111a 0%, #030910 32%, #010307 100%);
-    }
-
-    .bg-image {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(180deg, rgba(5, 9, 15, 0.34), rgba(3, 5, 10, 0.64)),
-        url("assets/blucine-iridescent-bg.jpg") center center / cover no-repeat;
-      filter: saturate(1.06) contrast(1.02) brightness(0.58);
-      transform: scale(1.04);
-    }
-
-    .ocean-depth {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(1000px 520px at 20% 78%, rgba(12, 40, 72, 0.34), transparent 68%),
-        radial-gradient(900px 480px at 76% 72%, rgba(6, 28, 56, 0.28), transparent 70%),
-        radial-gradient(1200px 900px at 50% 120%, rgba(0, 0, 0, 0.56), transparent 72%);
-      mix-blend-mode: multiply;
-    }
-
-    .ocean-wave,
-    .ocean-wave-2,
-    .ocean-wave-3 {
-      position: absolute;
-      inset: -16%;
-      mix-blend-mode: screen;
-      opacity: 0.34;
-      filter: blur(44px);
-    }
-
-    .ocean-wave {
-      background:
-        radial-gradient(ellipse at 24% 66%, rgba(162, 216, 255, 0.14) 0%, rgba(162,216,255,0.04) 18%, transparent 46%),
-        radial-gradient(ellipse at 70% 44%, rgba(108, 166, 224, 0.12) 0%, rgba(108,166,224,0.04) 18%, transparent 46%);
-      animation: waveDriftA 18s ease-in-out infinite alternate;
-    }
-
-    .ocean-wave-2 {
-      background:
-        radial-gradient(ellipse at 40% 78%, rgba(226, 235, 255, 0.08) 0%, rgba(226,235,255,0.025) 16%, transparent 42%),
-        radial-gradient(ellipse at 80% 58%, rgba(150, 182, 240, 0.08) 0%, rgba(150,182,240,0.02) 14%, transparent 38%);
-      animation: waveDriftB 26s ease-in-out infinite alternate;
-      opacity: 0.24;
-      filter: blur(68px);
-    }
-
-    .ocean-wave-3 {
-      background:
-        radial-gradient(ellipse at 16% 32%, rgba(188, 222, 255, 0.08) 0%, rgba(188,222,255,0.02) 14%, transparent 36%),
-        radial-gradient(ellipse at 58% 24%, rgba(255, 244, 222, 0.06) 0%, transparent 28%);
-      animation: waveDriftC 34s ease-in-out infinite alternate;
-      opacity: 0.16;
-      filter: blur(92px);
-    }
-
-    .caustics,
-    .caustics-2 {
-      position: absolute;
-      inset: -12%;
-      mix-blend-mode: screen;
-      opacity: 0.12;
-    }
-
-    .caustics {
-      background:
-        repeating-linear-gradient(
-          114deg,
-          rgba(255, 246, 226, 0.14) 0px,
-          rgba(255, 246, 226, 0.14) 1px,
-          transparent 4px,
-          transparent 20px
-        ),
-        repeating-linear-gradient(
-          24deg,
-          rgba(180, 226, 255, 0.08) 0px,
-          rgba(180, 226, 255, 0.08) 1px,
-          transparent 4px,
-          transparent 24px
-        );
-      background-size: 260px 260px, 340px 340px;
-      filter: blur(2px);
-      animation: causticMove 20s ease-in-out infinite alternate;
-    }
-
-    .caustics-2 {
-      background:
-        repeating-linear-gradient(
-          106deg,
-          rgba(255, 252, 243, 0.08) 0px,
-          rgba(255, 252, 243, 0.08) 1px,
-          transparent 4px,
-          transparent 28px
-        );
-      background-size: 420px 420px;
-      filter: blur(5px);
-      animation: causticMove2 28s ease-in-out infinite alternate;
-      opacity: 0.08;
-    }
-
-    .grain {
-      position: absolute;
-      inset: 0;
-      background: url("https://grainy-gradients.vercel.app/noise.png");
-      opacity: 0.06;
-      mix-blend-mode: overlay;
-    }
-
-    .vignette {
-      position: absolute;
-      inset: 0;
-      box-shadow:
-        inset 0 0 280px rgba(0, 0, 0, 0.72),
-        inset 0 0 44px rgba(255, 246, 230, 0.015);
-    }
-
-    @keyframes waveDriftA {
-      0% { transform: translate3d(-2%, 0, 0) scale(1); }
-      100% { transform: translate3d(3%, -2%, 0) scale(1.07); }
-    }
-
-    @keyframes waveDriftB {
-      0% { transform: translate3d(0, 0, 0) scale(1); }
-      100% { transform: translate3d(-3%, 3%, 0) scale(1.1); }
-    }
-
-    @keyframes waveDriftC {
-      0% { transform: translate3d(0, 0, 0) scale(1); }
-      100% { transform: translate3d(2%, -2%, 0) scale(1.12); }
-    }
-
-    @keyframes causticMove {
-      0% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
-      100% { transform: translate3d(-2%, -2%, 0) rotate(1deg) scale(1.05); }
-    }
-
-    @keyframes causticMove2 {
-      0% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
-      100% { transform: translate3d(2%, 2%, 0) rotate(-1deg) scale(1.07); }
-    }
-
-    /* =========================
-       CURSOR COMET
-       ========================= */
-
-    .cursor-core {
-      position: fixed;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #eef7ff;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      z-index: 9999;
-      box-shadow:
-        0 0 10px rgba(212, 238, 255, 0.88),
-        0 0 28px rgba(162, 224, 255, 0.56),
-        0 0 64px rgba(162, 224, 255, 0.26);
-    }
-
-    .cursor-trail {
-      position: fixed;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      background:
-        radial-gradient(circle, rgba(162, 224, 255, 0.24), transparent 70%);
-      filter: blur(6px);
-      pointer-events: none;
-      z-index: 9998;
-    }
-
-    .cursor-particle {
-      position: fixed;
-      width: 2px;
-      height: 2px;
-      border-radius: 50%;
-      background: rgba(226, 240, 255, 0.92);
-      pointer-events: none;
-      z-index: 9997;
-      animation: cursorFade 0.9s ease-out forwards;
-      box-shadow: 0 0 6px rgba(162, 224, 255, 0.35);
-    }
-
-    @keyframes cursorFade {
-      0% {
-        opacity: 0.9;
-        transform: translate(0, 0) scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(var(--dx), var(--dy)) scale(0.2);
-      }
-    }
-
-    /* =========================
-       TOPBAR
-       ========================= */
-
-    .topbar {
-      position: fixed;
-      inset: 0 0 auto 0;
-      height: var(--topbar-h);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(12px);
-      background: rgba(0, 0, 0, 0.28);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      z-index: 100;
-      transition: background 0.3s ease, border-color 0.3s ease;
-    }
-
-    .topbar.is-scrolled {
-      background: rgba(0, 0, 0, 0.48);
-      border-bottom-color: rgba(255, 255, 255, 0.06);
-    }
-
-    .topbar-inner {
-      width: min(var(--max), calc(100% - 40px));
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: relative;
-    }
-
-    .brand-mini {
-      font-size: 11px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(232, 226, 214, 0.84);
-      text-decoration: none;
-      position: relative;
-      z-index: 3;
-    }
-
-    .nav {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding-inline: 16px;
-      position: relative;
-      z-index: 3;
-    }
-
-    .nav a {
-      color: rgba(232, 226, 214, 0.88);
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      font-size: 11px;
-      transition: transform 0.2s ease, opacity 0.2s ease;
-      position: relative;
-    }
-
-    .nav a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -6px;
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(162, 224, 255, 0.8), transparent);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.2s ease;
-    }
-
-    .nav a:hover {
-      opacity: 1;
-      transform: translateY(-1px);
-    }
-
-    .nav a:hover::after {
-      transform: scaleX(1);
-    }
-
-    .topbar-wordmark {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform:
-        translate(-50%, -50%)
-        scale(calc(0.18 + var(--dock-progress) * 0.09));
-      transform-origin: center center;
-      opacity: calc(var(--dock-progress) * 0.98);
-      pointer-events: none;
-      z-index: 2;
-      transition: opacity 0.18s linear;
-      white-space: nowrap;
-    }
-
-    /* =========================
-       LAYOUT
-       ========================= */
-
-    main {
-      position: relative;
-      z-index: 2;
-    }
-
-    .section {
-      width: min(var(--content), calc(100% - 40px));
-      margin-inline: auto;
-    }
-
-    /* =========================
-       HERO / WORDMARK
-       ========================= */
-
-    .hero {
-      min-height: 160vh;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding-top: 92px;
-    }
-
-    .hero-sticky {
-      position: sticky;
-      top: 10vh;
-      width: min(var(--content), calc(100% - 40px));
-    }
-
-    .hero-inner {
-      display: grid;
-      gap: 36px;
-      will-change: transform, opacity;
-      transform:
-        translateY(calc(var(--dock-progress) * -54px))
-        scale(calc(1 - var(--dock-progress) * 0.18));
-      transform-origin: left top;
-      opacity: calc(1 - var(--dock-progress) * 0.96);
-    }
-
-    .wordmark {
-      display: flex;
-      gap: 6px;
-      user-select: none;
-      flex-wrap: nowrap;
-    }
-
-    .wordmark span {
-      font-family: Oswald, sans-serif;
-      font-weight: 400;
-      font-size: clamp(6.4rem, 13vw, 12rem);
-      line-height: 0.84;
-      letter-spacing: 0.05em;
-      color: transparent;
-      background:
-        linear-gradient(
-          112deg,
-          #9dc0d7 0%,
-          #f5efe4 18%,
-          #fffdf9 30%,
-          #d9cbbb 48%,
-          #ada5bf 72%,
-          #e2ceb0 100%
-        );
-      -webkit-background-clip: text;
-      background-clip: text;
-      position: relative;
-      transition:
-        text-shadow 0.22s ease,
-        filter 0.22s ease,
-        transform 0.22s ease;
-      filter:
-        drop-shadow(0 1px 0 rgba(255,255,255,0.1))
-        drop-shadow(0 12px 22px rgba(0,0,0,0.26));
-    }
-
-    .wordmark span::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.18), transparent 38%, rgba(0,0,0,0.12) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      mix-blend-mode: screen;
-      opacity: 0.28;
-      pointer-events: none;
-    }
-
-    .wordmark span::after {
-      content: "";
-      position: absolute;
-      top: -14%;
-      left: -20%;
-      width: 44%;
-      height: 128%;
-      background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(255,255,255,0.1) 35%,
-        rgba(255,255,255,0.34) 50%,
-        rgba(255,255,255,0.1) 65%,
-        transparent 100%
-      );
-      transform: translateX(-220%) skewX(-18deg);
-      opacity: 0;
-      mix-blend-mode: screen;
-      pointer-events: none;
-    }
-
-    .wordmark span.glow {
-      text-shadow:
-        0 0 12px rgba(162, 224, 255, 0.92),
-        0 0 34px rgba(162, 224, 255, 0.62),
-        0 0 92px rgba(140, 160, 255, 0.44);
-      filter:
-        brightness(1.2)
-        drop-shadow(0 1px 0 rgba(255,255,255,0.14))
-        drop-shadow(0 18px 28px rgba(0,0,0,0.26));
-      transform: translateY(-2px);
-    }
-
-    .wordmark span.glow::after {
-      opacity: 1;
-      animation: sheen 0.55s cubic-bezier(.22,1,.36,1);
-    }
-
-    @keyframes sheen {
-      0% { transform: translateX(-220%) skewX(-18deg); }
-      100% { transform: translateX(320%) skewX(-18deg); }
-    }
-
-    .hero-kicker {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      max-width: 900px;
-    }
-
-    .hero-chip {
-      padding: 14px 16px;
-      border-radius: 999px;
-      border: 1px solid var(--gold);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.004)),
-        rgba(14, 19, 28, 0.52);
-      color: rgba(233, 225, 212, 0.92);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      text-decoration: none;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.06),
-        0 12px 30px rgba(0,0,0,0.18);
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .hero-chip:hover {
-      transform: translateY(-2px);
-      border-color: var(--gold-strong);
-    }
-
-    /* =========================
-       PANELS
-       ========================= */
-
-    .panel {
-      width: min(var(--content), calc(100% - 40px));
-      margin: 150px auto;
-      padding: 38px;
-      border-radius: 18px;
-      border: 1px solid var(--gold);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.004)),
-        var(--panel);
-      backdrop-filter: blur(14px);
-      box-shadow:
-        var(--shadow-soft),
-        inset 0 0 22px rgba(255,255,255,0.02),
-        inset 0 1px 0 rgba(255,255,255,0.05);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .panel::before,
-    .card::before,
-    .archive-card::before,
-    .search-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(145deg, rgba
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BluCineLab</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+
+<body>
+
+
+<!-- BACKGROUND -->
+
+<div class="bg-liquid">
+
+<img src="background-liquid.jpg" class="bg-img">
+
+<div class="bg-overlay"></div>
+
+</div>
+
+
+
+<!-- CURSOR -->
+
+<div class="cursor-core"></div>
+<div class="cursor-trail"></div>
+
+
+
+<!-- NAV -->
+
+<header class="topbar">
+
+<nav class="nav">
+
+<a href="#studio">Studio</a>
+<a href="#direction">Direction</a>
+<a href="#digital">Digital</a>
+<a href="#spatial">Spatial</a>
+<a href="#archive">Archive</a>
+<a href="#lab">Lab</a>
+<a href="#contact">Contact</a>
+
+</nav>
+
+</header>
+
+
+
+<main>
+
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+<h1 class="wordmark">
+
+<span>B</span>
+<span>L</span>
+<span>U</span>
+<span>C</span>
+<span>I</span>
+<span>N</span>
+<span>E</span>
+
+<span>L</span>
+<span>A</span>
+<span>B</span>
+
+</h1>
+
+</section>
+
+
+
+<!-- STUDIO -->
+
+<section class="panel" id="studio">
+
+<h2>Studio</h2>
+
+<p>
+
+BluCineLab è uno studio visivo indipendente che lavora tra cinema,
+grafica, spazio e narrazione.
+
+Progettiamo immagini, sistemi visivi e ambienti per
+produzioni culturali, brand e istituzioni.
+
+</p>
+
+</section>
+
+
+
+<!-- SERVICES -->
+
+<section class="grid">
+
+
+
+<div class="card" id="direction">
+
+<h3>Direction</h3>
+
+<p>
+
+Direzione artistica per cinema, eventi, mostre e produzioni culturali.
+
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>Visual Systems</h3>
+
+<p>
+
+Identità visive e strutture grafiche pensate per durare nel tempo.
+
+</p>
+
+</div>
+
+
+
+<div class="card" id="digital">
+
+<h3>Digital Design</h3>
+
+<p>
+
+Siti, ambienti digitali e sistemi visivi per piattaforme online.
+
+</p>
+
+</div>
+
+
+
+<div class="card" id="spatial">
+
+<h3>Spatial Design</h3>
+
+<p>
+
+Scenografie e ambienti che trasformano lo spazio in narrazione.
+
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>Production</h3>
+
+<p>
+
+Sviluppo visivo per produzioni cinematografiche e audiovisive.
+
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>Creative Coding</h3>
+
+<p>
+
+Esperienze digitali immersive tra arte, interazione e cinema.
+
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>Research</h3>
+
+<p>
+
+Archivio visivo e laboratorio di ricerca estetica.
+
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>Editorial</h3>
+
+<p>
+
+Cataloghi, pubblicazioni e sistemi editoriali.
+
+</p>
+
+</div>
+
+
+
+</section>
+
+
+
+<!-- ARCHIVE -->
+
+<section class="archive" id="archive">
+
+<h2>Archive</h2>
+
+<div class="cards">
+
+
+
+<div class="archive-card">
+
+<img src="https://images.unsplash.com/photo-1485846234645-a62644f84728">
+
+</div>
+
+
+
+<div class="archive-card">
+
+<img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
+
+</div>
+
+
+
+<div class="archive-card">
+
+<img src="https://images.unsplash.com/photo-1522199710521-72d69614c702">
+
+</div>
+
+
+
+<div class="archive-card">
+
+<img src="https://images.unsplash.com/photo-1518770660439-4636190af475">
+
+</div>
+
+
+
+<div class="archive-card">
+
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
+
+</div>
+
+
+
+<div class="archive-card">
+
+<img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
+
+</div>
+
+
+
+</div>
+
+</section>
+
+
+
+<!-- LAB -->
+
+<section class="panel" id="lab">
+
+<h2>Lab</h2>
+
+<p>
+
+BluCineLab sviluppa progetti di ricerca tra cinema,
+design e tecnologie emergenti.
+
+Il laboratorio esplora linguaggi visivi,
+ambienti digitali e narrazioni spaziali.
+
+</p>
+
+</section>
+
+
+
+<!-- CONTACT -->
+
+<section class="panel" id="contact">
+
+<h2>Contact</h2>
+
+<p>
+
+contact@blucinelab.com
+
+</p>
+
+</section>
+
+
+
+</main>
+
+
+
+<script src="cursor.js"></script>
+
+</body>
+
+</html>
