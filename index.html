@@ -10,17 +10,477 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300&family=Inter:wght@200;300&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="style.css">
+<style>
+
+
+body{
+margin:0;
+background:#01040a;
+color:#e6e3da;
+font-family:Inter;
+overflow-x:hidden;
+cursor:none;
+}
+
+
+
+/* BACKGROUND FLUIDO */
+
+.fluid-bg{
+
+position:fixed;
+inset:0;
+
+background:
+
+radial-gradient(circle at 20% 40%,rgba(80,100,140,.25),transparent 60%),
+radial-gradient(circle at 80% 70%,rgba(120,150,200,.15),transparent 70%),
+radial-gradient(circle at 50% 50%,rgba(40,60,90,.3),transparent 70%);
+
+filter:blur(60px);
+
+animation:fluidMove 30s ease-in-out infinite alternate;
+
+z-index:-3;
+
+}
+
+@keyframes fluidMove{
+
+0%{transform:translateY(0)}
+100%{transform:translateY(-100px)}
+
+}
+
+
+
+/* PARTICELLE */
+
+.particle-field{
+
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:-2;
+
+}
+
+.particle{
+
+position:absolute;
+width:2px;
+height:2px;
+
+background:#b9d6ff;
+
+border-radius:50%;
+
+opacity:.8;
+
+animation:float 10s linear infinite;
+
+}
+
+@keyframes float{
+
+0%{transform:translateY(0)}
+100%{transform:translateY(-100vh)}
+
+}
+
+
+
+/* CURSORE COMETA */
+
+.cursor-core{
+
+position:fixed;
+width:6px;
+height:6px;
+
+border-radius:50%;
+background:#e7f6ff;
+
+pointer-events:none;
+z-index:9999;
+
+transform:translate(-50%,-50%);
+
+box-shadow:
+
+0 0 8px #c8ecff,
+0 0 25px #9fd6ff,
+0 0 60px #9fd6ff;
+
+}
+
+
+
+.cursor-trail{
+
+position:fixed;
+width:22px;
+height:22px;
+
+border-radius:50%;
+
+background:radial-gradient(circle,#9fd6ff33,transparent);
+
+pointer-events:none;
+transform:translate(-50%,-50%);
+
+z-index:9998;
+
+filter:blur(4px);
+
+}
+
+
+
+.cursor-particle{
+
+position:fixed;
+width:2px;
+height:2px;
+
+background:#d7ecff;
+
+border-radius:50%;
+
+pointer-events:none;
+
+opacity:.8;
+
+animation:fadeParticle .9s ease-out forwards;
+
+}
+
+
+
+@keyframes fadeParticle{
+
+0%{
+opacity:.9;
+transform:scale(1);
+}
+
+100%{
+opacity:0;
+transform:translateY(-15px) scale(.2);
+}
+
+}
+
+
+
+/* TOPBAR */
+
+.topbar{
+
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:70px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:rgba(0,0,0,.35);
+backdrop-filter:blur(10px);
+
+z-index:10;
+
+}
+
+.nav{
+
+display:flex;
+gap:40px;
+
+}
+
+.nav a{
+
+color:#ddd;
+text-decoration:none;
+font-size:12px;
+letter-spacing:.2em;
+
+}
+
+
+
+/* HERO */
+
+.hero{
+
+min-height:120vh;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+padding-top:100px;
+
+}
+
+.hero-inner{
+
+width:900px;
+max-width:90%;
+
+}
+
+
+
+.wordmark{
+
+font-family:Oswald;
+font-weight:200;
+
+font-size:140px;
+
+letter-spacing:12px;
+
+display:flex;
+gap:4px;
+
+margin-bottom:30px;
+
+}
+
+.wordmark span{
+
+color:#eaeaea;
+transition:.3s;
+
+}
+
+.wordmark span.glow{
+
+text-shadow:
+
+0 0 10px #9fd6ff,
+0 0 30px #9fd6ff,
+0 0 60px #9fd6ff;
+
+}
+
+
+
+.hero-lead{
+
+max-width:420px;
+
+line-height:2;
+
+font-weight:300;
+
+font-size:14px;
+
+color:#cfc9bb;
+
+}
+
+
+
+/* PANEL */
+
+.panel{
+
+width:900px;
+max-width:90%;
+
+margin:160px auto;
+
+padding:40px;
+
+border-radius:18px;
+
+border:1px solid rgba(215,185,120,.45);
+
+background:rgba(20,25,35,.5);
+
+backdrop-filter:blur(10px);
+
+}
+
+.panel h2{
+
+font-family:Oswald;
+letter-spacing:.14em;
+
+margin-bottom:20px;
+
+font-weight:300;
+
+}
+
+.panel p{
+
+line-height:2;
+
+font-size:14px;
+
+color:#cfc9bb;
+
+}
+
+
+
+/* DISCIPLINES */
+
+.disciplines{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:40px;
+
+width:900px;
+max-width:90%;
+
+margin:120px auto;
+
+}
+
+.discipline h3{
+
+font-family:Oswald;
+font-weight:300;
+margin-bottom:10px;
+
+}
+
+.discipline p{
+
+font-size:13px;
+line-height:2;
+
+color:#cfc9bb;
+
+}
+
+
+
+/* ARCHIVE */
+
+.archive-section{
+
+margin:200px 0;
+
+}
+
+.archive-track{
+
+display:flex;
+gap:40px;
+
+width:max-content;
+
+padding:0 100px;
+
+}
+
+.archive-card{
+
+width:320px;
+
+border:1px solid rgba(215,185,120,.45);
+
+border-radius:20px;
+
+overflow:hidden;
+
+background:rgba(30,35,50,.6);
+
+}
+
+.archive-card img{
+
+width:100%;
+
+display:block;
+
+}
+
+.archive-card h4{
+
+font-family:Oswald;
+font-weight:300;
+
+padding:20px;
+
+}
+
+
+
+/* RESEARCH */
+
+.research{
+
+width:900px;
+max-width:90%;
+
+margin:160px auto;
+
+}
+
+.research-grid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:30px;
+
+margin-top:40px;
+
+}
+
+.research-grid img{
+
+width:100%;
+border-radius:10px;
+
+}
+
+
+
+/* FOOTER */
+
+footer{
+
+text-align:center;
+padding:120px 0;
+
+color:#666;
+
+font-size:12px;
+
+}
+
+
+</style>
 
 </head>
+
+
 
 <body>
 
 
 
-<canvas id="bg"></canvas>
+<div class="fluid-bg"></div>
 
-<div class="cursor"></div>
+<div class="particle-field"></div>
+
+<div class="cursor-core"></div>
+<div class="cursor-trail"></div>
+<div class="cursor-particles"></div>
 
 
 
@@ -76,7 +536,6 @@ visivi e dispositivi narrativi.
 
 
 
-
 <section id="studio" class="panel">
 
 <h2>Studio</h2>
@@ -96,7 +555,6 @@ grafica e scenografia.
 
 
 
-
 <section class="disciplines">
 
 <div class="discipline">
@@ -104,50 +562,42 @@ grafica e scenografia.
 <h3>Direction</h3>
 
 <p>
-Costruzione di visioni per progetti culturali,
-brand e produzioni audiovisive.
+Costruzione di visioni per progetti culturali e audiovisivi.
 </p>
 
 </div>
-
 
 <div class="discipline">
 
 <h3>Visual Systems</h3>
 
 <p>
-Strutture visive pensate per tenere insieme
-un progetto nel tempo.
+Strutture visive che tengono insieme un progetto nel tempo.
 </p>
 
 </div>
-
 
 <div class="discipline">
 
 <h3>Spatial Design</h3>
 
 <p>
-Scenografie e ambienti
-che trasformano lo spazio in racconto.
+Scenografie e ambienti come dispositivi narrativi.
 </p>
 
 </div>
-
 
 <div class="discipline">
 
 <h3>Research</h3>
 
 <p>
-Un archivio di immagini e processi
-che alimentano ogni progetto.
+Un archivio visivo che alimenta ogni progetto.
 </p>
 
 </div>
 
 </section>
-
 
 
 
@@ -155,62 +605,24 @@ che alimentano ogni progetto.
 
 <div class="archive-track">
 
-
-
 <div class="archive-card">
-
 <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
-
 <h4>Exhibition Design</h4>
-
 </div>
 
-
-
 <div class="archive-card">
-
-<img src="https://images.unsplash.com/photo-1500534623283-312aade485b7">
-
-<h4>Spatial Narratives</h4>
-
-</div>
-
-
-
-<div class="archive-card">
-
 <img src="https://images.unsplash.com/photo-1481277542470-605612bd2d61">
-
 <h4>Visual Identity</h4>
-
 </div>
-
-
 
 <div class="archive-card">
-
-<img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
-
-<h4>Editorial Systems</h4>
-
+<img src="https://images.unsplash.com/photo-1500534623283-312aade485b7">
+<h4>Spatial Narratives</h4>
 </div>
-
-
-
-<div class="archive-card">
-
-<img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04">
-
-<h4>Scenography</h4>
-
-</div>
-
-
 
 </div>
 
 </section>
-
 
 
 
@@ -221,31 +633,9 @@ che alimentano ogni progetto.
 <div class="research-grid">
 
 <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
-
-<img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
-
 <img src="https://images.unsplash.com/photo-1481277542470-605612bd2d61">
 
-<img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04">
-
 </div>
-
-</section>
-
-
-
-
-<section id="contact" class="panel">
-
-<h2>Contact</h2>
-
-<p>
-
-Collaborazioni, progetti e ricerca.
-
-contact@blucinelab.com
-
-</p>
 
 </section>
 
@@ -262,10 +652,9 @@ BluCineLab
 <script>
 
 
+/* WORDMARK GLOW */
 
-const letters=document.querySelectorAll(".wordmark span")
-
-letters.forEach(letter=>{
+document.querySelectorAll(".wordmark span").forEach(letter=>{
 
 letter.addEventListener("mouseenter",()=>{
 
@@ -283,42 +672,89 @@ letter.classList.remove("glow")
 
 
 
+/* CURSOR COMETA */
 
-const cursor=document.querySelector(".cursor")
+const core=document.querySelector(".cursor-core")
+const trail=document.querySelector(".cursor-trail")
+const particles=document.querySelector(".cursor-particles")
+
+let mouseX=0
+let mouseY=0
+
+let trailX=0
+let trailY=0
 
 document.addEventListener("mousemove",e=>{
 
-cursor.style.left=e.clientX+"px"
-cursor.style.top=e.clientY+"px"
+mouseX=e.clientX
+mouseY=e.clientY
+
+core.style.left=mouseX+"px"
+core.style.top=mouseY+"px"
+
+createParticle(mouseX,mouseY)
 
 })
 
 
 
+function animateTrail(){
 
-const archiveSection=document.querySelector(".archive-section")
-const track=document.querySelector(".archive-track")
+trailX+=(mouseX-trailX)*0.18
+trailY+=(mouseY-trailY)*0.18
 
-window.addEventListener("scroll",()=>{
+trail.style.left=trailX+"px"
+trail.style.top=trailY+"px"
 
-const rect=archiveSection.getBoundingClientRect()
-
-if(rect.top<0 && rect.bottom>0){
-
-const progress=Math.abs(rect.top)/(archiveSection.offsetHeight-window.innerHeight)
-
-track.style.transform=`translateX(${-progress*50}vw)`
+requestAnimationFrame(animateTrail)
 
 }
 
-})
+animateTrail()
 
+
+
+function createParticle(x,y){
+
+const p=document.createElement("div")
+
+p.className="cursor-particle"
+
+p.style.left=x+"px"
+p.style.top=y+"px"
+
+document.body.appendChild(p)
+
+setTimeout(()=>{
+
+p.remove()
+
+},900)
+
+}
+
+
+
+/* PARTICELLE SFONDO */
+
+const field=document.querySelector(".particle-field")
+
+for(let i=0;i<120;i++){
+
+let p=document.createElement("div")
+
+p.className="particle"
+
+p.style.left=Math.random()*100+"%"
+p.style.top=Math.random()*100+"%"
+p.style.animationDuration=(6+Math.random()*10)+"s"
+
+field.appendChild(p)
+
+}
 
 
 </script>
-
-
-<script src="background.js"></script>
 
 
 
