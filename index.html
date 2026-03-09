@@ -10,352 +10,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300&family=Inter:wght@200;300&display=swap" rel="stylesheet">
 
-<style>
-
-body{
-margin:0;
-background:#02040a;
-font-family:Inter;
-color:#e6e3da;
-overflow-x:hidden;
-cursor:none;
-}
-
-
-
-/* LIQUID CANVAS */
-
-#liquid{
-
-position:fixed;
-top:0;
-left:0;
-
-width:100%;
-height:100%;
-
-z-index:-3;
-
-}
-
-
-
-/* PARTICLE FIELD */
-
-.particle-layer{
-
-position:fixed;
-inset:0;
-pointer-events:none;
-
-z-index:-2;
-
-}
-
-.particle{
-
-position:absolute;
-
-width:2px;
-height:2px;
-
-background:#cde8ff;
-
-border-radius:50%;
-
-opacity:.8;
-
-animation:particleFloat linear infinite;
-
-}
-
-@keyframes particleFloat{
-
-0%{transform:translateY(0)}
-100%{transform:translateY(-100vh)}
-
-}
-
-
-
-/* CURSOR */
-
-.cursor-core{
-
-position:fixed;
-
-width:6px;
-height:6px;
-
-background:#e7f6ff;
-
-border-radius:50%;
-
-pointer-events:none;
-
-transform:translate(-50%,-50%);
-
-z-index:1000;
-
-box-shadow:
-0 0 10px #c8ecff,
-0 0 25px #9fd6ff,
-0 0 60px #9fd6ff;
-
-}
-
-.cursor-trail{
-
-position:fixed;
-
-width:20px;
-height:20px;
-
-background:radial-gradient(circle,#9fd6ff33,transparent);
-
-border-radius:50%;
-
-pointer-events:none;
-
-transform:translate(-50%,-50%);
-
-filter:blur(4px);
-
-z-index:999;
-
-}
-
-
-
-/* HERO */
-
-.hero{
-
-min-height:120vh;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-}
-
-.hero-inner{
-
-width:900px;
-max-width:90%;
-
-}
-
-
-
-.wordmark{
-
-font-family:Oswald;
-font-weight:200;
-
-font-size:140px;
-
-letter-spacing:12px;
-
-display:flex;
-gap:4px;
-
-margin-bottom:30px;
-
-}
-
-.wordmark span{
-
-transition:.3s;
-
-}
-
-.wordmark span.glow{
-
-text-shadow:
-
-0 0 10px #9fd6ff,
-0 0 40px #9fd6ff,
-0 0 80px #9fd6ff;
-
-}
-
-
-
-.hero-lead{
-
-max-width:420px;
-
-line-height:2.2;
-
-font-size:14px;
-
-color:#cfc9bb;
-
-}
-
-
-
-/* EDITORIAL BLOCK */
-
-.editorial-block{
-
-width:900px;
-max-width:90%;
-
-margin:160px auto;
-
-display:grid;
-
-grid-template-columns:1fr 1fr;
-
-gap:80px;
-
-align-items:center;
-
-}
-
-.editorial-block img{
-
-width:100%;
-
-border-radius:12px;
-
-}
-
-
-
-/* DISCIPLINES */
-
-.disciplines{
-
-width:900px;
-max-width:90%;
-
-margin:140px auto;
-
-display:grid;
-
-grid-template-columns:repeat(4,1fr);
-
-gap:40px;
-
-}
-
-.discipline h3{
-
-font-family:Oswald;
-
-font-weight:300;
-
-margin-bottom:10px;
-
-}
-
-.discipline p{
-
-font-size:13px;
-
-line-height:2;
-
-color:#cfc9bb;
-
-}
-
-
-
-/* VISUAL BREAK */
-
-.visual-break{
-
-margin:200px 0;
-
-}
-
-.visual-break img{
-
-width:100%;
-
-}
-
-
-
-/* ARCHIVE */
-
-.archive-film{
-
-margin:200px 0;
-
-}
-
-.film-track{
-
-display:flex;
-
-gap:40px;
-
-padding:0 120px;
-
-}
-
-.film-track img{
-
-width:320px;
-
-border-radius:12px;
-
-}
-
-
-
-/* RESEARCH */
-
-.research-lab{
-
-width:900px;
-max-width:90%;
-
-margin:200px auto;
-
-}
-
-.research-grid{
-
-display:grid;
-
-grid-template-columns:repeat(2,1fr);
-
-gap:30px;
-
-margin-top:40px;
-
-}
-
-.research-grid img{
-
-width:100%;
-
-border-radius:10px;
-
-}
-
-
-
-/* FOOTER */
-
-footer{
-
-text-align:center;
-
-padding:120px 0;
-
-color:#777;
-
-font-size:12px;
-
-}
-
-</style>
+<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -363,14 +18,40 @@ font-size:12px;
 
 
 
-<canvas id="liquid"></canvas>
+<!-- BACKGROUND -->
 
+<canvas id="liquid"></canvas>
 <div class="particle-layer"></div>
+
+
+
+<!-- CURSOR -->
 
 <div class="cursor-core"></div>
 <div class="cursor-trail"></div>
 
 
+
+<header class="topbar">
+
+<nav class="nav">
+
+<a href="#studio">Studio</a>
+<a href="#archive">Archive</a>
+<a href="#research">Research</a>
+<a href="#contact">Contact</a>
+
+</nav>
+
+</header>
+
+
+
+<main>
+
+
+
+<!-- HERO -->
 
 <section class="hero">
 
@@ -404,11 +85,223 @@ spazio e narrazione.
 
 
 
+<!-- STUDIO BLOCK -->
+
+<section id="studio" class="panel">
+
+<h2>Studio</h2>
+
+<p>
+
+BluCineLab è un laboratorio di ricerca visiva tra
+immagine, spazio e narrazione.
+
+Cinema, grafica e scenografia
+diventano materiali di progetto.
+
+</p>
+
+</section>
+
+
+
+<!-- DISCIPLINES -->
+
+<section class="disciplines">
+
+<div class="discipline panel">
+
+<h3>Direction</h3>
+
+<p>
+Costruzione di visioni per progetti culturali
+e produzioni audiovisive.
+</p>
+
+</div>
+
+<div class="discipline panel">
+
+<h3>Visual Systems</h3>
+
+<p>
+Strutture visive pensate per tenere insieme
+un progetto nel tempo.
+</p>
+
+</div>
+
+<div class="discipline panel">
+
+<h3>Spatial Design</h3>
+
+<p>
+Scenografie e ambienti
+come dispositivi narrativi.
+</p>
+
+</div>
+
+<div class="discipline panel">
+
+<h3>Research</h3>
+
+<p>
+Un archivio visivo che alimenta ogni progetto.
+</p>
+
+</div>
+
+</section>
+
+
+
+<!-- VISUAL BREAK -->
+
+<section class="visual-break">
+
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
+
+</section>
+
+
+
+<!-- ARCHIVE -->
+
+<section id="archive" class="archive-film">
+
+<h2>Archive</h2>
+
+<div class="film-track">
+
+<div class="archive-card">
+
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
+
+<h4>Exhibition Design</h4>
+
+</div>
+
+
+<div class="archive-card">
+
+<img src="https://images.unsplash.com/photo-1500534623283-312aade485b7">
+
+<h4>Spatial Narratives</h4>
+
+</div>
+
+
+<div class="archive-card">
+
+<img src="https://images.unsplash.com/photo-1481277542470-605612bd2d61">
+
+<h4>Visual Identity</h4>
+
+</div>
+
+
+<div class="archive-card">
+
+<img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04">
+
+<h4>Scenography</h4>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- RESEARCH -->
+
+<section id="research" class="research-lab">
+
+<h2>Research</h2>
+
+<div class="research-grid">
+
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
+<img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
+<img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04">
+<img src="https://images.unsplash.com/photo-1481277542470-605612bd2d61">
+
+</div>
+
+</section>
+
+
+
+<!-- STATEMENT -->
+
+<section class="panel">
+
+<p>
+
+BluCineLab è uno spazio di lavoro tra
+cinema, immagine e spazio.
+
+Un archivio in evoluzione.
+
+</p>
+
+</section>
+
+
+
+<!-- CONTACT -->
+
+<section id="contact" class="panel contact">
+
+<h2>Contact</h2>
+
+<p>
+
+contact@blucinelab.com
+
+</p>
+
+</section>
+
+
+
+<footer>
+
+BluCineLab
+
+</footer>
+
+
+
+</main>
+
+
+
 <script>
 
+/* LETTER GLOW */
+
+document.querySelectorAll(".wordmark span").forEach(letter=>{
+
+letter.addEventListener("mouseenter",()=>{
+
+letter.classList.add("glow")
+
+})
+
+letter.addEventListener("mouseleave",()=>{
+
+letter.classList.remove("glow")
+
+})
+
+})
 
 
-/* CURSOR */
+
+/* CURSOR COMETA */
 
 const core=document.querySelector(".cursor-core")
 const trail=document.querySelector(".cursor-trail")
@@ -454,13 +347,13 @@ canvas.height=window.innerHeight
 
 let blobs=[]
 
-for(let i=0;i<8;i++){
+for(let i=0;i<7;i++){
 
 blobs.push({
 
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
-r:250+Math.random()*200,
+r:260+Math.random()*200,
 dx:(Math.random()-.5)*0.4,
 dy:(Math.random()-.5)*0.4
 
@@ -521,10 +414,9 @@ field.appendChild(p)
 
 }
 
-
-
 </script>
 
-</body>
 
+
+</body>
 </html>
