@@ -1,109 +1,160 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>BLUCINELAB</title>
-
-<link rel="stylesheet" href="style.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Inter:wght@300&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BLUCINELAB</title>
+  <meta
+    name="description"
+    content="BluCineLab — laboratorio visivo tra cinema, spazio, identità, direzione artistica e ambienti digitali."
+  />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
 </head>
 
-<body>
+<body class="page-home">
 
-<div class="background"></div>
+  <div class="background">
+    <canvas id="bgCanvas"></canvas>
+    <div class="background-noise"></div>
+    <div class="background-vignette"></div>
+  </div>
 
-<div class="cursor"></div>
+  <div class="cursor"></div>
 
-<nav class="nav">
+  <nav class="nav">
+    <a href="index.html" class="is-active">HOME</a>
+    <a href="archive.html">ARCHIVE</a>
+    <a href="studio.html">STUDIO</a>
+    <a href="contact.html">CONTACT</a>
+  </nav>
 
-<a href="index.html">HOME</a>
-<a href="archive.html">ARCHIVE</a>
-<a href="studio.html">STUDIO</a>
-<a href="contact.html">CONTACT</a>
+  <div class="home-title-dock" id="homeTitleDock">
+    <div class="home-title-dock-inner">
+      <h1 class="title dock-title" id="dockTitle" aria-label="BLUCINELAB">
+        <span>B</span><span>L</span><span>U</span><span>C</span><span>I</span><span>N</span><span>E</span><span>L</span><span>A</span><span>B</span>
+      </h1>
+    </div>
+  </div>
 
-</nav>
+  <header class="home-hero" id="homeHero">
+    <div class="home-hero-inner">
+      <div class="home-copy">
+        <div class="eyebrow">BLUCINELAB / IMAGE / SPACE / DIRECTION</div>
 
-<section class="hero">
+        <h1 class="title home-title" id="homeTitle" aria-label="BLUCINELAB">
+          <span>B</span><span>L</span><span>U</span><span>C</span><span>I</span><span>N</span><span>E</span><span>L</span><span>A</span><span>B</span>
+        </h1>
 
-<h1 class="title">
+        <p class="subtitle home-subtitle">
+          LABORATORIO VISIVO TRA CINEMA, SPAZIO, IDENTITÀ,
+          DIREZIONE ARTISTICA E AMBIENTI DIGITALI.
+        </p>
 
-<span>B</span>
-<span>L</span>
-<span>U</span>
-<span>C</span>
-<span>I</span>
-<span>N</span>
-<span>E</span>
-<span>L</span>
-<span>A</span>
-<span>B</span>
+        <div class="home-actions">
+          <a href="archive.html" class="button-chip magnetic-card">OPEN ARCHIVE</a>
+          <a href="studio.html" class="button-chip magnetic-card">STUDIO</a>
+          <a href="contact.html" class="button-chip magnetic-card">CONTACT</a>
+        </div>
+      </div>
 
-</h1>
+      <aside class="home-side-panel magnetic-card">
+        <div class="panel-label">HOME NOTE</div>
+        <p>
+          LA HOME DEVE FUNZIONARE COME INGRESSO EDITORIALE:
+          POCHI ELEMENTI, FORTI, ATMOSFERICI, CHIARI.
+          NON UNA VETRINA GENERICA, MA UN SISTEMA DI ACCESSO.
+        </p>
+      </aside>
+    </div>
+  </header>
 
-<p class="subtitle">
+  <main class="home-main">
 
-LABORATORIO VISIVO TRA CINEMA, SPAZIO E DESIGN
+    <section class="section reveal-section">
+      <div class="section-head">
+        <div class="section-kicker">ACCESS</div>
+        <h2>SEZIONI PRINCIPALI</h2>
+        <p>
+          PRIMO LIVELLO DI NAVIGAZIONE DEL SISTEMA.
+        </p>
+      </div>
 
-</p>
+      <div class="grid home-grid">
+        <a href="archive.html" class="card magnetic-card pop-card">
+          <div class="cardMedia">
+            <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1400&auto=format&fit=crop" alt="Archive" />
+          </div>
+          <div class="cardText">
+            <div class="cardKicker">ARCHIVE</div>
+            <h3>CATALOGO LAVORI</h3>
+            <p>PROGETTI, COLLABORAZIONI, DOCUMENTAZIONE E SISTEMI VISIVI.</p>
+          </div>
+        </a>
 
-</section>
+        <a href="studio.html" class="card magnetic-card pop-card">
+          <div class="cardMedia">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1400&auto=format&fit=crop" alt="Studio" />
+          </div>
+          <div class="cardText">
+            <div class="cardKicker">STUDIO</div>
+            <h3>IDENTITÀ E METODO</h3>
+            <p>POSIZIONE, CAMPI DI LAVORO, APPROCCIO E COSTRUZIONE DELLA FORMA.</p>
+          </div>
+        </a>
 
-<section class="grid">
+        <a href="contact.html" class="card magnetic-card pop-card">
+          <div class="cardMedia">
+            <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1400&auto=format&fit=crop" alt="Contact" />
+          </div>
+          <div class="cardText">
+            <div class="cardKicker">CONTACT</div>
+            <h3>COLLABORAZIONI</h3>
+            <p>ACCESSO A RICHIESTE, PROGETTI, DIALOGHI E NUOVE ATTIVAZIONI.</p>
+          </div>
+        </a>
+      </div>
+    </section>
 
-<a href="archive.html" class="card">
+    <section class="section reveal-section parallax-section">
+      <div class="section-head">
+        <div class="section-kicker">PREVIEW</div>
+        <h2>PRIMA IMPRESSIONE DEL SISTEMA</h2>
+        <p>
+          IL SITO DEVE DARE SENSAZIONE DI ARCHIVIO CURATO, NON DI TEMPLATE.
+        </p>
+      </div>
 
-<img src="https://images.unsplash.com/photo-1485846234645-a62644f84728">
+      <div class="cluster-grid">
+        <article class="cluster-card magnetic-card pop-card">
+          <div class="cluster-label">IMAGE</div>
+          <div class="cluster-title">CINEMA / SET</div>
+          <div class="cluster-text">AMBIENTI, ATMOSFERA, COSTRUZIONE DELLA SCENA.</div>
+        </article>
 
-<div class="cardText">
+        <article class="cluster-card magnetic-card pop-card">
+          <div class="cluster-label">IDENTITY</div>
+          <div class="cluster-title">SISTEMI VISIVI</div>
+          <div class="cluster-text">BRAND, DIREZIONE, COERENZA FORMALE, PRESENZA.</div>
+        </article>
 
-<h3>ARCHIVE</h3>
+        <article class="cluster-card magnetic-card pop-card">
+          <div class="cluster-label">SPATIAL</div>
+          <div class="cluster-title">EVENTI / SPAZIO</div>
+          <div class="cluster-text">ALLESTIMENTI, INSTALLAZIONI, MOSTRE E DISPOSITIVI.</div>
+        </article>
 
-<p>progetti realizzati</p>
+        <article class="cluster-card magnetic-card pop-card">
+          <div class="cluster-label">DIGITAL</div>
+          <div class="cluster-title">AMBIENTI WEB</div>
+          <div class="cluster-text">SHOWCASE, FRONT-END, SUPERFICI EDITORIALI DIGITALI.</div>
+        </article>
+      </div>
+    </section>
 
-</div>
+    <div class="archive-footer-space"></div>
+  </main>
 
-</a>
-
-
-<a href="studio.html" class="card">
-
-<img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3">
-
-<div class="cardText">
-
-<h3>STUDIO</h3>
-
-<p>metodo e ricerca</p>
-
-</div>
-
-</a>
-
-
-<a href="contact.html" class="card">
-
-<img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30">
-
-<div class="cardText">
-
-<h3>CONTACT</h3>
-
-<p>collaborazioni</p>
-
-</div>
-
-</a>
-
-</section>
-
-<script src="script.js"></script>
-
+  <script src="script.js"></script>
 </body>
-
 </html>
