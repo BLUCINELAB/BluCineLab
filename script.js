@@ -1,4 +1,6 @@
 var cursor = document.querySelector(".cursor");
+var audioCtx = null;
+var lastWaveSoundTime = 0;
 
 /* ================= CURSOR + SPARKS ================= */
 
@@ -31,6 +33,81 @@ if (cursor) {
       }(spark), 950);
     }
   }
+}
+
+/* ================= TITLE WAVE ================= */
+
+var homeTitle = document.getElementById("homeTitle");
+
+if (homeTitle) {
+  var titleLetters = homeTitle.querySelectorAll("span");
+
+  function resetWave() {
+    titleLetters.forEach(function (letter) {
+      letter.style.setProperty("--wave-strength", "0");
+    });
+  }
+
+  function playSoftWaveSound() {
+    var now = Date.now();
+    if (now - lastWaveSoundTime < 140) return;
+    lastWaveSoundTime = now;
+
+    try {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+
+      var osc = audioCtx.createOscillator();
+      var gain = audioCtx.createGain();
+      var filter = audioCtx.createBiquadFilter();
+
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(920, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(640, audioCtx.currentTime + 0.08);
+
+      filter.type = "lowpass";
+      filter.frequency.setValueAtTime(1800, audioCtx.currentTime);
+
+      gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.012, audioCtx.currentTime + 0.012);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.12);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.13);
+    } catch (e) {
+      /* ignore audio errors */
+    }
+  }
+
+  homeTitle.addEventListener("mousemove", function (e) {
+    var rect = homeTitle.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var progress = x / rect.width;
+    var activeIndex = progress * (titleLetters.length - 1);
+
+    titleLetters.forEach(function (letter, index) {
+      var distance = Math.abs(index - activeIndex);
+      var strength = Math.max(0, 1 - distance / 2.2);
+      letter.style.setProperty("--wave-strength", strength.toFixed(3));
+    });
+
+    playSoftWaveSound();
+  });
+
+  homeTitle.addEventListener("mouseleave", function () {
+    resetWave();
+  });
+
+  resetWave();
 }
 
 /* ================= REVEAL SECTIONS ================= */
@@ -96,7 +173,6 @@ magneticCards.forEach(function (card) {
 
 var homeTitleDock = document.getElementById("homeTitleDock");
 var homeHero = document.getElementById("homeHero");
-var homeTitle = document.getElementById("homeTitle");
 var heroChips = document.getElementById("heroChips");
 var heroStatement = document.getElementById("heroStatement");
 
