@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BLUCINELAB</title>
+<title>BluCineLab</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
 
-/* ================= BASE ================= */
+/* ---------- BASE ---------- */
 
 body{
 margin:0;
@@ -21,32 +22,31 @@ overflow-x:hidden;
 cursor:none;
 }
 
-/* ================= BACKGROUND ================= */
+/* ---------- BACKGROUND ---------- */
 
-.bg-shell{
+.bg{
 position:fixed;
 inset:0;
 z-index:-10;
-overflow:hidden;
 
 background:
 radial-gradient(1200px 800px at 50% 110%,rgba(0,0,0,0.9),transparent),
 linear-gradient(180deg,#071018,#030910,#010307);
 }
 
-#liquidCanvas{
+canvas{
 position:absolute;
 inset:0;
 width:100%;
 height:100%;
 }
 
-/* ================= CURSOR COMET ================= */
+/* ---------- CURSOR ---------- */
 
-.cursor-core{
+.cursor{
 position:fixed;
-width:8px;
-height:8px;
+width:6px;
+height:6px;
 border-radius:50%;
 background:white;
 pointer-events:none;
@@ -54,61 +54,27 @@ transform:translate(-50%,-50%);
 z-index:9999;
 
 box-shadow:
-0 0 10px white,
-0 0 30px rgba(160,220,255,0.9),
-0 0 70px rgba(120,200,255,0.6);
+0 0 6px white,
+0 0 16px rgba(150,210,255,.8),
+0 0 40px rgba(150,210,255,.6);
 }
 
-.cursor-trail{
+.cursorTrail{
 position:fixed;
-width:40px;
-height:40px;
+width:24px;
+height:24px;
 border-radius:50%;
-pointer-events:none;
-transform:translate(-50%,-50%);
 background:
 radial-gradient(circle,
-rgba(255,255,255,0.4),
-rgba(150,210,255,0.2),
+rgba(200,230,255,.25),
 transparent);
-filter:blur(12px);
+
+pointer-events:none;
+transform:translate(-50%,-50%);
 z-index:9998;
 }
 
-.comet-particle{
-position:fixed;
-width:3px;
-height:3px;
-background:white;
-border-radius:50%;
-pointer-events:none;
-z-index:9997;
-
-box-shadow:
-0 0 6px white,
-0 0 12px rgba(150,210,255,0.8),
-0 0 20px rgba(120,200,255,0.6);
-
-animation:cometFade 1.2s ease-out forwards;
-}
-
-@keyframes cometFade{
-
-0%{
-opacity:1;
-transform:translate(0,0) scale(1);
-}
-
-100%{
-opacity:0;
-transform:
-translate(var(--dx),var(--dy))
-scale(.2);
-}
-
-}
-
-/* ================= HERO ================= */
+/* ---------- HERO ---------- */
 
 .hero{
 height:80vh;
@@ -116,32 +82,33 @@ display:flex;
 align-items:center;
 justify-content:center;
 flex-direction:column;
-text-align:center;
 }
 
-.hero-title{
-font-family:Oswald,sans-serif;
+.hero h1{
+
+font-family:Oswald;
 font-size:clamp(4rem,8vw,7rem);
-letter-spacing:.08em;
+letter-spacing:.07em;
 
 background:
 linear-gradient(
 120deg,
-#a7c8e6,
+#8fb7d6,
 #ffffff,
-#d9cbbb,
+#e6d9c8,
 #ffffff,
-#a7c8e6);
+#8fb7d6);
 
 -webkit-background-clip:text;
 color:transparent;
 
 text-shadow:
-0 0 12px rgba(180,220,255,.8),
-0 0 30px rgba(150,210,255,.6);
+0 0 6px rgba(180,220,255,.5),
+0 0 14px rgba(180,220,255,.35);
+
 }
 
-/* ================= NAV ================= */
+/* ---------- NAV ---------- */
 
 .nav{
 position:fixed;
@@ -176,7 +143,7 @@ transition:.2s;
 transform:scaleX(1);
 }
 
-/* ================= GRID ================= */
+/* ---------- SECTIONS ---------- */
 
 .section{
 max-width:1200px;
@@ -193,6 +160,8 @@ opacity:1;
 transform:none;
 }
 
+/* ---------- GRID ---------- */
+
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -201,7 +170,7 @@ gap:26px;
 
 .card{
 
-border:1px solid rgba(208,178,122,.4);
+border:1px solid rgba(208,178,122,.35);
 border-radius:18px;
 overflow:hidden;
 
@@ -211,17 +180,16 @@ rgba(10,15,22,.8);
 
 box-shadow:
 0 18px 50px rgba(0,0,0,.2),
-inset 0 1px 0 rgba(255,255,255,.04);
+inset 0 1px 0 rgba(255,255,255,.03);
 
 transition:.35s;
 
-transform-style:preserve-3d;
 }
 
 .card:hover{
-transform:translateY(-8px) scale(1.02);
-border-color:rgba(230,198,140,.8);
-box-shadow:0 30px 80px rgba(0,0,0,.35);
+transform:translateY(-6px) scale(1.01);
+border-color:rgba(230,198,140,.7);
+box-shadow:0 26px 70px rgba(0,0,0,.35);
 }
 
 .card img{
@@ -233,27 +201,27 @@ transition:.4s;
 }
 
 .card:hover img{
-transform:scale(1.05);
+transform:scale(1.04);
 filter:brightness(1);
 }
 
-.card-body{
+.cardBody{
 padding:20px;
 }
 
-.card-title{
+.cardTitle{
 font-family:Oswald;
 font-size:1.2rem;
 letter-spacing:.06em;
 }
 
-.card-text{
+.cardText{
 font-size:.9rem;
 line-height:1.8;
 color:rgba(220,212,198,.8);
 }
 
-/* ================= RESPONSIVE ================= */
+/* ---------- MOBILE ---------- */
 
 @media(max-width:900px){
 
@@ -265,9 +233,8 @@ body{
 cursor:auto;
 }
 
-.cursor-core,
-.cursor-trail,
-.comet-particle{
+.cursor,
+.cursorTrail{
 display:none;
 }
 
@@ -278,12 +245,12 @@ display:none;
 
 <body>
 
-<div class="bg-shell">
-<canvas id="liquidCanvas"></canvas>
+<div class="bg">
+<canvas id="bgCanvas"></canvas>
 </div>
 
-<div class="cursor-core"></div>
-<div class="cursor-trail"></div>
+<div class="cursor"></div>
+<div class="cursorTrail"></div>
 
 <nav class="nav">
 <a href="#">Home</a>
@@ -294,9 +261,7 @@ display:none;
 </nav>
 
 <section class="hero">
-
-<h1 class="hero-title">BLUCINELAB</h1>
-
+<h1>BluCineLab</h1>
 </section>
 
 <section class="section">
@@ -304,27 +269,36 @@ display:none;
 <div class="grid">
 
 <div class="card">
+
 <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728">
-<div class="card-body">
-<div class="card-title">Cinema Production</div>
-<div class="card-text">Set design, props e scenografia.</div>
+
+<div class="cardBody">
+<div class="cardTitle">Cinema Production</div>
+<div class="cardText">Set design e produzione scenografica.</div>
 </div>
+
 </div>
 
 <div class="card">
+
 <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3">
-<div class="card-body">
-<div class="card-title">Digital Systems</div>
-<div class="card-text">Progetti web e visual systems.</div>
+
+<div class="cardBody">
+<div class="cardTitle">Digital Systems</div>
+<div class="cardText">Progetti web e sistemi visivi.</div>
 </div>
+
 </div>
 
 <div class="card">
+
 <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30">
-<div class="card-body">
-<div class="card-title">Spatial Events</div>
-<div class="card-text">Mostre, allestimenti e installazioni.</div>
+
+<div class="cardBody">
+<div class="cardTitle">Spatial Events</div>
+<div class="cardText">Mostre, allestimenti e installazioni.</div>
 </div>
+
 </div>
 
 </div>
@@ -333,10 +307,10 @@ display:none;
 
 <script>
 
-/* ===== CURSOR ===== */
+/* ----- CURSOR ----- */
 
-const cursor=document.querySelector(".cursor-core")
-const trail=document.querySelector(".cursor-trail")
+const cursor=document.querySelector(".cursor")
+const trail=document.querySelector(".cursorTrail")
 
 let mx=window.innerWidth/2
 let my=window.innerHeight/2
@@ -352,46 +326,23 @@ my=e.clientY
 cursor.style.left=mx+"px"
 cursor.style.top=my+"px"
 
-spawnComet(mx,my)
-
 })
 
-function spawnComet(x,y){
+function animate(){
 
-if(Math.random()<0.5){
-
-const p=document.createElement("div")
-p.className="comet-particle"
-
-p.style.left=x+"px"
-p.style.top=y+"px"
-
-p.style.setProperty("--dx",(Math.random()-.5)*40+"px")
-p.style.setProperty("--dy",(-20-Math.random()*40)+"px")
-
-document.body.appendChild(p)
-
-setTimeout(()=>p.remove(),1200)
-
-}
-
-}
-
-function animateCursor(){
-
-tx+=(mx-tx)*0.15
-ty+=(my-ty)*0.15
+tx+=(mx-tx)*0.18
+ty+=(my-ty)*0.18
 
 trail.style.left=tx+"px"
 trail.style.top=ty+"px"
 
-requestAnimationFrame(animateCursor)
+requestAnimationFrame(animate)
 
 }
 
-animateCursor()
+animate()
 
-/* ===== SECTION REVEAL ===== */
+/* ----- SECTION REVEAL ----- */
 
 const sections=document.querySelectorAll(".section")
 
@@ -405,16 +356,14 @@ e.target.classList.add("visible")
 
 sections.forEach(sec=>observer.observe(sec))
 
-/* ===== BACKGROUND LIQUID ===== */
+/* ----- BACKGROUND LIQUID ----- */
 
-const canvas=document.getElementById("liquidCanvas")
+const canvas=document.getElementById("bgCanvas")
 const ctx=canvas.getContext("2d")
 
 function resize(){
-
 canvas.width=window.innerWidth
 canvas.height=window.innerHeight
-
 }
 
 resize()
@@ -423,7 +372,7 @@ window.addEventListener("resize",resize)
 
 let blobs=[]
 
-for(let i=0;i<12;i++){
+for(let i=0;i<10;i++){
 
 blobs.push({
 
