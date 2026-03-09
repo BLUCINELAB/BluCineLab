@@ -17,20 +17,20 @@ if (cursor) {
   });
 
   function createSpark(x, y) {
-    if (Math.random() > 0.32) return;
+    if (Math.random() > 0.55) return;
 
     const spark = document.createElement("div");
     spark.className = "spark";
     spark.style.left = x + "px";
     spark.style.top = y + "px";
-    spark.style.setProperty("--dx", (Math.random() - 0.5) * 18 + "px");
-    spark.style.setProperty("--dy", (-8 - Math.random() * 18) + "px");
+    spark.style.setProperty("--dx", (Math.random() - 0.5) * 24 + "px");
+    spark.style.setProperty("--dy", (-10 - Math.random() * 22) + "px");
 
     document.body.appendChild(spark);
 
     setTimeout(() => {
       spark.remove();
-    }, 750);
+    }, 850);
   }
 }
 
@@ -49,6 +49,71 @@ const revealObserver = new IntersectionObserver((entries) => {
 });
 
 revealSections.forEach((section) => revealObserver.observe(section));
+
+/* ================= MAGNETIC / POP CARDS ================= */
+
+const magneticCards = document.querySelectorAll(".magnetic-card");
+
+magneticCards.forEach((card) => {
+  function onMove(e) {
+    const rect = card.getBoundingClientRect();
+    const px = ((e.clientX - rect.left) / rect.width) * 100;
+    const py = ((e.clientY - rect.top) / rect.height) * 100;
+
+    const ry = ((px / 100) - 0.5) * 7;
+    const rx = (0.5 - (py / 100)) * 7;
+
+    card.style.setProperty("--mx", `${px}%`);
+    card.style.setProperty("--my", `${py}%`);
+    card.classList.add("is-hovered");
+    card.style.transform = `translateY(-8px) scale(1.018) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+  }
+
+  function onLeave() {
+    card.classList.remove("is-hovered");
+    card.style.transform = "";
+  }
+
+  card.addEventListener("mousemove", onMove);
+  card.addEventListener("mouseleave", onLeave);
+});
+
+/* ================= HOME TITLE DOCK ================= */
+
+const homeTitle = document.getElementById("homeTitle");
+const dock = document.getElementById("homeTitleDock");
+const homeHero = document.getElementById("homeHero");
+
+if (homeTitle && dock && homeHero) {
+  function updateHomeDock() {
+    const rect = homeHero.getBoundingClientRect();
+    const trigger = rect.bottom < window.innerHeight * 0.46;
+
+    if (trigger) {
+      dock.classList.add("is-visible");
+    } else {
+      dock.classList.remove("is-visible");
+    }
+  }
+
+  updateHomeDock();
+  window.addEventListener("scroll", updateHomeDock, { passive: true });
+}
+
+/* ================= PARALLAX SECTIONS ================= */
+
+const parallaxSections = document.querySelectorAll(".parallax-section");
+
+function updateParallax() {
+  parallaxSections.forEach((section) => {
+    const rect = section.getBoundingClientRect();
+    const offset = (window.innerHeight - rect.top) * 0.03;
+    section.style.transform = `translateY(${Math.max(0, Math.min(18, offset))}px)`;
+  });
+}
+
+updateParallax();
+window.addEventListener("scroll", updateParallax, { passive: true });
 
 /* ================= BG CANVAS ================= */
 
