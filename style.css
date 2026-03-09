@@ -96,17 +96,17 @@ img{
 
 .spark{
   position:fixed;
-  width:2px;
-  height:2px;
+  width:1.6px;
+  height:1.6px;
   background:#fff;
   border-radius:50%;
   pointer-events:none;
   z-index:9998;
   box-shadow:
-    0 0 4px rgba(255,255,255,.95),
-    0 0 9px rgba(160,220,255,.72),
-    0 0 16px rgba(160,220,255,.38);
-  animation:sparkFade .95s linear forwards;
+    0 0 3px rgba(255,255,255,.95),
+    0 0 7px rgba(170,220,255,.62),
+    0 0 12px rgba(170,220,255,.26);
+  animation:sparkFade 1.05s linear forwards;
 }
 
 @keyframes sparkFade{
@@ -173,11 +173,12 @@ img{
   background:
     linear-gradient(
       120deg,
-      #8aa2b9,
-      #ffffff,
-      #e8dcc9,
-      #ffffff,
-      #8aa2b9
+      #7e8d9d 0%,
+      #d8dde2 18%,
+      #f5f7f8 34%,
+      #b9c1c8 52%,
+      #eef1f4 70%,
+      #8796a6 100%
     );
   -webkit-background-clip:text;
   color:transparent;
@@ -187,9 +188,10 @@ img{
 
 .title span:hover{
   text-shadow:
-    0 0 10px rgba(255,255,255,.92),
-    0 0 20px rgba(158,208,255,.76),
-    0 0 38px rgba(158,208,255,.44);
+    0 0 7px rgba(230,236,242,.74),
+    0 0 14px rgba(188,203,220,.44),
+    0 0 28px rgba(160,178,198,.22);
+  filter:brightness(1.08);
   transform:translateY(-1px);
 }
 
@@ -234,17 +236,18 @@ img{
   background:
     linear-gradient(
       120deg,
-      #8aa2b9,
-      #ffffff,
-      #e8dcc9,
-      #ffffff,
-      #8aa2b9
+      #7e8d9d 0%,
+      #d8dde2 18%,
+      #f5f7f8 34%,
+      #b9c1c8 52%,
+      #eef1f4 70%,
+      #8796a6 100%
     );
   -webkit-background-clip:text;
   color:transparent;
   text-shadow:
-    0 0 8px rgba(255,255,255,.18),
-    0 0 18px rgba(158,208,255,.12);
+    0 0 6px rgba(225,231,238,.14),
+    0 0 14px rgba(170,188,208,.08);
 }
 
 .home-hero{
