@@ -16,10 +16,10 @@
 
   <style>
     :root {
-      --bg: #03060a;
+      --bg: #02050a;
       --bg-deep: #010307;
-      --panel: rgba(12, 18, 26, 0.68);
-      --panel-2: rgba(16, 23, 34, 0.76);
+      --panel: rgba(10, 15, 22, 0.72);
+      --panel-2: rgba(14, 20, 30, 0.78);
 
       --text: #e8e2d7;
       --text-soft: rgba(220, 212, 198, 0.82);
@@ -29,8 +29,6 @@
 
       --max: 1280px;
       --content: 1080px;
-      --radius: 18px;
-      --radius-lg: 28px;
 
       --topbar-h: 74px;
       --dock-progress: 0;
@@ -65,8 +63,8 @@
       pointer-events: none;
       overflow: hidden;
       background:
-        radial-gradient(1600px 1200px at 50% 120%, rgba(0, 0, 0, 0.74), transparent 70%),
-        linear-gradient(180deg, #09121a 0%, #040a11 36%, #010307 100%);
+        radial-gradient(1600px 1200px at 50% 120%, rgba(0, 0, 0, 0.82), transparent 70%),
+        linear-gradient(180deg, #071018 0%, #030910 36%, #010307 100%);
     }
 
     #liquidCanvas {
@@ -75,14 +73,14 @@
       width: 100%;
       height: 100%;
       display: block;
-      opacity: 1;
+      opacity: 0.78;
     }
 
     .bg-grain {
       position: absolute;
       inset: 0;
       background: url("https://grainy-gradients.vercel.app/noise.png");
-      opacity: 0.035;
+      opacity: 0.03;
       mix-blend-mode: overlay;
     }
 
@@ -90,8 +88,8 @@
       position: absolute;
       inset: 0;
       box-shadow:
-        inset 0 0 300px rgba(0, 0, 0, 0.8),
-        inset 0 0 48px rgba(255,255,255,0.01);
+        inset 0 0 360px rgba(0, 0, 0, 0.84),
+        inset 0 0 54px rgba(255,255,255,0.008);
     }
 
     /* ================= CURSOR ================= */
@@ -108,7 +106,7 @@
       box-shadow:
         0 0 10px rgba(212, 238, 255, 0.9),
         0 0 28px rgba(150, 205, 255, 0.55),
-        0 0 64px rgba(150, 205, 255, 0.24);
+        0 0 64px rgba(150, 205, 255, 0.22);
     }
 
     .cursor-trail {
@@ -117,7 +115,7 @@
       height: 28px;
       border-radius: 50%;
       transform: translate(-50%, -50%);
-      background: radial-gradient(circle, rgba(150, 205, 255, 0.24), transparent 70%);
+      background: radial-gradient(circle, rgba(150, 205, 255, 0.18), transparent 70%);
       filter: blur(6px);
       pointer-events: none;
       z-index: 9998;
@@ -155,7 +153,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 0, 0, 0.28);
+      background: rgba(0, 0, 0, 0.32);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       z-index: 100;
@@ -163,12 +161,12 @@
     }
 
     .topbar.is-scrolled {
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.56);
       border-bottom-color: rgba(255, 255, 255, 0.05);
     }
 
     .topbar-inner {
-      width: min(var(--max), calc(100% - 40px));
+      width: min(1280px, calc(100% - 40px));
       height: 100%;
       display: flex;
       align-items: center;
@@ -245,22 +243,23 @@
     /* ================= HERO ================= */
 
     .hero {
-      min-height: 160vh;
+      min-height: 118vh;
       display: flex;
       align-items: flex-start;
       justify-content: center;
       padding-top: 92px;
+      margin-bottom: -24px;
     }
 
     .hero-sticky {
       position: sticky;
       top: 10vh;
-      width: min(var(--content), calc(100% - 40px));
+      width: min(1080px, calc(100% - 40px));
     }
 
     .hero-inner {
       display: grid;
-      gap: 34px;
+      gap: 26px;
       transform:
         translateY(calc(var(--dock-progress) * -54px))
         scale(calc(1 - var(--dock-progress) * 0.18));
@@ -284,18 +283,18 @@
       position: absolute;
       left: var(--hero-glow-x);
       top: 52%;
-      width: 300px;
-      height: 200px;
+      width: 360px;
+      height: 220px;
       transform: translate(-50%, -50%);
       background:
         radial-gradient(
           ellipse at center,
-          rgba(182, 226, 255, 0.16) 0%,
-          rgba(166, 186, 255, 0.1) 26%,
-          rgba(255, 220, 170, 0.05) 48%,
+          rgba(196, 232, 255, 0.18) 0%,
+          rgba(178, 196, 255, 0.12) 24%,
+          rgba(255, 226, 180, 0.06) 44%,
           transparent 74%
         );
-      filter: blur(28px);
+      filter: blur(32px);
       opacity: 0;
       transition: opacity 0.18s ease;
       pointer-events: none;
@@ -309,19 +308,20 @@
     .wordmark span {
       font-family: Oswald, sans-serif;
       font-weight: 400;
-      font-size: clamp(6.4rem, 13vw, 12rem);
+      font-size: clamp(6.6rem, 13.4vw, 12.4rem);
       line-height: 0.84;
       letter-spacing: 0.05em;
       color: transparent;
       background:
         linear-gradient(
           112deg,
-          #9dc0d7 0%,
-          #f5efe4 18%,
-          #fffdf9 30%,
-          #d9cbbb 48%,
-          #ada5bf 72%,
-          #e2ceb0 100%
+          #89aecd 0%,
+          #f6f0e5 14%,
+          #ffffff 22%,
+          #d9cbbb 40%,
+          #f4ead8 56%,
+          #a6a0be 74%,
+          #e0c8aa 100%
         );
       -webkit-background-clip: text;
       background-clip: text;
@@ -331,46 +331,66 @@
         filter 0.22s ease,
         transform 0.22s ease;
       filter:
-        drop-shadow(0 1px 0 rgba(255,255,255,0.1))
-        drop-shadow(0 12px 22px rgba(0,0,0,0.26));
+        drop-shadow(0 1px 0 rgba(255,255,255,0.14))
+        drop-shadow(0 12px 22px rgba(0,0,0,0.32));
       z-index: 1;
       overflow: visible;
+    }
+
+    .wordmark span::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(255,255,255,0.3) 0%,
+          rgba(255,255,255,0.08) 22%,
+          rgba(0,0,0,0.08) 70%,
+          rgba(0,0,0,0.16) 100%
+        );
+      -webkit-background-clip: text;
+      background-clip: text;
+      mix-blend-mode: screen;
+      opacity: 0.28;
+      pointer-events: none;
     }
 
     .wordmark span::after {
       content: "";
       position: absolute;
-      inset: -18px -22px;
-      background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(255,255,255,0.08) 34%,
-        rgba(255,255,255,0.32) 50%,
-        rgba(255,255,255,0.08) 66%,
-        transparent 100%
-      );
+      inset: -20px -24px;
+      background:
+        linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(255,255,255,0.08) 28%,
+          rgba(255,255,255,0.36) 50%,
+          rgba(255,255,255,0.08) 72%,
+          transparent 100%
+        );
       transform: translateX(-220%) skewX(-18deg);
       opacity: 0;
       mix-blend-mode: screen;
       pointer-events: none;
-      border-radius: 24px;
+      border-radius: 28px;
     }
 
     .wordmark span.glow {
       text-shadow:
-        0 0 14px rgba(162, 224, 255, 0.94),
-        0 0 38px rgba(162, 224, 255, 0.64),
-        0 0 104px rgba(140, 160, 255, 0.46);
+        0 0 16px rgba(182, 230, 255, 0.96),
+        0 0 42px rgba(162, 224, 255, 0.68),
+        0 0 116px rgba(148, 168, 255, 0.48);
       filter:
-        brightness(1.2)
-        drop-shadow(0 1px 0 rgba(255,255,255,0.14))
-        drop-shadow(0 18px 28px rgba(0,0,0,0.26));
+        brightness(1.24)
+        drop-shadow(0 1px 0 rgba(255,255,255,0.16))
+        drop-shadow(0 20px 30px rgba(0,0,0,0.3));
       transform: translateY(-2px);
     }
 
     .wordmark span.glow::after {
       opacity: 1;
-      animation: sheen 0.55s cubic-bezier(.22,1,.36,1);
+      animation: sheen 0.6s cubic-bezier(.22,1,.36,1);
     }
 
     @keyframes sheen {
@@ -411,8 +431,8 @@
     /* ================= PANELS ================= */
 
     .panel {
-      width: min(var(--content), calc(100% - 40px));
-      margin: 150px auto;
+      width: min(1080px, calc(100% - 40px));
+      margin: 96px auto 120px;
       padding: 38px;
       border-radius: 18px;
       border: 1px solid var(--gold);
@@ -478,8 +498,8 @@
     /* ================= CAPABILITIES ================= */
 
     .grid-block {
-      width: min(var(--content), calc(100% - 40px));
-      margin: 150px auto;
+      width: min(1080px, calc(100% - 40px));
+      margin: 0 auto 130px;
     }
 
     .grid {
@@ -487,6 +507,13 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 22px;
       margin-top: 26px;
+    }
+
+    .card,
+    .archive-card,
+    .search-card {
+      transform-style: preserve-3d;
+      will-change: transform, box-shadow, border-color, background;
     }
 
     .card {
@@ -498,9 +525,10 @@
         rgba(18, 22, 30, 0.54);
       backdrop-filter: blur(12px);
       transition:
-        transform 0.3s ease,
-        border-color 0.25s ease,
-        box-shadow 0.25s ease;
+        transform 0.28s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease,
+        background 0.22s ease;
       box-shadow:
         0 18px 50px rgba(0, 0, 0, 0.18),
         inset 0 1px 0 rgba(255,255,255,0.03);
@@ -508,12 +536,43 @@
       overflow: hidden;
     }
 
-    .card:hover {
-      transform: translateY(-6px);
+    .card::after,
+    .archive-card::after,
+    .search-card::after {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background:
+        radial-gradient(
+          240px 140px at var(--mx, 50%) var(--my, 50%),
+          rgba(190, 230, 255, 0.08),
+          rgba(255, 220, 176, 0.045) 34%,
+          transparent 70%
+        );
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+
+    .card.is-hovered,
+    .archive-card.is-hovered,
+    .search-card.is-hovered {
+      transform: translateY(-8px) scale(1.02);
       border-color: var(--gold-strong);
       box-shadow:
-        0 24px 70px rgba(0, 0, 0, 0.24),
-        inset 0 1px 0 rgba(255,255,255,0.05);
+        0 28px 80px rgba(0, 0, 0, 0.28),
+        0 0 0 1px rgba(190, 230, 255, 0.04),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.006)),
+        rgba(24, 30, 42, 0.74);
+      z-index: 3;
+    }
+
+    .card.is-hovered::after,
+    .archive-card.is-hovered::after,
+    .search-card.is-hovered::after {
+      opacity: 1;
     }
 
     .card h3 {
@@ -547,7 +606,7 @@
 
     .archive {
       width: min(1160px, calc(100% - 40px));
-      margin: 180px auto;
+      margin: 0 auto 130px;
     }
 
     .cards {
@@ -574,22 +633,15 @@
         linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.004)),
         var(--panel-2);
       transition:
-        transform 0.3s ease,
-        border-color 0.25s ease,
-        box-shadow 0.25s ease;
+        transform 0.28s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease,
+        background 0.22s ease;
       box-shadow:
         0 18px 50px rgba(0, 0, 0, 0.18),
         inset 0 1px 0 rgba(255,255,255,0.03);
       scroll-snap-align: start;
       position: relative;
-    }
-
-    .archive-card:hover {
-      transform: translateY(-8px);
-      border-color: var(--gold-strong);
-      box-shadow:
-        0 24px 70px rgba(0, 0, 0, 0.24),
-        inset 0 1px 0 rgba(255,255,255,0.05);
     }
 
     .archive-card img {
@@ -598,10 +650,10 @@
       object-fit: cover;
       display: block;
       filter: brightness(0.9) contrast(1.02);
-      transition: transform 0.4s ease, filter 0.3s ease;
+      transition: transform 0.38s ease, filter 0.28s ease;
     }
 
-    .archive-card:hover img {
+    .archive-card.is-hovered img {
       transform: scale(1.04);
       filter: brightness(0.98) contrast(1.04);
     }
@@ -628,8 +680,8 @@
     /* ================= LAB ================= */
 
     .search-lab {
-      width: min(var(--content), calc(100% - 40px));
-      margin: 180px auto;
+      width: min(1080px, calc(100% - 40px));
+      margin: 0 auto 130px;
     }
 
     .search-grid {
@@ -652,12 +704,11 @@
       box-shadow:
         0 18px 50px rgba(0, 0, 0, 0.18),
         inset 0 1px 0 rgba(255,255,255,0.03);
-      transition: transform 0.25s ease, border-color 0.25s ease;
-    }
-
-    .search-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--gold-strong);
+      transition:
+        transform 0.28s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease,
+        background 0.22s ease;
     }
 
     .search-card h3 {
@@ -672,8 +723,8 @@
     /* ================= CONTACT ================= */
 
     .contact {
-      width: min(var(--content), calc(100% - 40px));
-      margin: 180px auto;
+      width: min(1080px, calc(100% - 40px));
+      margin: 0 auto 180px;
     }
 
     .contact-links {
@@ -746,7 +797,7 @@
       }
 
       .hero {
-        min-height: 120vh;
+        min-height: 100vh;
       }
 
       .grid,
@@ -839,7 +890,7 @@
       <h2>Capabilities</h2>
 
       <div class="grid">
-        <article class="card">
+        <article class="card tilt-card">
           <h3>Direction</h3>
           <p>Direzione visiva per progetti culturali, audiovisivi e brand con una forte componente narrativa.</p>
           <div class="card-meta">
@@ -848,7 +899,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card tilt-card">
           <h3>Visual Systems</h3>
           <p>Identità, linguaggi grafici e strutture che tengono insieme un progetto nel tempo.</p>
           <div class="card-meta">
@@ -857,7 +908,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card tilt-card">
           <h3>Digital Design</h3>
           <p>Siti, ambienti digitali e sistemi visivi per piattaforme online con un taglio autoriale.</p>
           <div class="card-meta">
@@ -866,7 +917,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card tilt-card">
           <h3>Spatial Design</h3>
           <p>Scenografie, allestimenti, ambienti e dispositivi visivi per eventi, mostre e produzioni.</p>
           <div class="card-meta">
@@ -875,7 +926,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card tilt-card">
           <h3>Photography</h3>
           <p>Immagini di processo, archivio, still life, backstage e documentazione progettuale.</p>
           <div class="card-meta">
@@ -884,7 +935,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card tilt-card">
           <h3>Research</h3>
           <p>Raccolta di riferimenti, materiali, immagini e connessioni per dare spessore a ogni lavoro.</p>
           <div class="card-meta">
@@ -899,7 +950,7 @@
       <h2>Archive</h2>
 
       <div class="cards">
-        <article class="archive-card">
+        <article class="archive-card tilt-card">
           <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1200&auto=format&fit=crop" alt="Set cinematografico">
           <div class="archive-info">
             <h4>Cinema Set</h4>
@@ -907,7 +958,7 @@
           </div>
         </article>
 
-        <article class="archive-card">
+        <article class="archive-card tilt-card">
           <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="Computer e sviluppo web">
           <div class="archive-info">
             <h4>Digital Production</h4>
@@ -915,7 +966,7 @@
           </div>
         </article>
 
-        <article class="archive-card">
+        <article class="archive-card tilt-card">
           <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop" alt="Grande evento scenografico">
           <div class="archive-info">
             <h4>Event Scenography</h4>
@@ -923,7 +974,7 @@
           </div>
         </article>
 
-        <article class="archive-card">
+        <article class="archive-card tilt-card">
           <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Arte design fotografia">
           <div class="archive-info">
             <h4>Art & Design</h4>
@@ -931,7 +982,7 @@
           </div>
         </article>
 
-        <article class="archive-card">
+        <article class="archive-card tilt-card">
           <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1200&auto=format&fit=crop" alt="Fotografia e documentazione visiva">
           <div class="archive-info">
             <h4>Photography</h4>
@@ -945,35 +996,35 @@
       <h2>Lab / Research Paths</h2>
 
       <div class="search-grid">
-        <article class="search-card">
+        <article class="search-card tilt-card">
           <h3>Editorial Composition</h3>
           <p>Gerarchia, ritmo, pagina, presenza.</p>
         </article>
-        <article class="search-card">
+        <article class="search-card tilt-card">
           <h3>Set Lighting</h3>
           <p>Luce come costruzione narrativa e spaziale.</p>
         </article>
-        <article class="search-card">
+        <article class="search-card tilt-card">
           <h3>Material Archive</h3>
           <p>Metalli, superfici, tessuti, riflessi, usura.</p>
         </article>
-        <article class="search-card">
+        <article class="search-card tilt-card">
           <h3>Stage Systems</h3>
           <p>Apparati scenici, strutture e regia dello spazio.</p>
         </article>
-        <article class="search-card">
+        <article class="search-card tilt-card">
           <h3>Photo Research</h3>
           <p>Reference board, image collection, sequencing.</p>
         </article>
-        <article class="search-card">
+        <article class="search-card tilt-card">
           <h3>Interactive Surfaces</h3>
           <p>Web, UI, motion, comportamento editoriale.</p>
         </article>
-        <article class="search-card">
+        <article class="search-card tilt-card">
           <h3>Large Event Design</h3>
           <p>Scenografia espansa, pubblico, impatto e leggibilità.</p>
         </article>
-        <article class="search-card">
+        <article class="search-card tilt-card">
           <h3>Visual Storyworlds</h3>
           <p>Identità coerenti capaci di generare universo.</p>
         </article>
@@ -1071,7 +1122,39 @@
     }
     animateCursor();
 
-    /* DARKER / FLUID / NON-VECTOR BACKGROUND */
+    /* CARD HOVER EFFECT */
+    const hoverCards = document.querySelectorAll(".tilt-card");
+
+    hoverCards.forEach((card) => {
+      let raf = null;
+
+      function setCard(e) {
+        const rect = card.getBoundingClientRect();
+        const px = ((e.clientX - rect.left) / rect.width) * 100;
+        const py = ((e.clientY - rect.top) / rect.height) * 100;
+        const ry = ((px / 100) - 0.5) * 8;
+        const rx = (0.5 - (py / 100)) * 8;
+
+        card.style.setProperty("--mx", `${px}%`);
+        card.style.setProperty("--my", `${py}%`);
+        card.classList.add("is-hovered");
+
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          card.style.transform = `translateY(-8px) scale(1.02) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+        });
+      }
+
+      function resetCard() {
+        card.classList.remove("is-hovered");
+        card.style.transform = "";
+      }
+
+      card.addEventListener("mousemove", setCard);
+      card.addEventListener("mouseleave", resetCard);
+    });
+
+    /* DARKER FLUID BACKGROUND */
     const canvas = document.getElementById("liquidCanvas");
     const ctx = canvas.getContext("2d");
 
@@ -1103,34 +1186,34 @@
 
     function palette(mode, alpha = 1) {
       if (mode === 0) return [
-        `rgba(245,225,185,${0.09 * alpha})`,
-        `rgba(230,170,210,${0.07 * alpha})`,
-        `rgba(145,190,255,${0.08 * alpha})`,
-        `rgba(110,220,225,${0.05 * alpha})`
+        `rgba(245,225,185,${0.06 * alpha})`,
+        `rgba(230,170,210,${0.045 * alpha})`,
+        `rgba(145,190,255,${0.05 * alpha})`,
+        `rgba(110,220,225,${0.032 * alpha})`
       ];
       if (mode === 1) return [
-        `rgba(195,220,255,${0.1 * alpha})`,
-        `rgba(170,130,228,${0.07 * alpha})`,
-        `rgba(255,210,170,${0.06 * alpha})`,
-        `rgba(146,208,255,${0.05 * alpha})`
+        `rgba(195,220,255,${0.07 * alpha})`,
+        `rgba(170,130,228,${0.045 * alpha})`,
+        `rgba(255,210,170,${0.04 * alpha})`,
+        `rgba(146,208,255,${0.032 * alpha})`
       ];
       if (mode === 2) return [
-        `rgba(255,246,234,${0.08 * alpha})`,
-        `rgba(194,214,255,${0.08 * alpha})`,
-        `rgba(132,220,255,${0.05 * alpha})`,
-        `rgba(178,132,210,${0.04 * alpha})`
+        `rgba(255,246,234,${0.055 * alpha})`,
+        `rgba(194,214,255,${0.05 * alpha})`,
+        `rgba(132,220,255,${0.032 * alpha})`,
+        `rgba(178,132,210,${0.028 * alpha})`
       ];
       if (mode === 3) return [
-        `rgba(188,214,255,${0.09 * alpha})`,
-        `rgba(210,174,255,${0.06 * alpha})`,
-        `rgba(255,224,188,${0.06 * alpha})`,
-        `rgba(140,230,220,${0.05 * alpha})`
+        `rgba(188,214,255,${0.06 * alpha})`,
+        `rgba(210,174,255,${0.04 * alpha})`,
+        `rgba(255,224,188,${0.04 * alpha})`,
+        `rgba(140,230,220,${0.03 * alpha})`
       ];
       return [
-        `rgba(236,226,210,${0.07 * alpha})`,
-        `rgba(150,198,255,${0.06 * alpha})`,
-        `rgba(244,200,160,${0.05 * alpha})`,
-        `rgba(164,234,226,${0.05 * alpha})`
+        `rgba(236,226,210,${0.05 * alpha})`,
+        `rgba(150,198,255,${0.04 * alpha})`,
+        `rgba(244,200,160,${0.032 * alpha})`,
+        `rgba(164,234,226,${0.03 * alpha})`
       ];
     }
 
@@ -1158,16 +1241,16 @@
 
     function drawSpecularPools(t) {
       ctx.globalCompositeOperation = "screen";
-      for (let i = 0; i < 10; i++) {
-        const x = window.innerWidth * (0.08 + i * 0.095) + Math.sin(t * 0.00009 + i) * 34;
-        const y = window.innerHeight * (0.18 + 0.06 * Math.sin(i * 0.8 + t * 0.00007));
-        const rx = 180 + Math.sin(t * 0.0001 + i) * 26;
-        const ry = 42 + Math.cos(t * 0.00013 + i) * 8;
+      for (let i = 0; i < 8; i++) {
+        const x = window.innerWidth * (0.1 + i * 0.105) + Math.sin(t * 0.00009 + i) * 30;
+        const y = window.innerHeight * (0.2 + 0.05 * Math.sin(i * 0.8 + t * 0.00007));
+        const rx = 160 + Math.sin(t * 0.0001 + i) * 18;
+        const ry = 34 + Math.cos(t * 0.00013 + i) * 6;
 
         const g = ctx.createRadialGradient(x, y, 0, x, y, rx);
-        g.addColorStop(0, "rgba(255,248,236,0.06)");
-        g.addColorStop(0.18, "rgba(180,220,255,0.05)");
-        g.addColorStop(0.38, "rgba(204,170,255,0.03)");
+        g.addColorStop(0, "rgba(255,248,236,0.035)");
+        g.addColorStop(0.18, "rgba(180,220,255,0.032)");
+        g.addColorStop(0.38, "rgba(204,170,255,0.018)");
         g.addColorStop(1, "rgba(0,0,0,0)");
 
         ctx.fillStyle = g;
@@ -1181,9 +1264,9 @@
       ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
       const darkBase = ctx.createLinearGradient(0, 0, 0, window.innerHeight);
-      darkBase.addColorStop(0, "rgba(6,14,22,0.82)");
-      darkBase.addColorStop(0.5, "rgba(4,10,16,0.44)");
-      darkBase.addColorStop(1, "rgba(0,0,0,0)");
+      darkBase.addColorStop(0, "rgba(5,12,18,0.9)");
+      darkBase.addColorStop(0.5, "rgba(4,8,14,0.6)");
+      darkBase.addColorStop(1, "rgba(0,0,0,0.08)");
       ctx.fillStyle = darkBase;
       ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
@@ -1197,34 +1280,34 @@
 
       ctx.globalCompositeOperation = "screen";
 
-      ctx.filter = "blur(56px)";
-      for (const f of fields) drawFieldBlob(f, t, 0.9);
+      ctx.filter = "blur(74px)";
+      for (const f of fields) drawFieldBlob(f, t, 0.7);
 
-      ctx.filter = "blur(26px)";
+      ctx.filter = "blur(34px)";
       for (const f of fields) {
         drawFieldBlob(
           {
             ...f,
-            x: f.x + Math.sin(t * 0.00004 + f.seed) * 14,
-            y: f.y + Math.cos(t * 0.00005 + f.seed) * 10,
-            r: f.r * 0.72
+            x: f.x + Math.sin(t * 0.00003 + f.seed) * 10,
+            y: f.y + Math.cos(t * 0.00004 + f.seed) * 8,
+            r: f.r * 0.74
           },
           t,
-          0.74
+          0.52
         );
       }
 
-      ctx.filter = "blur(10px)";
+      ctx.filter = "blur(14px)";
       for (const f of fields.slice(0, 10)) {
         drawFieldBlob(
           {
             ...f,
-            x: f.x + Math.cos(t * 0.00007 + f.seed) * 10,
-            y: f.y + Math.sin(t * 0.00008 + f.seed) * 8,
-            r: f.r * 0.42
+            x: f.x + Math.cos(t * 0.00005 + f.seed) * 6,
+            y: f.y + Math.sin(t * 0.00006 + f.seed) * 5,
+            r: f.r * 0.46
           },
           t,
-          0.42
+          0.3
         );
       }
 
