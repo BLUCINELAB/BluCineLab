@@ -10,8 +10,6 @@
   --gold:rgba(208,178,122,.34);
   --gold-strong:rgba(230,198,140,.72);
 
-  --line:rgba(255,255,255,.05);
-
   --max:1280px;
 }
 
@@ -173,7 +171,7 @@ img{
   transform:scaleX(1);
 }
 
-/* ================= COMMON TITLES ================= */
+/* ================= TITLES ================= */
 
 .title{
   font-family:Oswald,sans-serif;
@@ -222,10 +220,10 @@ img{
   z-index:220;
   pointer-events:none;
   opacity:0;
-  transform:translateY(-12px);
+  transform:translateY(-10px);
   transition:
-    opacity .35s ease,
-    transform .35s ease;
+    opacity .32s ease,
+    transform .32s ease;
 }
 
 .home-title-dock.is-visible{
@@ -239,10 +237,26 @@ img{
   padding:14px 24px 0;
 }
 
-.dock-title{
-  font-size:clamp(1.25rem,2vw,1.8rem);
+.dock-wordmark{
+  font-family:Oswald,sans-serif;
+  font-size:clamp(1.3rem,2vw,1.85rem);
   line-height:1;
   letter-spacing:.16em;
+  text-transform:uppercase;
+  background:
+    linear-gradient(
+      120deg,
+      #8aa2b9,
+      #ffffff,
+      #e8dcc9,
+      #ffffff,
+      #8aa2b9
+    );
+  -webkit-background-clip:text;
+  color:transparent;
+  text-shadow:
+    0 0 8px rgba(255,255,255,.18),
+    0 0 18px rgba(158,208,255,.12);
 }
 
 .home-hero{
@@ -299,7 +313,11 @@ img{
 }
 
 .button-chip{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
   padding:13px 16px;
+  min-height:44px;
   border-radius:999px;
   border:1px solid var(--gold);
   background:
@@ -312,6 +330,11 @@ img{
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.05),
     0 12px 24px rgba(0,0,0,.12);
+  transition:
+    transform .28s ease,
+    border-color .28s ease,
+    box-shadow .28s ease,
+    background .28s ease;
 }
 
 .home-side-panel{
@@ -367,7 +390,7 @@ img{
   grid-template-columns:repeat(3,1fr);
 }
 
-/* ================= SHARED SECTION ================= */
+/* ================= SHARED SECTIONS ================= */
 
 .section,
 .archive-section{
@@ -442,23 +465,8 @@ img{
     inset 0 1px 0 rgba(255,255,255,.03);
 }
 
-.card::before,
-.cluster-card::before,
-.project-card::before,
-.button-chip::before,
-.home-side-panel::before{
-  will-change:opacity, transform;
-}
-
-.card::before,
-.cluster-card::after,
-.project-card::after,
-.button-chip::after,
-.magnetic-card::after{
-  content:"";
-}
-
 .card::before{
+  content:"";
   position:absolute;
   inset:0;
   background:
@@ -496,7 +504,8 @@ img{
   filter:brightness(.9);
 }
 
-.card:hover img{
+.card:hover img,
+.card.is-hovered img{
   transform:scale(1.05);
   filter:brightness(1.05);
 }
@@ -537,6 +546,7 @@ img{
 }
 
 .magnetic-card::after{
+  content:"";
   position:absolute;
   inset:-1px;
   background:
@@ -573,7 +583,7 @@ img{
   transform:translateY(-10px) scale(1.026);
 }
 
-/* ================= ARCHIVE / STUDIO / CONTACT ================= */
+/* ================= INTERNAL PAGES ================= */
 
 .archive-hero{
   padding:140px 24px 40px;
@@ -793,12 +803,6 @@ img{
 
 .archive-footer-space{
   height:110px;
-}
-
-/* ================= PARALLAX HELPERS ================= */
-
-.parallax-section{
-  will-change:transform;
 }
 
 /* ================= RESPONSIVE ================= */
