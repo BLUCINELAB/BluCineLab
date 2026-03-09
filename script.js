@@ -10,7 +10,7 @@ if (cursor) {
   });
 
   function createSparkBurst(x, y) {
-    const amount = 12 + Math.floor(Math.random() * 14); // 12–25
+    const amount = 12 + Math.floor(Math.random() * 14);
 
     for (let i = 0; i < amount; i++) {
       const spark = document.createElement("div");
