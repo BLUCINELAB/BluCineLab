@@ -104,9 +104,9 @@ img{
   z-index:9998;
   box-shadow:
     0 0 3px rgba(255,255,255,.95),
-    0 0 7px rgba(170,220,255,.62),
-    0 0 12px rgba(170,220,255,.26);
-  animation:sparkFade 1.05s linear forwards;
+    0 0 7px rgba(182,214,235,.8),
+    0 0 12px rgba(145,185,215,.42);
+  animation:sparkFade .95s linear forwards;
 }
 
 @keyframes sparkFade{
@@ -173,25 +173,40 @@ img{
   background:
     linear-gradient(
       120deg,
-      #7e8d9d 0%,
-      #d8dde2 18%,
-      #f5f7f8 34%,
-      #b9c1c8 52%,
-      #eef1f4 70%,
-      #8796a6 100%
+      #7f95a8 0%,
+      #dfe6ec 18%,
+      #f6f8fa 30%,
+      #c4cdd5 46%,
+      #f5f7f8 62%,
+      #b2bcc5 78%,
+      #7d93a6 100%
     );
   -webkit-background-clip:text;
   color:transparent;
   transition:.18s ease;
-  display:inline-block;
+  display:block;
+  flex:0 0 auto;
 }
 
 .title span:hover{
+  background:
+    linear-gradient(
+      120deg,
+      #8f9eaa 0%,
+      #d4dde4 18%,
+      #edf2f5 30%,
+      #bcc6ce 46%,
+      #ebeff2 62%,
+      #aab5be 78%,
+      #8b99a6 100%
+    );
+  -webkit-background-clip:text;
+  color:transparent;
   text-shadow:
-    0 0 7px rgba(230,236,242,.74),
-    0 0 14px rgba(188,203,220,.44),
-    0 0 28px rgba(160,178,198,.22);
-  filter:brightness(1.08);
+    0 0 6px rgba(196,206,214,.34),
+    0 0 12px rgba(170,186,198,.18),
+    0 0 24px rgba(146,166,182,.12);
+  filter:brightness(1.04);
   transform:translateY(-1px);
 }
 
@@ -231,23 +246,25 @@ img{
   font-family:Oswald,sans-serif;
   font-size:clamp(1.3rem,2vw,1.85rem);
   line-height:1;
-  letter-spacing:.16em;
+  letter-spacing:.14em;
   text-transform:uppercase;
+  white-space:nowrap;
   background:
     linear-gradient(
       120deg,
-      #7e8d9d 0%,
-      #d8dde2 18%,
-      #f5f7f8 34%,
-      #b9c1c8 52%,
-      #eef1f4 70%,
-      #8796a6 100%
+      #7f95a8 0%,
+      #dfe6ec 18%,
+      #f6f8fa 30%,
+      #c4cdd5 46%,
+      #f5f7f8 62%,
+      #b2bcc5 78%,
+      #7d93a6 100%
     );
   -webkit-background-clip:text;
   color:transparent;
   text-shadow:
-    0 0 6px rgba(225,231,238,.14),
-    0 0 14px rgba(170,188,208,.08);
+    0 0 6px rgba(196,206,214,.12),
+    0 0 14px rgba(170,186,198,.08);
 }
 
 .home-hero{
@@ -284,7 +301,28 @@ img{
 }
 
 .home-title{
-  font-size:clamp(4.2rem,8vw,7rem);
+  display:inline-flex;
+  flex-wrap:nowrap;
+  white-space:nowrap;
+  width:max-content;
+  max-width:100%;
+  overflow:visible;
+  font-size:clamp(4.1rem,7.4vw,7rem);
+  line-height:.9;
+  letter-spacing:.055em;
+  margin:14px 0 0;
+}
+
+.archive-title{
+  display:inline-flex;
+  flex-wrap:nowrap;
+  white-space:nowrap;
+  width:max-content;
+  max-width:100%;
+  overflow:visible;
+  font-size:clamp(3.8rem,6.4vw,6.4rem);
+  line-height:.9;
+  letter-spacing:.055em;
   margin:14px 0 0;
 }
 
@@ -389,8 +427,8 @@ img{
   opacity:0;
   transform:translateY(40px);
   transition:
-    opacity 1s ease,
-    transform 1s ease;
+    opacity .95s ease,
+    transform .95s ease;
 }
 
 .section.is-visible,
@@ -398,6 +436,26 @@ img{
   opacity:1;
   transform:none;
 }
+
+.reveal-item{
+  opacity:0;
+  transform:translateY(18px);
+  transition:
+    opacity .7s ease,
+    transform .7s ease;
+}
+
+.reveal-stagger.is-visible .reveal-item{
+  opacity:1;
+  transform:none;
+}
+
+.reveal-stagger.is-visible .reveal-item:nth-child(1){ transition-delay:.04s; }
+.reveal-stagger.is-visible .reveal-item:nth-child(2){ transition-delay:.10s; }
+.reveal-stagger.is-visible .reveal-item:nth-child(3){ transition-delay:.16s; }
+.reveal-stagger.is-visible .reveal-item:nth-child(4){ transition-delay:.22s; }
+.reveal-stagger.is-visible .reveal-item:nth-child(5){ transition-delay:.28s; }
+.reveal-stagger.is-visible .reveal-item:nth-child(6){ transition-delay:.34s; }
 
 .section-head{
   margin-bottom:26px;
@@ -603,6 +661,10 @@ img{
   gap:22px;
 }
 
+.archive-dense-grid{
+  gap:20px;
+}
+
 .cluster-card{
   padding:22px 20px 20px;
   min-height:200px;
@@ -638,6 +700,10 @@ img{
   gap:22px;
 }
 
+.archive-dense-projects{
+  gap:18px;
+}
+
 .projects-grid-large{
   grid-template-columns:repeat(2,1fr);
 }
@@ -657,11 +723,6 @@ img{
 
 .archive-copy{
   position:relative;
-}
-
-.archive-title{
-  font-size:clamp(4rem,7vw,6.4rem);
-  margin:14px 0 0;
 }
 
 .archive-intro{
@@ -732,9 +793,14 @@ img{
     padding-right:12px;
   }
 
-  .archive-title,
   .home-title{
-    font-size:clamp(3rem,12vw,4.2rem);
+    font-size:clamp(2.9rem, 11vw, 4.2rem);
+    letter-spacing:.04em;
+  }
+
+  .archive-title{
+    font-size:clamp(2.7rem, 10vw, 4rem);
+    letter-spacing:.04em;
   }
 
   .home-title-dock{
