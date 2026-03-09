@@ -4,483 +4,32 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>BluCineLab</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300&family=Inter:wght@200;300&display=swap" rel="stylesheet">
 
-<style>
-
-
-body{
-margin:0;
-background:#01040a;
-color:#e6e3da;
-font-family:Inter;
-overflow-x:hidden;
-cursor:none;
-}
-
-
-
-/* BACKGROUND FLUIDO */
-
-.fluid-bg{
-
-position:fixed;
-inset:0;
-
-background:
-
-radial-gradient(circle at 20% 40%,rgba(80,100,140,.25),transparent 60%),
-radial-gradient(circle at 80% 70%,rgba(120,150,200,.15),transparent 70%),
-radial-gradient(circle at 50% 50%,rgba(40,60,90,.3),transparent 70%);
-
-filter:blur(60px);
-
-animation:fluidMove 30s ease-in-out infinite alternate;
-
-z-index:-3;
-
-}
-
-@keyframes fluidMove{
-
-0%{transform:translateY(0)}
-100%{transform:translateY(-100px)}
-
-}
-
-
-
-/* PARTICELLE */
-
-.particle-field{
-
-position:fixed;
-inset:0;
-pointer-events:none;
-z-index:-2;
-
-}
-
-.particle{
-
-position:absolute;
-width:2px;
-height:2px;
-
-background:#b9d6ff;
-
-border-radius:50%;
-
-opacity:.8;
-
-animation:float 10s linear infinite;
-
-}
-
-@keyframes float{
-
-0%{transform:translateY(0)}
-100%{transform:translateY(-100vh)}
-
-}
-
-
-
-/* CURSORE COMETA */
-
-.cursor-core{
-
-position:fixed;
-width:6px;
-height:6px;
-
-border-radius:50%;
-background:#e7f6ff;
-
-pointer-events:none;
-z-index:9999;
-
-transform:translate(-50%,-50%);
-
-box-shadow:
-
-0 0 8px #c8ecff,
-0 0 25px #9fd6ff,
-0 0 60px #9fd6ff;
-
-}
-
-
-
-.cursor-trail{
-
-position:fixed;
-width:22px;
-height:22px;
-
-border-radius:50%;
-
-background:radial-gradient(circle,#9fd6ff33,transparent);
-
-pointer-events:none;
-transform:translate(-50%,-50%);
-
-z-index:9998;
-
-filter:blur(4px);
-
-}
-
-
-
-.cursor-particle{
-
-position:fixed;
-width:2px;
-height:2px;
-
-background:#d7ecff;
-
-border-radius:50%;
-
-pointer-events:none;
-
-opacity:.8;
-
-animation:fadeParticle .9s ease-out forwards;
-
-}
-
-
-
-@keyframes fadeParticle{
-
-0%{
-opacity:.9;
-transform:scale(1);
-}
-
-100%{
-opacity:0;
-transform:translateY(-15px) scale(.2);
-}
-
-}
-
-
-
-/* TOPBAR */
-
-.topbar{
-
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:70px;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-background:rgba(0,0,0,.35);
-backdrop-filter:blur(10px);
-
-z-index:10;
-
-}
-
-.nav{
-
-display:flex;
-gap:40px;
-
-}
-
-.nav a{
-
-color:#ddd;
-text-decoration:none;
-font-size:12px;
-letter-spacing:.2em;
-
-}
-
-
-
-/* HERO */
-
-.hero{
-
-min-height:120vh;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-padding-top:100px;
-
-}
-
-.hero-inner{
-
-width:900px;
-max-width:90%;
-
-}
-
-
-
-.wordmark{
-
-font-family:Oswald;
-font-weight:200;
-
-font-size:140px;
-
-letter-spacing:12px;
-
-display:flex;
-gap:4px;
-
-margin-bottom:30px;
-
-}
-
-.wordmark span{
-
-color:#eaeaea;
-transition:.3s;
-
-}
-
-.wordmark span.glow{
-
-text-shadow:
-
-0 0 10px #9fd6ff,
-0 0 30px #9fd6ff,
-0 0 60px #9fd6ff;
-
-}
-
-
-
-.hero-lead{
-
-max-width:420px;
-
-line-height:2;
-
-font-weight:300;
-
-font-size:14px;
-
-color:#cfc9bb;
-
-}
-
-
-
-/* PANEL */
-
-.panel{
-
-width:900px;
-max-width:90%;
-
-margin:160px auto;
-
-padding:40px;
-
-border-radius:18px;
-
-border:1px solid rgba(215,185,120,.45);
-
-background:rgba(20,25,35,.5);
-
-backdrop-filter:blur(10px);
-
-}
-
-.panel h2{
-
-font-family:Oswald;
-letter-spacing:.14em;
-
-margin-bottom:20px;
-
-font-weight:300;
-
-}
-
-.panel p{
-
-line-height:2;
-
-font-size:14px;
-
-color:#cfc9bb;
-
-}
-
-
-
-/* DISCIPLINES */
-
-.disciplines{
-
-display:grid;
-
-grid-template-columns:repeat(4,1fr);
-
-gap:40px;
-
-width:900px;
-max-width:90%;
-
-margin:120px auto;
-
-}
-
-.discipline h3{
-
-font-family:Oswald;
-font-weight:300;
-margin-bottom:10px;
-
-}
-
-.discipline p{
-
-font-size:13px;
-line-height:2;
-
-color:#cfc9bb;
-
-}
-
-
-
-/* ARCHIVE */
-
-.archive-section{
-
-margin:200px 0;
-
-}
-
-.archive-track{
-
-display:flex;
-gap:40px;
-
-width:max-content;
-
-padding:0 100px;
-
-}
-
-.archive-card{
-
-width:320px;
-
-border:1px solid rgba(215,185,120,.45);
-
-border-radius:20px;
-
-overflow:hidden;
-
-background:rgba(30,35,50,.6);
-
-}
-
-.archive-card img{
-
-width:100%;
-
-display:block;
-
-}
-
-.archive-card h4{
-
-font-family:Oswald;
-font-weight:300;
-
-padding:20px;
-
-}
-
-
-
-/* RESEARCH */
-
-.research{
-
-width:900px;
-max-width:90%;
-
-margin:160px auto;
-
-}
-
-.research-grid{
-
-display:grid;
-
-grid-template-columns:repeat(2,1fr);
-
-gap:30px;
-
-margin-top:40px;
-
-}
-
-.research-grid img{
-
-width:100%;
-border-radius:10px;
-
-}
-
-
-
-/* FOOTER */
-
-footer{
-
-text-align:center;
-padding:120px 0;
-
-color:#666;
-
-font-size:12px;
-
-}
-
-
-</style>
+<link rel="stylesheet" href="style.css">
 
 </head>
-
-
 
 <body>
 
 
 
-<div class="fluid-bg"></div>
+<!-- LIQUID BACKGROUND -->
 
-<div class="particle-field"></div>
+<canvas id="liquid"></canvas>
+
+<div class="particle-layer"></div>
+
+
+
+<!-- CURSOR -->
 
 <div class="cursor-core"></div>
 <div class="cursor-trail"></div>
-<div class="cursor-particles"></div>
 
 
 
@@ -496,6 +45,10 @@ font-size:12px;
 </nav>
 
 </header>
+
+
+
+<main>
 
 
 
@@ -518,15 +71,10 @@ font-size:12px;
 
 </h1>
 
-
 <p class="hero-lead">
 
 Studio visivo indipendente che lavora tra immagine,
 spazio e narrazione.
-
-Un laboratorio che attraversa grafica,
-cinema e scenografia per costruire sistemi
-visivi e dispositivi narrativi.
 
 </p>
 
@@ -536,22 +84,32 @@ visivi e dispositivi narrativi.
 
 
 
-<section id="studio" class="panel">
+<section id="studio" class="editorial-block">
+
+<div class="text-col">
 
 <h2>Studio</h2>
 
 <p>
 
-BluCineLab è un laboratorio di ricerca visiva tra immagine,
-spazio e narrazione.
+BluCineLab è un laboratorio di ricerca visiva tra
+immagine, spazio e narrazione.
 
-Il lavoro nasce dall’osservazione di archivi,
-materiali e processi che attraversano cinema,
-grafica e scenografia.
+Cinema, grafica e scenografia
+diventano materiali di progetto.
 
 </p>
 
+</div>
+
+<div class="image-col">
+
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
+
+</div>
+
 </section>
+
 
 
 
@@ -560,40 +118,28 @@ grafica e scenografia.
 <div class="discipline">
 
 <h3>Direction</h3>
-
-<p>
-Costruzione di visioni per progetti culturali e audiovisivi.
-</p>
+<p>Costruzione di visioni.</p>
 
 </div>
 
 <div class="discipline">
 
 <h3>Visual Systems</h3>
-
-<p>
-Strutture visive che tengono insieme un progetto nel tempo.
-</p>
+<p>Sistemi grafici evolutivi.</p>
 
 </div>
 
 <div class="discipline">
 
 <h3>Spatial Design</h3>
-
-<p>
-Scenografie e ambienti come dispositivi narrativi.
-</p>
+<p>Spazio come racconto.</p>
 
 </div>
 
 <div class="discipline">
 
 <h3>Research</h3>
-
-<p>
-Un archivio visivo che alimenta ogni progetto.
-</p>
+<p>Archivio visivo e processo.</p>
 
 </div>
 
@@ -601,24 +147,26 @@ Un archivio visivo che alimenta ogni progetto.
 
 
 
-<section id="archive" class="archive-section">
 
-<div class="archive-track">
+<section class="visual-break">
 
-<div class="archive-card">
-<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
-<h4>Exhibition Design</h4>
-</div>
-
-<div class="archive-card">
 <img src="https://images.unsplash.com/photo-1481277542470-605612bd2d61">
-<h4>Visual Identity</h4>
-</div>
 
-<div class="archive-card">
+</section>
+
+
+
+
+<section id="archive" class="archive-film">
+
+<h2>Archive</h2>
+
+<div class="film-track">
+
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
 <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7">
-<h4>Spatial Narratives</h4>
-</div>
+<img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
+<img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04">
 
 </div>
 
@@ -626,16 +174,50 @@ Un archivio visivo che alimenta ogni progetto.
 
 
 
-<section id="research" class="research">
+
+<section id="research" class="research-lab">
 
 <h2>Research</h2>
 
 <div class="research-grid">
 
 <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
+<img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
+<img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04">
 <img src="https://images.unsplash.com/photo-1481277542470-605612bd2d61">
 
 </div>
+
+</section>
+
+
+
+
+<section class="closing">
+
+<p>
+
+BluCineLab è un ambiente di lavoro tra
+cinema, immagine e spazio.
+
+Un archivio in evoluzione.
+
+</p>
+
+</section>
+
+
+
+
+<section id="contact" class="contact">
+
+<h2>Contact</h2>
+
+<p>
+
+contact@blucinelab.com
+
+</p>
 
 </section>
 
@@ -649,8 +231,11 @@ BluCineLab
 
 
 
-<script>
+</main>
 
+
+
+<script>
 
 /* WORDMARK GLOW */
 
@@ -676,83 +261,94 @@ letter.classList.remove("glow")
 
 const core=document.querySelector(".cursor-core")
 const trail=document.querySelector(".cursor-trail")
-const particles=document.querySelector(".cursor-particles")
 
-let mouseX=0
-let mouseY=0
-
-let trailX=0
-let trailY=0
+let mx=0
+let my=0
+let tx=0
+let ty=0
 
 document.addEventListener("mousemove",e=>{
 
-mouseX=e.clientX
-mouseY=e.clientY
+mx=e.clientX
+my=e.clientY
 
-core.style.left=mouseX+"px"
-core.style.top=mouseY+"px"
-
-createParticle(mouseX,mouseY)
+core.style.left=mx+"px"
+core.style.top=my+"px"
 
 })
 
+function animate(){
 
+tx+=(mx-tx)*0.18
+ty+=(my-ty)*0.18
 
-function animateTrail(){
+trail.style.left=tx+"px"
+trail.style.top=ty+"px"
 
-trailX+=(mouseX-trailX)*0.18
-trailY+=(mouseY-trailY)*0.18
-
-trail.style.left=trailX+"px"
-trail.style.top=trailY+"px"
-
-requestAnimationFrame(animateTrail)
+requestAnimationFrame(animate)
 
 }
 
-animateTrail()
+animate()
 
 
 
-function createParticle(x,y){
+/* LIQUID BACKGROUND */
 
-const p=document.createElement("div")
+const canvas=document.getElementById("liquid")
+const ctx=canvas.getContext("2d")
 
-p.className="cursor-particle"
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
 
-p.style.left=x+"px"
-p.style.top=y+"px"
+let blobs=[]
 
-document.body.appendChild(p)
+for(let i=0;i<6;i++){
 
-setTimeout(()=>{
+blobs.push({
 
-p.remove()
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:200+Math.random()*200,
+dx:Math.random()*0.5,
+dy:Math.random()*0.5
 
-},900)
-
-}
-
-
-
-/* PARTICELLE SFONDO */
-
-const field=document.querySelector(".particle-field")
-
-for(let i=0;i<120;i++){
-
-let p=document.createElement("div")
-
-p.className="particle"
-
-p.style.left=Math.random()*100+"%"
-p.style.top=Math.random()*100+"%"
-p.style.animationDuration=(6+Math.random()*10)+"s"
-
-field.appendChild(p)
+})
 
 }
 
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+blobs.forEach(b=>{
+
+b.x+=b.dx
+b.y+=b.dy
+
+if(b.x>canvas.width||b.x<0)b.dx*=-1
+if(b.y>canvas.height||b.y<0)b.dy*=-1
+
+let g=ctx.createRadialGradient(
+b.x,b.y,0,
+b.x,b.y,b.r
+)
+
+g.addColorStop(0,"rgba(120,150,200,.15)")
+g.addColorStop(1,"transparent")
+
+ctx.fillStyle=g
+ctx.beginPath()
+ctx.arc(b.x,b.y,b.r,0,Math.PI*2)
+ctx.fill()
+
+})
+
+requestAnimationFrame(draw)
+
+}
+
+draw()
 
 </script>
 
