@@ -1,835 +1,109 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BLUCINELAB — Archive</title>
-  <meta
-    name="description"
-    content="Archivio lavori BluCineLab. Catalogo navigabile di progetti tra cinema, identità visiva, spazio, eventi e digitale."
-  />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Inter:wght@300;400;500&display=swap"
-    rel="stylesheet"
-  />
 
-  <style>
-    :root {
-      --bg: #02050a;
-      --panel: rgba(10, 15, 22, 0.74);
-      --panel-2: rgba(14, 20, 30, 0.78);
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-      --text: #e8e2d7;
-      --text-soft: rgba(220, 212, 198, 0.82);
-      --muted: rgba(220, 212, 198, 0.56);
+<title>Archive — BluCineLab</title>
 
-      --gold: rgba(208, 178, 122, 0.42);
-      --gold-strong: rgba(230, 198, 140, 0.74);
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
-      --max: 1280px;
-      --content: 1180px;
-    }
+<style>
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+body{
+background:#03060b;
+color:#eae4d6;
+font-family:Inter,sans-serif;
+margin:0;
+}
 
-    html {
-      scroll-behavior: smooth;
-    }
+.container{
+max-width:1300px;
+margin:auto;
+padding:80px 30px;
+}
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: Inter, sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+h1{
+font-family:Oswald;
+font-weight:300;
+letter-spacing:0.06em;
+margin-bottom:40px;
+}
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+}
 
-    img {
-      display: block;
-      width: 100%;
-    }
+.project{
+border:1px solid rgba(208,178,122,0.4);
+border-radius:16px;
+overflow:hidden;
+background:#0c1117;
+}
 
-    .bg-shell {
-      position: fixed;
-      inset: 0;
-      z-index: -20;
-      pointer-events: none;
-      overflow: hidden;
-      background:
-        radial-gradient(1600px 1200px at 50% 120%, rgba(0, 0, 0, 0.82), transparent 70%),
-        linear-gradient(180deg, #071018 0%, #030910 36%, #010307 100%);
-    }
+.project img{
+width:100%;
+height:230px;
+object-fit:cover;
+}
 
-    #liquidCanvas {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
-      opacity: 0.72;
-    }
+.project-info{
+padding:20px;
+}
 
-    .bg-grain {
-      position: absolute;
-      inset: 0;
-      background: url("https://grainy-gradients.vercel.app/noise.png");
-      opacity: 0.03;
-      mix-blend-mode: overlay;
-    }
+.project-info h3{
+font-family:Oswald;
+font-weight:300;
+margin-bottom:8px;
+}
 
-    .bg-vignette {
-      position: absolute;
-      inset: 0;
-      box-shadow:
-        inset 0 0 360px rgba(0, 0, 0, 0.84),
-        inset 0 0 54px rgba(255,255,255,0.008);
-    }
+.project-info p{
+font-size:14px;
+color:#bfb8a7;
+}
 
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(0, 0, 0, 0.52);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
+</style>
 
-    .topbar-inner {
-      width: min(var(--max), calc(100% - 40px));
-      margin: 0 auto;
-      min-height: 74px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .brand {
-      font-size: 11px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(232, 226, 214, 0.82);
-    }
-
-    .nav {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .nav a {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: rgba(232, 226, 214, 0.9);
-      position: relative;
-    }
-
-    .nav a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -6px;
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(160, 220, 255, 0.8), transparent);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.2s ease;
-    }
-
-    .nav a:hover::after {
-      transform: scaleX(1);
-    }
-
-    .page {
-      width: min(var(--content), calc(100% - 40px));
-      margin: 0 auto;
-      padding: 72px 0 120px;
-    }
-
-    .hero {
-      display: grid;
-      gap: 22px;
-      margin-bottom: 54px;
-    }
-
-    .archive-mark {
-      font-size: 11px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(220, 212, 198, 0.62);
-    }
-
-    .hero h1 {
-      font-family: Oswald, sans-serif;
-      font-weight: 300;
-      font-size: clamp(3.4rem, 8vw, 7rem);
-      line-height: 0.9;
-      letter-spacing: 0.06em;
-      color: #f1e7d0;
-      margin: 0;
-    }
-
-    .hero p {
-      max-width: 56ch;
-      line-height: 2;
-      color: var(--text-soft);
-    }
-
-    .hub-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 22px;
-      margin-bottom: 72px;
-    }
-
-    .hub-card,
-    .project-card {
-      border: 1px solid var(--gold);
-      border-radius: 18px;
-      overflow: hidden;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.004)),
-        var(--panel);
-      box-shadow:
-        0 18px 50px rgba(0, 0, 0, 0.18),
-        inset 0 1px 0 rgba(255,255,255,0.03);
-      transition:
-        transform 0.25s ease,
-        border-color 0.25s ease,
-        box-shadow 0.25s ease,
-        background 0.25s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hub-card::before,
-    .project-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(145deg, rgba(255,255,255,0.03), transparent 28%, transparent 72%, rgba(255,255,255,0.012));
-      pointer-events: none;
-    }
-
-    .hub-card:hover,
-    .project-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--gold-strong);
-      box-shadow:
-        0 28px 70px rgba(0, 0, 0, 0.26),
-        inset 0 1px 0 rgba(255,255,255,0.05);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.028), rgba(255,255,255,0.006)),
-        rgba(18, 25, 36, 0.86);
-    }
-
-    .hub-card {
-      padding: 22px 20px 20px;
-      min-height: 200px;
-      display: grid;
-      align-content: space-between;
-      gap: 16px;
-    }
-
-    .hub-card .kicker,
-    .project-card .kicker {
-      display: inline-block;
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(226, 217, 200, 0.66);
-      margin-bottom: 10px;
-    }
-
-    .hub-card h3,
-    .project-card h3,
-    .section h2 {
-      font-family: Oswald, sans-serif;
-      font-weight: 300;
-      letter-spacing: 0.06em;
-      color: #efe4cd;
-    }
-
-    .hub-card h3 {
-      font-size: 1.18rem;
-      margin-bottom: 8px;
-    }
-
-    .hub-card p,
-    .project-card p {
-      line-height: 1.9;
-      font-size: 0.88rem;
-      color: var(--text-soft);
-    }
-
-    .hub-link {
-      font-size: 11px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: rgba(240, 232, 220, 0.86);
-    }
-
-    .section {
-      margin-top: 78px;
-    }
-
-    .section-header {
-      display: grid;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-
-    .section h2 {
-      font-size: clamp(1.7rem, 3vw, 2.6rem);
-      margin: 0;
-    }
-
-    .section p.section-note {
-      max-width: 48ch;
-      line-height: 1.95;
-      color: var(--text-soft);
-      font-size: 0.92rem;
-    }
-
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-    }
-
-    .project-card img {
-      height: 280px;
-      object-fit: cover;
-      filter: brightness(0.88);
-      transition: transform 0.35s ease, filter 0.25s ease;
-    }
-
-    .project-card:hover img {
-      transform: scale(1.035);
-      filter: brightness(0.96);
-    }
-
-    .project-body {
-      padding: 20px 18px 22px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .project-body h3 {
-      font-size: 1.16rem;
-      margin-bottom: 8px;
-    }
-
-    .placeholder-note {
-      margin-top: 12px;
-      font-size: 0.74rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(232, 226, 214, 0.52);
-    }
-
-    .footer-back {
-      margin-top: 80px;
-      padding-top: 24px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .footer-back a {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: rgba(232, 226, 214, 0.86);
-    }
-
-    @media (max-width: 1100px) {
-      .hub-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .project-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 720px) {
-      .topbar-inner,
-      .page {
-        width: calc(100% - 24px);
-      }
-
-      .hub-grid,
-      .project-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .nav {
-        gap: 12px;
-      }
-    }
-  </style>
 </head>
+
 <body>
-  <div class="bg-shell" aria-hidden="true">
-    <canvas id="liquidCanvas"></canvas>
-    <div class="bg-grain"></div>
-    <div class="bg-vignette"></div>
-  </div>
 
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a class="brand" href="index.html">BLUCINELAB</a>
-      <nav class="nav">
-        <a href="index.html">Home</a>
-        <a href="#all">All</a>
-        <a href="#cinema">Cinema</a>
-        <a href="#identity">Identity</a>
-        <a href="#digital">Digital</a>
-        <a href="#events">Events</a>
-        <a href="#editorial">Editorial</a>
-      </nav>
-    </div>
-  </header>
+<div class="container">
 
-  <main class="page">
-    <section class="hero">
-      <span class="archive-mark">archive / internal page</span>
-      <h1>Archive</h1>
-      <p>
-        Questa è la pagina interna del catalogo. Per ora contiene immagini e testi placeholder,
-        ma la struttura è già pronta per ospitare tutti i lavori reali di BluCineLab:
-        cinema, identità visiva, eventi, digital, editoria e progetti speciali.
-      </p>
-    </section>
+<h1>Archive</h1>
 
-    <section class="hub-grid">
-      <a class="hub-card" href="#cinema">
-        <div>
-          <span class="kicker">Cinema / Set</span>
-          <h3>Produzioni e scenografie</h3>
-          <p>Set, props, ambienti narrativi, lavoro sul cinema e costruzione della scena.</p>
-        </div>
-        <div class="hub-link">Open section</div>
-      </a>
+<div class="grid">
 
-      <a class="hub-card" href="#identity">
-        <div>
-          <span class="kicker">Identity / Direction</span>
-          <h3>Sistemi visivi</h3>
-          <p>Brand, art direction, linguaggi grafici, identità visive e coerenza progettuale.</p>
-        </div>
-        <div class="hub-link">Open section</div>
-      </a>
+<div class="project">
+<img src="https://images.unsplash.com/photo-1485846234645-a62644f84728">
+<div class="project-info">
+<h3>Cinema Set</h3>
+<p>Scenografie cinematografiche e ambienti narrativi.</p>
+</div>
+</div>
 
-      <a class="hub-card" href="#digital">
-        <div>
-          <span class="kicker">Digital / Web</span>
-          <h3>Ambienti digitali</h3>
-          <p>Front-end, siti, showcase, superfici editoriali e presenza online strutturata.</p>
-        </div>
-        <div class="hub-link">Open section</div>
-      </a>
+<div class="project">
+<img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4">
+<div class="project-info">
+<h3>Digital Systems</h3>
+<p>Progettazione siti e ambienti digitali.</p>
+</div>
+</div>
 
-      <a class="hub-card" href="#events">
-        <div>
-          <span class="kicker">Events / Spatial</span>
-          <h3>Spazi, eventi, installazioni</h3>
-          <p>Mostre, grandi eventi, allestimenti, dispositivi spaziali e lavoro pubblico.</p>
-        </div>
-        <div class="hub-link">Open section</div>
-      </a>
-    </section>
+<div class="project">
+<img src="https://images.unsplash.com/photo-1511578314322-379afb476865">
+<div class="project-info">
+<h3>Spatial Events</h3>
+<p>Mostre e allestimenti per eventi.</p>
+</div>
+</div>
 
-    <section class="section" id="all">
-      <div class="section-header">
-        <h2>All Projects</h2>
-        <p class="section-note">
-          Vista generale dell’archivio. Qui potrai raccogliere tutto in un unico colpo d’occhio.
-        </p>
-      </div>
+</div>
 
-      <div class="project-grid">
-        <article class="project-card">
-          <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1200&auto=format&fit=crop" alt="Cinema project placeholder">
-          <div class="project-body">
-            <span class="kicker">Cinema / Set</span>
-            <h3>Project Title Placeholder</h3>
-            <p>Qui andrà uno dei lavori reali con descrizione breve, ruolo, anno e immagine principale.</p>
-            <div class="placeholder-note">ready for real content</div>
-          </div>
-        </article>
+</div>
 
-        <article class="project-card">
-          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="Digital project placeholder">
-          <div class="project-body">
-            <span class="kicker">Digital</span>
-            <h3>Project Title Placeholder</h3>
-            <p>Card già pronta per siti, showcase, interfacce o lavori di visual systems digitali.</p>
-            <div class="placeholder-note">ready for real content</div>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop" alt="Event project placeholder">
-          <div class="project-body">
-            <span class="kicker">Event / Spatial</span>
-            <h3>Project Title Placeholder</h3>
-            <p>Card pronta per mostre, allestimenti, scenografie evento e grandi spazi.</p>
-            <div class="placeholder-note">ready for real content</div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="cinema">
-      <div class="section-header">
-        <h2>Cinema / Set Design</h2>
-        <p class="section-note">
-          Area dedicata a cortometraggi, set, props, production design e lavoro sulla scena.
-        </p>
-      </div>
-
-      <div class="project-grid">
-        <article class="project-card">
-          <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1200&auto=format&fit=crop" alt="Cinema placeholder">
-          <div class="project-body">
-            <span class="kicker">Cinema</span>
-            <h3>Project Placeholder</h3>
-            <p>Qui entreranno cortometraggi, scene, props, production design e art direction cinema.</p>
-            <div class="placeholder-note">replace later</div>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1200&auto=format&fit=crop" alt="Set placeholder">
-          <div class="project-body">
-            <span class="kicker">Set / Direction</span>
-            <h3>Project Placeholder</h3>
-            <p>Seconda card cinema pronta per essere sostituita con un lavoro reale e immagini definitive.</p>
-            <div class="placeholder-note">replace later</div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="identity">
-      <div class="section-header">
-        <h2>Identity / Direction</h2>
-        <p class="section-note">
-          Per brand, sistemi grafici, campagne, art direction e struttura visiva di progetto.
-        </p>
-      </div>
-
-      <div class="project-grid">
-        <article class="project-card">
-          <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Identity placeholder">
-          <div class="project-body">
-            <span class="kicker">Identity</span>
-            <h3>Project Placeholder</h3>
-            <p>Qui entreranno brand identity, art direction, visual systems e coordinati grafici.</p>
-            <div class="placeholder-note">replace later</div>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop" alt="Editorial identity placeholder">
-          <div class="project-body">
-            <span class="kicker">Direction / Graphics</span>
-            <h3>Project Placeholder</h3>
-            <p>Seconda card identità pronta per campagne, coordinati o lavoro visuale di sistema.</p>
-            <div class="placeholder-note">replace later</div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="digital">
-      <div class="section-header">
-        <h2>Digital / Web</h2>
-        <p class="section-note">
-          Area dedicata a siti, front-end, showcase e presenza digitale progettata.
-        </p>
-      </div>
-
-      <div class="project-grid">
-        <article class="project-card">
-          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="Digital placeholder">
-          <div class="project-body">
-            <span class="kicker">Digital</span>
-            <h3>Project Placeholder</h3>
-            <p>Qui entreranno siti, front-end, interfacce, ambienti web e showcase digitali.</p>
-            <div class="placeholder-note">replace later</div>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop" alt="Web placeholder">
-          <div class="project-body">
-            <span class="kicker">Web / Interface</span>
-            <h3>Project Placeholder</h3>
-            <p>Seconda card pronta per lavori di sviluppo visivo, ambienti digitali o UI narrative.</p>
-            <div class="placeholder-note">replace later</div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="events">
-      <div class="section-header">
-        <h2>Events / Spatial</h2>
-        <p class="section-note">
-          Mostre, open day, allestimenti, ambienti e grandi dispositivi spaziali.
-        </p>
-      </div>
-
-      <div class="project-grid">
-        <article class="project-card">
-          <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop" alt="Events placeholder">
-          <div class="project-body">
-            <span class="kicker">Events</span>
-            <h3>Project Placeholder</h3>
-            <p>Qui entreranno open day, mostre, grandi eventi, allestimenti e installazioni.</p>
-            <div class="placeholder-note">replace later</div>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1200&auto=format&fit=crop" alt="Spatial placeholder">
-          <div class="project-body">
-            <span class="kicker">Spatial</span>
-            <h3>Project Placeholder</h3>
-            <p>Seconda card pronta per scenografie, spazi pubblici e costruzione dell’ambiente.</p>
-            <div class="placeholder-note">replace later</div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="editorial">
-      <div class="section-header">
-        <h2>Editorial / Catalogues</h2>
-        <p class="section-note">
-          Libri, cataloghi, impaginazioni, pubblicazioni e sistemi editoriali.
-        </p>
-      </div>
-
-      <div class="project-grid">
-        <article class="project-card">
-          <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1200&auto=format&fit=crop" alt="Editorial placeholder">
-          <div class="project-body">
-            <span class="kicker">Editorial</span>
-            <h3>Project Placeholder</h3>
-            <p>Qui entreranno libri, cataloghi, pubblicazioni e sistemi editoriali complessi.</p>
-            <div class="placeholder-note">replace later</div>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop" alt="Catalogue placeholder">
-          <div class="project-body">
-            <span class="kicker">Catalogue</span>
-            <h3>Project Placeholder</h3>
-            <p>Seconda card pronta per cataloghi moda, impaginati, stampati e archivi visivi.</p>
-            <div class="placeholder-note">replace later</div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <div class="footer-back">
-      <a href="index.html">Back home</a>
-      <a href="#top">Top</a>
-    </div>
-  </main>
-
-  <script>
-    const canvas = document.getElementById("liquidCanvas");
-    const ctx = canvas.getContext("2d");
-
-    function resizeCanvas() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.floor(window.innerWidth * dpr);
-      canvas.height = Math.floor(window.innerHeight * dpr);
-      canvas.style.width = window.innerWidth + "px";
-      canvas.style.height = window.innerHeight + "px";
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-
-    const fields = [];
-    function createFields() {
-      fields.length = 0;
-      const count = 18;
-      for (let i = 0; i < count; i++) {
-        fields.push({
-          x: Math.random() * window.innerWidth,
-          y: Math.random() * window.innerHeight,
-          r: 220 + Math.random() * 420,
-          dx: (Math.random() - 0.5) * 0.018,
-          dy: (Math.random() - 0.5) * 0.012,
-          seed: Math.random() * 1000,
-          mode: Math.floor(Math.random() * 5)
-        });
-      }
-    }
-
-    function palette(mode, alpha = 1) {
-      if (mode === 0) return [
-        `rgba(245,225,185,${0.06 * alpha})`,
-        `rgba(230,170,210,${0.045 * alpha})`,
-        `rgba(145,190,255,${0.05 * alpha})`,
-        `rgba(110,220,225,${0.032 * alpha})`
-      ];
-      if (mode === 1) return [
-        `rgba(195,220,255,${0.07 * alpha})`,
-        `rgba(170,130,228,${0.045 * alpha})`,
-        `rgba(255,210,170,${0.04 * alpha})`,
-        `rgba(146,208,255,${0.032 * alpha})`
-      ];
-      if (mode === 2) return [
-        `rgba(255,246,234,${0.055 * alpha})`,
-        `rgba(194,214,255,${0.05 * alpha})`,
-        `rgba(132,220,255,${0.032 * alpha})`,
-        `rgba(178,132,210,${0.028 * alpha})`
-      ];
-      if (mode === 3) return [
-        `rgba(188,214,255,${0.06 * alpha})`,
-        `rgba(210,174,255,${0.04 * alpha})`,
-        `rgba(255,224,188,${0.04 * alpha})`,
-        `rgba(140,230,220,${0.03 * alpha})`
-      ];
-      return [
-        `rgba(236,226,210,${0.05 * alpha})`,
-        `rgba(150,198,255,${0.04 * alpha})`,
-        `rgba(244,200,160,${0.032 * alpha})`,
-        `rgba(164,234,226,${0.03 * alpha})`
-      ];
-    }
-
-    function drawFieldBlob(f, t, softness = 1) {
-      const colors = palette(f.mode, softness);
-      const grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r);
-      grad.addColorStop(0, colors[0]);
-      grad.addColorStop(0.18, colors[1]);
-      grad.addColorStop(0.38, colors[2]);
-      grad.addColorStop(0.62, colors[3]);
-      grad.addColorStop(1, "rgba(0,0,0,0)");
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.ellipse(
-        f.x,
-        f.y,
-        f.r * (0.9 + Math.sin(t * 0.00006 + f.seed) * 0.05),
-        f.r * (0.58 + Math.cos(t * 0.00005 + f.seed * 0.8) * 0.05),
-        Math.sin(f.seed + t * 0.00002) * 0.8,
-        0,
-        Math.PI * 2
-      );
-      ctx.fill();
-    }
-
-    function drawSpecularPools(t) {
-      ctx.globalCompositeOperation = "screen";
-      for (let i = 0; i < 8; i++) {
-        const x = window.innerWidth * (0.1 + i * 0.105) + Math.sin(t * 0.00009 + i) * 30;
-        const y = window.innerHeight * (0.2 + 0.05 * Math.sin(i * 0.8 + t * 0.00007));
-        const rx = 160 + Math.sin(t * 0.0001 + i) * 18;
-        const ry = 34 + Math.cos(t * 0.00013 + i) * 6;
-
-        const g = ctx.createRadialGradient(x, y, 0, x, y, rx);
-        g.addColorStop(0, "rgba(255,248,236,0.035)");
-        g.addColorStop(0.18, "rgba(180,220,255,0.032)");
-        g.addColorStop(0.38, "rgba(204,170,255,0.018)");
-        g.addColorStop(1, "rgba(0,0,0,0)");
-
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.ellipse(x, y, rx, ry, Math.sin(i) * 0.25, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    function drawLiquid(t) {
-      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-
-      const darkBase = ctx.createLinearGradient(0, 0, 0, window.innerHeight);
-      darkBase.addColorStop(0, "rgba(5,12,18,0.9)");
-      darkBase.addColorStop(0.5, "rgba(4,8,14,0.6)");
-      darkBase.addColorStop(1, "rgba(0,0,0,0.08)");
-      ctx.fillStyle = darkBase;
-      ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-
-      for (const f of fields) {
-        f.x += f.dx;
-        f.y += f.dy;
-
-        if (f.x < -f.r || f.x > window.innerWidth + f.r) f.dx *= -1;
-        if (f.y < -f.r || f.y > window.innerHeight + f.r) f.dy *= -1;
-      }
-
-      ctx.globalCompositeOperation = "screen";
-
-      ctx.filter = "blur(74px)";
-      for (const f of fields) drawFieldBlob(f, t, 0.7);
-
-      ctx.filter = "blur(34px)";
-      for (const f of fields) {
-        drawFieldBlob(
-          {
-            ...f,
-            x: f.x + Math.sin(t * 0.00003 + f.seed) * 10,
-            y: f.y + Math.cos(t * 0.00004 + f.seed) * 8,
-            r: f.r * 0.74
-          },
-          t,
-          0.52
-        );
-      }
-
-      ctx.filter = "blur(14px)";
-      for (const f of fields.slice(0, 10)) {
-        drawFieldBlob(
-          {
-            ...f,
-            x: f.x + Math.cos(t * 0.00005 + f.seed) * 6,
-            y: f.y + Math.sin(t * 0.00006 + f.seed) * 5,
-            r: f.r * 0.46
-          },
-          t,
-          0.3
-        );
-      }
-
-      ctx.filter = "none";
-      drawSpecularPools(t);
-
-      ctx.globalCompositeOperation = "source-over";
-      requestAnimationFrame(drawLiquid);
-    }
-
-    resizeCanvas();
-    createFields();
-    requestAnimationFrame(drawLiquid);
-
-    window.addEventListener("resize", () => {
-      resizeCanvas();
-      createFields();
-    });
-  </script>
 </body>
 </html>
