@@ -21,71 +21,85 @@ overflow-x:hidden;
 cursor:none;
 }
 
-/* ================= BACKGROUND ================= */
+/* ===================== BACKGROUND ===================== */
 
 .bg{
 position:fixed;
 inset:0;
 z-index:-10;
 overflow:hidden;
-background:
-linear-gradient(#020409,#010208);
+background:linear-gradient(#020409,#010208);
 }
 
 .wave{
+
 position:absolute;
-width:200%;
-height:200%;
-top:-40%;
-left:-40%;
+width:240%;
+height:240%;
+top:-60%;
+left:-60%;
 
 background:
 
-radial-gradient(circle at 40% 60%,rgba(120,150,200,.06),transparent 40%),
-radial-gradient(circle at 60% 40%,rgba(150,170,220,.05),transparent 45%),
-radial-gradient(circle at 70% 70%,rgba(90,110,150,.05),transparent 50%);
+radial-gradient(circle at 40% 60%,rgba(120,150,200,.09),transparent 40%),
+radial-gradient(circle at 60% 40%,rgba(160,180,220,.08),transparent 45%),
+radial-gradient(circle at 70% 70%,rgba(90,110,150,.08),transparent 50%);
 
-filter:blur(120px);
+filter:blur(140px);
 
-animation:flow 32s infinite alternate ease-in-out;
+animation:flow 30s infinite alternate ease-in-out;
+
 }
 
 .wave2{
-animation-duration:46s;
-opacity:.6;
+animation-duration:44s;
+opacity:.7;
+}
+
+.wave3{
+animation-duration:55s;
+opacity:.4;
 }
 
 @keyframes flow{
-0%{transform:translate3d(-3%,0,0) scale(1)}
-100%{transform:translate3d(4%,-3%,0) scale(1.12)}
+
+0%{transform:translate3d(-4%,0,0) scale(1)}
+
+100%{transform:translate3d(5%,-4%,0) scale(1.15)}
+
 }
 
-/* nebula dust */
+/* nebula particles */
 
 .dust{
+
 position:absolute;
 inset:0;
 
 background-image:
 
-radial-gradient(circle at 10% 20%,rgba(220,240,255,.05) 1px,transparent 2px),
-radial-gradient(circle at 40% 70%,rgba(220,240,255,.04) 1px,transparent 2px),
-radial-gradient(circle at 70% 30%,rgba(220,240,255,.05) 1px,transparent 2px),
-radial-gradient(circle at 85% 80%,rgba(220,240,255,.04) 1px,transparent 2px);
+radial-gradient(circle at 10% 20%,rgba(220,240,255,.06) 1px,transparent 2px),
+radial-gradient(circle at 40% 70%,rgba(220,240,255,.05) 1px,transparent 2px),
+radial-gradient(circle at 70% 30%,rgba(220,240,255,.06) 1px,transparent 2px),
+radial-gradient(circle at 85% 80%,rgba(220,240,255,.05) 1px,transparent 2px);
 
 background-size:320px 320px;
 
 animation:dustmove 40s linear infinite;
 
-opacity:.4;
+opacity:.45;
+
 }
 
 @keyframes dustmove{
+
 0%{transform:translateY(0)}
-100%{transform:translateY(-70px)}
+
+100%{transform:translateY(-80px)}
+
 }
 
-/* ================= NAV ================= */
+/* ===================== NAV ===================== */
 
 .nav{
 position:fixed;
@@ -113,7 +127,7 @@ opacity:.8;
 opacity:1;
 }
 
-/* ================= HERO ================= */
+/* ===================== HERO ===================== */
 
 .hero{
 min-height:120vh;
@@ -124,19 +138,18 @@ justify-content:center;
 
 .wordmark{
 display:flex;
-gap:4px;
+gap:6px;
 }
 
 .wordmark span{
 
 font-family:Oswald;
-font-size:120px;
+font-size:160px;
 font-weight:200;
 
 color:transparent;
 
-background:
-linear-gradient(120deg,#b5cce6,#f5f2ea,#c7bfb0);
+background:linear-gradient(120deg,#b5cce6,#f5f2ea,#c7bfb0);
 
 -webkit-background-clip:text;
 background-clip:text;
@@ -148,13 +161,16 @@ transition:.25s;
 .wordmark span.glow{
 
 text-shadow:
-0 0 8px rgba(160,220,255,.8),
-0 0 25px rgba(160,220,255,.5),
-0 0 60px rgba(140,160,255,.35);
+
+0 0 12px rgba(160,220,255,.9),
+0 0 35px rgba(160,220,255,.6),
+0 0 90px rgba(140,160,255,.45);
+
+transform:translateY(-2px);
 
 }
 
-/* ================= PANELS ================= */
+/* ===================== PANELS ===================== */
 
 .panel{
 
@@ -164,7 +180,6 @@ margin:160px auto;
 padding:40px;
 
 border:1px solid rgba(210,180,120,.45);
-
 border-radius:18px;
 
 background:rgba(20,25,35,.55);
@@ -174,24 +189,20 @@ backdrop-filter:blur(12px);
 }
 
 .panel h2{
-
 font-family:Oswald;
 letter-spacing:.12em;
 font-weight:300;
 margin-bottom:15px;
-
 }
 
 .panel p{
-
 line-height:2;
 font-size:14px;
 color:#cfc9bb;
 max-width:36ch;
-
 }
 
-/* ================= GRID ================= */
+/* ===================== GRID ===================== */
 
 .grid{
 
@@ -210,27 +221,24 @@ gap:30px;
 border:1px solid rgba(210,180,120,.45);
 border-radius:14px;
 padding:25px;
+
 background:rgba(18,22,30,.5);
 
 }
 
 .card h3{
-
 font-family:Oswald;
 font-weight:300;
 margin-bottom:8px;
-
 }
 
 .card p{
-
 font-size:13px;
 line-height:2;
 color:#cfc9bb;
-
 }
 
-/* ================= ARCHIVE ================= */
+/* ===================== ARCHIVE ===================== */
 
 .archive{
 
@@ -241,11 +249,9 @@ margin:200px auto;
 }
 
 .archive h2{
-
 font-family:Oswald;
 font-weight:300;
 margin-bottom:40px;
-
 }
 
 .cards{
@@ -258,13 +264,16 @@ padding-bottom:10px;
 }
 
 .cards img{
-
 width:300px;
 border-radius:14px;
-
+transition:.3s;
 }
 
-/* ================= CURSOR ================= */
+.cards img:hover{
+transform:scale(1.05);
+}
+
+/* ===================== CURSOR ===================== */
 
 .cursor{
 
@@ -272,13 +281,17 @@ position:fixed;
 width:6px;
 height:6px;
 border-radius:50%;
+
 background:#e7f6ff;
+
 pointer-events:none;
+
 transform:translate(-50%,-50%);
+
 z-index:999;
 
 box-shadow:
-0 0 10px #9fd6ff,
+0 0 12px #9fd6ff,
 0 0 30px #9fd6ff;
 
 }
@@ -286,13 +299,20 @@ box-shadow:
 .trail{
 
 position:fixed;
-width:20px;
-height:20px;
+
+width:24px;
+height:24px;
+
 border-radius:50%;
+
 background:radial-gradient(circle,#9fd6ff33,transparent);
-filter:blur(4px);
+
+filter:blur(5px);
+
 pointer-events:none;
+
 transform:translate(-50%,-50%);
+
 z-index:998;
 
 }
@@ -302,19 +322,24 @@ z-index:998;
 </head>
 
 
+
 <body>
 
 <div class="bg">
 
 <div class="wave"></div>
 <div class="wave wave2"></div>
+<div class="wave wave3"></div>
+
 <div class="dust"></div>
 
 </div>
 
 
+
 <div class="cursor"></div>
 <div class="trail"></div>
+
 
 
 <div class="nav">
@@ -332,9 +357,16 @@ z-index:998;
 
 <h1 class="wordmark">
 
-<span>B</span><span>L</span><span>U</span>
-<span>C</span><span>I</span><span>N</span><span>E</span>
-<span>L</span><span>A</span><span>B</span>
+<span>B</span>
+<span>L</span>
+<span>U</span>
+<span>C</span>
+<span>I</span>
+<span>N</span>
+<span>E</span>
+<span>L</span>
+<span>A</span>
+<span>B</span>
 
 </h1>
 
@@ -358,31 +390,23 @@ Cinema, grafica e scenografia diventano materiali di progetto.
 <section class="grid">
 
 <div class="card">
-
 <h3>Direction</h3>
 <p>Costruzione di visioni per progetti culturali e audiovisivi.</p>
-
 </div>
 
 <div class="card">
-
 <h3>Visual Systems</h3>
 <p>Strutture visive pensate per durare nel tempo.</p>
-
 </div>
 
 <div class="card">
-
 <h3>Spatial Design</h3>
 <p>Scenografie e ambienti come dispositivi narrativi.</p>
-
 </div>
 
 <div class="card">
-
 <h3>Research</h3>
 <p>Archivio visivo che alimenta ogni progetto.</p>
-
 </div>
 
 </section>
@@ -396,13 +420,9 @@ Cinema, grafica e scenografia diventano materiali di progetto.
 <div class="cards">
 
 <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
-
 <img src="https://images.unsplash.com/photo-1481277542470-605612bd2d61">
-
 <img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04">
-
 <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7">
-
 <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
 
 </div>
@@ -413,6 +433,8 @@ Cinema, grafica e scenografia diventano materiali di progetto.
 
 <script>
 
+/* glow lettere */
+
 const letters=document.querySelectorAll(".wordmark span")
 
 letters.forEach(l=>{
@@ -420,6 +442,7 @@ l.addEventListener("mouseenter",()=>l.classList.add("glow"))
 l.addEventListener("mouseleave",()=>l.classList.remove("glow"))
 })
 
+/* cursor comet */
 
 const cursor=document.querySelector(".cursor")
 const trail=document.querySelector(".trail")
@@ -427,13 +450,10 @@ const trail=document.querySelector(".trail")
 let mx=0,my=0,tx=0,ty=0
 
 document.addEventListener("mousemove",e=>{
-
 mx=e.clientX
 my=e.clientY
-
 cursor.style.left=mx+"px"
 cursor.style.top=my+"px"
-
 })
 
 function animate(){
@@ -451,7 +471,6 @@ requestAnimationFrame(animate)
 animate()
 
 </script>
-
 
 </body>
 </html>
