@@ -6,30 +6,23 @@
   <title>BLUCINELAB</title>
   <meta
     name="description"
-    content="BluCineLab — laboratorio visivo tra immagine, spazio, direzione, scenografia e sistemi digitali."
+    content="BluCineLab — studio visivo tra cinema, spazio, direzione, identità e ambienti digitali."
   />
   <link
     href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Inter:wght@300;400;500&display=swap"
     rel="stylesheet"
   />
-
   <style>
     :root{
       --bg:#02050a;
-      --bg-soft:#08111a;
-      --panel:rgba(11,16,24,.74);
-      --panel-2:rgba(14,20,30,.82);
+      --panel:rgba(10,15,22,.74);
       --text:#e8e2d7;
       --text-soft:rgba(220,212,198,.82);
-      --muted:rgba(220,212,198,.56);
       --gold:rgba(208,178,122,.42);
-      --gold-strong:rgba(230,198,140,.78);
-      --line:rgba(255,255,255,.06);
+      --gold-strong:rgba(230,198,140,.74);
       --max:1280px;
-      --content:1120px;
-      --topbar-h:74px;
-      --dock-progress:0;
       --hero-glow-x:50%;
+      --dock-progress:0;
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
@@ -38,10 +31,12 @@
       background:var(--bg);
       color:var(--text);
       font-family:Inter,sans-serif;
-      overflow-x:hidden;
-      cursor:none;
       min-height:100vh;
+      overflow-x:hidden;
     }
+
+    a{text-decoration:none;color:inherit}
+    img{display:block;width:100%}
 
     .bg-shell{
       position:fixed;
@@ -60,7 +55,7 @@
       width:100%;
       height:100%;
       display:block;
-      opacity:.74;
+      opacity:.72;
     }
 
     .bg-grain{
@@ -79,106 +74,45 @@
         inset 0 0 54px rgba(255,255,255,.008);
     }
 
-    .cursor-core{
-      position:fixed;
-      width:7px;
-      height:7px;
-      border-radius:50%;
-      background:#eef7ff;
-      transform:translate(-50%,-50%);
-      pointer-events:none;
-      z-index:9999;
-      box-shadow:
-        0 0 10px rgba(212,238,255,.9),
-        0 0 28px rgba(150,205,255,.55),
-        0 0 64px rgba(150,205,255,.22);
-    }
-
-    .cursor-trail{
-      position:fixed;
-      width:28px;
-      height:28px;
-      border-radius:50%;
-      transform:translate(-50%,-50%);
-      background:radial-gradient(circle, rgba(150,205,255,.18), transparent 70%);
-      filter:blur(6px);
-      pointer-events:none;
-      z-index:9998;
-    }
-
-    .cursor-particle{
-      position:fixed;
-      width:2px;
-      height:2px;
-      border-radius:50%;
-      background:rgba(230,240,255,.95);
-      pointer-events:none;
-      z-index:9997;
-      animation:cursorFade .9s ease-out forwards;
-      box-shadow:0 0 6px rgba(162,224,255,.35);
-    }
-
-    @keyframes cursorFade{
-      0%{opacity:.9;transform:translate(0,0) scale(1)}
-      100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.2)}
-    }
-
     .topbar{
-      position:fixed;
-      inset:0 0 auto 0;
-      height:var(--topbar-h);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:rgba(0,0,0,.32);
-      backdrop-filter:blur(12px);
-      border-bottom:1px solid rgba(255,255,255,.04);
+      position:sticky;
+      top:0;
       z-index:100;
-      transition:background .3s ease,border-color .3s ease;
-    }
-
-    .topbar.is-scrolled{
-      background:rgba(0,0,0,.56);
-      border-bottom-color:rgba(255,255,255,.05);
+      background:rgba(0,0,0,.52);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(255,255,255,.05);
     }
 
     .topbar-inner{
-      width:min(1280px,calc(100% - 40px));
-      height:100%;
+      width:min(var(--max),calc(100% - 40px));
+      margin:0 auto;
+      min-height:74px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      position:relative;
+      gap:20px;
     }
 
-    .brand-mini{
+    .brand{
       font-size:11px;
       letter-spacing:.22em;
       text-transform:uppercase;
-      text-decoration:none;
       color:rgba(232,226,214,.82);
-      position:relative;
-      z-index:3;
     }
 
     .nav{
       display:flex;
-      gap:22px;
+      gap:18px;
       flex-wrap:wrap;
-      justify-content:center;
-      padding-inline:16px;
-      position:relative;
-      z-index:3;
+      justify-content:flex-end;
     }
 
     .nav a{
-      color:rgba(232,226,214,.88);
-      text-decoration:none;
-      text-transform:uppercase;
-      letter-spacing:.2em;
       font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      color:rgba(232,226,214,.9);
       position:relative;
-      transition:transform .2s ease,opacity .2s ease;
     }
 
     .nav a::after{
@@ -194,47 +128,20 @@
       transition:transform .2s ease;
     }
 
-    .nav a:hover{opacity:1;transform:translateY(-1px)}
     .nav a:hover::after{transform:scaleX(1)}
 
-    .topbar-wordmark{
-      position:absolute;
-      left:50%;
-      top:50%;
-      transform:
-        translate(-50%,-50%)
-        scale(calc(.18 + var(--dock-progress) * .09));
-      transform-origin:center center;
-      opacity:calc(var(--dock-progress) * .98);
-      pointer-events:none;
-      z-index:2;
-      white-space:nowrap;
+    .page{
+      width:min(var(--max),calc(100% - 40px));
+      margin:0 auto;
+      padding:70px 0 120px;
     }
 
     .hero{
-      min-height:112vh;
-      display:flex;
-      align-items:flex-start;
-      justify-content:center;
-      padding-top:92px;
-      margin-bottom:-18px;
-    }
-
-    .hero-sticky{
-      position:sticky;
-      top:10vh;
-      width:min(1120px,calc(100% - 40px));
-    }
-
-    .hero-inner{
+      min-height:72vh;
       display:grid;
+      align-content:center;
       gap:24px;
-      transform:
-        translateY(calc(var(--dock-progress) * -54px))
-        scale(calc(1 - var(--dock-progress) * .18));
-      transform-origin:left top;
-      opacity:calc(1 - var(--dock-progress) * .96);
-      will-change:transform,opacity;
+      padding:20px 0 60px;
     }
 
     .wordmark{
@@ -275,7 +182,7 @@
     .wordmark span{
       font-family:Oswald,sans-serif;
       font-weight:400;
-      font-size:clamp(6.6rem,13.4vw,12.4rem);
+      font-size:clamp(5.8rem,12vw,11rem);
       line-height:.84;
       letter-spacing:.05em;
       color:transparent;
@@ -298,26 +205,6 @@
         drop-shadow(0 1px 0 rgba(255,255,255,.14))
         drop-shadow(0 12px 22px rgba(0,0,0,.32));
       z-index:1;
-      overflow:visible;
-    }
-
-    .wordmark span::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(
-          180deg,
-          rgba(255,255,255,.3) 0%,
-          rgba(255,255,255,.08) 22%,
-          rgba(0,0,0,.08) 70%,
-          rgba(0,0,0,.16) 100%
-        );
-      -webkit-background-clip:text;
-      background-clip:text;
-      mix-blend-mode:screen;
-      opacity:.28;
-      pointer-events:none;
     }
 
     .wordmark span::after{
@@ -362,14 +249,20 @@
       100%{transform:translateX(320%) skewX(-18deg)}
     }
 
-    .hero-kicker{
+    .hero p{
+      max-width:42ch;
+      line-height:2;
+      color:var(--text-soft);
+      font-size:1rem;
+    }
+
+    .hero-actions{
       display:flex;
       flex-wrap:wrap;
       gap:12px;
-      max-width:920px;
     }
 
-    .hero-chip{
+    .chip{
       padding:14px 16px;
       border-radius:999px;
       border:1px solid var(--gold);
@@ -380,610 +273,277 @@
       font-size:11px;
       letter-spacing:.18em;
       text-transform:uppercase;
-      text-decoration:none;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.06),
-        0 12px 30px rgba(0,0,0,.18);
       transition:transform .2s ease,border-color .2s ease;
     }
 
-    .hero-chip:hover{
+    .chip:hover{
       transform:translateY(-2px);
       border-color:var(--gold-strong);
     }
 
     .section{
-      width:min(1120px,calc(100% - 40px));
-      margin-inline:auto;
+      margin-top:78px;
     }
 
-    .panel{
-      margin:96px auto 120px;
-      padding:38px;
-      border-radius:18px;
-      border:1px solid var(--gold);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.004)),
-        var(--panel);
-      backdrop-filter:blur(14px);
-      box-shadow:
-        0 24px 80px rgba(0,0,0,.22),
-        inset 0 0 22px rgba(255,255,255,.02),
-        inset 0 1px 0 rgba(255,255,255,.05);
-      position:relative;
-      overflow:hidden;
-    }
-
-    .panel::before,
-    .window-card::before,
-    .archive-card::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(145deg, rgba(255,255,255,.03), transparent 28%, transparent 72%, rgba(255,255,255,.012));
-      pointer-events:none;
-    }
-
-    .panel > *,
-    .window-card > *,
-    .archive-card > *{
-      position:relative;
-      z-index:1;
-    }
-
-    h2{
+    .section h2{
       font-family:Oswald,sans-serif;
-      letter-spacing:.12em;
       font-weight:300;
+      font-size:clamp(1.7rem,3vw,2.6rem);
+      letter-spacing:.1em;
+      color:#efe4cd;
       margin-bottom:16px;
-      color:#f1e7d0;
-      font-size:clamp(1.8rem,3vw,2.8rem);
     }
 
-    p{
-      line-height:2;
-      font-size:.92rem;
+    .section p{
+      max-width:48ch;
+      line-height:1.95;
       color:var(--text-soft);
-      text-wrap:balance;
+      font-size:.92rem;
     }
 
-    .panel p{max-width:38ch}
-
-    .works-intro{
-      margin:0 auto 28px;
-      max-width:52ch;
-    }
-
-    .windows-grid{
+    .grid{
       display:grid;
-      grid-template-columns:repeat(3,1fr);
+      grid-template-columns:repeat(4,1fr);
       gap:22px;
-      margin:0 auto 120px;
+      margin-top:26px;
     }
 
-    .window-card{
-      display:grid;
-      gap:16px;
-      text-decoration:none;
-      color:inherit;
+    .card{
       border:1px solid var(--gold);
       border-radius:18px;
-      padding:20px;
+      overflow:hidden;
       background:
-        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.004)),
-        rgba(18,22,30,.54);
-      backdrop-filter:blur(12px);
-      transition:
-        transform .28s ease,
-        border-color .22s ease,
-        box-shadow .22s ease,
-        background .22s ease;
+        linear-gradient(180deg, rgba(255,255,255,.018), rgba(255,255,255,.004)),
+        var(--panel);
       box-shadow:
         0 18px 50px rgba(0,0,0,.18),
         inset 0 1px 0 rgba(255,255,255,.03);
-      position:relative;
-      overflow:hidden;
-      min-height:360px;
-      transform-style:preserve-3d;
-      will-change:transform,box-shadow;
+      transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
     }
 
-    .window-card::after,
-    .archive-card::after{
-      content:"";
-      position:absolute;
-      inset:-1px;
-      background:
-        radial-gradient(
-          260px 160px at var(--mx,50%) var(--my,50%),
-          rgba(190,230,255,.09),
-          rgba(255,220,176,.05) 34%,
-          transparent 72%
-        );
-      opacity:0;
-      transition:opacity .2s ease;
-      pointer-events:none;
-    }
-
-    .window-card.is-hovered,
-    .archive-card.is-hovered{
-      transform:translateY(-8px) scale(1.02);
+    .card:hover{
+      transform:translateY(-6px);
       border-color:var(--gold-strong);
       box-shadow:
-        0 28px 80px rgba(0,0,0,.28),
-        0 0 0 1px rgba(190,230,255,.04),
-        inset 0 1px 0 rgba(255,255,255,.06);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.006)),
-        rgba(24,30,42,.74);
-      z-index:3;
+        0 28px 70px rgba(0,0,0,.24),
+        inset 0 1px 0 rgba(255,255,255,.05);
     }
 
-    .window-card.is-hovered::after,
-    .archive-card.is-hovered::after{
-      opacity:1;
-    }
-
-    .window-thumb{
-      aspect-ratio:4/3;
-      border-radius:12px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.06);
-      background:#0b1119;
-    }
-
-    .window-thumb img{
-      width:100%;
-      height:100%;
+    .card img{
+      height:220px;
       object-fit:cover;
-      display:block;
-      filter:brightness(.88) contrast(1.03);
-      transition:transform .4s ease,filter .28s ease;
+      filter:brightness(.86);
     }
 
-    .window-card.is-hovered .window-thumb img{
-      transform:scale(1.04);
-      filter:brightness(.98) contrast(1.06);
+    .card-body{
+      padding:18px;
     }
 
-    .window-meta{
+    .kicker{
+      display:inline-block;
       font-size:10px;
       letter-spacing:.18em;
       text-transform:uppercase;
-      color:var(--muted);
+      color:rgba(226,217,200,.66);
+      margin-bottom:10px;
     }
 
-    .window-card h3{
+    .card h3{
       font-family:Oswald,sans-serif;
       font-weight:300;
-      font-size:1.28rem;
-      letter-spacing:.06em;
+      font-size:1.16rem;
+      letter-spacing:.05em;
       color:#efe4cd;
-    }
-
-    .window-link{
-      margin-top:auto;
-      font-size:11px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:#f1e7d0;
-      opacity:.86;
-    }
-
-    .archive{
-      margin:0 auto 130px;
-    }
-
-    .cards{
-      display:flex;
-      gap:24px;
-      overflow-x:auto;
-      padding-bottom:10px;
-      scrollbar-width:none;
-      scroll-snap-type:x mandatory;
-      margin-top:24px;
-    }
-
-    .cards::-webkit-scrollbar{display:none}
-
-    .archive-card{
-      min-width:300px;
-      width:300px;
-      border-radius:16px;
-      overflow:hidden;
-      border:1px solid var(--gold);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.004)),
-        var(--panel-2);
-      transition:
-        transform .28s ease,
-        border-color .22s ease,
-        box-shadow .22s ease,
-        background .22s ease;
-      box-shadow:
-        0 18px 50px rgba(0,0,0,.18),
-        inset 0 1px 0 rgba(255,255,255,.03);
-      scroll-snap-align:start;
-      position:relative;
-      transform-style:preserve-3d;
-      will-change:transform,box-shadow;
-    }
-
-    .archive-card img{
-      width:100%;
-      height:420px;
-      object-fit:cover;
-      display:block;
-      filter:brightness(.9) contrast(1.02);
-      transition:transform .38s ease,filter .28s ease;
-    }
-
-    .archive-card.is-hovered img{
-      transform:scale(1.04);
-      filter:brightness(.98) contrast(1.04);
-    }
-
-    .archive-info{
-      padding:18px 18px 20px;
-    }
-
-    .archive-info h4{
-      font-family:Oswald,sans-serif;
-      font-weight:300;
-      letter-spacing:.06em;
-      color:#efe4cd;
-      font-size:1.08rem;
       margin-bottom:8px;
     }
 
-    .archive-info p{
-      font-size:.8rem;
+    .card p{
+      max-width:none;
       line-height:1.9;
-      color:var(--text-soft);
+      font-size:.88rem;
     }
 
-    .contact{
-      margin:0 auto 180px;
+    .contact-box{
+      border:1px solid var(--gold);
+      border-radius:18px;
+      padding:28px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.018), rgba(255,255,255,.004)),
+        var(--panel);
+      margin-top:24px;
     }
 
     .contact-links{
-      margin-top:18px;
       display:flex;
-      flex-wrap:wrap;
       gap:12px;
-    }
-
-    .contact-link{
-      padding:14px 16px;
-      border-radius:999px;
-      border:1px solid var(--gold);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.004)),
-        rgba(14,19,28,.52);
-      color:rgba(233,225,212,.92);
-      font-size:11px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      text-decoration:none;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.06),
-        0 12px 30px rgba(0,0,0,.18);
-      transition:transform .2s ease,border-color .2s ease;
-    }
-
-    .contact-link:hover{
-      transform:translateY(-2px);
-      border-color:var(--gold-strong);
+      flex-wrap:wrap;
+      margin-top:18px;
     }
 
     @media (max-width:1100px){
-      .windows-grid{grid-template-columns:repeat(2,1fr)}
+      .grid{grid-template-columns:repeat(2,1fr)}
     }
 
     @media (max-width:720px){
-      body{cursor:auto}
-      .cursor-core,.cursor-trail,.cursor-particle{display:none}
-      .topbar{height:64px}
-      .topbar-inner{width:calc(100% - 24px)}
-      .nav{gap:14px}
-      .nav a,.hero-chip,.contact-link{font-size:10px}
-      .hero{min-height:96vh}
-      .windows-grid{grid-template-columns:1fr}
-      .archive-card{min-width:78vw;width:78vw}
-      .archive-card img{height:56vw}
-      .panel{padding:24px}
+      .topbar-inner,.page{width:calc(100% - 24px)}
+      .grid{grid-template-columns:1fr}
+      .nav{gap:12px}
     }
   </style>
 </head>
 <body>
-
   <div class="bg-shell" aria-hidden="true">
     <canvas id="liquidCanvas"></canvas>
     <div class="bg-grain"></div>
     <div class="bg-vignette"></div>
   </div>
 
-  <div class="cursor-core"></div>
-  <div class="cursor-trail"></div>
-
-  <header class="topbar" id="topbar">
+  <header class="topbar">
     <div class="topbar-inner">
-      <a href="#hero" class="brand-mini">BLUCINELAB</a>
-
-      <div class="topbar-wordmark" aria-hidden="true">
-        <div class="wordmark">
-          <span>B</span><span>L</span><span>U</span><span>C</span><span>I</span>
-          <span>N</span><span>E</span><span>L</span><span>A</span><span>B</span>
-        </div>
-      </div>
-
+      <a class="brand" href="index.html">BLUCINELAB</a>
       <nav class="nav">
-        <a href="#studio">Studio</a>
-        <a href="#windows">Works</a>
-        <a href="#archive">Archive</a>
-        <a href="#contact">Contact</a>
+        <a href="studio.html">Studio</a>
+        <a href="archive.html">Archive</a>
+        <a href="capabilities.html">Capabilities</a>
+        <a href="contact.html">Contact</a>
       </nav>
     </div>
   </header>
 
-  <main>
+  <main class="page">
+    <section class="hero">
+      <h1 class="wordmark" id="heroWordmark" aria-label="BLUCINELAB">
+        <span>B</span><span>L</span><span>U</span><span>C</span><span>I</span>
+        <span>N</span><span>E</span><span>L</span><span>A</span><span>B</span>
+      </h1>
 
-    <section class="hero" id="hero">
-      <div class="hero-sticky">
-        <div class="hero-inner">
-          <h1 class="wordmark" id="heroWordmark" aria-label="BLUCINELAB">
-            <span>B</span><span>L</span><span>U</span><span>C</span><span>I</span>
-            <span>N</span><span>E</span><span>L</span><span>A</span><span>B</span>
-          </h1>
+      <p>
+        Studio visivo indipendente tra cinema, spazio, identità, art direction
+        e ambienti digitali. Archivio in crescita di lavori, collaborazioni e sistemi visivi.
+      </p>
 
-          <div class="hero-kicker">
-            <a class="hero-chip" href="#studio">Studio</a>
-            <a class="hero-chip" href="#windows">Works</a>
-            <a class="hero-chip" href="archive.html">Full Archive</a>
-            <a class="hero-chip" href="#contact">Contact</a>
+      <div class="hero-actions">
+        <a class="chip" href="archive.html">Open Archive</a>
+        <a class="chip" href="studio.html">Studio</a>
+        <a class="chip" href="capabilities.html">Capabilities</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Access</h2>
+      <div class="grid">
+        <a class="card" href="archive.html">
+          <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1200&auto=format&fit=crop" alt="Archive">
+          <div class="card-body">
+            <span class="kicker">Archive</span>
+            <h3>Catalogo lavori</h3>
+            <p>Pagina madre con tutti i lavori, cluster, categorie e progetti.</p>
           </div>
+        </a>
+
+        <a class="card" href="studio.html">
+          <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Studio">
+          <div class="card-body">
+            <span class="kicker">Studio</span>
+            <h3>Chi è BluCineLab</h3>
+            <p>Visione, tono, metodo, approccio e identità dello studio.</p>
+          </div>
+        </a>
+
+        <a class="card" href="capabilities.html">
+          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="Capabilities">
+          <div class="card-body">
+            <span class="kicker">Capabilities</span>
+            <h3>Cosa facciamo</h3>
+            <p>Direzione creativa, scenografia, sistemi visivi, editoria e digitale.</p>
+          </div>
+        </a>
+
+        <a class="card" href="contact.html">
+          <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop" alt="Contact">
+          <div class="card-body">
+            <span class="kicker">Contact</span>
+            <h3>Contatti</h3>
+            <p>Punto d’ingresso diretto per collaborazioni, incarichi e richieste.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Selected Preview</h2>
+      <p>
+        Anteprima del catalogo. I contenuti reali verranno sostituiti appena completi l’elenco dei progetti.
+      </p>
+      <div class="grid">
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1200&auto=format&fit=crop" alt="Preview">
+          <div class="card-body">
+            <span class="kicker">Cinema / Set</span>
+            <h3>Project Placeholder</h3>
+            <p>Card pronta per uno dei lavori più forti da mostrare in evidenza.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop" alt="Preview">
+          <div class="card-body">
+            <span class="kicker">Identity</span>
+            <h3>Project Placeholder</h3>
+            <p>Spazio già pronto per sistemi visivi, grafica, cataloghi o campagne.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1200&auto=format&fit=crop" alt="Preview">
+          <div class="card-body">
+            <span class="kicker">Spatial</span>
+            <h3>Project Placeholder</h3>
+            <p>Placeholder per allestimenti, mostre, open day ed eventi.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop" alt="Preview">
+          <div class="card-body">
+            <span class="kicker">Digital</span>
+            <h3>Project Placeholder</h3>
+            <p>Spazio riservato a siti, front-end e ambienti digitali.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Quick Contact</h2>
+      <div class="contact-box">
+        <p>
+          Struttura pronta. Il passo successivo è sostituire questi placeholder con i lavori reali.
+        </p>
+        <div class="contact-links">
+          <a class="chip" href="contact.html">Contact Page</a>
+          <a class="chip" href="archive.html">Archive</a>
         </div>
       </div>
     </section>
-
-    <section class="panel section" id="studio">
-      <h2>Studio</h2>
-      <p>
-        BluCineLab è un laboratorio visivo che lavora tra cinema, grafica,
-        spazio, fotografia, direzione e sistemi digitali.
-        Ogni progetto viene costruito come un oggetto coerente:
-        atmosfera, metodo, presenza, memoria.
-      </p>
-    </section>
-
-    <section class="section" id="windows">
-      <h2>Archive / Windows</h2>
-      <p class="works-intro">
-        Finestre di accesso alle aree di lavoro. Ogni scheda apre una pagina interna
-        del sito, pensata come archivio vivo e catalogo consultabile.
-      </p>
-
-      <div class="windows-grid">
-        <a class="window-card tilt-card" href="archive.html">
-          <div class="window-thumb">
-            <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1200&auto=format&fit=crop" alt="Archivio completo">
-          </div>
-          <div class="window-meta">catalogue / all works</div>
-          <h3>Full Archive</h3>
-          <p>Tutti i lavori raccolti in un archivio navigabile, ordinabile e aggiornabile.</p>
-          <div class="window-link">open archive</div>
-        </a>
-
-        <a class="window-card tilt-card" href="cluster-cinema.html">
-          <div class="window-thumb">
-            <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1200&auto=format&fit=crop" alt="Cinema e set design">
-          </div>
-          <div class="window-meta">cinema / set / production</div>
-          <h3>Cinema & Set</h3>
-          <p>Scenografie, set cinematografici, dispositivi visivi e costruzione atmosferica.</p>
-          <div class="window-link">open page</div>
-        </a>
-
-        <a class="window-card tilt-card" href="cluster-identity.html">
-          <div class="window-thumb">
-            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Identità visive">
-          </div>
-          <div class="window-meta">identity / editorial / graphics</div>
-          <h3>Visual Systems</h3>
-          <p>Identità, sistemi grafici, impaginazione, strutture editoriali e linguaggi coerenti.</p>
-          <div class="window-link">open page</div>
-        </a>
-
-        <a class="window-card tilt-card" href="cluster-spatial.html">
-          <div class="window-thumb">
-            <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop" alt="Allestimenti e spazio">
-          </div>
-          <div class="window-meta">events / staging / space</div>
-          <h3>Spatial Design</h3>
-          <p>Allestimenti, eventi, ambienti visivi, presenza pubblica e regia dello spazio.</p>
-          <div class="window-link">open page</div>
-        </a>
-
-        <a class="window-card tilt-card" href="cluster-digital.html">
-          <div class="window-thumb">
-            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="Produzione digitale">
-          </div>
-          <div class="window-meta">web / interfaces / digital</div>
-          <h3>Digital Production</h3>
-          <p>Siti, ambienti digitali, front-end, interfacce editoriali e presenza online.</p>
-          <div class="window-link">open page</div>
-        </a>
-
-        <a class="window-card tilt-card" href="project-template.html">
-          <div class="window-thumb">
-            <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1200&auto=format&fit=crop" alt="Template progetto">
-          </div>
-          <div class="window-meta">single project / template</div>
-          <h3>Project Page</h3>
-          <p>Template interno già pronto per ogni singolo lavoro, da riempire con foto e testo.</p>
-          <div class="window-link">open template</div>
-        </a>
-      </div>
-    </section>
-
-    <section class="archive section" id="archive">
-      <h2>Selected Works</h2>
-
-      <div class="cards">
-        <article class="archive-card tilt-card">
-          <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1200&auto=format&fit=crop" alt="Set cinematografico">
-          <div class="archive-info">
-            <h4>Cinema Set</h4>
-            <p>Scena, luce, props, costruzione atmosferica.</p>
-          </div>
-        </article>
-
-        <article class="archive-card tilt-card">
-          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="Computer e sviluppo web">
-          <div class="archive-info">
-            <h4>Digital Production</h4>
-            <p>Interfacce, codice, superfici editoriali e sistemi web.</p>
-          </div>
-        </article>
-
-        <article class="archive-card tilt-card">
-          <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop" alt="Grande evento scenografico">
-          <div class="archive-info">
-            <h4>Event Scenography</h4>
-            <p>Palchi, grandi ambienti, dispositivi visivi e presenza.</p>
-          </div>
-        </article>
-
-        <article class="archive-card tilt-card">
-          <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Arte design fotografia">
-          <div class="archive-info">
-            <h4>Art & Design</h4>
-            <p>Oggetti, immagini, superfici e costruzione simbolica.</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="panel section contact" id="contact">
-      <h2>Contact</h2>
-      <p>
-        Per progetti, collaborazioni, allestimenti, immagini, sistemi visivi e
-        produzioni digitali.
-      </p>
-
-      <div class="contact-links">
-        <a href="mailto:contact@blucinelab.com" class="contact-link">Email</a>
-        <a href="archive.html" class="contact-link">Archive</a>
-        <a href="project-template.html" class="contact-link">Project Page</a>
-      </div>
-    </section>
-
   </main>
 
   <script>
-    const hero = document.getElementById("hero");
-    const topbar = document.getElementById("topbar");
-
-    function updateDock() {
-      const scrollY = window.scrollY;
-      const heroHeight = Math.max(hero.offsetHeight - window.innerHeight, 1);
-      const progress = Math.max(0, Math.min(1, scrollY / heroHeight));
-      document.documentElement.style.setProperty("--dock-progress", progress.toFixed(4));
-      topbar.classList.toggle("is-scrolled", scrollY > 24);
-    }
-
-    updateDock();
-    window.addEventListener("scroll", updateDock, { passive: true });
-    window.addEventListener("resize", updateDock);
-
-    document.querySelectorAll(".wordmark").forEach((wm) => {
-      wm.querySelectorAll("span").forEach((letter) => {
-        letter.addEventListener("mouseenter", () => letter.classList.add("glow"));
-        letter.addEventListener("mouseleave", () => letter.classList.remove("glow"));
-      });
-    });
-
     const heroWordmark = document.getElementById("heroWordmark");
+
     heroWordmark.querySelectorAll("span").forEach((letter) => {
       letter.addEventListener("mouseenter", (e) => {
         const rect = heroWordmark.getBoundingClientRect();
         const x = e.target.getBoundingClientRect().left + e.target.offsetWidth / 2 - rect.left;
         heroWordmark.style.setProperty("--hero-glow-x", `${x}px`);
         heroWordmark.classList.add("is-active");
+        letter.classList.add("glow");
       });
+
       letter.addEventListener("mouseleave", () => {
         heroWordmark.classList.remove("is-active");
+        letter.classList.remove("glow");
       });
-    });
-
-    const cursor = document.querySelector(".cursor-core");
-    const trail = document.querySelector(".cursor-trail");
-
-    let mx = window.innerWidth * 0.5;
-    let my = window.innerHeight * 0.5;
-    let tx = mx;
-    let ty = my;
-
-    function spawnParticle(x, y) {
-      if (!window.matchMedia("(pointer:fine)").matches) return;
-
-      const p = document.createElement("div");
-      p.className = "cursor-particle";
-      p.style.left = x + "px";
-      p.style.top = y + "px";
-      p.style.setProperty("--dx", `${(Math.random() - 0.5) * 18}px`);
-      p.style.setProperty("--dy", `${-8 - Math.random() * 18}px`);
-      document.body.appendChild(p);
-      setTimeout(() => p.remove(), 900);
-    }
-
-    window.addEventListener("mousemove", (e) => {
-      mx = e.clientX;
-      my = e.clientY;
-      cursor.style.left = mx + "px";
-      cursor.style.top = my + "px";
-      spawnParticle(mx, my);
-    }, { passive: true });
-
-    function animateCursor() {
-      tx += (mx - tx) * 0.18;
-      ty += (my - ty) * 0.18;
-      trail.style.left = tx + "px";
-      trail.style.top = ty + "px";
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-    const hoverCards = document.querySelectorAll(".tilt-card");
-
-    hoverCards.forEach((card) => {
-      let raf = null;
-
-      function setCard(e) {
-        const rect = card.getBoundingClientRect();
-        const px = ((e.clientX - rect.left) / rect.width) * 100;
-        const py = ((e.clientY - rect.top) / rect.height) * 100;
-        const ry = ((px / 100) - 0.5) * 8;
-        const rx = (0.5 - (py / 100)) * 8;
-
-        card.style.setProperty("--mx", `${px}%`);
-        card.style.setProperty("--my", `${py}%`);
-        card.classList.add("is-hovered");
-
-        if (raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          card.style.transform = `translateY(-8px) scale(1.02) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
-        });
-      }
-
-      function resetCard() {
-        card.classList.remove("is-hovered");
-        card.style.transform = "";
-      }
-
-      card.addEventListener("mousemove", setCard);
-      card.addEventListener("mouseleave", resetCard);
     });
 
     const canvas = document.getElementById("liquidCanvas");
@@ -1104,13 +664,11 @@
       for (const f of fields) {
         f.x += f.dx;
         f.y += f.dy;
-
         if (f.x < -f.r || f.x > window.innerWidth + f.r) f.dx *= -1;
         if (f.y < -f.r || f.y > window.innerHeight + f.r) f.dy *= -1;
       }
 
       ctx.globalCompositeOperation = "screen";
-
       ctx.filter = "blur(74px)";
       for (const f of fields) drawFieldBlob(f, t, 0.7);
 
@@ -1156,7 +714,6 @@
     window.addEventListener("resize", () => {
       resizeCanvas();
       createFields();
-      updateDock();
     });
   </script>
 </body>
