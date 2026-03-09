@@ -2,25 +2,18 @@
 <html lang="it">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>BLUCINELAB</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
 
 <style>
 
-
 :root{
-
---bg:#02060d;
 --text:#e8e4da;
-
+--gold:rgba(215,185,120,.45);
 }
-
-
 
 *{
 margin:0;
@@ -29,41 +22,27 @@ box-sizing:border-box;
 }
 
 body{
-
 font-family:Inter;
 color:var(--text);
-overflow-x:hidden;
 background:#02060d;
-
+overflow-x:hidden;
+cursor:none;
 }
 
 
+/* WEBGL CANVAS BACKGROUND */
 
-/* LIQUID BACKGROUND */
-
-body::before{
-
-content:"";
+#bg{
 position:fixed;
-inset:-20%;
-
-background:
-
-radial-gradient(circle at 30% 40%, rgba(220,230,255,.10), transparent 45%),
-radial-gradient(circle at 70% 60%, rgba(160,200,255,.08), transparent 50%),
-radial-gradient(circle at 50% 50%, rgba(130,150,255,.06), transparent 55%);
-
-filter:blur(120px);
-
-animation:liquidMove 40s ease-in-out infinite alternate;
-
-z-index:-2;
-
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-3;
 }
 
 
-
-/* METALLIC GRAIN */
+/* GRAIN */
 
 body::after{
 
@@ -76,93 +55,83 @@ background:url("https://grainy-gradients.vercel.app/noise.png");
 opacity:.05;
 mix-blend-mode:overlay;
 
+pointer-events:none;
 z-index:-1;
 
 }
 
 
+/* CURSOR */
 
-@keyframes liquidMove{
-
-0%{
-transform:translate(-4%, -2%) scale(1.15);
+.cursor{
+position:fixed;
+width:10px;
+height:10px;
+border-radius:50%;
+background:#b6d9ff;
+pointer-events:none;
+mix-blend-mode:screen;
+z-index:1000;
+box-shadow:
+0 0 10px #9fd6ff,
+0 0 30px #8ebfff,
+0 0 80px #8ebfff;
 }
 
-50%{
-transform:translate(3%, 4%) scale(1.25);
+.trail{
+position:fixed;
+width:4px;
+height:4px;
+background:#c7e4ff;
+border-radius:50%;
+pointer-events:none;
+opacity:.8;
+z-index:999;
 }
-
-100%{
-transform:translate(-2%, 3%) scale(1.18);
-}
-
-}
-
 
 
 /* TOPBAR */
 
 .topbar{
-
 position:fixed;
 top:0;
-left:0;
 width:100%;
 height:70px;
-
 display:flex;
 align-items:center;
 justify-content:center;
-
-background:rgba(0,0,0,.4);
+background:rgba(0,0,0,.35);
 backdrop-filter:blur(10px);
-
 z-index:100;
-
 }
 
-
-
 .nav{
-
 position:absolute;
 right:30px;
-
 }
 
 .nav a{
-
 margin-left:25px;
 font-size:12px;
 letter-spacing:2px;
-text-transform:uppercase;
 text-decoration:none;
 color:#ddd;
-
 }
-
 
 
 /* HERO */
 
 .hero{
-
 height:160vh;
 display:flex;
 align-items:center;
 justify-content:center;
-
 }
-
-
 
 .hero-inner{
-
 width:1100px;
 max-width:90%;
-
 }
-
 
 
 /* WORDMARK */
@@ -172,19 +141,22 @@ max-width:90%;
 font-family:Oswald;
 font-weight:300;
 
-font-size:130px;
-letter-spacing:12px;
+font-size:150px;
+letter-spacing:14px;
 
 display:flex;
-gap:5px;
+gap:4px;
+
+transition:
+transform .8s cubic-bezier(.22,1,.36,1),
+top .8s cubic-bezier(.22,1,.36,1),
+left .8s cubic-bezier(.22,1,.36,1);
 
 }
 
-
-
 .wordmark span{
 
-background:linear-gradient(120deg,#8ce8ff,#ffffff,#b7a0ff,#ffe0b2);
+background:linear-gradient(120deg,#9fe8ff,#ffffff,#c6b3ff,#ffe0b2);
 
 -webkit-background-clip:text;
 background-clip:text;
@@ -195,33 +167,27 @@ transition:.25s;
 
 }
 
-
-
-.wordmark span:hover{
+.wordmark span.glow{
 
 text-shadow:
-0 0 8px #8ce8ff,
-0 0 20px #8ce8ff,
-0 0 40px #9faaff;
+0 0 10px #9fd6ff,
+0 0 25px #9fd6ff,
+0 0 60px #9fd6ff;
 
-filter:brightness(1.2);
+filter:brightness(1.3);
 
 }
-
 
 
 /* HERO TEXT */
 
 .hero-lead{
-
 margin-top:30px;
-max-width:450px;
-line-height:1.9;
-
+max-width:480px;
+line-height:2;
+font-weight:300;
 color:#cfc9bb;
-
 }
-
 
 
 /* PANELS */
@@ -229,129 +195,99 @@ color:#cfc9bb;
 .hero-panels{
 
 margin-top:60px;
-
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:25px;
 
 }
 
-
-
 .panel{
 
 padding:28px;
-
 border-radius:18px;
+border:1px solid var(--gold);
 
-border:1px solid rgba(220,190,130,.4);
-
-background:rgba(30,35,45,.5);
-
+background:rgba(40,45,60,.45);
 backdrop-filter:blur(15px);
 
 box-shadow:
-
 0 0 40px rgba(0,0,0,.5),
-inset 0 0 30px rgba(255,255,255,.03);
+inset 0 0 20px rgba(255,255,255,.03);
 
 }
-
-
 
 .panel h3{
-
 font-family:Oswald;
 letter-spacing:3px;
-margin-bottom:12px;
-
+margin-bottom:10px;
+color:#f1e6c8;
 }
-
-
 
 .panel p{
-
-line-height:1.9;
-font-size:14px;
-
+line-height:2;
+font-size:13px;
+font-weight:300;
+color:#cfc9bb;
 }
-
 
 
 /* SECTION */
 
 .section{
-
 padding:140px 20px;
-
 }
 
-
-
 .container{
-
 width:800px;
 max-width:90%;
 margin:auto;
-
 }
 
-
-
 .section h2{
-
 font-family:Oswald;
 letter-spacing:4px;
 margin-bottom:25px;
-
 }
-
-
 
 .text{
-
-line-height:2;
+line-height:2.2;
 max-width:40ch;
 margin-bottom:25px;
-
+font-size:14px;
+font-weight:300;
 }
-
 
 
 /* FOOTER */
 
 footer{
-
 text-align:center;
 padding:80px 0;
 color:#777;
-
+font-size:12px;
 }
 
 </style>
 
 </head>
 
-
-
 <body>
 
+<canvas id="bg"></canvas>
 
+<div class="cursor"></div>
 
 <header class="topbar">
 
 <div class="logo">BLUCINELAB</div>
 
 <nav class="nav">
-
 <a href="#">Studio</a>
 <a href="#">Archive</a>
 <a href="#">Contact</a>
-
 </nav>
 
 </header>
-
 
 
 <section class="hero">
@@ -375,130 +311,237 @@ color:#777;
 
 <p class="hero-lead">
 
-Studio visivo indipendente che lavora tra immagine, direzione creativa,
-editoria e costruzione di atmosfere.
+Studio visivo indipendente che lavora tra immagine,
+direzione creativa, editoria e costruzione di atmosfere.
 
 </p>
-
-
 
 <div class="hero-panels">
 
 <div class="panel">
-
 <h3>Studio</h3>
-
-<p>
-
-Pratica visiva tra immagine, spazio e costruzione di identità visiva.
-
-</p>
-
+<p>Ricerca tra immagine, identità e composizione editoriale.</p>
 </div>
 
-
-
 <div class="panel">
-
 <h3>Archive</h3>
-
-<p>
-
-Un archivio di frammenti visivi, sistemi editoriali e ricerca grafica.
-
-</p>
-
+<p>Frammenti di lavori, sistemi grafici e sperimentazioni visive.</p>
 </div>
-
-
 
 <div class="panel">
-
 <h3>Field</h3>
-
-<p>
-
-Progetti tra scenografia, fotografia e direzione artistica.
-
-</p>
-
+<p>Progetti tra scenografia, fotografia e direzione artistica.</p>
 </div>
 
 </div>
 
 </div>
-
 </section>
 
 
-
 <section class="section">
-
 <div class="container">
-
 <h2>Studio</h2>
-
 <p class="text">
-
 BLUCINELAB lavora tra immagine e spazio.
 Ogni progetto è trattato come un sistema visivo coerente.
-
 </p>
-
-<p class="text">
-
-Il lavoro non mira a riempire superfici ma a costruire atmosfere leggibili e desiderabili.
-
-</p>
-
 </div>
-
 </section>
-
-
-
-<section class="section">
-
-<div class="container">
-
-<h2>Archive</h2>
-
-<p class="text">
-
-Una selezione di lavori e frammenti visivi.
-Non un portfolio esaustivo ma un archivio orientato.
-
-</p>
-
-</div>
-
-</section>
-
 
 
 <footer>
-
 <p>© BLUCINELAB</p>
-
 </footer>
 
 
+<script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
 
 <script>
 
-/* SCROLL LOGO DOCK */
+/* THREE FLUID BACKGROUND */
+
+const canvas=document.getElementById("bg")
+
+const scene=new THREE.Scene()
+
+const camera=new THREE.PerspectiveCamera(
+45,
+window.innerWidth/window.innerHeight,
+0.1,
+100
+)
+
+camera.position.z=1
+
+const renderer=new THREE.WebGLRenderer({canvas,alpha:true})
+renderer.setSize(window.innerWidth,window.innerHeight)
+
+const uniforms={
+time:{value:0},
+mouse:{value:new THREE.Vector2(0.5,0.5)}
+}
+
+const material=new THREE.ShaderMaterial({
+
+uniforms,
+
+vertexShader:`
+
+void main(){
+gl_Position=vec4(position,1.0);
+}
+
+`,
+
+fragmentShader:`
+
+uniform float time;
+uniform vec2 mouse;
+
+float noise(vec2 p){
+return sin(p.x)*sin(p.y);
+}
+
+void main(){
+
+vec2 uv=gl_FragCoord.xy/vec2(1920.,1080.);
+
+float d=distance(uv,mouse);
+
+float fluid=
+sin((uv.x+time*.03)*6.)+
+sin((uv.y+time*.04)*7.)+
+sin((uv.x+uv.y+time*.05)*8.);
+
+fluid*=.08;
+
+float glow=smoothstep(.25,.0,d)*.35;
+
+vec3 col=vec3(0.02,0.05,0.1)+fluid+glow;
+
+gl_FragColor=vec4(col,1.);
+
+}
+
+`
+
+})
+
+const geometry=new THREE.PlaneGeometry(2,2)
+const mesh=new THREE.Mesh(geometry,material)
+
+scene.add(mesh)
+
+function animate(){
+
+uniforms.time.value+=.02
+
+renderer.render(scene,camera)
+
+requestAnimationFrame(animate)
+
+}
+
+animate()
+
+
+window.addEventListener("mousemove",e=>{
+uniforms.mouse.value.x=e.clientX/window.innerWidth
+uniforms.mouse.value.y=1-e.clientY/window.innerHeight
+})
+
+
+window.addEventListener("resize",()=>{
+renderer.setSize(window.innerWidth,window.innerHeight)
+})
+
+
+/* CURSOR COMET */
+
+const cursor=document.querySelector(".cursor")
+
+let mouseX=0
+let mouseY=0
+
+document.addEventListener("mousemove",e=>{
+mouseX=e.clientX
+mouseY=e.clientY
+})
+
+let x=0
+let y=0
+
+function animateCursor(){
+
+x+=(mouseX-x)*0.15
+y+=(mouseY-y)*0.15
+
+cursor.style.transform=`translate(${x}px,${y}px)`
+
+createTrail(x,y)
+
+requestAnimationFrame(animateCursor)
+
+}
+
+animateCursor()
+
+function createTrail(x,y){
+
+const t=document.createElement("div")
+t.className="trail"
+
+t.style.left=x+"px"
+t.style.top=y+"px"
+
+document.body.appendChild(t)
+
+setTimeout(()=>{
+t.style.transition="1s"
+t.style.opacity=0
+t.style.transform="scale(.3)"
+},10)
+
+setTimeout(()=>{
+t.remove()
+},1000)
+
+}
+
+
+/* LETTER GLOW */
+
+document.querySelectorAll(".wordmark span").forEach(letter=>{
+
+letter.addEventListener("mouseenter",()=>{
+letter.classList.add("glow")
+})
+
+letter.addEventListener("mouseleave",()=>{
+letter.classList.remove("glow")
+})
+
+})
+
+
+/* SMOOTH LOGO DOCK */
 
 const wordmark=document.querySelector(".wordmark")
 
 window.addEventListener("scroll",()=>{
 
-if(window.scrollY>200){
+let y=window.scrollY
 
-wordmark.style.transform="scale(.35)"
+let scale=Math.max(.35,1-y/500)
+
+wordmark.style.transform=`translateX(-50%) scale(${scale})`
+
+if(y>120){
+
 wordmark.style.position="fixed"
 wordmark.style.top="15px"
 wordmark.style.left="50%"
-wordmark.style.transform+=" translateX(-50%)"
 
 }else{
 
@@ -510,8 +553,6 @@ wordmark.style.transform="scale(1)"
 })
 
 </script>
-
-
 
 </body>
 </html>
