@@ -1,6 +1,6 @@
 const cursor = document.querySelector(".cursor");
 
-/* ================= CURSOR + MANY SPARKS ================= */
+/* ================= CURSOR + MANY SMALL SPARKS ================= */
 
 if (cursor) {
   document.addEventListener("mousemove", (e) => {
@@ -10,17 +10,15 @@ if (cursor) {
   });
 
   function createSparkBurst(x, y) {
-    const amount = 6 + Math.floor(Math.random() * 7); // 6–12
+    const amount = 12 + Math.floor(Math.random() * 14); // 12–25
 
     for (let i = 0; i < amount; i++) {
-      if (Math.random() > 0.72) continue;
-
       const spark = document.createElement("div");
       spark.className = "spark";
       spark.style.left = x + "px";
       spark.style.top = y + "px";
-      spark.style.setProperty("--dx", (Math.random() - 0.5) * 34 + "px");
-      spark.style.setProperty("--dy", (-6 - Math.random() * 34) + "px");
+      spark.style.setProperty("--dx", (Math.random() - 0.5) * 42 + "px");
+      spark.style.setProperty("--dy", (-6 - Math.random() * 30) + "px");
 
       document.body.appendChild(spark);
 
