@@ -92,25 +92,49 @@ magneticCards.forEach(function (card) {
   card.addEventListener("mouseleave", onLeave);
 });
 
-/* ================= HOME TITLE DOCK ================= */
+/* ================= HOME TITLE DOCK + HERO MOTION ================= */
 
 var homeTitleDock = document.getElementById("homeTitleDock");
 var homeHero = document.getElementById("homeHero");
+var homeTitle = document.getElementById("homeTitle");
+var heroChips = document.getElementById("heroChips");
+var heroStatement = document.getElementById("heroStatement");
 
-if (homeTitleDock && homeHero) {
-  function updateHomeDock() {
-    var rect = homeHero.getBoundingClientRect();
-    var trigger = rect.bottom < window.innerHeight * 0.42;
+if (homeHero && homeTitle) {
+  function updateHomeHeroMotion() {
+    var scrollY = window.scrollY || window.pageYOffset || 0;
+    var limit = window.innerHeight * 0.55;
+    var progress = Math.min(scrollY / limit, 1);
 
-    if (trigger) {
-      homeTitleDock.classList.add("is-visible");
-    } else {
-      homeTitleDock.classList.remove("is-visible");
+    var titleScale = 1 - progress * 0.16;
+    var titleY = progress * -72;
+    var titleOpacity = 1 - progress * 0.38;
+
+    homeTitle.style.transform =
+      "translateY(" + titleY + "px) scale(" + titleScale + ")";
+    homeTitle.style.opacity = titleOpacity;
+
+    if (heroChips) {
+      heroChips.style.transform = "translateY(" + (progress * -28) + "px)";
+      heroChips.style.opacity = 1 - progress * 0.32;
+    }
+
+    if (heroStatement) {
+      heroStatement.style.transform = "translateY(" + (progress * -20) + "px)";
+      heroStatement.style.opacity = 1 - progress * 0.18;
+    }
+
+    if (homeTitleDock) {
+      if (progress > 0.34) {
+        homeTitleDock.classList.add("is-visible");
+      } else {
+        homeTitleDock.classList.remove("is-visible");
+      }
     }
   }
 
-  updateHomeDock();
-  window.addEventListener("scroll", updateHomeDock, { passive: true });
+  updateHomeHeroMotion();
+  window.addEventListener("scroll", updateHomeHeroMotion, { passive: true });
 }
 
 /* ================= PARALLAX SECTION ================= */
