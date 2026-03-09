@@ -1,6 +1,35 @@
 var cursor = document.querySelector(".cursor");
 var audioCtx = null;
+var audioUnlocked = false;
 var lastWaveSoundTime = 0;
+
+/* ================= AUDIO UNLOCK ================= */
+
+function ensureAudioContext() {
+  try {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    return audioCtx;
+  } catch (e) {
+    return null;
+  }
+}
+
+function unlockAudio() {
+  var ctx = ensureAudioContext();
+  if (!ctx) return;
+
+  if (ctx.state === "suspended") {
+    ctx.resume();
+  }
+
+  audioUnlocked = true;
+}
+
+document.addEventListener("pointerdown", unlockAudio, { passive: true });
+document.addEventListener("touchstart", unlockAudio, { passive: true });
+document.addEventListener("click", unlockAudio, { passive: true });
 
 /* ================= CURSOR + SPARKS ================= */
 
@@ -39,6 +68,55 @@ if (cursor) {
 
 var homeTitle = document.getElementById("homeTitle");
 
+function playSoftWaveSound() {
+  var now = Date.now();
+  if (now - lastWaveSoundTime < 110) return;
+  lastWaveSoundTime = now;
+
+  var ctx = ensureAudioContext();
+  if (!ctx) return;
+  if (!audioUnlocked) return;
+
+  try {
+    if (ctx.state === "suspended") {
+      ctx.resume();
+    }
+
+    var osc1 = ctx.createOscillator();
+    var osc2 = ctx.createOscillator();
+    var gain = ctx.createGain();
+    var filter = ctx.createBiquadFilter();
+
+    osc1.type = "sine";
+    osc2.type = "triangle";
+
+    osc1.frequency.setValueAtTime(980, ctx.currentTime);
+    osc1.frequency.exponentialRampToValueAtTime(720, ctx.currentTime + 0.11);
+
+    osc2.frequency.setValueAtTime(660, ctx.currentTime);
+    osc2.frequency.exponentialRampToValueAtTime(520, ctx.currentTime + 0.11);
+
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(2100, ctx.currentTime);
+
+    gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.028, ctx.currentTime + 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.17);
+
+    osc1.connect(filter);
+    osc2.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc1.start();
+    osc2.start();
+    osc1.stop(ctx.currentTime + 0.18);
+    osc2.stop(ctx.currentTime + 0.18);
+  } catch (e) {
+    /* ignore audio errors */
+  }
+}
+
 if (homeTitle) {
   var titleLetters = homeTitle.querySelectorAll("span");
 
@@ -46,46 +124,6 @@ if (homeTitle) {
     titleLetters.forEach(function (letter) {
       letter.style.setProperty("--wave-strength", "0");
     });
-  }
-
-  function playSoftWaveSound() {
-    var now = Date.now();
-    if (now - lastWaveSoundTime < 140) return;
-    lastWaveSoundTime = now;
-
-    try {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-
-      if (audioCtx.state === "suspended") {
-        audioCtx.resume();
-      }
-
-      var osc = audioCtx.createOscillator();
-      var gain = audioCtx.createGain();
-      var filter = audioCtx.createBiquadFilter();
-
-      osc.type = "sine";
-      osc.frequency.setValueAtTime(920, audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(640, audioCtx.currentTime + 0.08);
-
-      filter.type = "lowpass";
-      filter.frequency.setValueAtTime(1800, audioCtx.currentTime);
-
-      gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.012, audioCtx.currentTime + 0.012);
-      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.12);
-
-      osc.connect(filter);
-      filter.connect(gain);
-      gain.connect(audioCtx.destination);
-
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.13);
-    } catch (e) {
-      /* ignore audio errors */
-    }
   }
 
   homeTitle.addEventListener("mousemove", function (e) {
@@ -96,10 +134,14 @@ if (homeTitle) {
 
     titleLetters.forEach(function (letter, index) {
       var distance = Math.abs(index - activeIndex);
-      var strength = Math.max(0, 1 - distance / 2.2);
+      var strength = Math.max(0, 1 - distance / 2.35);
       letter.style.setProperty("--wave-strength", strength.toFixed(3));
     });
 
+    playSoftWaveSound();
+  });
+
+  homeTitle.addEventListener("mouseenter", function () {
     playSoftWaveSound();
   });
 
