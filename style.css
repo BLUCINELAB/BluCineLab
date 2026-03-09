@@ -1,7 +1,8 @@
 :root{
 
 --bg-deep:#02040a;
---text-main:#e6e3da;
+
+--text-main:#e8e4da;
 --text-soft:#cfc9bb;
 
 --gold:rgba(215,185,120,.45);
@@ -49,14 +50,14 @@ height:100%;
 
 z-index:-3;
 
-filter:blur(40px) contrast(110%);
+filter:blur(30px) contrast(110%);
 
 }
 
 
 
 /* ============================= */
-/* PARTICLE LAYER */
+/* PARTICLES */
 /* ============================= */
 
 .particle-layer{
@@ -156,6 +157,68 @@ z-index:9998;
 
 
 /* ============================= */
+/* TOPBAR */
+/* ============================= */
+
+.topbar{
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:70px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:rgba(0,0,0,.35);
+
+backdrop-filter:blur(10px);
+
+z-index:10;
+
+border-bottom:1px solid rgba(255,255,255,.05);
+
+}
+
+.nav{
+
+display:flex;
+gap:40px;
+
+}
+
+.nav a{
+
+color:#ddd;
+
+text-decoration:none;
+
+font-size:12px;
+
+letter-spacing:.2em;
+
+text-transform:uppercase;
+
+opacity:.9;
+
+transition:.2s;
+
+}
+
+.nav a:hover{
+
+opacity:1;
+transform:translateY(-1px);
+
+}
+
+
+
+/* ============================= */
 /* HERO */
 /* ============================= */
 
@@ -177,10 +240,6 @@ width:1000px;
 max-width:90%;
 
 }
-
-
-
-/* WORDMARK */
 
 .wordmark{
 
@@ -219,8 +278,6 @@ filter:brightness(1.2);
 
 
 
-/* HERO TEXT */
-
 .hero-lead{
 
 max-width:420px;
@@ -236,40 +293,54 @@ color:var(--text-soft);
 
 
 /* ============================= */
-/* EDITORIAL BLOCK */
+/* PANEL */
 /* ============================= */
 
-.editorial-block{
+.panel{
 
 width:1000px;
 max-width:90%;
 
 margin:180px auto;
 
-display:grid;
+padding:40px;
 
-grid-template-columns:1fr 1fr;
+border-radius:18px;
 
-gap:80px;
+border:1px solid var(--gold);
 
-align-items:center;
+background:rgba(20,25,35,.45);
+
+backdrop-filter:blur(10px);
 
 }
 
-.editorial-block img{
+.panel h2{
 
-width:100%;
+font-family:Oswald;
 
-border-radius:14px;
+letter-spacing:.14em;
 
-filter:brightness(.9);
+margin-bottom:20px;
+
+font-weight:300;
+
+}
+
+.panel p{
+
+line-height:2.1;
+
+font-size:14px;
+
+color:var(--text-soft);
 
 }
 
 
 
 /* ============================= */
-/* DISCIPLINES */
+/* DISCIPLINES GRID */
 /* ============================= */
 
 .disciplines{
@@ -284,6 +355,18 @@ display:grid;
 grid-template-columns:repeat(4,1fr);
 
 gap:40px;
+
+}
+
+.discipline{
+
+padding:30px;
+
+border-radius:14px;
+
+border:1px solid var(--gold);
+
+background:rgba(20,25,35,.35);
 
 }
 
@@ -334,12 +417,25 @@ filter:brightness(.85);
 
 
 /* ============================= */
-/* ARCHIVE FILM */
+/* ARCHIVE */
 /* ============================= */
 
 .archive-film{
 
 margin:200px 0;
+
+}
+
+.archive-film h2{
+
+width:1000px;
+max-width:90%;
+
+margin:0 auto 40px;
+
+font-family:Oswald;
+
+font-weight:300;
 
 }
 
@@ -349,32 +445,56 @@ display:flex;
 
 gap:40px;
 
-padding:0 140px;
+padding:0 120px;
 
 }
 
-.film-track img{
+.archive-card{
 
 width:320px;
 
-border-radius:12px;
+border-radius:14px;
 
-filter:brightness(.9);
+overflow:hidden;
 
-transition:.4s;
+border:1px solid var(--gold);
+
+background:rgba(20,25,35,.5);
+
+transition:.35s;
 
 }
 
-.film-track img:hover{
+.archive-card:hover{
 
-transform:scale(1.04);
+transform:translateY(-8px);
+
+}
+
+.archive-card img{
+
+width:100%;
+
+display:block;
+
+filter:brightness(.9);
+
+}
+
+.archive-card h4{
+
+font-family:Oswald;
+
+font-weight:300;
+
+padding:20px;
 
 }
 
 
 
 /* ============================= */
-/* RESEARCH LAB */
+/* RESEARCH */
 /* ============================= */
 
 .research-lab{
