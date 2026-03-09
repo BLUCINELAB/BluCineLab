@@ -276,7 +276,7 @@ img{
 }
 
 .home-hero-inner{
-  width:min(var(--max),100%);
+  width:min(96vw, 1680px);
   margin:auto;
 }
 
@@ -294,8 +294,8 @@ img{
   position:absolute;
   left:50%;
   top:-12%;
-  width:68%;
-  height:52%;
+  width:72%;
+  height:54%;
   transform:translateX(-50%);
   background:radial-gradient(circle, rgba(150,210,255,.1), transparent 70%);
   filter:blur(32px);
@@ -303,7 +303,7 @@ img{
 }
 
 .hero-eyebrow{
-  margin-bottom:18px;
+  margin-bottom:22px;
 }
 
 .home-title{
@@ -313,9 +313,9 @@ img{
   width:max-content;
   max-width:none;
   overflow:visible;
-  font-size:clamp(5.6rem, 16vw, 15rem);
-  line-height:.84;
-  letter-spacing:.03em;
+  font-size:clamp(7rem, 21vw, 24rem);
+  line-height:.78;
+  letter-spacing:.01em;
   margin:0;
 }
 
@@ -327,12 +327,12 @@ img{
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
-  gap:10px;
-  margin-top:24px;
+  gap:14px;
+  margin-top:36px;
 }
 
 .hero-chips{
-  max-width:900px;
+  max-width:1080px;
 }
 
 .button-chip{
@@ -401,9 +401,9 @@ img{
 }
 
 .hero-statement{
-  width:min(860px, 100%);
-  margin-top:20px;
-  padding:22px 24px;
+  width:min(900px, 100%);
+  margin-top:28px;
+  padding:24px 26px;
 }
 
 .panel-label,
@@ -419,9 +419,9 @@ img{
 .home-side-panel p,
 .archive-panel p{
   margin:0;
-  line-height:1.75;
+  line-height:1.72;
   color:var(--text-soft);
-  font-size:.9rem;
+  font-size:.88rem;
   text-transform:none;
 }
 
@@ -498,9 +498,9 @@ img{
 .hero-project p{
   margin:0;
   max-width:56ch;
-  line-height:1.92;
+  line-height:1.84;
   color:var(--text-soft);
-  font-size:.92rem;
+  font-size:.9rem;
   text-transform:none;
 }
 
@@ -521,9 +521,9 @@ img{
 .manifesto-block p{
   margin:0;
   max-width:62ch;
-  line-height:1.85;
+  line-height:1.8;
   color:var(--text-soft);
-  font-size:.88rem;
+  font-size:.87rem;
   text-transform:none;
 }
 
@@ -590,8 +590,8 @@ img{
 
 .featured-body p{
   margin:0;
-  line-height:1.76;
-  font-size:.9rem;
+  line-height:1.74;
+  font-size:.89rem;
   color:var(--text-soft);
   text-transform:none;
 }
@@ -719,7 +719,7 @@ img{
 .cardText p,
 .project-body p{
   margin:0;
-  font-size:.9rem;
+  font-size:.89rem;
   line-height:1.72;
   color:var(--text-soft);
   text-transform:none;
@@ -807,8 +807,8 @@ img{
 }
 
 .cluster-text{
-  line-height:1.74;
-  font-size:.86rem;
+  line-height:1.72;
+  font-size:.85rem;
   color:var(--text-soft);
   text-transform:none;
 }
@@ -858,7 +858,7 @@ img{
   max-width:48ch;
   line-height:1.78;
   color:var(--text-soft);
-  font-size:.9rem;
+  font-size:.89rem;
   text-transform:none;
 }
 
@@ -941,8 +941,8 @@ img{
   }
 
   .home-title{
-    font-size:clamp(3.7rem, 17vw, 7rem);
-    letter-spacing:.02em;
+    font-size:clamp(4.8rem, 20vw, 8.2rem);
+    letter-spacing:.01em;
   }
 
   .archive-title{
