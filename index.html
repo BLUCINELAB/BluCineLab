@@ -506,7 +506,7 @@
     }
 
     h1 {
-      font-size: clamp(5rem, 10vw, 9.4rem);
+      font-size: clamp(6rem, 11.6vw, 10.8rem);
       line-height: 0.82;
       letter-spacing: 0.04em;
       font-weight: 300;
@@ -596,16 +596,16 @@
     .wip,
     figcaption {
       font-family: "Alexandria", sans-serif;
-      font-size: 0.46rem;
-      font-weight: 200;
-      letter-spacing: 0.24em;
+      font-size: 0.56rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       background-image: linear-gradient(
         180deg,
         rgba(255,246,230,0.98) 0%,
-        rgba(228,219,204,0.92) 18%,
+        rgba(242,236,228,0.98) 18%,
         rgba(255,252,246,0.98) 34%,
-        rgba(205,194,176,0.88) 58%,
+        rgba(238,229,214,0.96) 58%,
         rgba(243,236,224,0.96) 100%
       );
       -webkit-background-clip: text;
@@ -613,9 +613,9 @@
       color: transparent;
     }
 
-    .small-label,
-    figcaption {
-      opacity: 0.72;
+    .section-index,
+    .small-label {
+      opacity: 0.98;
     }
 
     .section-index {
@@ -729,9 +729,9 @@
     }
 
     .hero {
-      min-height: 100svh;
+      min-height: 130svh;
       display: grid;
-      align-items: center;
+      align-items: start;
       padding-top: calc(var(--space-7) + 2rem);
       padding-bottom: var(--space-6);
       position: relative;
@@ -746,6 +746,11 @@
       background: linear-gradient(90deg, transparent, rgba(154, 238, 254, 0.12), transparent);
       opacity: 0.48;
       z-index: 1;
+    }
+
+    .hero-sticky {
+      position: sticky;
+      top: 12vh;
     }
 
     .hero-grid {
@@ -764,6 +769,7 @@
       max-width: 760px;
       z-index: 3;
       transform: translateY(var(--hero-shift));
+      will-change: transform;
     }
 
     .hero-copy::before {
@@ -797,33 +803,40 @@
       line-height: 2.72;
     }
 
-    .hero-fields {
+    .hero-links {
       display: flex;
       flex-wrap: wrap;
       gap: 0.72rem;
       margin-top: var(--space-2);
     }
 
-    .meta-chip {
-      padding: 0.68rem 0.9rem;
-      border: 1px solid rgba(154, 238, 254, 0.14);
+    .hero-link {
+      padding: 0.76rem 1rem;
+      border: 1px solid rgba(196, 163, 99, 0.42);
       border-radius: 999px;
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.014), rgba(255,255,255,0.005)),
-        rgba(6, 10, 18, 0.44);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.01);
+        linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.004)),
+        rgba(6, 10, 18, 0.42);
+      color: var(--text-soft);
+      font-size: 0.58rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
       transition:
         transform var(--transition-fast),
         border-color var(--transition-fast),
-        background var(--transition-fast);
+        background var(--transition-fast),
+        color var(--transition-fast);
     }
 
-    .meta-chip:hover {
+    .hero-link:hover,
+    .hero-link:focus-visible {
       transform: translateY(-2px);
-      border-color: rgba(154, 238, 254, 0.2);
+      border-color: rgba(223, 189, 122, 0.66);
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0.007)),
-        rgba(8, 13, 22, 0.52);
+        linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0.006)),
+        rgba(8, 13, 22, 0.56);
+      color: var(--text-strong);
     }
 
     .hero-panel {
@@ -843,6 +856,7 @@
       position: relative;
       overflow: hidden;
       z-index: 3;
+      will-change: transform;
     }
 
     .hero-panel::before {
@@ -878,6 +892,7 @@
     .section {
       padding: var(--space-6) 0;
       position: relative;
+      will-change: transform;
     }
 
     .section + .section {
@@ -912,6 +927,7 @@
       backdrop-filter: blur(14px);
       position: relative;
       overflow: hidden;
+      transform: translateY(var(--drift-y, 0px));
     }
 
     .panel::before {
@@ -1028,6 +1044,7 @@
       text-align: center;
       position: relative;
       overflow: hidden;
+      transform: translateY(var(--drift-y, 0px));
     }
 
     .contact-panel::before {
@@ -1189,6 +1206,15 @@
     }
 
     @media (max-width: 1040px) {
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-sticky {
+        position: relative;
+        top: auto;
+      }
+
       .hero-grid,
       .manifest-grid {
         grid-template-columns: 1fr;
@@ -1215,13 +1241,12 @@
       }
 
       .hero {
-        min-height: auto;
         padding-top: 7rem;
         padding-bottom: 4rem;
       }
 
       h1 {
-        font-size: clamp(3.8rem, 16vw, 5.7rem);
+        font-size: clamp(4.4rem, 17vw, 6.6rem);
       }
 
       .section {
@@ -1247,6 +1272,11 @@
         bottom: 1rem;
         right: 1rem;
       }
+
+      .hero-links {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1264,8 +1294,17 @@
           scale(1) !important;
       }
 
-      .fragment-card {
+      .fragment-card,
+      .panel,
+      .contact-panel,
+      .hero-copy,
+      .hero-panel {
         transform: none !important;
+      }
+
+      .hero-sticky {
+        position: relative;
+        top: auto;
       }
     }
   </style>
@@ -1315,41 +1354,43 @@
     <span id="studio" class="section-anchor" aria-hidden="true"></span>
 
     <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <span class="eyebrow">image / space / direction</span>
+      <div class="container hero-sticky">
+        <div class="hero-grid">
+          <div class="hero-copy" data-parallax="0.18">
+            <span class="eyebrow">image / space / direction</span>
 
-          <div class="hero-heading">
-            <h1 class="wordmark"><span>BLUCINELAB</span></h1>
-            <p class="hero-claim">build visual atmospheres</p>
+            <div class="hero-heading">
+              <h1 class="wordmark"><span>BLUCINELAB</span></h1>
+              <p class="hero-claim">build visual atmospheres</p>
+            </div>
+
+            <p class="hero-lead">
+              Studio visivo indipendente che lavora tra immagine, direzione creativa,
+              composizione editoriale e costruzione di presenza.
+            </p>
+
+            <div class="hero-links" aria-label="Hero quick links">
+              <a class="hero-link" href="#studio">Studio</a>
+              <a class="hero-link" href="#archive">Archive</a>
+              <a class="hero-link" href="#contact">Contact</a>
+            </div>
           </div>
 
-          <p class="hero-lead">
-            Studio visivo indipendente che lavora tra immagine, direzione creativa,
-            composizione editoriale e costruzione di presenza.
-          </p>
-
-          <div class="hero-fields">
-            <span class="meta-chip">identity systems</span>
-            <span class="meta-chip">editorial composition</span>
-            <span class="meta-chip">visual atmospheres</span>
-          </div>
+          <aside class="hero-panel reveal" data-parallax="0.28">
+            <span class="small-label">Studio note</span>
+            <p>
+              Una pratica selettiva tra immagine, impaginazione, ambienti visivi,
+              archivi e costruzione di presenza. Non un portfolio da riempire,
+              ma un sistema che si compone per frammenti.
+            </p>
+          </aside>
         </div>
-
-        <aside class="hero-panel reveal">
-          <span class="small-label">Studio note</span>
-          <p>
-            Una pratica selettiva tra immagine, impaginazione, ambienti visivi,
-            archivi e costruzione di presenza. Non un portfolio da riempire,
-            ma un sistema che si compone per frammenti.
-          </p>
-        </aside>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" data-drift="0.08">
       <div class="container manifest-grid">
-        <div class="panel reveal">
+        <div class="panel reveal tilt-card">
           <span class="section-index">01 / Studio</span>
           <h2>Un laboratorio visivo, non una semplice vetrina.</h2>
           <p>
@@ -1363,7 +1404,7 @@
           </p>
         </div>
 
-        <div class="panel reveal">
+        <div class="panel reveal tilt-card">
           <span class="section-index">02 / Campo</span>
           <p>
             Il lavoro si muove tra direzione creativa, impaginazione, costruzione di archivi,
@@ -1379,9 +1420,9 @@
 
     <span id="archive" class="section-anchor" aria-hidden="true"></span>
 
-    <section class="section">
+    <section class="section" data-drift="0.12">
       <div class="container">
-        <div class="section-header narrow reveal">
+        <div class="section-header narrow reveal" data-parallax="0.1">
           <span class="section-index">03 / Archive</span>
           <h2>Una selezione in progress di lavori, sistemi e costruzioni visive.</h2>
           <p>
@@ -1423,9 +1464,9 @@
 
     <span id="contact" class="section-anchor" aria-hidden="true"></span>
 
-    <section class="section">
+    <section class="section" data-drift="0.1">
       <div class="container narrow">
-        <div class="contact-panel reveal">
+        <div class="contact-panel reveal tilt-card">
           <span class="section-index">04 / Contact</span>
           <h2>Collaborazioni, committenze, dialoghi visivi.</h2>
           <p>
@@ -1461,8 +1502,8 @@
 
     function updateTopbar() {
       topbar.classList.toggle("is-scrolled", window.scrollY > 24);
-      const heroShift = Math.max(-28, window.scrollY * -0.035);
-      root.style.setProperty("--hero-shift", heroShift + "px");
+      const heroShift = Math.max(-38, window.scrollY * -0.04);
+      root.style.setProperty("--hero-shift", `${heroShift}px`);
     }
 
     updateTopbar();
@@ -1479,6 +1520,41 @@
     }, { threshold: 0.12 });
 
     reveals.forEach((el) => observer.observe(el));
+
+    if (!prefersReducedMotion) {
+      const driftEls = document.querySelectorAll("[data-drift]");
+      const parallaxEls = document.querySelectorAll("[data-parallax]");
+
+      let currentScroll = window.scrollY;
+      let targetScroll = window.scrollY;
+
+      window.addEventListener("scroll", () => {
+        targetScroll = window.scrollY;
+      }, { passive: true });
+
+      function animateScrollField() {
+        currentScroll += (targetScroll - currentScroll) * 0.08;
+
+        driftEls.forEach((el) => {
+          const factor = parseFloat(el.dataset.drift || "0");
+          const rect = el.getBoundingClientRect();
+          const center = rect.top + rect.height * 0.5 - window.innerHeight * 0.5;
+          const drift = center * factor * -0.16;
+          el.style.setProperty("--drift-y", `${drift.toFixed(2)}px`);
+        });
+
+        parallaxEls.forEach((el) => {
+          const factor = parseFloat(el.dataset.parallax || "0");
+          const rect = el.getBoundingClientRect();
+          const offset = (window.innerHeight - rect.top) * factor * 0.08;
+          el.style.transform = `translate3d(0, ${offset.toFixed(2)}px, 0)`;
+        });
+
+        requestAnimationFrame(animateScrollField);
+      }
+
+      animateScrollField();
+    }
 
     if (!prefersReducedMotion && finePointer) {
       const sparksHost = document.getElementById("cometSparks");
@@ -1514,15 +1590,15 @@
 
       function spawnSpark(x, y, speed, angle) {
         const now = performance.now();
-        if (now - lastSparkTime < 16) return;
+        if (now - lastSparkTime < 18) return;
         lastSparkTime = now;
 
         const spark = document.createElement("span");
         spark.className = "spark";
 
-        const spread = (Math.random() - 0.5) * 0.7;
+        const spread = (Math.random() - 0.5) * 0.65;
         const dir = angle + Math.PI + spread;
-        const distance = 16 + Math.random() * 34 + speed * 0.12;
+        const distance = 18 + Math.random() * 42 + speed * 0.14;
 
         const driftX = Math.cos(dir) * distance;
         const driftY = Math.sin(dir) * distance;
@@ -1531,8 +1607,8 @@
         spark.style.top = `${y}px`;
         spark.style.setProperty("--dx", `${driftX}px`);
         spark.style.setProperty("--dy", `${driftY}px`);
-        spark.style.setProperty("--spark-scale", `${0.6 + Math.random() * 0.6}`);
-        spark.style.setProperty("--spark-duration", `${900 + Math.random() * 600}ms`);
+        spark.style.setProperty("--spark-scale", `${0.55 + Math.random() * 0.55}`);
+        spark.style.setProperty("--spark-duration", `${1100 + Math.random() * 800}ms`);
 
         sparksHost.appendChild(spark);
         spark.addEventListener("animationend", () => spark.remove());
@@ -1548,15 +1624,15 @@
         targetX = event.clientX;
         targetY = event.clientY;
 
-        targetScale = 1 - t * 0.12;
-        targetCoreScale = 1 + t * 0.24;
-        targetOpacity = 0.84 + t * 0.14;
+        targetScale = 1 - t * 0.1;
+        targetCoreScale = 1 + t * 0.18;
+        targetOpacity = 0.82 + t * 0.14;
 
-        stretchX = 1 + t * 0.28;
-        stretchY = 1 - t * 0.12;
+        stretchX = 1 + t * 0.34;
+        stretchY = 1 - t * 0.14;
         targetRotate = angle;
 
-        if (t > 0.05) {
+        if (t > 0.04) {
           spawnSpark(event.clientX, event.clientY, speed, angle);
         }
 
@@ -1578,11 +1654,11 @@
         const dx = targetX - currentX;
         const dy = targetY - currentY;
 
-        vx += dx * 0.075;
-        vy += dy * 0.075;
+        vx += dx * 0.09;
+        vy += dy * 0.09;
 
-        vx *= 0.72;
-        vy *= 0.72;
+        vx *= 0.7;
+        vy *= 0.7;
 
         currentX += vx;
         currentY += vy;
@@ -1590,8 +1666,8 @@
         currentScale += (targetScale - currentScale) * 0.12;
         currentCoreScale += (targetCoreScale - currentCoreScale) * 0.11;
         currentOpacity += (targetOpacity - currentOpacity) * 0.08;
-        currentStretchX += (stretchX - currentStretchX) * 0.16;
-        currentStretchY += (stretchY - currentStretchY) * 0.16;
+        currentStretchX += (stretchX - currentStretchX) * 0.18;
+        currentStretchY += (stretchY - currentStretchY) * 0.18;
 
         let deltaAngle = targetRotate - currentRotate;
         while (deltaAngle > Math.PI) deltaAngle -= Math.PI * 2;
