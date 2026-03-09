@@ -3,28 +3,21 @@ const cursor = document.querySelector(".cursor");
 /* ================= CURSOR + SPARKS ================= */
 
 if (cursor) {
-  let mx = window.innerWidth / 2;
-  let my = window.innerHeight / 2;
-
   document.addEventListener("mousemove", (e) => {
-    mx = e.clientX;
-    my = e.clientY;
-
-    cursor.style.left = mx + "px";
-    cursor.style.top = my + "px";
-
-    createSpark(mx, my);
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+    createSpark(e.clientX, e.clientY);
   });
 
   function createSpark(x, y) {
-    if (Math.random() > 0.55) return;
+    if (Math.random() > 0.38) return;
 
     const spark = document.createElement("div");
     spark.className = "spark";
     spark.style.left = x + "px";
     spark.style.top = y + "px";
-    spark.style.setProperty("--dx", (Math.random() - 0.5) * 24 + "px");
-    spark.style.setProperty("--dy", (-10 - Math.random() * 22) + "px");
+    spark.style.setProperty("--dx", (Math.random() - 0.5) * 26 + "px");
+    spark.style.setProperty("--dy", (-10 - Math.random() * 26) + "px");
 
     document.body.appendChild(spark);
 
@@ -80,19 +73,18 @@ magneticCards.forEach((card) => {
 
 /* ================= HOME TITLE DOCK ================= */
 
-const homeTitle = document.getElementById("homeTitle");
-const dock = document.getElementById("homeTitleDock");
+const homeTitleDock = document.getElementById("homeTitleDock");
 const homeHero = document.getElementById("homeHero");
 
-if (homeTitle && dock && homeHero) {
+if (homeTitleDock && homeHero) {
   function updateHomeDock() {
     const rect = homeHero.getBoundingClientRect();
-    const trigger = rect.bottom < window.innerHeight * 0.46;
+    const trigger = rect.bottom < window.innerHeight * 0.42;
 
     if (trigger) {
-      dock.classList.add("is-visible");
+      homeTitleDock.classList.add("is-visible");
     } else {
-      dock.classList.remove("is-visible");
+      homeTitleDock.classList.remove("is-visible");
     }
   }
 
@@ -100,15 +92,15 @@ if (homeTitle && dock && homeHero) {
   window.addEventListener("scroll", updateHomeDock, { passive: true });
 }
 
-/* ================= PARALLAX SECTIONS ================= */
+/* ================= PARALLAX SECTION ================= */
 
 const parallaxSections = document.querySelectorAll(".parallax-section");
 
 function updateParallax() {
   parallaxSections.forEach((section) => {
     const rect = section.getBoundingClientRect();
-    const offset = (window.innerHeight - rect.top) * 0.03;
-    section.style.transform = `translateY(${Math.max(0, Math.min(18, offset))}px)`;
+    const progress = (window.innerHeight - rect.top) * 0.03;
+    section.style.transform = `translateY(${Math.max(0, Math.min(18, progress))}px)`;
   });
 }
 
