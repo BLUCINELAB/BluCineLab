@@ -12,7 +12,7 @@
   <meta name="theme-color" content="#050816" />
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600&family=Changa:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600&family=Oswald:wght@400;500;600&display=swap"
     rel="stylesheet"
   />
 
@@ -20,11 +20,11 @@
     :root {
       --bg: #050816;
       --bg-deep: #02040a;
-      --bg-mid: #0b1121;
+      --bg-mid: #0a1020;
       --bg-soft: #10192d;
 
       --panel: rgba(11, 16, 29, 0.58);
-      --panel-strong: rgba(10, 16, 28, 0.82);
+      --panel-strong: rgba(10, 16, 28, 0.8);
 
       --text: #f1eee8;
       --text-soft: rgba(241, 238, 232, 0.78);
@@ -35,25 +35,33 @@
       --accent-warm: #cf8a5c;
 
       --line: rgba(255, 255, 255, 0.08);
-      --line-strong: rgba(135, 239, 255, 0.18);
+      --line-strong: rgba(135, 239, 255, 0.16);
 
       --radius-sm: 14px;
       --radius-md: 22px;
-      --radius-lg: 34px;
+      --radius-lg: 32px;
 
       --max-width: 1180px;
-      --content-width: 780px;
+      --content-width: 760px;
 
       --shadow-soft: 0 18px 48px rgba(0, 0, 0, 0.28);
-      --shadow-deep: 0 30px 100px rgba(0, 0, 0, 0.66);
+      --shadow-deep: 0 30px 100px rgba(0, 0, 0, 0.62);
 
       --transition-fast: 0.28s ease;
       --transition: 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 
-      --glow-x: 78%;
-      --glow-y: 38%;
+      --space-1: clamp(0.5rem, 0.4rem + 0.25vw, 0.75rem);
+      --space-2: clamp(0.75rem, 0.65rem + 0.35vw, 1rem);
+      --space-3: clamp(1rem, 0.85rem + 0.55vw, 1.4rem);
+      --space-4: clamp(1.4rem, 1.1rem + 0.9vw, 2rem);
+      --space-5: clamp(2rem, 1.5rem + 1.5vw, 3rem);
+      --space-6: clamp(3rem, 2rem + 2.8vw, 5rem);
+
+      --glow-x: 78vw;
+      --glow-y: 34vh;
       --glow-scale: 1;
       --glow-core-scale: 1;
+      --glow-opacity: 0.95;
     }
 
     *,
@@ -77,45 +85,52 @@
       overflow-x: hidden;
       position: relative;
       background:
-        radial-gradient(1300px 760px at 12% -14%, rgba(135, 239, 255, 0.11), transparent 56%),
-        radial-gradient(980px 560px at 88% 10%, rgba(114, 129, 255, 0.09), transparent 54%),
-        radial-gradient(780px 420px at 82% 72%, rgba(207, 138, 92, 0.05), transparent 50%),
+        radial-gradient(1280px 760px at 12% -12%, rgba(135, 239, 255, 0.1), transparent 56%),
+        radial-gradient(940px 560px at 88% 10%, rgba(114, 129, 255, 0.08), transparent 54%),
+        radial-gradient(760px 460px at 82% 74%, rgba(207, 138, 92, 0.045), transparent 50%),
         linear-gradient(180deg, #0d1425 0%, #09101d 18%, #060b16 42%, #040811 70%, #02040a 100%);
     }
 
-    /* Trama morbida: non pattern decorativo, ma pelle */
+    /* trama / pelle */
     body::before {
       content: "";
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.42;
+      opacity: 0.54;
       background:
-        radial-gradient(circle at 12% 18%, rgba(255,255,255,0.035) 0 1px, transparent 2px),
-        radial-gradient(circle at 78% 30%, rgba(255,255,255,0.02) 0 1px, transparent 2px),
-        radial-gradient(circle at 32% 74%, rgba(255,255,255,0.018) 0 1px, transparent 2px),
+        radial-gradient(circle at 14% 22%, rgba(255,255,255,0.03) 0 1px, transparent 2px),
+        radial-gradient(circle at 80% 34%, rgba(255,255,255,0.024) 0 1px, transparent 2px),
+        radial-gradient(circle at 34% 76%, rgba(255,255,255,0.018) 0 1px, transparent 2px),
         repeating-linear-gradient(
-          115deg,
-          rgba(255,255,255,0.018) 0px,
-          rgba(255,255,255,0.018) 1px,
+          112deg,
+          rgba(255,255,255,0.02) 0px,
+          rgba(255,255,255,0.02) 1px,
           transparent 2px,
-          transparent 11px
+          transparent 10px
         ),
         repeating-linear-gradient(
-          25deg,
-          rgba(255,255,255,0.012) 0px,
-          rgba(255,255,255,0.012) 1px,
+          24deg,
+          rgba(255,255,255,0.014) 0px,
+          rgba(255,255,255,0.014) 1px,
           transparent 2px,
-          transparent 15px
+          transparent 14px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          rgba(255,255,255,0.008) 0px,
+          rgba(255,255,255,0.008) 1px,
+          transparent 2px,
+          transparent 6px
         ),
         linear-gradient(
-          125deg,
-          rgba(255,255,255,0.025) 0%,
+          126deg,
+          rgba(255,255,255,0.024) 0%,
           transparent 14%,
           rgba(255,255,255,0.012) 28%,
           transparent 42%,
-          rgba(255,255,255,0.015) 58%,
+          rgba(255,255,255,0.014) 58%,
           transparent 74%,
           rgba(255,255,255,0.012) 100%
         );
@@ -123,8 +138,9 @@
         220px 220px,
         260px 260px,
         240px 240px,
-        320px 320px,
+        300px 300px,
         420px 420px,
+        100px 100px,
         100% 100%;
       mix-blend-mode: soft-light;
     }
@@ -135,11 +151,117 @@
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.1;
+      opacity: 0.14;
       background:
         url("https://grainy-gradients.vercel.app/noise.png"),
         radial-gradient(circle at center, rgba(255,255,255,0.016) 0%, transparent 64%);
       mix-blend-mode: overlay;
+    }
+
+    .cursor-glow {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: min(34vw, 420px);
+      aspect-ratio: 1;
+      pointer-events: none;
+      z-index: 1;
+      opacity: var(--glow-opacity);
+      will-change: transform;
+      transform:
+        translate3d(
+          calc(var(--glow-x) - 50%),
+          calc(var(--glow-y) - 50%),
+          0
+        )
+        scale(var(--glow-scale));
+      filter: blur(0.2px);
+    }
+
+    .cursor-glow::before,
+    .cursor-glow::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+    }
+
+    .cursor-glow::before {
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 10%, transparent 18%),
+        radial-gradient(circle at 49% 50%, rgba(135,239,255,0.22) 0%, rgba(135,239,255,0.14) 18%, transparent 42%),
+        radial-gradient(circle at 56% 44%, rgba(114,129,255,0.16) 0%, transparent 30%),
+        radial-gradient(circle at 44% 60%, rgba(207,138,92,0.08) 0%, transparent 22%),
+        radial-gradient(circle at center, rgba(135,239,255,0.05) 0%, rgba(135,239,255,0.02) 48%, transparent 78%);
+      filter: blur(42px);
+      animation: glowBreath 13s ease-in-out infinite;
+    }
+
+    .cursor-glow::after {
+      background:
+        radial-gradient(circle at 50% 50%, transparent 0 24%, rgba(135,239,255,0.08) 42%, transparent 58%),
+        radial-gradient(circle at 54% 46%, rgba(255,255,255,0.08), transparent 14%),
+        radial-gradient(circle at 44% 58%, rgba(135,239,255,0.06), transparent 20%);
+      mix-blend-mode: screen;
+      filter: blur(56px);
+      animation: glowHalo 18s ease-in-out infinite;
+    }
+
+    .cursor-glow__core {
+      position: absolute;
+      inset: 35%;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 46% 42%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.18) 14%, rgba(135,239,255,0.22) 28%, rgba(114,129,255,0.08) 42%, transparent 70%);
+      transform: scale(var(--glow-core-scale));
+      filter: blur(12px);
+      box-shadow:
+        0 0 34px rgba(135,239,255,0.16),
+        0 0 74px rgba(135,239,255,0.09),
+        0 0 120px rgba(114,129,255,0.04);
+      animation: glowCore 11s ease-in-out infinite;
+    }
+
+    @keyframes glowBreath {
+      0% {
+        transform: scale(0.98) translate3d(0, 0, 0);
+        opacity: 0.74;
+      }
+      50% {
+        transform: scale(1.03) translate3d(-0.6%, 0.8%, 0);
+        opacity: 0.88;
+      }
+      100% {
+        transform: scale(1.01) translate3d(0.8%, -0.6%, 0);
+        opacity: 0.8;
+      }
+    }
+
+    @keyframes glowHalo {
+      0% {
+        transform: scale(0.99);
+        opacity: 0.26;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.42;
+      }
+      100% {
+        transform: scale(1.02);
+        opacity: 0.32;
+      }
+    }
+
+    @keyframes glowCore {
+      0% {
+        opacity: 0.56;
+      }
+      50% {
+        opacity: 0.78;
+      }
+      100% {
+        opacity: 0.62;
+      }
     }
 
     img {
@@ -160,9 +282,9 @@
     h1,
     h2,
     h3 {
-      font-family: "Changa", sans-serif;
-      font-weight: 600;
-      letter-spacing: 0.035em;
+      font-family: "Oswald", sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.03em;
       line-height: 0.92;
       text-transform: uppercase;
     }
@@ -183,27 +305,29 @@
       background-clip: text;
       color: transparent;
       filter:
-        drop-shadow(0 0 14px rgba(121, 235, 255, 0.10))
-        drop-shadow(0 0 28px rgba(121, 235, 255, 0.05));
+        drop-shadow(0 0 14px rgba(121, 235, 255, 0.09))
+        drop-shadow(0 0 24px rgba(121, 235, 255, 0.04));
     }
 
     h2 {
-      font-size: clamp(1.9rem, 4vw, 2.8rem);
-      color: var(--text);
-      letter-spacing: 0.045em;
-    }
-
-    h3 {
-      font-size: clamp(1.1rem, 2vw, 1.28rem);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
       color: var(--text);
       letter-spacing: 0.05em;
     }
 
+    h3 {
+      font-size: clamp(1.05rem, 2vw, 1.24rem);
+      color: var(--text);
+      letter-spacing: 0.055em;
+    }
+
     p {
-      font-size: 1rem;
-      line-height: 1.8;
+      font-size: clamp(0.98rem, 0.95rem + 0.18vw, 1.06rem);
+      line-height: 2;
+      letter-spacing: 0.01em;
       color: var(--text-soft);
       font-family: "Alexandria", sans-serif;
+      max-width: 44ch;
     }
 
     .eyebrow,
@@ -236,12 +360,12 @@
 
     .section-index {
       display: inline-block;
-      margin-bottom: 1rem;
+      margin-bottom: var(--space-2);
     }
 
     .site-shell {
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
 
     .container {
@@ -336,8 +460,8 @@
       min-height: 100vh;
       display: grid;
       align-items: center;
-      padding-top: 8rem;
-      padding-bottom: 5rem;
+      padding-top: calc(var(--space-6) + 4rem);
+      padding-bottom: var(--space-6);
       position: relative;
       overflow: clip;
     }
@@ -345,14 +469,14 @@
     .hero-grid {
       display: grid;
       grid-template-columns: 1.05fr 0.95fr;
-      gap: 2.5rem;
+      gap: var(--space-5);
       align-items: center;
       position: relative;
     }
 
     .hero-copy {
       display: grid;
-      gap: 1rem;
+      gap: var(--space-2);
       position: relative;
       max-width: 700px;
       z-index: 3;
@@ -365,39 +489,39 @@
       top: 8%;
       width: 52%;
       height: 44%;
-      background: radial-gradient(circle, rgba(134, 236, 255, 0.08), transparent 74%);
+      background: radial-gradient(circle, rgba(134, 236, 255, 0.07), transparent 74%);
       filter: blur(34px);
       z-index: -1;
     }
 
     .hero-heading {
       display: grid;
-      gap: 0.7rem;
+      gap: 0.85rem;
     }
 
     .hero-claim {
-      font-size: clamp(0.84rem, 1.15vw, 1rem);
+      font-size: clamp(0.82rem, 1.05vw, 0.96rem);
       font-weight: 500;
-      line-height: 1.2;
+      line-height: 1.35;
       letter-spacing: 0.22em;
-      color: rgba(241, 238, 232, 0.72);
+      color: rgba(241, 238, 232, 0.68);
       max-width: 34ch;
       margin: 0;
     }
 
     .hero-lead {
-      margin-top: 0.8rem;
-      max-width: 40ch;
-      font-size: clamp(1rem, 1.3vw, 1.12rem);
-      line-height: 1.75;
+      margin-top: var(--space-2);
+      max-width: 38ch;
+      font-size: clamp(1rem, 1rem + 0.14vw, 1.08rem);
+      line-height: 2.05;
       color: rgba(241, 238, 232, 0.82);
     }
 
-    .hero-meta {
+    .hero-fields {
       display: flex;
       flex-wrap: wrap;
       gap: 0.7rem;
-      margin-top: 0.35rem;
+      margin-top: var(--space-2);
     }
 
     .meta-chip {
@@ -405,145 +529,34 @@
       border: 1px solid var(--line-strong);
       border-radius: 999px;
       color: var(--text-soft);
-      background: rgba(10, 16, 28, 0.42);
+      background: rgba(10, 16, 28, 0.4);
     }
 
     .hero-panel {
       width: min(100%, 360px);
       justify-self: end;
-      padding: 1.45rem;
+      padding: var(--space-4);
       border-radius: var(--radius-md);
       border: 1px solid var(--line);
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.012)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
         var(--panel);
       backdrop-filter: blur(14px);
       box-shadow: var(--shadow-soft);
       display: grid;
-      gap: 0.85rem;
+      gap: var(--space-2);
       position: relative;
       z-index: 3;
     }
 
     .hero-panel p {
       font-size: 0.95rem;
-    }
-
-    /* Luce: più atmosferica, meno intermittente, più sfumata */
-    .hero-glow {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: min(52vw, 760px);
-      aspect-ratio: 1;
-      pointer-events: none;
-      z-index: 1;
-      transform:
-        translate(
-          calc(var(--glow-x) - 50%),
-          calc(var(--glow-y) - 50%)
-        )
-        scale(var(--glow-scale));
-      will-change: transform;
-      filter: blur(0.2px);
-    }
-
-    .hero-glow::before,
-    .hero-glow::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-    }
-
-    .hero-glow::before {
-      background:
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 10%, transparent 18%),
-        radial-gradient(circle at 48% 50%, rgba(135,239,255,0.24) 0%, rgba(135,239,255,0.16) 16%, transparent 40%),
-        radial-gradient(circle at 57% 45%, rgba(114,129,255,0.18) 0%, transparent 28%),
-        radial-gradient(circle at 43% 60%, rgba(207,138,92,0.10) 0%, transparent 22%),
-        radial-gradient(circle at 50% 50%, rgba(135,239,255,0.07) 0%, rgba(135,239,255,0.03) 44%, transparent 76%);
-      filter: blur(38px);
-      animation: glowBreath 11s ease-in-out infinite;
-    }
-
-    .hero-glow::after {
-      background:
-        radial-gradient(circle at 50% 50%, transparent 0 26%, rgba(135,239,255,0.10) 42%, transparent 58%),
-        radial-gradient(circle at 53% 46%, rgba(255,255,255,0.10), transparent 14%),
-        radial-gradient(circle at 44% 57%, rgba(135,239,255,0.08), transparent 20%);
-      mix-blend-mode: screen;
-      filter: blur(54px);
-      animation: glowHalo 15s ease-in-out infinite;
-    }
-
-    .hero-glow__core {
-      position: absolute;
-      inset: 34%;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 46% 42%, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.24) 12%, rgba(135,239,255,0.24) 26%, rgba(114,129,255,0.10) 42%, transparent 68%);
-      transform: scale(var(--glow-core-scale));
-      filter: blur(14px);
-      box-shadow:
-        0 0 44px rgba(135,239,255,0.20),
-        0 0 88px rgba(135,239,255,0.12),
-        0 0 140px rgba(114,129,255,0.06);
-      animation: glowCore 9s ease-in-out infinite;
-    }
-
-    .hero-glow.is-active::before {
-      filter: blur(28px);
-    }
-
-    .hero-glow.is-active::after {
-      filter: blur(36px);
-    }
-
-    @keyframes glowBreath {
-      0% {
-        transform: scale(0.97) translate3d(0, 0, 0);
-        opacity: 0.76;
-      }
-      50% {
-        transform: scale(1.03) translate3d(-1%, 1%, 0);
-        opacity: 0.92;
-      }
-      100% {
-        transform: scale(1.01) translate3d(1%, -1%, 0);
-        opacity: 0.82;
-      }
-    }
-
-    @keyframes glowHalo {
-      0% {
-        transform: scale(0.98);
-        opacity: 0.34;
-      }
-      50% {
-        transform: scale(1.06);
-        opacity: 0.56;
-      }
-      100% {
-        transform: scale(1.02);
-        opacity: 0.42;
-      }
-    }
-
-    @keyframes glowCore {
-      0% {
-        opacity: 0.62;
-      }
-      50% {
-        opacity: 0.88;
-      }
-      100% {
-        opacity: 0.70;
-      }
+      line-height: 1.95;
+      max-width: none;
     }
 
     .section {
-      padding: 6.5rem 0;
+      padding: var(--space-6) 0;
       position: relative;
     }
 
@@ -553,32 +566,42 @@
 
     .section-header {
       display: grid;
-      gap: 1rem;
-      margin-bottom: 2.5rem;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+
+    .section-header p {
+      max-width: 44ch;
     }
 
     .manifest-grid {
       display: grid;
-      grid-template-columns: 1.12fr 0.88fr;
+      grid-template-columns: 1.08fr 0.92fr;
       gap: 1rem;
     }
 
     .panel {
-      padding: 2rem;
+      padding: var(--space-4);
       border-radius: var(--radius-md);
       border: 1px solid var(--line);
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.008)),
         var(--panel);
       box-shadow: var(--shadow-soft);
       backdrop-filter: blur(14px);
     }
 
     .panel p + p {
-      margin-top: 1rem;
+      margin-top: var(--space-2);
     }
 
-    .image-card {
+    .fragments-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .fragment-card {
       overflow: hidden;
       border-radius: var(--radius-lg);
       border: 1px solid var(--line);
@@ -587,45 +610,63 @@
       transition: transform var(--transition), border-color var(--transition-fast);
     }
 
-    .image-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(134, 236, 255, 0.18);
+    .fragment-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(134, 236, 255, 0.16);
     }
 
-    .image-card img {
+    .fragment-card img {
       width: 100%;
-      aspect-ratio: 16 / 10;
+      aspect-ratio: 4 / 5;
       object-fit: cover;
-      filter: brightness(0.9) saturate(0.94) contrast(1.03);
+      filter: brightness(0.92) saturate(0.94) contrast(1.02);
       transition: transform 1.2s ease, filter 0.8s ease;
     }
 
-    .image-card:hover img {
-      transform: scale(1.03);
-      filter: brightness(0.98) saturate(1.02) contrast(1.06);
+    .fragment-card:hover img {
+      transform: scale(1.025);
+      filter: brightness(0.98) saturate(1) contrast(1.04);
     }
 
-    .image-card-caption {
-      padding: 1rem 1.25rem 1.2rem;
+    .fragment-body {
+      padding: 1rem 1rem 1.15rem;
       display: grid;
       gap: 0.45rem;
     }
 
+    .fragment-body p {
+      max-width: none;
+      font-size: 0.94rem;
+      line-height: 1.9;
+    }
+
     .contact-panel {
-      padding: 2rem;
+      padding: var(--space-4);
       border-radius: var(--radius-lg);
       border: 1px solid var(--line);
       background:
-        radial-gradient(circle at top left, rgba(134, 236, 255, 0.08), transparent 32%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
+        linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0.008)),
         var(--panel);
       box-shadow: var(--shadow-soft);
       backdrop-filter: blur(14px);
       text-align: center;
     }
 
+    .contact-panel p {
+      margin-inline: auto;
+      max-width: 46ch;
+      line-height: 2;
+    }
+
+    .contact-guidance {
+      margin-top: var(--space-2);
+      color: var(--muted);
+      font-size: 0.9rem;
+      letter-spacing: 0.01em;
+    }
+
     .contact-links {
-      margin-top: 1.4rem;
+      margin-top: var(--space-3);
       display: flex;
       justify-content: center;
       gap: 0.8rem;
@@ -633,7 +674,7 @@
     }
 
     .contact-link {
-      padding: 0.85rem 1rem;
+      padding: 0.9rem 1rem;
       border: 1px solid var(--line);
       border-radius: 999px;
       color: var(--text-soft);
@@ -648,7 +689,7 @@
     .contact-link:focus-visible {
       transform: translateY(-2px);
       border-color: rgba(134, 236, 255, 0.22);
-      background: rgba(134, 236, 255, 0.05);
+      background: rgba(134, 236, 255, 0.04);
       color: var(--text);
     }
 
@@ -656,7 +697,7 @@
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       padding: 2rem 0 3rem;
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
 
     .footer-inner {
@@ -671,6 +712,8 @@
     .footer-inner p {
       font-size: 0.9rem;
       color: var(--muted);
+      max-width: none;
+      line-height: 1.8;
     }
 
     .wip {
@@ -692,7 +735,7 @@
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(circle at center, rgba(255, 255, 255, 0.04), transparent 34%),
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.035), transparent 34%),
         #010203;
       display: flex;
       justify-content: center;
@@ -715,7 +758,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle, rgba(134, 236, 255, 0.06) 0%, transparent 60%);
+      background: radial-gradient(circle, rgba(134, 236, 255, 0.05) 0%, transparent 60%);
       mix-blend-mode: screen;
     }
 
@@ -737,7 +780,7 @@
 
     .reveal {
       opacity: 0;
-      transform: translateY(34px);
+      transform: translateY(26px);
       transition:
         opacity 1s ease,
         transform 1s cubic-bezier(0.22, 1, 0.36, 1);
@@ -748,7 +791,7 @@
       transform: translateY(0) !important;
     }
 
-    @media (max-width: 980px) {
+    @media (max-width: 1040px) {
       .hero-grid,
       .manifest-grid {
         grid-template-columns: 1fr;
@@ -757,11 +800,11 @@
       .hero-panel {
         justify-self: start;
         width: 100%;
-        max-width: 440px;
+        max-width: 460px;
       }
 
-      .hero-glow {
-        width: 54vw;
+      .fragments-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
@@ -776,30 +819,22 @@
 
       .hero {
         min-height: auto;
-        padding-top: 7.4rem;
+        padding-top: 7rem;
         padding-bottom: 4rem;
       }
 
       h1 {
-        font-size: clamp(3.6rem, 16vw, 5.4rem);
+        font-size: clamp(3.7rem, 16vw, 5.5rem);
       }
 
       .hero-claim {
-        font-size: 0.82rem;
+        font-size: 0.8rem;
         max-width: 30ch;
       }
 
       .hero-lead {
         max-width: 34ch;
-      }
-
-      .hero-meta {
-        gap: 0.55rem;
-      }
-
-      .meta-chip {
-        padding: 0.66rem 0.82rem;
-        font-size: 0.66rem;
+        line-height: 1.95;
       }
 
       .section {
@@ -809,16 +844,19 @@
       .panel,
       .contact-panel,
       .hero-panel {
-        padding: 1.35rem;
+        padding: 1.3rem;
       }
 
-      .hero-glow {
-        width: 84vw;
-        opacity: 0.72;
+      .fragments-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cursor-glow {
+        width: min(52vw, 300px);
       }
 
       body::before {
-        opacity: 0.30;
+        opacity: 0.42;
       }
     }
 
@@ -831,12 +869,9 @@
         scroll-behavior: auto !important;
       }
 
-      .hero-glow {
+      .cursor-glow {
         transform:
-          translate(
-            calc(78% - 50%),
-            calc(38% - 50%)
-          )
+          translate3d(calc(78vw - 50%), calc(34vh - 50%), 0)
           scale(1) !important;
       }
     }
@@ -845,6 +880,9 @@
 
 <body>
   <div class="lens"></div>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true">
+    <div class="cursor-glow__core"></div>
+  </div>
   <div class="wip">archive in progress</div>
 
   <header class="site-topbar">
@@ -856,14 +894,14 @@
 
       <nav class="topnav" aria-label="Primary navigation">
         <a href="#studio">Studio</a>
-        <a href="#frame">Frame</a>
+        <a href="#archive">Archive</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
   </header>
 
   <main class="site-shell">
-    <section class="hero" id="hero">
+    <section class="hero">
       <div class="container hero-grid">
         <div class="hero-copy">
           <span class="eyebrow">image / space / direction</span>
@@ -878,25 +916,21 @@
             composizione editoriale e costruzione di presenza.
           </p>
 
-          <div class="hero-meta">
-            <span class="meta-chip">Bologna</span>
-            <span class="meta-chip">Visual systems</span>
-            <span class="meta-chip">Image + space</span>
+          <div class="hero-fields">
+            <span class="meta-chip">identity systems</span>
+            <span class="meta-chip">editorial composition</span>
+            <span class="meta-chip">visual atmospheres</span>
           </div>
         </div>
 
         <aside class="hero-panel">
           <span class="small-label">Studio note</span>
           <p>
-            Questo sito non mostra solo un’identità. Mostra un metodo:
-            osservare, tradurre, costruire immagini e sistemi visivi con
-            rigore e tensione estetica.
+            Una pratica selettiva tra immagine, impaginazione, ambienti visivi,
+            archivi e costruzione di presenza. Non un portfolio da riempire,
+            ma un sistema che si compone per frammenti.
           </p>
         </aside>
-
-        <div class="hero-glow" id="heroGlow" aria-hidden="true">
-          <div class="hero-glow__core"></div>
-        </div>
       </div>
     </section>
 
@@ -906,46 +940,69 @@
           <span class="section-index">01 / Studio</span>
           <h2>Un laboratorio visivo, non una semplice vetrina.</h2>
           <p>
-            BLUCINELAB è uno spazio indipendente in cui immagine, direzione e
-            struttura convivono. Non si lavora solo su output grafici, ma su
-            ritmo, atmosfera, presenza e leggibilità.
+            BLUCINELAB lavora sulla soglia tra identità, immagine, editoria e spazio.
+            Ogni progetto viene trattato come un sistema: ritmo, atmosfera, gerarchia,
+            leggibilità, presenza.
           </p>
           <p>
-            Il sito segue la stessa logica: pochi elementi, ma calibrati; una
-            superficie scura attraversata da luce, pressione e materia.
+            L’interesse non è produrre superficie, ma costruire una forma visiva precisa,
+            coerente e desiderabile.
           </p>
         </div>
 
         <div class="panel reveal">
-          <span class="section-index">02 / Processo</span>
+          <span class="section-index">02 / Campo</span>
           <p>
-            Le pagine arriveranno come frammenti coerenti: immagini, lavori,
-            identità, editoria, costruzioni visive, appunti di metodo.
+            Il lavoro si muove tra direzione creativa, impaginazione, costruzione di archivi,
+            frammenti fotografici, sistemi di identità e ambienti visivi.
           </p>
           <p>
-            Non un portfolio neutro. Un archivio vivo, selettivo, con carattere.
+            Una pratica trasversale, ma con una logica unica: dare struttura a ciò che deve
+            essere percepito con chiarezza e carattere.
           </p>
         </div>
       </div>
     </section>
 
-    <section id="frame" class="section">
-      <div class="container narrow">
-        <div class="section-header">
-          <span class="section-index">03 / Frame</span>
-          <h2>Un primo frammento di atmosfera.</h2>
+    <section id="archive" class="section">
+      <div class="container">
+        <div class="section-header narrow">
+          <span class="section-index">03 / Archive</span>
+          <h2>Una selezione in progress di lavori, sistemi e costruzioni visive.</h2>
+          <p>
+            L’archivio si compone per frammenti. Non esaustivo, ma orientato: immagine,
+            editoria, spazio.
+          </p>
         </div>
 
-        <figure class="image-card reveal">
-          <img src="assets/watercyber.webp" alt="Texture d’acqua in luce notturna" />
-          <div class="image-card-caption">
-            <figcaption>Water / Cyber — still frame · WIP</figcaption>
-            <p>
-              Un’immagine-soglia: luce, superficie, materia, riflesso.
-              Un riferimento di tono, non una semplice illustrazione.
-            </p>
-          </div>
-        </figure>
+        <div class="fragments-grid">
+          <article class="fragment-card reveal">
+            <img src="assets/fragment-photo.webp" alt="Frammento fotografico notturno con luce riflessa sull'acqua" />
+            <div class="fragment-body">
+              <figcaption>Photographic fragment</figcaption>
+              <h3>Light / Surface / Reflection</h3>
+              <p>Ricerca d’immagine e costruzione di tono attraverso materia, luce e densità visiva.</p>
+            </div>
+          </article>
+
+          <article class="fragment-card reveal">
+            <img src="assets/fragment-editorial.webp" alt="Frammento editoriale con impaginazione grafica e ritmo tipografico" />
+            <div class="fragment-body">
+              <figcaption>Editorial system</figcaption>
+              <h3>Layout / Sequence / Presence</h3>
+              <p>Impaginazione, gerarchia e ritmo come strumenti per organizzare contenuto e percezione.</p>
+            </div>
+          </article>
+
+          <article class="fragment-card reveal">
+            <img src="assets/fragment-space.webp" alt="Frammento spaziale installativo con atmosfera scura e presenza materica" />
+            <div class="fragment-body">
+              <figcaption>Spatial fragment</figcaption>
+              <h3>Atmosphere / Installation / Space</h3>
+              <p>Costruzione di ambienti visivi e presenza spaziale tra allestimento, scena e dispositivo percettivo.</p>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -955,18 +1012,15 @@
           <span class="section-index">04 / Contact</span>
           <h2>Collaborazioni, committenze, dialoghi visivi.</h2>
           <p>
-            Per progetti di identità, direzione creativa, impaginazione,
-            immagini, allestimenti e sistemi visivi.
+            Per progetti di identità, immagini, editoria, allestimenti e sistemi visivi.
+          </p>
+          <p class="contact-guidance">
+            Per un primo contatto: contesto, obiettivo, luogo, tempi e natura del progetto.
           </p>
 
           <div class="contact-links">
             <a class="contact-link" href="mailto:blucinelab@gmail.com">Email</a>
-            <a
-              class="contact-link"
-              href="https://instagram.com/blucinelab"
-              target="_blank"
-              rel="noopener noreferrer"
-            >Instagram</a>
+            <a class="contact-link" href="https://instagram.com/blucinelab" target="_blank" rel="noopener noreferrer">Instagram</a>
           </div>
         </div>
       </div>
@@ -991,7 +1045,7 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.16 });
+    }, { threshold: 0.14 });
 
     reveals.forEach((el) => observer.observe(el));
 
@@ -999,62 +1053,63 @@
     const finePointer = window.matchMedia("(pointer:fine)").matches;
 
     if (!prefersReducedMotion && finePointer) {
-      const hero = document.getElementById("hero");
-      const glow = document.getElementById("heroGlow");
       const root = document.documentElement;
 
-      let targetX = 78;
-      let targetY = 38;
-      let currentX = 78;
-      let currentY = 38;
+      let targetX = window.innerWidth * 0.78;
+      let targetY = window.innerHeight * 0.34;
+      let currentX = targetX;
+      let currentY = targetY;
+
       let targetScale = 1;
       let currentScale = 1;
+
       let targetCoreScale = 1;
       let currentCoreScale = 1;
+
+      let targetOpacity = 0.95;
+      let currentOpacity = 0.95;
+
       let active = false;
 
-      function setTargetFromEvent(event) {
-        const rect = hero.getBoundingClientRect();
-        const x = ((event.clientX - rect.left) / rect.width) * 100;
-        const y = ((event.clientY - rect.top) / rect.height) * 100;
-
-        targetX = Math.max(58, Math.min(94, x));
-        targetY = Math.max(16, Math.min(74, y));
-        targetScale = 0.82;
-        targetCoreScale = 1.16;
-
-        if (!active) {
-          active = true;
-          glow.classList.add("is-active");
-        }
-      }
-
-      hero.addEventListener("mousemove", setTargetFromEvent);
-
-      hero.addEventListener("mouseenter", () => {
+      const updateTarget = (event) => {
+        targetX = event.clientX;
+        targetY = event.clientY;
+        targetScale = 0.88;
+        targetCoreScale = 1.12;
+        targetOpacity = 1;
         active = true;
-        glow.classList.add("is-active");
-      });
+      };
 
-      hero.addEventListener("mouseleave", () => {
+      window.addEventListener("pointermove", updateTarget, { passive: true });
+
+      window.addEventListener("pointerleave", () => {
         active = false;
-        targetX = 78;
-        targetY = 38;
+        targetX = window.innerWidth * 0.78;
+        targetY = window.innerHeight * 0.34;
         targetScale = 1;
         targetCoreScale = 1;
-        glow.classList.remove("is-active");
+        targetOpacity = 0.9;
+      });
+
+      window.addEventListener("resize", () => {
+        if (!active) {
+          targetX = window.innerWidth * 0.78;
+          targetY = window.innerHeight * 0.34;
+        }
       });
 
       function animateGlow() {
-        currentX += (targetX - currentX) * 0.065;
-        currentY += (targetY - currentY) * 0.065;
-        currentScale += (targetScale - currentScale) * 0.07;
-        currentCoreScale += (targetCoreScale - currentCoreScale) * 0.08;
+        currentX += (targetX - currentX) * 0.16;
+        currentY += (targetY - currentY) * 0.16;
+        currentScale += (targetScale - currentScale) * 0.12;
+        currentCoreScale += (targetCoreScale - currentCoreScale) * 0.1;
+        currentOpacity += (targetOpacity - currentOpacity) * 0.08;
 
-        root.style.setProperty("--glow-x", currentX + "%");
-        root.style.setProperty("--glow-y", currentY + "%");
+        root.style.setProperty("--glow-x", currentX + "px");
+        root.style.setProperty("--glow-y", currentY + "px");
         root.style.setProperty("--glow-scale", currentScale.toFixed(4));
         root.style.setProperty("--glow-core-scale", currentCoreScale.toFixed(4));
+        root.style.setProperty("--glow-opacity", currentOpacity.toFixed(4));
 
         requestAnimationFrame(animateGlow);
       }
