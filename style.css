@@ -323,7 +323,7 @@ img{
 }
 
 .hero-chips{
-  max-width:1120px;
+  max-width:1180px;
 }
 
 .button-chip{
@@ -331,9 +331,10 @@ img{
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:4px;
+  gap:5px;
   padding:13px 18px 12px;
-  min-height:54px;
+  min-height:58px;
+  min-width:188px;
   border-radius:999px;
   border:1px solid rgba(239, 207, 148, .62);
   background:
@@ -363,6 +364,7 @@ img{
 }
 
 .chip-title{
+  display:block;
   font-size:10px;
   letter-spacing:.18em;
   text-transform:uppercase;
@@ -370,11 +372,13 @@ img{
 }
 
 .chip-meta{
-  font-size:.66rem;
-  letter-spacing:.03em;
+  display:block;
+  font-size:.69rem;
+  letter-spacing:.01em;
   text-transform:none;
-  color:rgba(232,224,211,.74);
-  line-height:1.1;
+  color:rgba(232,224,211,.78);
+  line-height:1.15;
+  white-space:nowrap;
 }
 
 .home-side-panel,
@@ -526,22 +530,25 @@ img{
 }
 
 .manifesto-block{
-  max-width:1040px;
+  max-width:980px;
   margin:0 auto;
   text-align:center;
+  padding:28px 34px;
 }
 
 .manifesto-block h2{
-  max-width:18ch;
+  max-width:20ch;
   margin:0 auto 18px;
+  font-size:clamp(1.8rem, 2.8vw, 2.55rem);
+  line-height:1.18;
 }
 
 .manifesto-block p{
   margin:0 auto;
-  max-width:62ch;
-  line-height:1.8;
+  max-width:54ch;
+  line-height:1.74;
   color:var(--text-soft);
-  font-size:.87rem;
+  font-size:.86rem;
   text-transform:none;
 }
 
@@ -989,5 +996,17 @@ img{
 
   .home-actions{
     gap:12px;
+  }
+
+  .button-chip{
+    min-width:172px;
+  }
+
+  .manifesto-block{
+    padding:24px 20px;
+  }
+
+  .manifesto-block h2{
+    max-width:100%;
   }
 }
