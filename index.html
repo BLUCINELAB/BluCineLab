@@ -8,310 +8,277 @@
     name="description"
     content="BluCineLab — laboratorio visivo tra immagine, spazio, direzione, scenografia e sistemi digitali."
   />
-
   <link
     href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Inter:wght@300;400;500&display=swap"
     rel="stylesheet"
   />
 
   <style>
-    :root {
-      --bg: #02050a;
-      --bg-deep: #010307;
-      --panel: rgba(10, 15, 22, 0.72);
-      --panel-2: rgba(14, 20, 30, 0.78);
-
-      --text: #e8e2d7;
-      --text-soft: rgba(220, 212, 198, 0.82);
-
-      --gold: rgba(208, 178, 122, 0.42);
-      --gold-strong: rgba(230, 198, 140, 0.74);
-
-      --max: 1280px;
-      --content: 1080px;
-
-      --topbar-h: 74px;
-      --dock-progress: 0;
-      --hero-glow-x: 50%;
+    :root{
+      --bg:#02050a;
+      --bg-soft:#08111a;
+      --panel:rgba(11,16,24,.74);
+      --panel-2:rgba(14,20,30,.82);
+      --text:#e8e2d7;
+      --text-soft:rgba(220,212,198,.82);
+      --muted:rgba(220,212,198,.56);
+      --gold:rgba(208,178,122,.42);
+      --gold-strong:rgba(230,198,140,.78);
+      --line:rgba(255,255,255,.06);
+      --max:1280px;
+      --content:1120px;
+      --topbar-h:74px;
+      --dock-progress:0;
+      --hero-glow-x:50%;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:Inter,sans-serif;
+      overflow-x:hidden;
+      cursor:none;
+      min-height:100vh;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: Inter, sans-serif;
-      overflow-x: hidden;
-      cursor: none;
-      min-height: 100vh;
-    }
-
-    /* ================= BACKGROUND ================= */
-
-    .bg-shell {
-      position: fixed;
-      inset: 0;
-      z-index: -20;
-      pointer-events: none;
-      overflow: hidden;
+    .bg-shell{
+      position:fixed;
+      inset:0;
+      z-index:-20;
+      pointer-events:none;
+      overflow:hidden;
       background:
-        radial-gradient(1600px 1200px at 50% 120%, rgba(0, 0, 0, 0.82), transparent 70%),
-        linear-gradient(180deg, #071018 0%, #030910 36%, #010307 100%);
+        radial-gradient(1600px 1200px at 50% 120%, rgba(0,0,0,.82), transparent 70%),
+        linear-gradient(180deg,#071018 0%,#030910 36%,#010307 100%);
     }
 
-    #liquidCanvas {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
-      opacity: 0.78;
+    #liquidCanvas{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      display:block;
+      opacity:.74;
     }
 
-    .bg-grain {
-      position: absolute;
-      inset: 0;
-      background: url("https://grainy-gradients.vercel.app/noise.png");
-      opacity: 0.03;
-      mix-blend-mode: overlay;
+    .bg-grain{
+      position:absolute;
+      inset:0;
+      background:url("https://grainy-gradients.vercel.app/noise.png");
+      opacity:.03;
+      mix-blend-mode:overlay;
     }
 
-    .bg-vignette {
-      position: absolute;
-      inset: 0;
+    .bg-vignette{
+      position:absolute;
+      inset:0;
       box-shadow:
-        inset 0 0 360px rgba(0, 0, 0, 0.84),
-        inset 0 0 54px rgba(255,255,255,0.008);
+        inset 0 0 360px rgba(0,0,0,.84),
+        inset 0 0 54px rgba(255,255,255,.008);
     }
 
-    /* ================= CURSOR ================= */
-
-    .cursor-core {
-      position: fixed;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #eef7ff;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      z-index: 9999;
+    .cursor-core{
+      position:fixed;
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:#eef7ff;
+      transform:translate(-50%,-50%);
+      pointer-events:none;
+      z-index:9999;
       box-shadow:
-        0 0 10px rgba(212, 238, 255, 0.9),
-        0 0 28px rgba(150, 205, 255, 0.55),
-        0 0 64px rgba(150, 205, 255, 0.22);
+        0 0 10px rgba(212,238,255,.9),
+        0 0 28px rgba(150,205,255,.55),
+        0 0 64px rgba(150,205,255,.22);
     }
 
-    .cursor-trail {
-      position: fixed;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(circle, rgba(150, 205, 255, 0.18), transparent 70%);
-      filter: blur(6px);
-      pointer-events: none;
-      z-index: 9998;
+    .cursor-trail{
+      position:fixed;
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      transform:translate(-50%,-50%);
+      background:radial-gradient(circle, rgba(150,205,255,.18), transparent 70%);
+      filter:blur(6px);
+      pointer-events:none;
+      z-index:9998;
     }
 
-    .cursor-particle {
-      position: fixed;
-      width: 2px;
-      height: 2px;
-      border-radius: 50%;
-      background: rgba(230, 240, 255, 0.95);
-      pointer-events: none;
-      z-index: 9997;
-      animation: cursorFade 0.9s ease-out forwards;
-      box-shadow: 0 0 6px rgba(162, 224, 255, 0.35);
+    .cursor-particle{
+      position:fixed;
+      width:2px;
+      height:2px;
+      border-radius:50%;
+      background:rgba(230,240,255,.95);
+      pointer-events:none;
+      z-index:9997;
+      animation:cursorFade .9s ease-out forwards;
+      box-shadow:0 0 6px rgba(162,224,255,.35);
     }
 
-    @keyframes cursorFade {
-      0% {
-        opacity: 0.9;
-        transform: translate(0, 0) scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(var(--dx), var(--dy)) scale(0.2);
-      }
+    @keyframes cursorFade{
+      0%{opacity:.9;transform:translate(0,0) scale(1)}
+      100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.2)}
     }
 
-    /* ================= TOPBAR ================= */
-
-    .topbar {
-      position: fixed;
-      inset: 0 0 auto 0;
-      height: var(--topbar-h);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 0, 0, 0.32);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      z-index: 100;
-      transition: background 0.3s ease, border-color 0.3s ease;
+    .topbar{
+      position:fixed;
+      inset:0 0 auto 0;
+      height:var(--topbar-h);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,.32);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(255,255,255,.04);
+      z-index:100;
+      transition:background .3s ease,border-color .3s ease;
     }
 
-    .topbar.is-scrolled {
-      background: rgba(0, 0, 0, 0.56);
-      border-bottom-color: rgba(255, 255, 255, 0.05);
+    .topbar.is-scrolled{
+      background:rgba(0,0,0,.56);
+      border-bottom-color:rgba(255,255,255,.05);
     }
 
-    .topbar-inner {
-      width: min(1280px, calc(100% - 40px));
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: relative;
+    .topbar-inner{
+      width:min(1280px,calc(100% - 40px));
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      position:relative;
     }
 
-    .brand-mini {
-      font-size: 11px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: rgba(232, 226, 214, 0.82);
-      position: relative;
-      z-index: 3;
+    .brand-mini{
+      font-size:11px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      text-decoration:none;
+      color:rgba(232,226,214,.82);
+      position:relative;
+      z-index:3;
     }
 
-    .nav {
-      display: flex;
-      gap: 22px;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding-inline: 16px;
-      position: relative;
-      z-index: 3;
+    .nav{
+      display:flex;
+      gap:22px;
+      flex-wrap:wrap;
+      justify-content:center;
+      padding-inline:16px;
+      position:relative;
+      z-index:3;
     }
 
-    .nav a {
-      color: rgba(232, 226, 214, 0.88);
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      font-size: 11px;
-      position: relative;
-      transition: transform 0.2s ease, opacity 0.2s ease;
+    .nav a{
+      color:rgba(232,226,214,.88);
+      text-decoration:none;
+      text-transform:uppercase;
+      letter-spacing:.2em;
+      font-size:11px;
+      position:relative;
+      transition:transform .2s ease,opacity .2s ease;
     }
 
-    .nav a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -6px;
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(160, 220, 255, 0.8), transparent);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.2s ease;
+    .nav a::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-6px;
+      width:100%;
+      height:1px;
+      background:linear-gradient(90deg, rgba(160,220,255,.8), transparent);
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:transform .2s ease;
     }
 
-    .nav a:hover {
-      opacity: 1;
-      transform: translateY(-1px);
-    }
+    .nav a:hover{opacity:1;transform:translateY(-1px)}
+    .nav a:hover::after{transform:scaleX(1)}
 
-    .nav a:hover::after {
-      transform: scaleX(1);
-    }
-
-    .topbar-wordmark {
-      position: absolute;
-      left: 50%;
-      top: 50%;
+    .topbar-wordmark{
+      position:absolute;
+      left:50%;
+      top:50%;
       transform:
-        translate(-50%, -50%)
-        scale(calc(0.18 + var(--dock-progress) * 0.09));
-      transform-origin: center center;
-      opacity: calc(var(--dock-progress) * 0.98);
-      pointer-events: none;
-      z-index: 2;
-      white-space: nowrap;
+        translate(-50%,-50%)
+        scale(calc(.18 + var(--dock-progress) * .09));
+      transform-origin:center center;
+      opacity:calc(var(--dock-progress) * .98);
+      pointer-events:none;
+      z-index:2;
+      white-space:nowrap;
     }
 
-    /* ================= HERO ================= */
-
-    .hero {
-      min-height: 118vh;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding-top: 92px;
-      margin-bottom: -24px;
+    .hero{
+      min-height:112vh;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding-top:92px;
+      margin-bottom:-18px;
     }
 
-    .hero-sticky {
-      position: sticky;
-      top: 10vh;
-      width: min(1080px, calc(100% - 40px));
+    .hero-sticky{
+      position:sticky;
+      top:10vh;
+      width:min(1120px,calc(100% - 40px));
     }
 
-    .hero-inner {
-      display: grid;
-      gap: 26px;
+    .hero-inner{
+      display:grid;
+      gap:24px;
       transform:
         translateY(calc(var(--dock-progress) * -54px))
-        scale(calc(1 - var(--dock-progress) * 0.18));
-      transform-origin: left top;
-      opacity: calc(1 - var(--dock-progress) * 0.96);
-      will-change: transform, opacity;
+        scale(calc(1 - var(--dock-progress) * .18));
+      transform-origin:left top;
+      opacity:calc(1 - var(--dock-progress) * .96);
+      will-change:transform,opacity;
     }
 
-    .wordmark {
-      display: flex;
-      gap: 6px;
-      flex-wrap: nowrap;
-      user-select: none;
-      position: relative;
-      overflow: visible;
-      isolation: isolate;
+    .wordmark{
+      display:flex;
+      gap:6px;
+      flex-wrap:nowrap;
+      user-select:none;
+      position:relative;
+      overflow:visible;
+      isolation:isolate;
     }
 
-    .wordmark::before {
-      content: "";
-      position: absolute;
-      left: var(--hero-glow-x);
-      top: 52%;
-      width: 360px;
-      height: 220px;
-      transform: translate(-50%, -50%);
+    .wordmark::before{
+      content:"";
+      position:absolute;
+      left:var(--hero-glow-x);
+      top:52%;
+      width:360px;
+      height:220px;
+      transform:translate(-50%,-50%);
       background:
         radial-gradient(
           ellipse at center,
-          rgba(196, 232, 255, 0.18) 0%,
-          rgba(178, 196, 255, 0.12) 24%,
-          rgba(255, 226, 180, 0.06) 44%,
+          rgba(196,232,255,.18) 0%,
+          rgba(178,196,255,.12) 24%,
+          rgba(255,226,180,.06) 44%,
           transparent 74%
         );
-      filter: blur(32px);
-      opacity: 0;
-      transition: opacity 0.18s ease;
-      pointer-events: none;
-      z-index: 0;
+      filter:blur(32px);
+      opacity:0;
+      transition:opacity .18s ease;
+      pointer-events:none;
+      z-index:0;
     }
 
-    .wordmark.is-active::before {
-      opacity: 1;
-    }
+    .wordmark.is-active::before{opacity:1}
 
-    .wordmark span {
-      font-family: Oswald, sans-serif;
-      font-weight: 400;
-      font-size: clamp(6.6rem, 13.4vw, 12.4rem);
-      line-height: 0.84;
-      letter-spacing: 0.05em;
-      color: transparent;
+    .wordmark span{
+      font-family:Oswald,sans-serif;
+      font-weight:400;
+      font-size:clamp(6.6rem,13.4vw,12.4rem);
+      line-height:.84;
+      letter-spacing:.05em;
+      color:transparent;
       background:
         linear-gradient(
           112deg,
@@ -323,1010 +290,117 @@
           #a6a0be 74%,
           #e0c8aa 100%
         );
-      -webkit-background-clip: text;
-      background-clip: text;
-      position: relative;
-      transition:
-        text-shadow 0.22s ease,
-        filter 0.22s ease,
-        transform 0.22s ease;
+      -webkit-background-clip:text;
+      background-clip:text;
+      position:relative;
+      transition:text-shadow .22s ease,filter .22s ease,transform .22s ease;
       filter:
-        drop-shadow(0 1px 0 rgba(255,255,255,0.14))
-        drop-shadow(0 12px 22px rgba(0,0,0,0.32));
-      z-index: 1;
-      overflow: visible;
+        drop-shadow(0 1px 0 rgba(255,255,255,.14))
+        drop-shadow(0 12px 22px rgba(0,0,0,.32));
+      z-index:1;
+      overflow:visible;
     }
 
-    .wordmark span::before {
-      content: "";
-      position: absolute;
-      inset: 0;
+    .wordmark span::before{
+      content:"";
+      position:absolute;
+      inset:0;
       background:
         linear-gradient(
           180deg,
-          rgba(255,255,255,0.3) 0%,
-          rgba(255,255,255,0.08) 22%,
-          rgba(0,0,0,0.08) 70%,
-          rgba(0,0,0,0.16) 100%
+          rgba(255,255,255,.3) 0%,
+          rgba(255,255,255,.08) 22%,
+          rgba(0,0,0,.08) 70%,
+          rgba(0,0,0,.16) 100%
         );
-      -webkit-background-clip: text;
-      background-clip: text;
-      mix-blend-mode: screen;
-      opacity: 0.28;
-      pointer-events: none;
+      -webkit-background-clip:text;
+      background-clip:text;
+      mix-blend-mode:screen;
+      opacity:.28;
+      pointer-events:none;
     }
 
-    .wordmark span::after {
-      content: "";
-      position: absolute;
-      inset: -20px -24px;
+    .wordmark span::after{
+      content:"";
+      position:absolute;
+      inset:-20px -24px;
       background:
         linear-gradient(
           90deg,
           transparent 0%,
-          rgba(255,255,255,0.08) 28%,
-          rgba(255,255,255,0.36) 50%,
-          rgba(255,255,255,0.08) 72%,
+          rgba(255,255,255,.08) 28%,
+          rgba(255,255,255,.36) 50%,
+          rgba(255,255,255,.08) 72%,
           transparent 100%
         );
-      transform: translateX(-220%) skewX(-18deg);
-      opacity: 0;
-      mix-blend-mode: screen;
-      pointer-events: none;
-      border-radius: 28px;
+      transform:translateX(-220%) skewX(-18deg);
+      opacity:0;
+      mix-blend-mode:screen;
+      pointer-events:none;
+      border-radius:28px;
     }
 
-    .wordmark span.glow {
+    .wordmark span.glow{
       text-shadow:
-        0 0 16px rgba(182, 230, 255, 0.96),
-        0 0 42px rgba(162, 224, 255, 0.68),
-        0 0 116px rgba(148, 168, 255, 0.48);
+        0 0 16px rgba(182,230,255,.96),
+        0 0 42px rgba(162,224,255,.68),
+        0 0 116px rgba(148,168,255,.48);
       filter:
         brightness(1.24)
-        drop-shadow(0 1px 0 rgba(255,255,255,0.16))
-        drop-shadow(0 20px 30px rgba(0,0,0,0.3));
-      transform: translateY(-2px);
+        drop-shadow(0 1px 0 rgba(255,255,255,.16))
+        drop-shadow(0 20px 30px rgba(0,0,0,.3));
+      transform:translateY(-2px);
     }
 
-    .wordmark span.glow::after {
-      opacity: 1;
-      animation: sheen 0.6s cubic-bezier(.22,1,.36,1);
+    .wordmark span.glow::after{
+      opacity:1;
+      animation:sheen .6s cubic-bezier(.22,1,.36,1);
     }
 
-    @keyframes sheen {
-      0% { transform: translateX(-220%) skewX(-18deg); }
-      100% { transform: translateX(320%) skewX(-18deg); }
+    @keyframes sheen{
+      0%{transform:translateX(-220%) skewX(-18deg)}
+      100%{transform:translateX(320%) skewX(-18deg)}
     }
 
-    .hero-kicker {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      max-width: 920px;
+    .hero-kicker{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      max-width:920px;
     }
 
-    .hero-chip {
-      padding: 14px 16px;
-      border-radius: 999px;
-      border: 1px solid var(--gold);
+    .hero-chip{
+      padding:14px 16px;
+      border-radius:999px;
+      border:1px solid var(--gold);
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.004)),
-        rgba(14, 19, 28, 0.52);
-      color: rgba(233, 225, 212, 0.92);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      text-decoration: none;
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.004)),
+        rgba(14,19,28,.52);
+      color:rgba(233,225,212,.92);
+      font-size:11px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      text-decoration:none;
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.06),
-        0 12px 30px rgba(0,0,0,0.18);
-      transition: transform 0.2s ease, border-color 0.2s ease;
+        inset 0 1px 0 rgba(255,255,255,.06),
+        0 12px 30px rgba(0,0,0,.18);
+      transition:transform .2s ease,border-color .2s ease;
     }
 
-    .hero-chip:hover {
-      transform: translateY(-2px);
-      border-color: var(--gold-strong);
+    .hero-chip:hover{
+      transform:translateY(-2px);
+      border-color:var(--gold-strong);
     }
 
-    /* ================= PANELS ================= */
+    .section{
+      width:min(1120px,calc(100% - 40px));
+      margin-inline:auto;
+    }
 
-    .panel {
-      width: min(1080px, calc(100% - 40px));
-      margin: 96px auto 120px;
-      padding: 38px;
-      border-radius: 18px;
-      border: 1px solid var(--gold);
+    .panel{
+      margin:96px auto 120px;
+      padding:38px;
+      border-radius:18px;
+      border:1px solid var(--gold);
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.004)),
-        var(--panel);
-      backdrop-filter: blur(14px);
-      box-shadow:
-        0 24px 80px rgba(0, 0, 0, 0.22),
-        inset 0 0 22px rgba(255,255,255,0.02),
-        inset 0 1px 0 rgba(255,255,255,0.05);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .panel::before,
-    .card::before,
-    .archive-card::before,
-    .search-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(145deg, rgba(255,255,255,0.03), transparent 28%, transparent 72%, rgba(255,255,255,0.012));
-      pointer-events: none;
-    }
-
-    .panel > *,
-    .card > *,
-    .archive-card > *,
-    .search-card > * {
-      position: relative;
-      z-index: 1;
-    }
-
-    .panel h2,
-    .grid-block h2,
-    .archive h2,
-    .search-lab h2,
-    .contact h2 {
-      font-family: Oswald, sans-serif;
-      letter-spacing: 0.12em;
-      font-weight: 300;
-      margin-bottom: 16px;
-      color: #f1e7d0;
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-    }
-
-    .panel p,
-    .card p,
-    .search-card p,
-    .contact p {
-      line-height: 2;
-      font-size: 0.92rem;
-      color: var(--text-soft);
-      text-wrap: balance;
-    }
-
-    .panel p {
-      max-width: 38ch;
-    }
-
-    /* ================= CAPABILITIES ================= */
-
-    .grid-block {
-      width: min(1080px, calc(100% - 40px));
-      margin: 0 auto 130px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-      margin-top: 26px;
-    }
-
-    .card,
-    .archive-card,
-    .search-card {
-      transform-style: preserve-3d;
-      will-change: transform, box-shadow, border-color, background;
-    }
-
-    .card {
-      border: 1px solid var(--gold);
-      border-radius: 16px;
-      padding: 26px 24px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.004)),
-        rgba(18, 22, 30, 0.54);
-      backdrop-filter: blur(12px);
-      transition:
-        transform 0.28s ease,
-        border-color 0.22s ease,
-        box-shadow 0.22s ease,
-        background 0.22s ease;
-      box-shadow:
-        0 18px 50px rgba(0, 0, 0, 0.18),
-        inset 0 1px 0 rgba(255,255,255,0.03);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::after,
-    .archive-card::after,
-    .search-card::after {
-      content: "";
-      position: absolute;
-      inset: -1px;
-      background:
-        radial-gradient(
-          240px 140px at var(--mx, 50%) var(--my, 50%),
-          rgba(190, 230, 255, 0.08),
-          rgba(255, 220, 176, 0.045) 34%,
-          transparent 70%
-        );
-      opacity: 0;
-      transition: opacity 0.2s ease;
-      pointer-events: none;
-    }
-
-    .card.is-hovered,
-    .archive-card.is-hovered,
-    .search-card.is-hovered {
-      transform: translateY(-8px) scale(1.02);
-      border-color: var(--gold-strong);
-      box-shadow:
-        0 28px 80px rgba(0, 0, 0, 0.28),
-        0 0 0 1px rgba(190, 230, 255, 0.04),
-        inset 0 1px 0 rgba(255,255,255,0.06);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.006)),
-        rgba(24, 30, 42, 0.74);
-      z-index: 3;
-    }
-
-    .card.is-hovered::after,
-    .archive-card.is-hovered::after,
-    .search-card.is-hovered::after {
-      opacity: 1;
-    }
-
-    .card h3 {
-      font-family: Oswald, sans-serif;
-      font-weight: 300;
-      margin-bottom: 8px;
-      color: #efe4cd;
-      font-size: 1.18rem;
-      letter-spacing: 0.06em;
-    }
-
-    .card-meta {
-      margin-top: 16px;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .card-tag {
-      padding: 9px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 241, 210, 0.08);
-      background: rgba(255,255,255,0.02);
-      color: rgba(226, 217, 200, 0.78);
-      font-size: 10px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-
-    /* ================= ARCHIVE ================= */
-
-    .archive {
-      width: min(1160px, calc(100% - 40px));
-      margin: 0 auto 130px;
-    }
-
-    .cards {
-      display: flex;
-      gap: 24px;
-      overflow-x: auto;
-      padding-bottom: 10px;
-      scrollbar-width: none;
-      scroll-snap-type: x mandatory;
-      margin-top: 24px;
-    }
-
-    .cards::-webkit-scrollbar {
-      display: none;
-    }
-
-    .archive-card {
-      min-width: 300px;
-      width: 300px;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid var(--gold);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.004)),
-        var(--panel-2);
-      transition:
-        transform 0.28s ease,
-        border-color 0.22s ease,
-        box-shadow 0.22s ease,
-        background 0.22s ease;
-      box-shadow:
-        0 18px 50px rgba(0, 0, 0, 0.18),
-        inset 0 1px 0 rgba(255,255,255,0.03);
-      scroll-snap-align: start;
-      position: relative;
-    }
-
-    .archive-card img {
-      width: 100%;
-      height: 420px;
-      object-fit: cover;
-      display: block;
-      filter: brightness(0.9) contrast(1.02);
-      transition: transform 0.38s ease, filter 0.28s ease;
-    }
-
-    .archive-card.is-hovered img {
-      transform: scale(1.04);
-      filter: brightness(0.98) contrast(1.04);
-    }
-
-    .archive-info {
-      padding: 18px 18px 20px;
-    }
-
-    .archive-info h4 {
-      font-family: Oswald, sans-serif;
-      font-weight: 300;
-      letter-spacing: 0.06em;
-      color: #efe4cd;
-      font-size: 1.08rem;
-      margin-bottom: 8px;
-    }
-
-    .archive-info p {
-      font-size: 0.8rem;
-      line-height: 1.9;
-      color: var(--text-soft);
-    }
-
-    /* ================= LAB ================= */
-
-    .search-lab {
-      width: min(1080px, calc(100% - 40px));
-      margin: 0 auto 130px;
-    }
-
-    .search-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-      margin-top: 24px;
-    }
-
-    .search-card {
-      border: 1px solid var(--gold);
-      border-radius: 16px;
-      padding: 20px 18px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0.004)),
-        rgba(18, 22, 30, 0.52);
-      backdrop-filter: blur(12px);
-      position: relative;
-      overflow: hidden;
-      box-shadow:
-        0 18px 50px rgba(0, 0, 0, 0.18),
-        inset 0 1px 0 rgba(255,255,255,0.03);
-      transition:
-        transform 0.28s ease,
-        border-color 0.22s ease,
-        box-shadow 0.22s ease,
-        background 0.22s ease;
-    }
-
-    .search-card h3 {
-      font-family: Oswald, sans-serif;
-      font-weight: 300;
-      font-size: 1rem;
-      letter-spacing: 0.06em;
-      color: #efe4cd;
-      margin-bottom: 8px;
-    }
-
-    /* ================= CONTACT ================= */
-
-    .contact {
-      width: min(1080px, calc(100% - 40px));
-      margin: 0 auto 180px;
-    }
-
-    .contact-links {
-      margin-top: 18px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .contact-link {
-      padding: 14px 16px;
-      border-radius: 999px;
-      border: 1px solid var(--gold);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.004)),
-        rgba(14, 19, 28, 0.52);
-      color: rgba(233, 225, 212, 0.92);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      text-decoration: none;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.06),
-        0 12px 30px rgba(0,0,0,0.18);
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .contact-link:hover {
-      transform: translateY(-2px);
-      border-color: var(--gold-strong);
-    }
-
-    @media (max-width: 1100px) {
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .search-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 720px) {
-      body {
-        cursor: auto;
-      }
-
-      .cursor-core,
-      .cursor-trail,
-      .cursor-particle {
-        display: none;
-      }
-
-      .topbar {
-        height: 64px;
-      }
-
-      .topbar-inner {
-        width: calc(100% - 24px);
-      }
-
-      .nav {
-        gap: 14px;
-      }
-
-      .nav a,
-      .hero-chip,
-      .contact-link {
-        font-size: 10px;
-      }
-
-      .hero {
-        min-height: 100vh;
-      }
-
-      .grid,
-      .search-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .archive-card {
-        min-width: 78vw;
-        width: 78vw;
-      }
-
-      .archive-card img {
-        height: 56vw;
-      }
-
-      .panel {
-        padding: 24px;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <div class="bg-shell" aria-hidden="true">
-    <canvas id="liquidCanvas"></canvas>
-    <div class="bg-grain"></div>
-    <div class="bg-vignette"></div>
-  </div>
-
-  <div class="cursor-core"></div>
-  <div class="cursor-trail"></div>
-
-  <header class="topbar" id="topbar">
-    <div class="topbar-inner">
-      <a href="#hero" class="brand-mini">BLUCINELAB</a>
-
-      <div class="topbar-wordmark" aria-hidden="true">
-        <div class="wordmark">
-          <span>B</span><span>L</span><span>U</span><span>C</span><span>I</span>
-          <span>N</span><span>E</span><span>L</span><span>A</span><span>B</span>
-        </div>
-      </div>
-
-      <nav class="nav">
-        <a href="#studio">Studio</a>
-        <a href="#capabilities">Capabilities</a>
-        <a href="#archive">Archive</a>
-        <a href="#lab">Lab</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-
-    <section class="hero" id="hero">
-      <div class="hero-sticky">
-        <div class="hero-inner">
-          <h1 class="wordmark" id="heroWordmark" aria-label="BLUCINELAB">
-            <span>B</span><span>L</span><span>U</span><span>C</span><span>I</span>
-            <span>N</span><span>E</span><span>L</span><span>A</span><span>B</span>
-          </h1>
-
-          <div class="hero-kicker">
-            <a class="hero-chip" href="#studio">Studio</a>
-            <a class="hero-chip" href="#capabilities">Direction</a>
-            <a class="hero-chip" href="#capabilities">Visual Systems</a>
-            <a class="hero-chip" href="#capabilities">Spatial Design</a>
-            <a class="hero-chip" href="#capabilities">Digital Production</a>
-            <a class="hero-chip" href="#archive">Archive</a>
-            <a class="hero-chip" href="#lab">Lab</a>
-            <a class="hero-chip" href="#contact">Contact</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel" id="studio">
-      <h2>Studio</h2>
-      <p>
-        BluCineLab è un laboratorio visivo che lavora tra cinema, grafica,
-        spazio, fotografia, direzione e sistemi digitali.
-        Ogni progetto viene costruito come un oggetto coerente:
-        atmosfera, metodo, presenza, memoria.
-      </p>
-    </section>
-
-    <section class="grid-block" id="capabilities">
-      <h2>Capabilities</h2>
-
-      <div class="grid">
-        <article class="card tilt-card">
-          <h3>Direction</h3>
-          <p>Direzione visiva per progetti culturali, audiovisivi e brand con una forte componente narrativa.</p>
-          <div class="card-meta">
-            <span class="card-tag">art direction</span>
-            <span class="card-tag">concept</span>
-          </div>
-        </article>
-
-        <article class="card tilt-card">
-          <h3>Visual Systems</h3>
-          <p>Identità, linguaggi grafici e strutture che tengono insieme un progetto nel tempo.</p>
-          <div class="card-meta">
-            <span class="card-tag">identity</span>
-            <span class="card-tag">editorial</span>
-          </div>
-        </article>
-
-        <article class="card tilt-card">
-          <h3>Digital Design</h3>
-          <p>Siti, ambienti digitali e sistemi visivi per piattaforme online con un taglio autoriale.</p>
-          <div class="card-meta">
-            <span class="card-tag">front-end</span>
-            <span class="card-tag">web</span>
-          </div>
-        </article>
-
-        <article class="card tilt-card">
-          <h3>Spatial Design</h3>
-          <p>Scenografie, allestimenti, ambienti e dispositivi visivi per eventi, mostre e produzioni.</p>
-          <div class="card-meta">
-            <span class="card-tag">set design</span>
-            <span class="card-tag">staging</span>
-          </div>
-        </article>
-
-        <article class="card tilt-card">
-          <h3>Photography</h3>
-          <p>Immagini di processo, archivio, still life, backstage e documentazione progettuale.</p>
-          <div class="card-meta">
-            <span class="card-tag">still</span>
-            <span class="card-tag">process</span>
-          </div>
-        </article>
-
-        <article class="card tilt-card">
-          <h3>Research</h3>
-          <p>Raccolta di riferimenti, materiali, immagini e connessioni per dare spessore a ogni lavoro.</p>
-          <div class="card-meta">
-            <span class="card-tag">lab</span>
-            <span class="card-tag">archive</span>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="archive" id="archive">
-      <h2>Archive</h2>
-
-      <div class="cards">
-        <article class="archive-card tilt-card">
-          <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1200&auto=format&fit=crop" alt="Set cinematografico">
-          <div class="archive-info">
-            <h4>Cinema Set</h4>
-            <p>Scena, luce, props, costruzione atmosferica.</p>
-          </div>
-        </article>
-
-        <article class="archive-card tilt-card">
-          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="Computer e sviluppo web">
-          <div class="archive-info">
-            <h4>Digital Production</h4>
-            <p>Interfacce, codice, superfici editoriali e sistemi web.</p>
-          </div>
-        </article>
-
-        <article class="archive-card tilt-card">
-          <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop" alt="Grande evento scenografico">
-          <div class="archive-info">
-            <h4>Event Scenography</h4>
-            <p>Palchi, grandi ambienti, dispositivi visivi e presenza.</p>
-          </div>
-        </article>
-
-        <article class="archive-card tilt-card">
-          <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Arte design fotografia">
-          <div class="archive-info">
-            <h4>Art & Design</h4>
-            <p>Oggetti, immagini, superfici e costruzione simbolica.</p>
-          </div>
-        </article>
-
-        <article class="archive-card tilt-card">
-          <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1200&auto=format&fit=crop" alt="Fotografia e documentazione visiva">
-          <div class="archive-info">
-            <h4>Photography</h4>
-            <p>Dettagli, materiali, atmosfera e memoria visiva.</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="search-lab" id="lab">
-      <h2>Lab / Research Paths</h2>
-
-      <div class="search-grid">
-        <article class="search-card tilt-card">
-          <h3>Editorial Composition</h3>
-          <p>Gerarchia, ritmo, pagina, presenza.</p>
-        </article>
-        <article class="search-card tilt-card">
-          <h3>Set Lighting</h3>
-          <p>Luce come costruzione narrativa e spaziale.</p>
-        </article>
-        <article class="search-card tilt-card">
-          <h3>Material Archive</h3>
-          <p>Metalli, superfici, tessuti, riflessi, usura.</p>
-        </article>
-        <article class="search-card tilt-card">
-          <h3>Stage Systems</h3>
-          <p>Apparati scenici, strutture e regia dello spazio.</p>
-        </article>
-        <article class="search-card tilt-card">
-          <h3>Photo Research</h3>
-          <p>Reference board, image collection, sequencing.</p>
-        </article>
-        <article class="search-card tilt-card">
-          <h3>Interactive Surfaces</h3>
-          <p>Web, UI, motion, comportamento editoriale.</p>
-        </article>
-        <article class="search-card tilt-card">
-          <h3>Large Event Design</h3>
-          <p>Scenografia espansa, pubblico, impatto e leggibilità.</p>
-        </article>
-        <article class="search-card tilt-card">
-          <h3>Visual Storyworlds</h3>
-          <p>Identità coerenti capaci di generare universo.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="panel contact" id="contact">
-      <h2>Contact</h2>
-      <p>
-        Per progetti, collaborazioni, allestimenti, immagini, sistemi visivi e
-        produzioni digitali.
-      </p>
-
-      <div class="contact-links">
-        <a href="mailto:contact@blucinelab.com" class="contact-link">Email</a>
-        <a href="#archive" class="contact-link">Projects</a>
-        <a href="#lab" class="contact-link">Research</a>
-        <a href="#capabilities" class="contact-link">Capabilities</a>
-      </div>
-    </section>
-
-  </main>
-
-  <script>
-    const hero = document.getElementById("hero");
-    const topbar = document.getElementById("topbar");
-
-    function updateDock() {
-      const scrollY = window.scrollY;
-      const heroHeight = Math.max(hero.offsetHeight - window.innerHeight, 1);
-      const progress = Math.max(0, Math.min(1, scrollY / heroHeight));
-      document.documentElement.style.setProperty("--dock-progress", progress.toFixed(4));
-      topbar.classList.toggle("is-scrolled", scrollY > 24);
-    }
-
-    updateDock();
-    window.addEventListener("scroll", updateDock, { passive: true });
-    window.addEventListener("resize", updateDock);
-
-    document.querySelectorAll(".wordmark").forEach((wm) => {
-      wm.querySelectorAll("span").forEach((letter) => {
-        letter.addEventListener("mouseenter", () => letter.classList.add("glow"));
-        letter.addEventListener("mouseleave", () => letter.classList.remove("glow"));
-      });
-    });
-
-    const heroWordmark = document.getElementById("heroWordmark");
-    heroWordmark.querySelectorAll("span").forEach((letter) => {
-      letter.addEventListener("mouseenter", (e) => {
-        const rect = heroWordmark.getBoundingClientRect();
-        const x = e.target.getBoundingClientRect().left + e.target.offsetWidth / 2 - rect.left;
-        heroWordmark.style.setProperty("--hero-glow-x", `${x}px`);
-        heroWordmark.classList.add("is-active");
-      });
-      letter.addEventListener("mouseleave", () => {
-        heroWordmark.classList.remove("is-active");
-      });
-    });
-
-    const cursor = document.querySelector(".cursor-core");
-    const trail = document.querySelector(".cursor-trail");
-
-    let mx = window.innerWidth * 0.5;
-    let my = window.innerHeight * 0.5;
-    let tx = mx;
-    let ty = my;
-
-    function spawnParticle(x, y) {
-      if (!window.matchMedia("(pointer:fine)").matches) return;
-
-      const p = document.createElement("div");
-      p.className = "cursor-particle";
-      p.style.left = x + "px";
-      p.style.top = y + "px";
-      p.style.setProperty("--dx", `${(Math.random() - 0.5) * 18}px`);
-      p.style.setProperty("--dy", `${-8 - Math.random() * 18}px`);
-      document.body.appendChild(p);
-      setTimeout(() => p.remove(), 900);
-    }
-
-    window.addEventListener("mousemove", (e) => {
-      mx = e.clientX;
-      my = e.clientY;
-      cursor.style.left = mx + "px";
-      cursor.style.top = my + "px";
-      spawnParticle(mx, my);
-    }, { passive: true });
-
-    function animateCursor() {
-      tx += (mx - tx) * 0.18;
-      ty += (my - ty) * 0.18;
-      trail.style.left = tx + "px";
-      trail.style.top = ty + "px";
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-    /* CARD HOVER EFFECT */
-    const hoverCards = document.querySelectorAll(".tilt-card");
-
-    hoverCards.forEach((card) => {
-      let raf = null;
-
-      function setCard(e) {
-        const rect = card.getBoundingClientRect();
-        const px = ((e.clientX - rect.left) / rect.width) * 100;
-        const py = ((e.clientY - rect.top) / rect.height) * 100;
-        const ry = ((px / 100) - 0.5) * 8;
-        const rx = (0.5 - (py / 100)) * 8;
-
-        card.style.setProperty("--mx", `${px}%`);
-        card.style.setProperty("--my", `${py}%`);
-        card.classList.add("is-hovered");
-
-        if (raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          card.style.transform = `translateY(-8px) scale(1.02) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
-        });
-      }
-
-      function resetCard() {
-        card.classList.remove("is-hovered");
-        card.style.transform = "";
-      }
-
-      card.addEventListener("mousemove", setCard);
-      card.addEventListener("mouseleave", resetCard);
-    });
-
-    /* DARKER FLUID BACKGROUND */
-    const canvas = document.getElementById("liquidCanvas");
-    const ctx = canvas.getContext("2d");
-
-    function resizeCanvas() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.floor(window.innerWidth * dpr);
-      canvas.height = Math.floor(window.innerHeight * dpr);
-      canvas.style.width = window.innerWidth + "px";
-      canvas.style.height = window.innerHeight + "px";
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-
-    const fields = [];
-    function createFields() {
-      fields.length = 0;
-      const count = 18;
-      for (let i = 0; i < count; i++) {
-        fields.push({
-          x: Math.random() * window.innerWidth,
-          y: Math.random() * window.innerHeight,
-          r: 220 + Math.random() * 420,
-          dx: (Math.random() - 0.5) * 0.018,
-          dy: (Math.random() - 0.5) * 0.012,
-          seed: Math.random() * 1000,
-          mode: Math.floor(Math.random() * 5)
-        });
-      }
-    }
-
-    function palette(mode, alpha = 1) {
-      if (mode === 0) return [
-        `rgba(245,225,185,${0.06 * alpha})`,
-        `rgba(230,170,210,${0.045 * alpha})`,
-        `rgba(145,190,255,${0.05 * alpha})`,
-        `rgba(110,220,225,${0.032 * alpha})`
-      ];
-      if (mode === 1) return [
-        `rgba(195,220,255,${0.07 * alpha})`,
-        `rgba(170,130,228,${0.045 * alpha})`,
-        `rgba(255,210,170,${0.04 * alpha})`,
-        `rgba(146,208,255,${0.032 * alpha})`
-      ];
-      if (mode === 2) return [
-        `rgba(255,246,234,${0.055 * alpha})`,
-        `rgba(194,214,255,${0.05 * alpha})`,
-        `rgba(132,220,255,${0.032 * alpha})`,
-        `rgba(178,132,210,${0.028 * alpha})`
-      ];
-      if (mode === 3) return [
-        `rgba(188,214,255,${0.06 * alpha})`,
-        `rgba(210,174,255,${0.04 * alpha})`,
-        `rgba(255,224,188,${0.04 * alpha})`,
-        `rgba(140,230,220,${0.03 * alpha})`
-      ];
-      return [
-        `rgba(236,226,210,${0.05 * alpha})`,
-        `rgba(150,198,255,${0.04 * alpha})`,
-        `rgba(244,200,160,${0.032 * alpha})`,
-        `rgba(164,234,226,${0.03 * alpha})`
-      ];
-    }
-
-    function drawFieldBlob(f, t, softness = 1) {
-      const colors = palette(f.mode, softness);
-      const grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r);
-      grad.addColorStop(0, colors[0]);
-      grad.addColorStop(0.18, colors[1]);
-      grad.addColorStop(0.38, colors[2]);
-      grad.addColorStop(0.62, colors[3]);
-      grad.addColorStop(1, "rgba(0,0,0,0)");
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.ellipse(
-        f.x,
-        f.y,
-        f.r * (0.9 + Math.sin(t * 0.00006 + f.seed) * 0.05),
-        f.r * (0.58 + Math.cos(t * 0.00005 + f.seed * 0.8) * 0.05),
-        Math.sin(f.seed + t * 0.00002) * 0.8,
-        0,
-        Math.PI * 2
-      );
-      ctx.fill();
-    }
-
-    function drawSpecularPools(t) {
-      ctx.globalCompositeOperation = "screen";
-      for (let i = 0; i < 8; i++) {
-        const x = window.innerWidth * (0.1 + i * 0.105) + Math.sin(t * 0.00009 + i) * 30;
-        const y = window.innerHeight * (0.2 + 0.05 * Math.sin(i * 0.8 + t * 0.00007));
-        const rx = 160 + Math.sin(t * 0.0001 + i) * 18;
-        const ry = 34 + Math.cos(t * 0.00013 + i) * 6;
-
-        const g = ctx.createRadialGradient(x, y, 0, x, y, rx);
-        g.addColorStop(0, "rgba(255,248,236,0.035)");
-        g.addColorStop(0.18, "rgba(180,220,255,0.032)");
-        g.addColorStop(0.38, "rgba(204,170,255,0.018)");
-        g.addColorStop(1, "rgba(0,0,0,0)");
-
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.ellipse(x, y, rx, ry, Math.sin(i) * 0.25, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    function drawLiquid(t) {
-      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-
-      const darkBase = ctx.createLinearGradient(0, 0, 0, window.innerHeight);
-      darkBase.addColorStop(0, "rgba(5,12,18,0.9)");
-      darkBase.addColorStop(0.5, "rgba(4,8,14,0.6)");
-      darkBase.addColorStop(1, "rgba(0,0,0,0.08)");
-      ctx.fillStyle = darkBase;
-      ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-
-      for (const f of fields) {
-        f.x += f.dx;
-        f.y += f.dy;
-
-        if (f.x < -f.r || f.x > window.innerWidth + f.r) f.dx *= -1;
-        if (f.y < -f.r || f.y > window.innerHeight + f.r) f.dy *= -1;
-      }
-
-      ctx.globalCompositeOperation = "screen";
-
-      ctx.filter = "blur(74px)";
-      for (const f of fields) drawFieldBlob(f, t, 0.7);
-
-      ctx.filter = "blur(34px)";
-      for (const f of fields) {
-        drawFieldBlob(
-          {
-            ...f,
-            x: f.x + Math.sin(t * 0.00003 + f.seed) * 10,
-            y: f.y + Math.cos(t * 0.00004 + f.seed) * 8,
-            r: f.r * 0.74
-          },
-          t,
-          0.52
-        );
-      }
-
-      ctx.filter = "blur(14px)";
-      for (const f of fields.slice(0, 10)) {
-        drawFieldBlob(
-          {
-            ...f,
-            x: f.x + Math.cos(t * 0.00005 + f.seed) * 6,
-            y: f.y + Math.sin(t * 0.00006 + f.seed) * 5,
-            r: f.r * 0.46
-          },
-          t,
-          0.3
-        );
-      }
-
-      ctx.filter = "none";
-      drawSpecularPools(t);
-
-      ctx.globalCompositeOperation = "source-over";
-      requestAnimationFrame(drawLiquid);
-    }
-
-    resizeCanvas();
-    createFields();
-    requestAnimationFrame(drawLiquid);
-
-    window.addEventListener("resize", () => {
-      resizeCanvas();
-      createFields();
-      updateDock();
-    });
-  </script>
-</body>
-</html>
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba
