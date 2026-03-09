@@ -1,29 +1,33 @@
 const cursor = document.querySelector(".cursor");
 
-/* ================= CURSOR + SPARKS ================= */
+/* ================= CURSOR + MANY SPARKS ================= */
 
 if (cursor) {
   document.addEventListener("mousemove", (e) => {
     cursor.style.left = e.clientX + "px";
     cursor.style.top = e.clientY + "px";
-    createSpark(e.clientX, e.clientY);
+    createSparkBurst(e.clientX, e.clientY);
   });
 
-  function createSpark(x, y) {
-    if (Math.random() > 0.38) return;
+  function createSparkBurst(x, y) {
+    const amount = 6 + Math.floor(Math.random() * 7); // 6–12
 
-    const spark = document.createElement("div");
-    spark.className = "spark";
-    spark.style.left = x + "px";
-    spark.style.top = y + "px";
-    spark.style.setProperty("--dx", (Math.random() - 0.5) * 26 + "px");
-    spark.style.setProperty("--dy", (-10 - Math.random() * 26) + "px");
+    for (let i = 0; i < amount; i++) {
+      if (Math.random() > 0.72) continue;
 
-    document.body.appendChild(spark);
+      const spark = document.createElement("div");
+      spark.className = "spark";
+      spark.style.left = x + "px";
+      spark.style.top = y + "px";
+      spark.style.setProperty("--dx", (Math.random() - 0.5) * 34 + "px");
+      spark.style.setProperty("--dy", (-6 - Math.random() * 34) + "px");
 
-    setTimeout(() => {
-      spark.remove();
-    }, 850);
+      document.body.appendChild(spark);
+
+      setTimeout(() => {
+        spark.remove();
+      }, 950);
+    }
   }
 }
 
