@@ -403,4 +403,761 @@
       border-radius:18px;
       border:1px solid var(--gold);
       background:
-        linear-gradient(180deg, rgba(255,255,255,.02), rgba
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.004)),
+        var(--panel);
+      backdrop-filter:blur(14px);
+      box-shadow:
+        0 24px 80px rgba(0,0,0,.22),
+        inset 0 0 22px rgba(255,255,255,.02),
+        inset 0 1px 0 rgba(255,255,255,.05);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .panel::before,
+    .window-card::before,
+    .archive-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.03), transparent 28%, transparent 72%, rgba(255,255,255,.012));
+      pointer-events:none;
+    }
+
+    .panel > *,
+    .window-card > *,
+    .archive-card > *{
+      position:relative;
+      z-index:1;
+    }
+
+    h2{
+      font-family:Oswald,sans-serif;
+      letter-spacing:.12em;
+      font-weight:300;
+      margin-bottom:16px;
+      color:#f1e7d0;
+      font-size:clamp(1.8rem,3vw,2.8rem);
+    }
+
+    p{
+      line-height:2;
+      font-size:.92rem;
+      color:var(--text-soft);
+      text-wrap:balance;
+    }
+
+    .panel p{max-width:38ch}
+
+    .works-intro{
+      margin:0 auto 28px;
+      max-width:52ch;
+    }
+
+    .windows-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:22px;
+      margin:0 auto 120px;
+    }
+
+    .window-card{
+      display:grid;
+      gap:16px;
+      text-decoration:none;
+      color:inherit;
+      border:1px solid var(--gold);
+      border-radius:18px;
+      padding:20px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.004)),
+        rgba(18,22,30,.54);
+      backdrop-filter:blur(12px);
+      transition:
+        transform .28s ease,
+        border-color .22s ease,
+        box-shadow .22s ease,
+        background .22s ease;
+      box-shadow:
+        0 18px 50px rgba(0,0,0,.18),
+        inset 0 1px 0 rgba(255,255,255,.03);
+      position:relative;
+      overflow:hidden;
+      min-height:360px;
+      transform-style:preserve-3d;
+      will-change:transform,box-shadow;
+    }
+
+    .window-card::after,
+    .archive-card::after{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background:
+        radial-gradient(
+          260px 160px at var(--mx,50%) var(--my,50%),
+          rgba(190,230,255,.09),
+          rgba(255,220,176,.05) 34%,
+          transparent 72%
+        );
+      opacity:0;
+      transition:opacity .2s ease;
+      pointer-events:none;
+    }
+
+    .window-card.is-hovered,
+    .archive-card.is-hovered{
+      transform:translateY(-8px) scale(1.02);
+      border-color:var(--gold-strong);
+      box-shadow:
+        0 28px 80px rgba(0,0,0,.28),
+        0 0 0 1px rgba(190,230,255,.04),
+        inset 0 1px 0 rgba(255,255,255,.06);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.006)),
+        rgba(24,30,42,.74);
+      z-index:3;
+    }
+
+    .window-card.is-hovered::after,
+    .archive-card.is-hovered::after{
+      opacity:1;
+    }
+
+    .window-thumb{
+      aspect-ratio:4/3;
+      border-radius:12px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.06);
+      background:#0b1119;
+    }
+
+    .window-thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter:brightness(.88) contrast(1.03);
+      transition:transform .4s ease,filter .28s ease;
+    }
+
+    .window-card.is-hovered .window-thumb img{
+      transform:scale(1.04);
+      filter:brightness(.98) contrast(1.06);
+    }
+
+    .window-meta{
+      font-size:10px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+
+    .window-card h3{
+      font-family:Oswald,sans-serif;
+      font-weight:300;
+      font-size:1.28rem;
+      letter-spacing:.06em;
+      color:#efe4cd;
+    }
+
+    .window-link{
+      margin-top:auto;
+      font-size:11px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:#f1e7d0;
+      opacity:.86;
+    }
+
+    .archive{
+      margin:0 auto 130px;
+    }
+
+    .cards{
+      display:flex;
+      gap:24px;
+      overflow-x:auto;
+      padding-bottom:10px;
+      scrollbar-width:none;
+      scroll-snap-type:x mandatory;
+      margin-top:24px;
+    }
+
+    .cards::-webkit-scrollbar{display:none}
+
+    .archive-card{
+      min-width:300px;
+      width:300px;
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid var(--gold);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.004)),
+        var(--panel-2);
+      transition:
+        transform .28s ease,
+        border-color .22s ease,
+        box-shadow .22s ease,
+        background .22s ease;
+      box-shadow:
+        0 18px 50px rgba(0,0,0,.18),
+        inset 0 1px 0 rgba(255,255,255,.03);
+      scroll-snap-align:start;
+      position:relative;
+      transform-style:preserve-3d;
+      will-change:transform,box-shadow;
+    }
+
+    .archive-card img{
+      width:100%;
+      height:420px;
+      object-fit:cover;
+      display:block;
+      filter:brightness(.9) contrast(1.02);
+      transition:transform .38s ease,filter .28s ease;
+    }
+
+    .archive-card.is-hovered img{
+      transform:scale(1.04);
+      filter:brightness(.98) contrast(1.04);
+    }
+
+    .archive-info{
+      padding:18px 18px 20px;
+    }
+
+    .archive-info h4{
+      font-family:Oswald,sans-serif;
+      font-weight:300;
+      letter-spacing:.06em;
+      color:#efe4cd;
+      font-size:1.08rem;
+      margin-bottom:8px;
+    }
+
+    .archive-info p{
+      font-size:.8rem;
+      line-height:1.9;
+      color:var(--text-soft);
+    }
+
+    .contact{
+      margin:0 auto 180px;
+    }
+
+    .contact-links{
+      margin-top:18px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+
+    .contact-link{
+      padding:14px 16px;
+      border-radius:999px;
+      border:1px solid var(--gold);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.004)),
+        rgba(14,19,28,.52);
+      color:rgba(233,225,212,.92);
+      font-size:11px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      text-decoration:none;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.06),
+        0 12px 30px rgba(0,0,0,.18);
+      transition:transform .2s ease,border-color .2s ease;
+    }
+
+    .contact-link:hover{
+      transform:translateY(-2px);
+      border-color:var(--gold-strong);
+    }
+
+    @media (max-width:1100px){
+      .windows-grid{grid-template-columns:repeat(2,1fr)}
+    }
+
+    @media (max-width:720px){
+      body{cursor:auto}
+      .cursor-core,.cursor-trail,.cursor-particle{display:none}
+      .topbar{height:64px}
+      .topbar-inner{width:calc(100% - 24px)}
+      .nav{gap:14px}
+      .nav a,.hero-chip,.contact-link{font-size:10px}
+      .hero{min-height:96vh}
+      .windows-grid{grid-template-columns:1fr}
+      .archive-card{min-width:78vw;width:78vw}
+      .archive-card img{height:56vw}
+      .panel{padding:24px}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-shell" aria-hidden="true">
+    <canvas id="liquidCanvas"></canvas>
+    <div class="bg-grain"></div>
+    <div class="bg-vignette"></div>
+  </div>
+
+  <div class="cursor-core"></div>
+  <div class="cursor-trail"></div>
+
+  <header class="topbar" id="topbar">
+    <div class="topbar-inner">
+      <a href="#hero" class="brand-mini">BLUCINELAB</a>
+
+      <div class="topbar-wordmark" aria-hidden="true">
+        <div class="wordmark">
+          <span>B</span><span>L</span><span>U</span><span>C</span><span>I</span>
+          <span>N</span><span>E</span><span>L</span><span>A</span><span>B</span>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#studio">Studio</a>
+        <a href="#windows">Works</a>
+        <a href="#archive">Archive</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero" id="hero">
+      <div class="hero-sticky">
+        <div class="hero-inner">
+          <h1 class="wordmark" id="heroWordmark" aria-label="BLUCINELAB">
+            <span>B</span><span>L</span><span>U</span><span>C</span><span>I</span>
+            <span>N</span><span>E</span><span>L</span><span>A</span><span>B</span>
+          </h1>
+
+          <div class="hero-kicker">
+            <a class="hero-chip" href="#studio">Studio</a>
+            <a class="hero-chip" href="#windows">Works</a>
+            <a class="hero-chip" href="archive.html">Full Archive</a>
+            <a class="hero-chip" href="#contact">Contact</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel section" id="studio">
+      <h2>Studio</h2>
+      <p>
+        BluCineLab è un laboratorio visivo che lavora tra cinema, grafica,
+        spazio, fotografia, direzione e sistemi digitali.
+        Ogni progetto viene costruito come un oggetto coerente:
+        atmosfera, metodo, presenza, memoria.
+      </p>
+    </section>
+
+    <section class="section" id="windows">
+      <h2>Archive / Windows</h2>
+      <p class="works-intro">
+        Finestre di accesso alle aree di lavoro. Ogni scheda apre una pagina interna
+        del sito, pensata come archivio vivo e catalogo consultabile.
+      </p>
+
+      <div class="windows-grid">
+        <a class="window-card tilt-card" href="archive.html">
+          <div class="window-thumb">
+            <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1200&auto=format&fit=crop" alt="Archivio completo">
+          </div>
+          <div class="window-meta">catalogue / all works</div>
+          <h3>Full Archive</h3>
+          <p>Tutti i lavori raccolti in un archivio navigabile, ordinabile e aggiornabile.</p>
+          <div class="window-link">open archive</div>
+        </a>
+
+        <a class="window-card tilt-card" href="cluster-cinema.html">
+          <div class="window-thumb">
+            <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1200&auto=format&fit=crop" alt="Cinema e set design">
+          </div>
+          <div class="window-meta">cinema / set / production</div>
+          <h3>Cinema & Set</h3>
+          <p>Scenografie, set cinematografici, dispositivi visivi e costruzione atmosferica.</p>
+          <div class="window-link">open page</div>
+        </a>
+
+        <a class="window-card tilt-card" href="cluster-identity.html">
+          <div class="window-thumb">
+            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Identità visive">
+          </div>
+          <div class="window-meta">identity / editorial / graphics</div>
+          <h3>Visual Systems</h3>
+          <p>Identità, sistemi grafici, impaginazione, strutture editoriali e linguaggi coerenti.</p>
+          <div class="window-link">open page</div>
+        </a>
+
+        <a class="window-card tilt-card" href="cluster-spatial.html">
+          <div class="window-thumb">
+            <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop" alt="Allestimenti e spazio">
+          </div>
+          <div class="window-meta">events / staging / space</div>
+          <h3>Spatial Design</h3>
+          <p>Allestimenti, eventi, ambienti visivi, presenza pubblica e regia dello spazio.</p>
+          <div class="window-link">open page</div>
+        </a>
+
+        <a class="window-card tilt-card" href="cluster-digital.html">
+          <div class="window-thumb">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="Produzione digitale">
+          </div>
+          <div class="window-meta">web / interfaces / digital</div>
+          <h3>Digital Production</h3>
+          <p>Siti, ambienti digitali, front-end, interfacce editoriali e presenza online.</p>
+          <div class="window-link">open page</div>
+        </a>
+
+        <a class="window-card tilt-card" href="project-template.html">
+          <div class="window-thumb">
+            <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1200&auto=format&fit=crop" alt="Template progetto">
+          </div>
+          <div class="window-meta">single project / template</div>
+          <h3>Project Page</h3>
+          <p>Template interno già pronto per ogni singolo lavoro, da riempire con foto e testo.</p>
+          <div class="window-link">open template</div>
+        </a>
+      </div>
+    </section>
+
+    <section class="archive section" id="archive">
+      <h2>Selected Works</h2>
+
+      <div class="cards">
+        <article class="archive-card tilt-card">
+          <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1200&auto=format&fit=crop" alt="Set cinematografico">
+          <div class="archive-info">
+            <h4>Cinema Set</h4>
+            <p>Scena, luce, props, costruzione atmosferica.</p>
+          </div>
+        </article>
+
+        <article class="archive-card tilt-card">
+          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="Computer e sviluppo web">
+          <div class="archive-info">
+            <h4>Digital Production</h4>
+            <p>Interfacce, codice, superfici editoriali e sistemi web.</p>
+          </div>
+        </article>
+
+        <article class="archive-card tilt-card">
+          <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop" alt="Grande evento scenografico">
+          <div class="archive-info">
+            <h4>Event Scenography</h4>
+            <p>Palchi, grandi ambienti, dispositivi visivi e presenza.</p>
+          </div>
+        </article>
+
+        <article class="archive-card tilt-card">
+          <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Arte design fotografia">
+          <div class="archive-info">
+            <h4>Art & Design</h4>
+            <p>Oggetti, immagini, superfici e costruzione simbolica.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel section contact" id="contact">
+      <h2>Contact</h2>
+      <p>
+        Per progetti, collaborazioni, allestimenti, immagini, sistemi visivi e
+        produzioni digitali.
+      </p>
+
+      <div class="contact-links">
+        <a href="mailto:contact@blucinelab.com" class="contact-link">Email</a>
+        <a href="archive.html" class="contact-link">Archive</a>
+        <a href="project-template.html" class="contact-link">Project Page</a>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const hero = document.getElementById("hero");
+    const topbar = document.getElementById("topbar");
+
+    function updateDock() {
+      const scrollY = window.scrollY;
+      const heroHeight = Math.max(hero.offsetHeight - window.innerHeight, 1);
+      const progress = Math.max(0, Math.min(1, scrollY / heroHeight));
+      document.documentElement.style.setProperty("--dock-progress", progress.toFixed(4));
+      topbar.classList.toggle("is-scrolled", scrollY > 24);
+    }
+
+    updateDock();
+    window.addEventListener("scroll", updateDock, { passive: true });
+    window.addEventListener("resize", updateDock);
+
+    document.querySelectorAll(".wordmark").forEach((wm) => {
+      wm.querySelectorAll("span").forEach((letter) => {
+        letter.addEventListener("mouseenter", () => letter.classList.add("glow"));
+        letter.addEventListener("mouseleave", () => letter.classList.remove("glow"));
+      });
+    });
+
+    const heroWordmark = document.getElementById("heroWordmark");
+    heroWordmark.querySelectorAll("span").forEach((letter) => {
+      letter.addEventListener("mouseenter", (e) => {
+        const rect = heroWordmark.getBoundingClientRect();
+        const x = e.target.getBoundingClientRect().left + e.target.offsetWidth / 2 - rect.left;
+        heroWordmark.style.setProperty("--hero-glow-x", `${x}px`);
+        heroWordmark.classList.add("is-active");
+      });
+      letter.addEventListener("mouseleave", () => {
+        heroWordmark.classList.remove("is-active");
+      });
+    });
+
+    const cursor = document.querySelector(".cursor-core");
+    const trail = document.querySelector(".cursor-trail");
+
+    let mx = window.innerWidth * 0.5;
+    let my = window.innerHeight * 0.5;
+    let tx = mx;
+    let ty = my;
+
+    function spawnParticle(x, y) {
+      if (!window.matchMedia("(pointer:fine)").matches) return;
+
+      const p = document.createElement("div");
+      p.className = "cursor-particle";
+      p.style.left = x + "px";
+      p.style.top = y + "px";
+      p.style.setProperty("--dx", `${(Math.random() - 0.5) * 18}px`);
+      p.style.setProperty("--dy", `${-8 - Math.random() * 18}px`);
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 900);
+    }
+
+    window.addEventListener("mousemove", (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+      cursor.style.left = mx + "px";
+      cursor.style.top = my + "px";
+      spawnParticle(mx, my);
+    }, { passive: true });
+
+    function animateCursor() {
+      tx += (mx - tx) * 0.18;
+      ty += (my - ty) * 0.18;
+      trail.style.left = tx + "px";
+      trail.style.top = ty + "px";
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    const hoverCards = document.querySelectorAll(".tilt-card");
+
+    hoverCards.forEach((card) => {
+      let raf = null;
+
+      function setCard(e) {
+        const rect = card.getBoundingClientRect();
+        const px = ((e.clientX - rect.left) / rect.width) * 100;
+        const py = ((e.clientY - rect.top) / rect.height) * 100;
+        const ry = ((px / 100) - 0.5) * 8;
+        const rx = (0.5 - (py / 100)) * 8;
+
+        card.style.setProperty("--mx", `${px}%`);
+        card.style.setProperty("--my", `${py}%`);
+        card.classList.add("is-hovered");
+
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          card.style.transform = `translateY(-8px) scale(1.02) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+        });
+      }
+
+      function resetCard() {
+        card.classList.remove("is-hovered");
+        card.style.transform = "";
+      }
+
+      card.addEventListener("mousemove", setCard);
+      card.addEventListener("mouseleave", resetCard);
+    });
+
+    const canvas = document.getElementById("liquidCanvas");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(window.innerWidth * dpr);
+      canvas.height = Math.floor(window.innerHeight * dpr);
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    const fields = [];
+    function createFields() {
+      fields.length = 0;
+      const count = 18;
+      for (let i = 0; i < count; i++) {
+        fields.push({
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          r: 220 + Math.random() * 420,
+          dx: (Math.random() - 0.5) * 0.018,
+          dy: (Math.random() - 0.5) * 0.012,
+          seed: Math.random() * 1000,
+          mode: Math.floor(Math.random() * 5)
+        });
+      }
+    }
+
+    function palette(mode, alpha = 1) {
+      if (mode === 0) return [
+        `rgba(245,225,185,${0.06 * alpha})`,
+        `rgba(230,170,210,${0.045 * alpha})`,
+        `rgba(145,190,255,${0.05 * alpha})`,
+        `rgba(110,220,225,${0.032 * alpha})`
+      ];
+      if (mode === 1) return [
+        `rgba(195,220,255,${0.07 * alpha})`,
+        `rgba(170,130,228,${0.045 * alpha})`,
+        `rgba(255,210,170,${0.04 * alpha})`,
+        `rgba(146,208,255,${0.032 * alpha})`
+      ];
+      if (mode === 2) return [
+        `rgba(255,246,234,${0.055 * alpha})`,
+        `rgba(194,214,255,${0.05 * alpha})`,
+        `rgba(132,220,255,${0.032 * alpha})`,
+        `rgba(178,132,210,${0.028 * alpha})`
+      ];
+      if (mode === 3) return [
+        `rgba(188,214,255,${0.06 * alpha})`,
+        `rgba(210,174,255,${0.04 * alpha})`,
+        `rgba(255,224,188,${0.04 * alpha})`,
+        `rgba(140,230,220,${0.03 * alpha})`
+      ];
+      return [
+        `rgba(236,226,210,${0.05 * alpha})`,
+        `rgba(150,198,255,${0.04 * alpha})`,
+        `rgba(244,200,160,${0.032 * alpha})`,
+        `rgba(164,234,226,${0.03 * alpha})`
+      ];
+    }
+
+    function drawFieldBlob(f, t, softness = 1) {
+      const colors = palette(f.mode, softness);
+      const grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r);
+      grad.addColorStop(0, colors[0]);
+      grad.addColorStop(0.18, colors[1]);
+      grad.addColorStop(0.38, colors[2]);
+      grad.addColorStop(0.62, colors[3]);
+      grad.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.ellipse(
+        f.x,
+        f.y,
+        f.r * (0.9 + Math.sin(t * 0.00006 + f.seed) * 0.05),
+        f.r * (0.58 + Math.cos(t * 0.00005 + f.seed * 0.8) * 0.05),
+        Math.sin(f.seed + t * 0.00002) * 0.8,
+        0,
+        Math.PI * 2
+      );
+      ctx.fill();
+    }
+
+    function drawSpecularPools(t) {
+      ctx.globalCompositeOperation = "screen";
+      for (let i = 0; i < 8; i++) {
+        const x = window.innerWidth * (0.1 + i * 0.105) + Math.sin(t * 0.00009 + i) * 30;
+        const y = window.innerHeight * (0.2 + 0.05 * Math.sin(i * 0.8 + t * 0.00007));
+        const rx = 160 + Math.sin(t * 0.0001 + i) * 18;
+        const ry = 34 + Math.cos(t * 0.00013 + i) * 6;
+
+        const g = ctx.createRadialGradient(x, y, 0, x, y, rx);
+        g.addColorStop(0, "rgba(255,248,236,0.035)");
+        g.addColorStop(0.18, "rgba(180,220,255,0.032)");
+        g.addColorStop(0.38, "rgba(204,170,255,0.018)");
+        g.addColorStop(1, "rgba(0,0,0,0)");
+
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.ellipse(x, y, rx, ry, Math.sin(i) * 0.25, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function drawLiquid(t) {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+      const darkBase = ctx.createLinearGradient(0, 0, 0, window.innerHeight);
+      darkBase.addColorStop(0, "rgba(5,12,18,0.9)");
+      darkBase.addColorStop(0.5, "rgba(4,8,14,0.6)");
+      darkBase.addColorStop(1, "rgba(0,0,0,0.08)");
+      ctx.fillStyle = darkBase;
+      ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
+      for (const f of fields) {
+        f.x += f.dx;
+        f.y += f.dy;
+
+        if (f.x < -f.r || f.x > window.innerWidth + f.r) f.dx *= -1;
+        if (f.y < -f.r || f.y > window.innerHeight + f.r) f.dy *= -1;
+      }
+
+      ctx.globalCompositeOperation = "screen";
+
+      ctx.filter = "blur(74px)";
+      for (const f of fields) drawFieldBlob(f, t, 0.7);
+
+      ctx.filter = "blur(34px)";
+      for (const f of fields) {
+        drawFieldBlob(
+          {
+            ...f,
+            x: f.x + Math.sin(t * 0.00003 + f.seed) * 10,
+            y: f.y + Math.cos(t * 0.00004 + f.seed) * 8,
+            r: f.r * 0.74
+          },
+          t,
+          0.52
+        );
+      }
+
+      ctx.filter = "blur(14px)";
+      for (const f of fields.slice(0, 10)) {
+        drawFieldBlob(
+          {
+            ...f,
+            x: f.x + Math.cos(t * 0.00005 + f.seed) * 6,
+            y: f.y + Math.sin(t * 0.00006 + f.seed) * 5,
+            r: f.r * 0.46
+          },
+          t,
+          0.3
+        );
+      }
+
+      ctx.filter = "none";
+      drawSpecularPools(t);
+
+      ctx.globalCompositeOperation = "source-over";
+      requestAnimationFrame(drawLiquid);
+    }
+
+    resizeCanvas();
+    createFields();
+    requestAnimationFrame(drawLiquid);
+
+    window.addEventListener("resize", () => {
+      resizeCanvas();
+      createFields();
+      updateDock();
+    });
+  </script>
+</body>
+</html>
