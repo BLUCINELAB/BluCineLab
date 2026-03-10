@@ -1,1 +1,203 @@
-Ti sto mandando un esempio di come si vede dal mio telefono, c'è qualcosa che non va. Aggiustala questa cosa. Ovviamente solo dal Oh no, aspetta, mi sono appena reso conto adesso che è andato in crash anche pure dall'iPad, adesso non so perché, ma vedo sull'iPad anche uguale a come vedo sul telefono, tutto scazzato in quel modo, è giusto, ti prego.telefono, però devi aggiustarla, da iPad lo vedo bene. Poi ti avevo chiesto delle modifiche, ovvero, non mi piace che la scritta BlueCineLab abbia quella sorta di taglio basso fatto di ombra. Preferisco a questo punto che quella parte direttamente tagliata del tutto, o c'è un metodo di renderla non un'ombra, ma una sorta di gradiente, un qualcosa di più equilibrato, per favore, così è proprio brutta. Poi... Il manifesto, il titolo, tutta quella parte insomma in maiuscolo, devi svilupparla in orizzontale, cioè non andare a capo così tante volte nella frase. Metti tutto nella stessa riga, capito che voglio dire? Perché è eccessivo che occupi tutto quello spazio. Deve essere sviluppato tutto più, cioè o meglio, che ci sia tutto quello spazio vuoto. Fai piuttosto due o tre righe e metti tutto insieme. Poi nella pagina archivio dove c'è Identity Direct, ci sono ad esempio quattro caselle o cinque, non mi ricordo, che tu hai disposto andando a capo, in un certo senso ne hai messe una, due o tre in fila e poi una di sotto. Ecco, no, mi piace di più quando c'è quell'effetto per cui se non riescono a rientrare nella stessa linea, allora c'è lo scorrimento, capito? Quell'effetto.
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BLUCINELAB</title>
+  <meta
+    name="description"
+    content="BluCineLab — laboratorio visivo tra cinema, spazio, identità, direzione artistica e ambienti digitali."
+  />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+
+<body class="page-home">
+  <div class="background">
+    <canvas id="bgCanvas"></canvas>
+    <div class="background-noise"></div>
+    <div class="background-vignette"></div>
+  </div>
+
+  <div class="cursor"></div>
+
+  <nav class="nav">
+    <a href="index.html" class="is-active">HOME</a>
+    <a href="archive.html">ARCHIVE</a>
+    <a href="studio.html">STUDIO</a>
+    <a href="contact.html">CONTACT</a>
+  </nav>
+
+  <div class="home-title-dock" id="homeTitleDock" aria-hidden="true">
+    <div class="home-title-dock-inner">
+      <div class="dock-wordmark">BLUCINELAB</div>
+    </div>
+  </div>
+
+  <header class="home-hero" id="homeHero">
+    <div class="home-hero-inner">
+      <div class="home-copy">
+        <div class="eyebrow hero-eyebrow">BLUCINELAB / IMAGE / SPACE / DIRECTION</div>
+
+        <div class="home-title-clip">
+          <h1 class="title home-title title-wave" id="homeTitle" aria-label="BLUCINELAB">
+            <span data-index="0">B</span>
+            <span data-index="1">L</span>
+            <span data-index="2">U</span>
+            <span data-index="3">C</span>
+            <span data-index="4">I</span>
+            <span data-index="5">N</span>
+            <span data-index="6">E</span>
+            <span data-index="7">L</span>
+            <span data-index="8">A</span>
+            <span data-index="9">B</span>
+          </h1>
+        </div>
+
+        <div class="home-actions hero-chips" id="heroChips">
+          <a href="archive.html" class="button-chip">
+            <span class="chip-title">ARCHIVE</span>
+            <span class="chip-meta">works / catalogue</span>
+          </a>
+
+          <a href="studio.html" class="button-chip">
+            <span class="chip-title">STUDIO</span>
+            <span class="chip-meta">identity / method</span>
+          </a>
+
+          <a href="contact.html" class="button-chip">
+            <span class="chip-title">CONTACT</span>
+            <span class="chip-meta">collaborations / access</span>
+          </a>
+
+          <a href="#manifesto" class="button-chip">
+            <span class="chip-title">MANIFESTO</span>
+            <span class="chip-meta">position / statement</span>
+          </a>
+
+          <a href="#fields" class="button-chip">
+            <span class="chip-title">FIELDS</span>
+            <span class="chip-meta">image / space / digital</span>
+          </a>
+        </div>
+
+        <aside class="home-side-panel hero-statement" id="heroStatement">
+          <div class="panel-label">STATEMENT</div>
+          <p>
+            BluCineLab è una struttura visiva indipendente che lavora tra cinema,
+            spazio, identità, direzione artistica e ambienti digitali.
+            Ogni progetto viene costruito come un sistema coerente:
+            immagine, atmosfera, gerarchia, materia e presenza devono parlare la stessa lingua.
+          </p>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <main class="home-main">
+    <section class="section reveal-section manifesto-section" id="manifesto">
+      <div class="manifesto-block panel-button">
+        <div class="manifesto-kicker">MANIFESTO</div>
+
+        <div class="manifesto-layout">
+          <h2>
+            NON UNA VETRINA GENERICA. UN AMBIENTE EDITORIALE
+            CHE ORGANIZZA IMMAGINI, SPAZI E DIREZIONE
+            IN UN LINGUAGGIO UNICO.
+          </h2>
+
+          <p>
+            Il lavoro si muove tra ricerca visiva, costruzione di atmosfera,
+            sistemi di identità e ambienti digitali.
+            La forma non decora: orienta, tiene insieme, rende leggibile.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal-section reveal-stagger featured-section">
+      <div class="section-head">
+        <div class="section-kicker">SELECTED ACCESS</div>
+        <h2>DUE SOGLIE PRINCIPALI</h2>
+        <p>Un ingresso al catalogo e un ingresso al metodo.</p>
+      </div>
+
+      <div class="featured-grid">
+        <a href="archive.html" class="featured-card panel-button reveal-item">
+          <div class="featured-media">
+            <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1600&auto=format&fit=crop" alt="Archive" />
+          </div>
+          <div class="featured-body">
+            <div class="cardKicker">ARCHIVE</div>
+            <h3>CATALOGO LAVORI</h3>
+            <p>Progetti, documentazione, collaborazioni e materiali organizzati come archivio curatoriale.</p>
+          </div>
+        </a>
+
+        <a href="studio.html" class="featured-card panel-button reveal-item">
+          <div class="featured-media">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600&auto=format&fit=crop" alt="Studio" />
+          </div>
+          <div class="featured-body">
+            <div class="cardKicker">STUDIO</div>
+            <h3>IDENTITÀ E METODO</h3>
+            <p>Posizione, campi di lavoro e logica operativa con cui le forme prendono struttura.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section reveal-section reveal-stagger" id="fields">
+      <div class="section-head">
+        <div class="section-kicker">FIELDS</div>
+        <h2>MAPPA DEI CAMPI</h2>
+        <p>Quattro aree che si intrecciano e si alimentano a vicenda.</p>
+      </div>
+
+      <div class="cluster-grid">
+        <article class="cluster-card panel-button reveal-item">
+          <div class="cluster-label">IMAGE</div>
+          <div class="cluster-title">CINEMA / SET</div>
+          <div class="cluster-text">Scena, atmosfera, materia e costruzione visiva del racconto.</div>
+        </article>
+
+        <article class="cluster-card panel-button reveal-item">
+          <div class="cluster-label">IDENTITY</div>
+          <div class="cluster-title">SISTEMI VISIVI</div>
+          <div class="cluster-text">Identità, direzione, struttura grafica e coerenza formale.</div>
+        </article>
+
+        <article class="cluster-card panel-button reveal-item">
+          <div class="cluster-label">SPATIAL</div>
+          <div class="cluster-title">EVENTI / SPAZIO</div>
+          <div class="cluster-text">Allestimenti, installazioni, mostre e ambienti temporanei.</div>
+        </article>
+
+        <article class="cluster-card panel-button reveal-item">
+          <div class="cluster-label">DIGITAL</div>
+          <div class="cluster-title">AMBIENTI WEB</div>
+          <div class="cluster-text">Showcase, front-end e presenza digitale con taglio editoriale.</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section reveal-section reveal-stagger footer-cta-section">
+      <div class="footer-cta panel-button reveal-item">
+        <div class="footer-cta-kicker">NEXT STEP</div>
+        <h2>ARCHIVE, STUDIO, CONTACT.</h2>
+        <p>Tre ingressi, un solo linguaggio.</p>
+
+        <div class="footer-cta-links">
+          <a href="archive.html" class="text-link">ARCHIVE</a>
+          <a href="studio.html" class="text-link">STUDIO</a>
+          <a href="contact.html" class="text-link">CONTACT</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="archive-footer-space"></div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
