@@ -178,22 +178,23 @@ p,
   color:transparent;
 }
 
+/* GLOWING LETTERS RESTORED */
 .title-wave span{
   --wave-strength:0;
   filter:
-    brightness(calc(1 + (var(--wave-strength) * 0.32)))
-    saturate(calc(1 + (var(--wave-strength) * 0.06)));
+    brightness(calc(1 + (var(--wave-strength) * 0.42)))
+    saturate(calc(1 + (var(--wave-strength) * 0.10)));
   text-shadow:
-    0 0 calc(4px + (var(--wave-strength) * 8px)) rgba(228,236,242, calc(0.12 + (var(--wave-strength) * 0.20))),
-    0 0 calc(10px + (var(--wave-strength) * 14px)) rgba(170,190,208, calc(0.08 + (var(--wave-strength) * 0.16))),
-    0 0 calc(18px + (var(--wave-strength) * 20px)) rgba(126,152,180, calc(0.03 + (var(--wave-strength) * 0.10)));
+    0 0 calc(5px + (var(--wave-strength) * 10px)) rgba(235,242,248, calc(0.18 + (var(--wave-strength) * 0.34))),
+    0 0 calc(12px + (var(--wave-strength) * 22px)) rgba(182,204,226, calc(0.10 + (var(--wave-strength) * 0.24))),
+    0 0 calc(22px + (var(--wave-strength) * 34px)) rgba(132,165,205, calc(0.05 + (var(--wave-strength) * 0.16)));
   transform:
-    translateY(calc(var(--wave-strength) * -1.35px))
-    scale(calc(1 + (var(--wave-strength) * 0.014)));
+    translateY(calc(var(--wave-strength) * -1.4px))
+    scale(calc(1 + (var(--wave-strength) * 0.018)));
   transition:
-    filter .18s ease,
-    text-shadow .20s ease,
-    transform .18s ease;
+    filter .14s linear,
+    text-shadow .18s linear,
+    transform .14s linear;
 }
 
 /* NAV */
