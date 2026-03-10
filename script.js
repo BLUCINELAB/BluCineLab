@@ -5,7 +5,6 @@ const homeHero = document.getElementById("homeHero");
 const heroChips = document.getElementById("heroChips");
 const heroStatement = document.getElementById("heroStatement");
 
-let pointerActive = false;
 let cursorHideTimer = null;
 
 /* CURSOR HELPERS */
@@ -15,7 +14,6 @@ function showCursor(x, y) {
   cursor.style.opacity = "1";
   cursor.style.left = `${x}px`;
   cursor.style.top = `${y}px`;
-  pointerActive = true;
 }
 
 function fadeCursorLater(delay = 700) {
@@ -23,7 +21,6 @@ function fadeCursorLater(delay = 700) {
   if (cursorHideTimer) clearTimeout(cursorHideTimer);
   cursorHideTimer = setTimeout(() => {
     cursor.style.opacity = "0";
-    pointerActive = false;
   }, delay);
 }
 
@@ -43,7 +40,7 @@ function createSparkBurst(x, y, amount = 10) {
   }
 }
 
-/* DESKTOP / TRACKPAD / MOUSE */
+/* POINTER */
 
 document.addEventListener("mousemove", (e) => {
   showCursor(e.clientX, e.clientY);
@@ -51,8 +48,6 @@ document.addEventListener("mousemove", (e) => {
   handleTitleWaveAtPoint(e.clientX, e.clientY);
   fadeCursorLater(1200);
 });
-
-/* TOUCH / IPAD */
 
 document.addEventListener("touchstart", (e) => {
   const touch = e.touches[0];
@@ -78,7 +73,7 @@ document.addEventListener("touchend", () => {
   fadeCursorLater(500);
 }, { passive: true });
 
-/* AUDIO ENGINE */
+/* AUDIO */
 
 let audioCtx = null;
 let audioUnlocked = false;
@@ -99,9 +94,7 @@ function ensureAudioContext() {
 function unlockAudio() {
   const ctx = ensureAudioContext();
   if (!ctx) return;
-  if (ctx.state === "suspended") {
-    ctx.resume();
-  }
+  if (ctx.state === "suspended") ctx.resume();
   audioUnlocked = true;
 }
 
@@ -111,7 +104,7 @@ document.addEventListener("pointerdown", unlockAudio, { passive: true });
 
 function playLetterSound(intensity = 1) {
   const now = performance.now();
-  if (now - lastLetterSoundTime < 70) return;
+  if (now - lastLetterSoundTime < 90) return;
   lastLetterSoundTime = now;
 
   const ctx = ensureAudioContext();
@@ -120,45 +113,47 @@ function playLetterSound(intensity = 1) {
   try {
     if (ctx.state === "suspended") ctx.resume();
 
-    const oscA = ctx.createOscillator();
-    const oscB = ctx.createOscillator();
     const gain = ctx.createGain();
     const filter = ctx.createBiquadFilter();
+    const oscA = ctx.createOscillator();
+    const oscB = ctx.createOscillator();
 
-    oscA.type = "sine";
-    oscB.type = "triangle";
+    oscA.type = "triangle";
+    oscB.type = "sine";
 
-    const baseA = 920 + (intensity * 60);
-    const baseB = 640 + (intensity * 40);
+    const t = ctx.currentTime;
+    const baseA = 520 + (intensity * 20);
+    const baseB = 360 + (intensity * 16);
 
-    oscA.frequency.setValueAtTime(baseA, ctx.currentTime);
-    oscA.frequency.exponentialRampToValueAtTime(baseA * 0.74, ctx.currentTime + 0.09);
+    oscA.frequency.setValueAtTime(baseA, t);
+    oscA.frequency.exponentialRampToValueAtTime(baseA * 0.82, t + 0.11);
 
-    oscB.frequency.setValueAtTime(baseB, ctx.currentTime);
-    oscB.frequency.exponentialRampToValueAtTime(baseB * 0.82, ctx.currentTime + 0.09);
+    oscB.frequency.setValueAtTime(baseB, t);
+    oscB.frequency.exponentialRampToValueAtTime(baseB * 0.88, t + 0.11);
 
     filter.type = "lowpass";
-    filter.frequency.setValueAtTime(2400, ctx.currentTime);
+    filter.frequency.setValueAtTime(1200, t);
+    filter.Q.setValueAtTime(0.8, t);
 
-    gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.018, ctx.currentTime + 0.012);
-    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.16);
+    gain.gain.setValueAtTime(0.0001, t);
+    gain.gain.exponentialRampToValueAtTime(0.012, t + 0.018);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);
 
     oscA.connect(filter);
     oscB.connect(filter);
     filter.connect(gain);
     gain.connect(ctx.destination);
 
-    oscA.start();
-    oscB.start();
-    oscA.stop(ctx.currentTime + 0.17);
-    oscB.stop(ctx.currentTime + 0.17);
+    oscA.start(t);
+    oscB.start(t);
+    oscA.stop(t + 0.19);
+    oscB.stop(t + 0.19);
   } catch (e) {}
 }
 
 function playMetalClickSound(strength = 1) {
   const now = performance.now();
-  if (now - lastClickSoundTime < 85) return;
+  if (now - lastClickSoundTime < 100) return;
   lastClickSoundTime = now;
 
   const ctx = ensureAudioContext();
@@ -167,50 +162,41 @@ function playMetalClickSound(strength = 1) {
   try {
     if (ctx.state === "suspended") ctx.resume();
 
+    const t = ctx.currentTime;
+
     const gain = ctx.createGain();
     const filter = ctx.createBiquadFilter();
 
     const osc1 = ctx.createOscillator();
     const osc2 = ctx.createOscillator();
-    const osc3 = ctx.createOscillator();
 
     osc1.type = "triangle";
-    osc2.type = "square";
-    osc3.type = "sine";
+    osc2.type = "sine";
 
-    const t = ctx.currentTime;
+    osc1.frequency.setValueAtTime(260 * strength, t);
+    osc1.frequency.exponentialRampToValueAtTime(180, t + 0.08);
 
-    osc1.frequency.setValueAtTime(720 * strength, t);
-    osc1.frequency.exponentialRampToValueAtTime(290, t + 0.08);
+    osc2.frequency.setValueAtTime(480 * strength, t);
+    osc2.frequency.exponentialRampToValueAtTime(220, t + 0.06);
 
-    osc2.frequency.setValueAtTime(1320 * strength, t);
-    osc2.frequency.exponentialRampToValueAtTime(610, t + 0.045);
-
-    osc3.frequency.setValueAtTime(2800, t);
-    osc3.frequency.exponentialRampToValueAtTime(980, t + 0.03);
-
-    filter.type = "bandpass";
-    filter.frequency.setValueAtTime(1800, t);
-    filter.Q.setValueAtTime(1.2, t);
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(900, t);
+    filter.Q.setValueAtTime(0.7, t);
 
     gain.gain.setValueAtTime(0.0001, t);
-    gain.gain.exponentialRampToValueAtTime(0.03, t + 0.006);
-    gain.gain.exponentialRampToValueAtTime(0.009, t + 0.045);
-    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.14);
+    gain.gain.exponentialRampToValueAtTime(0.028, t + 0.008);
+    gain.gain.exponentialRampToValueAtTime(0.010, t + 0.045);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.16);
 
     osc1.connect(filter);
     osc2.connect(filter);
-    osc3.connect(filter);
     filter.connect(gain);
     gain.connect(ctx.destination);
 
     osc1.start(t);
     osc2.start(t);
-    osc3.start(t);
-
-    osc1.stop(t + 0.15);
-    osc2.stop(t + 0.11);
-    osc3.stop(t + 0.08);
+    osc1.stop(t + 0.17);
+    osc2.stop(t + 0.14);
   } catch (e) {}
 }
 
@@ -230,7 +216,7 @@ function applyWave(indexValue) {
 
   titleLetters.forEach((letter, index) => {
     const distance = Math.abs(index - indexValue);
-    const strength = Math.max(0, 1 - distance / 2.6);
+    const strength = Math.max(0, 1 - distance / 2.8);
     letter.style.setProperty("--wave-strength", strength.toFixed(3));
   });
 }
@@ -253,7 +239,7 @@ function animateWave() {
   if (waveCurrentIndex === null) {
     waveCurrentIndex = waveTargetIndex;
   } else {
-    waveCurrentIndex += (waveTargetIndex - waveCurrentIndex) * 0.18;
+    waveCurrentIndex += (waveTargetIndex - waveCurrentIndex) * 0.16;
   }
 
   applyWave(waveCurrentIndex);
@@ -283,7 +269,7 @@ function setWaveFromClientX(clientX) {
   waveTargetIndex = nextIndex;
   startWaveLoop();
 
-  if (previousIndex === null || Math.abs(previousIndex - nextIndex) > 0.18) {
+  if (previousIndex === null || Math.abs(previousIndex - nextIndex) > 0.22) {
     playLetterSound(1);
   }
 }
@@ -321,7 +307,7 @@ if (homeTitle) {
   });
 }
 
-/* CLICK SOUND ON BOXES */
+/* CLICK SOUND ON PANELS */
 
 function attachMetalClickToInteractivePanels() {
   const selectors = [
@@ -381,16 +367,16 @@ if (homeHero && homeTitle && homeTitleDock) {
     const limit = window.innerHeight * 0.55;
     const progress = Math.min(scrollY / limit, 1);
 
-    const titleScale = 1 - progress * 0.16;
-    const titleY = progress * -72;
-    const titleOpacity = 1 - progress * 0.38;
+    const titleScale = 1 - progress * 0.14;
+    const titleY = progress * -68;
+    const titleOpacity = 1 - progress * 0.34;
 
     homeTitle.style.transform = `translateY(${titleY}px) scale(${titleScale})`;
     homeTitle.style.opacity = titleOpacity;
 
     if (heroChips) {
-      heroChips.style.transform = `translateY(${-20 * progress}px)`;
-      heroChips.style.opacity = 1 - progress * 0.24;
+      heroChips.style.transform = `translateY(${-18 * progress}px)`;
+      heroChips.style.opacity = 1 - progress * 0.20;
     }
 
     if (heroStatement) {
