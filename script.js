@@ -78,20 +78,12 @@ document.addEventListener("touchend", () => {
   fadeCursorLater(500);
 }, { passive: true });
 
-/* TITLE WAVE + AUDIO */
-
-let titleLetters = [];
-let waveTargetIndex = null;
-let waveCurrentIndex = null;
-let waveRAF = null;
+/* AUDIO ENGINE */
 
 let audioCtx = null;
 let audioUnlocked = false;
-let lastSoundTime = 0;
-
-if (homeTitle) {
-  titleLetters = Array.from(homeTitle.querySelectorAll("span"));
-}
+let lastLetterSoundTime = 0;
+let lastClickSoundTime = 0;
 
 function ensureAudioContext() {
   try {
@@ -119,8 +111,8 @@ document.addEventListener("pointerdown", unlockAudio, { passive: true });
 
 function playLetterSound(intensity = 1) {
   const now = performance.now();
-  if (now - lastSoundTime < 70) return;
-  lastSoundTime = now;
+  if (now - lastLetterSoundTime < 70) return;
+  lastLetterSoundTime = now;
 
   const ctx = ensureAudioContext();
   if (!ctx || !audioUnlocked) return;
@@ -162,6 +154,75 @@ function playLetterSound(intensity = 1) {
     oscA.stop(ctx.currentTime + 0.17);
     oscB.stop(ctx.currentTime + 0.17);
   } catch (e) {}
+}
+
+function playMetalClickSound(strength = 1) {
+  const now = performance.now();
+  if (now - lastClickSoundTime < 85) return;
+  lastClickSoundTime = now;
+
+  const ctx = ensureAudioContext();
+  if (!ctx || !audioUnlocked) return;
+
+  try {
+    if (ctx.state === "suspended") ctx.resume();
+
+    const gain = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+
+    const osc1 = ctx.createOscillator();
+    const osc2 = ctx.createOscillator();
+    const osc3 = ctx.createOscillator();
+
+    osc1.type = "triangle";
+    osc2.type = "square";
+    osc3.type = "sine";
+
+    const t = ctx.currentTime;
+
+    osc1.frequency.setValueAtTime(720 * strength, t);
+    osc1.frequency.exponentialRampToValueAtTime(290, t + 0.08);
+
+    osc2.frequency.setValueAtTime(1320 * strength, t);
+    osc2.frequency.exponentialRampToValueAtTime(610, t + 0.045);
+
+    osc3.frequency.setValueAtTime(2800, t);
+    osc3.frequency.exponentialRampToValueAtTime(980, t + 0.03);
+
+    filter.type = "bandpass";
+    filter.frequency.setValueAtTime(1800, t);
+    filter.Q.setValueAtTime(1.2, t);
+
+    gain.gain.setValueAtTime(0.0001, t);
+    gain.gain.exponentialRampToValueAtTime(0.03, t + 0.006);
+    gain.gain.exponentialRampToValueAtTime(0.009, t + 0.045);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.14);
+
+    osc1.connect(filter);
+    osc2.connect(filter);
+    osc3.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc1.start(t);
+    osc2.start(t);
+    osc3.start(t);
+
+    osc1.stop(t + 0.15);
+    osc2.stop(t + 0.11);
+    osc3.stop(t + 0.08);
+  } catch (e) {}
+}
+
+/* TITLE WAVE */
+
+let titleLetters = [];
+let waveTargetIndex = null;
+let waveCurrentIndex = null;
+let waveRAF = null;
+
+if (homeTitle) {
+  titleLetters = Array.from(homeTitle.querySelectorAll("span"));
 }
 
 function applyWave(indexValue) {
@@ -259,6 +320,42 @@ if (homeTitle) {
     startWaveLoop();
   });
 }
+
+/* CLICK SOUND ON BOXES */
+
+function attachMetalClickToInteractivePanels() {
+  const selectors = [
+    ".button-chip",
+    ".panel-button",
+    ".hero-statement",
+    ".manifesto-block",
+    ".featured-card",
+    ".cluster-card",
+    ".project-card",
+    ".archive-panel",
+    ".hero-project"
+  ];
+
+  const panels = document.querySelectorAll(selectors.join(","));
+
+  panels.forEach((panel) => {
+    panel.addEventListener("mousedown", () => {
+      playMetalClickSound(1);
+    });
+
+    panel.addEventListener("touchstart", () => {
+      playMetalClickSound(1);
+    }, { passive: true });
+
+    panel.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        playMetalClickSound(0.9);
+      }
+    });
+  });
+}
+
+attachMetalClickToInteractivePanels();
 
 /* REVEAL */
 
