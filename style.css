@@ -73,7 +73,7 @@ img{
 .background-vignette{
   position:absolute;
   inset:0;
-  box-shadow:inset 0 0 118px rgba(0,0,0,.34);
+  box-shadow:inset 0 0 130px rgba(0,0,0,.38);
   pointer-events:none;
 }
 
@@ -95,96 +95,6 @@ img{
     0 0 72px rgba(180,210,255,.18);
   opacity:0;
   transition:opacity .18s ease;
-}
-
-.spark{
-  position:fixed;
-  width:1.8px;
-  height:1.8px;
-  background:#fff;
-  border-radius:50%;
-  pointer-events:none;
-  z-index:9998;
-  animation:sparkFade .95s linear forwards;
-}
-
-@keyframes sparkFade{
-  0%{
-    opacity:1;
-    transform:translate(0,0) scale(1);
-  }
-  100%{
-    opacity:0;
-    transform:translate(var(--dx),var(--dy)) scale(0);
-  }
-}
-
-/* TYPOGRAPHY */
-
-.title,
-.section-head h2,
-.manifesto-block h2,
-.cluster-card h3,
-.project-body h3,
-.featured-body h3,
-.archive-title,
-.dock-wordmark,
-.chip-title,
-.panel-label,
-.section-kicker,
-.card-kicker,
-.hero-eyebrow,
-.nav a{
-  font-family:Oswald,sans-serif;
-  text-transform:uppercase;
-  letter-spacing:.08em;
-}
-
-body,
-p,
-.chip-meta,
-.archive-intro,
-.hero-statement p{
-  font-family:Inter,sans-serif;
-}
-
-/* HERO TITLE */
-
-.title span{
-  display:block;
-  background:
-    linear-gradient(
-      120deg,
-      #7f95a8 0%,
-      #dfe6ec 18%,
-      #f6f8fa 30%,
-      #c4cdd5 46%,
-      #f5f7f8 62%,
-      #b2bcc5 78%,
-      #7d93a6 100%
-    );
-  -webkit-background-clip:text;
-  color:transparent;
-}
-
-/* NAV */
-
-.nav{
-  position:fixed;
-  top:22px;
-  right:34px;
-  z-index:300;
-  display:flex;
-  gap:18px;
-  padding:12px 14px;
-  border-radius:999px;
-  background:rgba(7,10,18,.34);
-  backdrop-filter:blur(10px);
-}
-
-.nav a{
-  color:#fff;
-  font-size:11px;
 }
 
 /* HERO */
@@ -223,8 +133,6 @@ p,
 
 /* HERO TITLE */
 
-/* QUI È LA MODIFICA CHE ALZA BLUCINE */
-
 .home-title{
   display:inline-flex;
   white-space:nowrap;
@@ -234,7 +142,25 @@ p,
   margin:0 auto;
   padding-right:.06em;
 
-  transform:translateY(-0.05em);
+  /* TAGLIO MOLTO SOTTILE */
+  transform:translateY(-0.012em);
+}
+
+.title span{
+  display:block;
+  background:
+    linear-gradient(
+      120deg,
+      #7f95a8 0%,
+      #dfe6ec 18%,
+      #f6f8fa 30%,
+      #c4cdd5 46%,
+      #f5f7f8 62%,
+      #b2bcc5 78%,
+      #7d93a6 100%
+    );
+  -webkit-background-clip:text;
+  color:transparent;
 }
 
 /* HERO BUTTONS */
@@ -285,32 +211,7 @@ p,
   border-radius:18px;
 }
 
-/* MAIN LAYOUT */
-
-.main-shell{
-  width:min(1200px, calc(100% - 40px));
-  margin:auto;
-}
-
-.section{
-  padding-top:100px;
-  opacity:0;
-  transform:translateY(40px);
-  transition:opacity .95s ease, transform .95s ease;
-}
-
-.section.is-visible{
-  opacity:1;
-  transform:none;
-}
-
-.section-head{
-  margin-bottom:26px;
-}
-
-.section-head h2{
-  font-size:clamp(1.9rem,3.2vw,2.8rem);
-}
+/* GRID */
 
 .cluster-grid{
   display:grid;
@@ -335,7 +236,7 @@ p,
 
   .home-title{
     font-size:clamp(4.9rem,23vw,9rem);
-    transform:translateY(-0.04em);
+    transform:translateY(-0.01em);
   }
 
   .cluster-grid{
