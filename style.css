@@ -73,8 +73,34 @@ img{
 .background-vignette{
   position:absolute;
   inset:0;
-  box-shadow:inset 0 0 130px rgba(0,0,0,.38);
   pointer-events:none;
+}
+
+.background-vignette::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  box-shadow:inset 0 0 110px rgba(0,0,0,.22);
+}
+
+.background-vignette::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:34vh;
+  background:linear-gradient(
+    to top,
+    rgba(0,0,0,.24) 0%,
+    rgba(0,0,0,.18) 18%,
+    rgba(0,0,0,.11) 34%,
+    rgba(0,0,0,.05) 52%,
+    rgba(0,0,0,.015) 70%,
+    rgba(0,0,0,0) 100%
+  );
+  filter:blur(10px);
+  transform:translateY(8%);
 }
 
 /* CURSOR */
@@ -178,7 +204,6 @@ p,
   color:transparent;
 }
 
-/* GLOWING LETTERS RESTORED */
 .title-wave span{
   --wave-strength:0;
   filter:
