@@ -5,37 +5,52 @@ const homeHero = document.getElementById("homeHero");
 const heroChips = document.getElementById("heroChips");
 const heroStatement = document.getElementById("heroStatement");
 
+const hasCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
+
 /* CURSOR + SPARKS */
 
-if (cursor) {
-  document.addEventListener("mousemove", (e) => {
-    cursor.style.left = `${e.clientX}px`;
-    cursor.style.top = `${e.clientY}px`;
-    createSparkBurst(e.clientX, e.clientY);
-  });
+function createSparkBurst(x, y, amount = 10) {
+  for (let i = 0; i < amount; i++) {
+    const spark = document.createElement("div");
+    spark.className = "spark";
+    spark.style.left = `${x}px`;
+    spark.style.top = `${y}px`;
+    spark.style.setProperty("--dx", `${(Math.random() - 0.5) * 34}px`);
+    spark.style.setProperty("--dy", `${-4 - Math.random() * 24}px`);
+    document.body.appendChild(spark);
 
-  function createSparkBurst(x, y) {
-    const amount = 10;
-
-    for (let i = 0; i < amount; i++) {
-      const spark = document.createElement("div");
-      spark.className = "spark";
-      spark.style.left = `${x}px`;
-      spark.style.top = `${y}px`;
-      spark.style.setProperty("--dx", `${(Math.random() - 0.5) * 34}px`);
-      spark.style.setProperty("--dy", `${-4 - Math.random() * 24}px`);
-      document.body.appendChild(spark);
-
-      setTimeout(() => {
-        if (spark.parentNode) spark.parentNode.removeChild(spark);
-      }, 900);
-    }
+    setTimeout(() => {
+      if (spark.parentNode) spark.parentNode.removeChild(spark);
+    }, 900);
   }
 }
 
+/* Desktop / mouse / trackpad */
+if (cursor && !hasCoarsePointer) {
+  document.addEventListener("mousemove", (e) => {
+    cursor.style.opacity = "1";
+    cursor.style.left = `${e.clientX}px`;
+    cursor.style.top = `${e.clientY}px`;
+    createSparkBurst(e.clientX, e.clientY, 8);
+  });
+}
+
+/* iPad / touch: niente cursore persistente, solo scintille al tocco */
+document.addEventListener("touchstart", (e) => {
+  const touch = e.touches[0];
+  if (!touch) return;
+  createSparkBurst(touch.clientX, touch.clientY, 14);
+}, { passive: true });
+
+document.addEventListener("touchmove", (e) => {
+  const touch = e.touches[0];
+  if (!touch) return;
+  createSparkBurst(touch.clientX, touch.clientY, 6);
+}, { passive: true });
+
 /* TITLE WAVE */
 
-if (homeTitle) {
+if (homeTitle && !hasCoarsePointer) {
   const titleLetters = homeTitle.querySelectorAll("span");
 
   function resetWave() {
@@ -79,7 +94,7 @@ if ("IntersectionObserver" in window) {
 
 /* HERO DOCK */
 
-if (homeHero && homeTitle && homeTitleDock) {
+if (homeHero && homeTitle && homeTitleDock && !hasCoarsePointer) {
   function updateHomeHeroMotion() {
     const scrollY = window.scrollY || window.pageYOffset || 0;
     const limit = window.innerHeight * 0.55;
