@@ -73,7 +73,7 @@ document.addEventListener("touchend", () => {
   fadeCursorLater(500);
 }, { passive: true });
 
-/* AUDIO */
+/* AUDIO ENGINE */
 
 let audioCtx = null;
 let audioUnlocked = false;
@@ -83,7 +83,9 @@ let lastClickSoundTime = 0;
 function ensureAudioContext() {
   try {
     if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)({
+        latencyHint: "interactive"
+      });
     }
     return audioCtx;
   } catch (e) {
@@ -91,116 +93,168 @@ function ensureAudioContext() {
   }
 }
 
-function unlockAudio() {
-  const ctx = ensureAudioContext();
-  if (!ctx) return;
-  if (ctx.state === "suspended") ctx.resume();
-  audioUnlocked = true;
+function playSilentUnlockBuffer(ctx) {
+  try {
+    const buffer = ctx.createBuffer(1, 1, 22050);
+    const source = ctx.createBufferSource();
+    const gain = ctx.createGain();
+    gain.gain.value = 0.0001;
+    source.buffer = buffer;
+    source.connect(gain);
+    gain.connect(ctx.destination);
+    source.start(0);
+  } catch (e) {}
 }
 
-document.addEventListener("click", unlockAudio, { passive: true });
-document.addEventListener("touchstart", unlockAudio, { passive: true });
-document.addEventListener("pointerdown", unlockAudio, { passive: true });
+async function unlockAudio() {
+  const ctx = ensureAudioContext();
+  if (!ctx) return;
+
+  try {
+    if (ctx.state !== "running") {
+      await ctx.resume();
+    }
+    playSilentUnlockBuffer(ctx);
+    audioUnlocked = true;
+  } catch (e) {}
+}
+
+/* iPad-safe unlock */
+["pointerdown", "touchstart", "touchend", "click"].forEach((eventName) => {
+  document.addEventListener(eventName, unlockAudio, { passive: true });
+});
+
+/* SOUNDS */
 
 function playLetterSound(intensity = 1) {
   const now = performance.now();
-  if (now - lastLetterSoundTime < 90) return;
+  if (now - lastLetterSoundTime < 95) return;
   lastLetterSoundTime = now;
 
   const ctx = ensureAudioContext();
   if (!ctx || !audioUnlocked) return;
 
   try {
-    if (ctx.state === "suspended") ctx.resume();
+    const t = ctx.currentTime;
 
-    const gain = ctx.createGain();
-    const filter = ctx.createBiquadFilter();
+    const master = ctx.createGain();
+    const lowpass = ctx.createBiquadFilter();
+    const air = ctx.createBiquadFilter();
+
     const oscA = ctx.createOscillator();
     const oscB = ctx.createOscillator();
+    const oscC = ctx.createOscillator();
 
     oscA.type = "triangle";
     oscB.type = "sine";
+    oscC.type = "sine";
 
-    const t = ctx.currentTime;
-    const baseA = 520 + (intensity * 20);
-    const baseB = 360 + (intensity * 16);
+    const baseA = 430 + (intensity * 14);
+    const baseB = 295 + (intensity * 10);
+    const baseC = 690 + (intensity * 12);
 
     oscA.frequency.setValueAtTime(baseA, t);
-    oscA.frequency.exponentialRampToValueAtTime(baseA * 0.82, t + 0.11);
+    oscA.frequency.exponentialRampToValueAtTime(baseA * 0.88, t + 0.15);
 
     oscB.frequency.setValueAtTime(baseB, t);
-    oscB.frequency.exponentialRampToValueAtTime(baseB * 0.88, t + 0.11);
+    oscB.frequency.exponentialRampToValueAtTime(baseB * 0.92, t + 0.16);
 
-    filter.type = "lowpass";
-    filter.frequency.setValueAtTime(1200, t);
-    filter.Q.setValueAtTime(0.8, t);
+    oscC.frequency.setValueAtTime(baseC, t);
+    oscC.frequency.exponentialRampToValueAtTime(baseC * 0.84, t + 0.09);
 
-    gain.gain.setValueAtTime(0.0001, t);
-    gain.gain.exponentialRampToValueAtTime(0.012, t + 0.018);
-    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);
+    lowpass.type = "lowpass";
+    lowpass.frequency.setValueAtTime(950, t);
+    lowpass.Q.setValueAtTime(0.75, t);
 
-    oscA.connect(filter);
-    oscB.connect(filter);
-    filter.connect(gain);
-    gain.connect(ctx.destination);
+    air.type = "peaking";
+    air.frequency.setValueAtTime(1200, t);
+    air.Q.setValueAtTime(0.6, t);
+    air.gain.setValueAtTime(1.2, t);
+
+    master.gain.setValueAtTime(0.0001, t);
+    master.gain.exponentialRampToValueAtTime(0.02, t + 0.02);
+    master.gain.exponentialRampToValueAtTime(0.012, t + 0.08);
+    master.gain.exponentialRampToValueAtTime(0.0001, t + 0.23);
+
+    oscA.connect(lowpass);
+    oscB.connect(lowpass);
+    oscC.connect(air);
+    air.connect(lowpass);
+    lowpass.connect(master);
+    master.connect(ctx.destination);
 
     oscA.start(t);
     oscB.start(t);
-    oscA.stop(t + 0.19);
-    oscB.stop(t + 0.19);
+    oscC.start(t);
+
+    oscA.stop(t + 0.24);
+    oscB.stop(t + 0.24);
+    oscC.stop(t + 0.14);
   } catch (e) {}
 }
 
-function playMetalClickSound(strength = 1) {
+function playAppleClickSound(strength = 1) {
   const now = performance.now();
-  if (now - lastClickSoundTime < 100) return;
+  if (now - lastClickSoundTime < 110) return;
   lastClickSoundTime = now;
 
   const ctx = ensureAudioContext();
   if (!ctx || !audioUnlocked) return;
 
   try {
-    if (ctx.state === "suspended") ctx.resume();
-
     const t = ctx.currentTime;
 
-    const gain = ctx.createGain();
-    const filter = ctx.createBiquadFilter();
+    const master = ctx.createGain();
+    const lowpass = ctx.createBiquadFilter();
+    const highpass = ctx.createBiquadFilter();
 
     const osc1 = ctx.createOscillator();
     const osc2 = ctx.createOscillator();
+    const osc3 = ctx.createOscillator();
 
-    osc1.type = "triangle";
-    osc2.type = "sine";
+    osc1.type = "sine";
+    osc2.type = "triangle";
+    osc3.type = "sine";
 
-    osc1.frequency.setValueAtTime(260 * strength, t);
-    osc1.frequency.exponentialRampToValueAtTime(180, t + 0.08);
+    osc1.frequency.setValueAtTime(310 * strength, t);
+    osc1.frequency.exponentialRampToValueAtTime(230, t + 0.08);
 
-    osc2.frequency.setValueAtTime(480 * strength, t);
-    osc2.frequency.exponentialRampToValueAtTime(220, t + 0.06);
+    osc2.frequency.setValueAtTime(620 * strength, t);
+    osc2.frequency.exponentialRampToValueAtTime(320, t + 0.05);
 
-    filter.type = "lowpass";
-    filter.frequency.setValueAtTime(900, t);
-    filter.Q.setValueAtTime(0.7, t);
+    osc3.frequency.setValueAtTime(980, t);
+    osc3.frequency.exponentialRampToValueAtTime(540, t + 0.035);
 
-    gain.gain.setValueAtTime(0.0001, t);
-    gain.gain.exponentialRampToValueAtTime(0.028, t + 0.008);
-    gain.gain.exponentialRampToValueAtTime(0.010, t + 0.045);
-    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.16);
+    highpass.type = "highpass";
+    highpass.frequency.setValueAtTime(180, t);
 
-    osc1.connect(filter);
-    osc2.connect(filter);
-    filter.connect(gain);
-    gain.connect(ctx.destination);
+    lowpass.type = "lowpass";
+    lowpass.frequency.setValueAtTime(1350, t);
+    lowpass.Q.setValueAtTime(0.7, t);
+
+    master.gain.setValueAtTime(0.0001, t);
+    master.gain.exponentialRampToValueAtTime(0.03, t + 0.007);
+    master.gain.exponentialRampToValueAtTime(0.012, t + 0.035);
+    master.gain.exponentialRampToValueAtTime(0.0001, t + 0.14);
+
+    osc1.connect(highpass);
+    osc2.connect(highpass);
+    osc3.connect(highpass);
+    highpass.connect(lowpass);
+    lowpass.connect(master);
+    master.connect(ctx.destination);
 
     osc1.start(t);
     osc2.start(t);
-    osc1.stop(t + 0.17);
-    osc2.stop(t + 0.14);
+    osc3.start(t);
+
+    osc1.stop(t + 0.15);
+    osc2.stop(t + 0.12);
+    osc3.stop(t + 0.08);
   } catch (e) {}
 }
 
-/* TITLE WAVE */
+/* TITLE WAVE - GLOW */
 
 let titleLetters = [];
 let waveTargetIndex = null;
@@ -216,7 +270,7 @@ function applyWave(indexValue) {
 
   titleLetters.forEach((letter, index) => {
     const distance = Math.abs(index - indexValue);
-    const strength = Math.max(0, 1 - distance / 2.8);
+    const strength = Math.max(0, 1 - distance / 2.45);
     letter.style.setProperty("--wave-strength", strength.toFixed(3));
   });
 }
@@ -239,7 +293,7 @@ function animateWave() {
   if (waveCurrentIndex === null) {
     waveCurrentIndex = waveTargetIndex;
   } else {
-    waveCurrentIndex += (waveTargetIndex - waveCurrentIndex) * 0.16;
+    waveCurrentIndex += (waveTargetIndex - waveCurrentIndex) * 0.24;
   }
 
   applyWave(waveCurrentIndex);
@@ -269,7 +323,7 @@ function setWaveFromClientX(clientX) {
   waveTargetIndex = nextIndex;
   startWaveLoop();
 
-  if (previousIndex === null || Math.abs(previousIndex - nextIndex) > 0.22) {
+  if (previousIndex === null || Math.abs(previousIndex - nextIndex) > 0.14) {
     playLetterSound(1);
   }
 }
@@ -305,11 +359,19 @@ if (homeTitle) {
     waveTargetIndex = null;
     startWaveLoop();
   });
+
+  /* extra trigger for iPad */
+  homeTitle.addEventListener("touchstart", (e) => {
+    const touch = e.touches[0];
+    if (!touch) return;
+    setWaveFromClientX(touch.clientX);
+    playLetterSound(0.95);
+  }, { passive: true });
 }
 
 /* CLICK SOUND ON PANELS */
 
-function attachMetalClickToInteractivePanels() {
+function attachClickToInteractivePanels() {
   const selectors = [
     ".button-chip",
     ".panel-button",
@@ -326,22 +388,22 @@ function attachMetalClickToInteractivePanels() {
 
   panels.forEach((panel) => {
     panel.addEventListener("mousedown", () => {
-      playMetalClickSound(1);
+      playAppleClickSound(1);
     });
 
     panel.addEventListener("touchstart", () => {
-      playMetalClickSound(1);
+      playAppleClickSound(1);
     }, { passive: true });
 
     panel.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
-        playMetalClickSound(0.9);
+        playAppleClickSound(0.95);
       }
     });
   });
 }
 
-attachMetalClickToInteractivePanels();
+attachClickToInteractivePanels();
 
 /* REVEAL */
 
@@ -359,7 +421,7 @@ if ("IntersectionObserver" in window) {
   revealSections.forEach((section) => section.classList.add("is-visible"));
 }
 
-/* HERO DOCK + TITLE MOTION */
+/* HERO DOCK + SCROLL MOTION */
 
 if (homeHero && homeTitle && homeTitleDock) {
   function updateHomeHeroMotion() {
