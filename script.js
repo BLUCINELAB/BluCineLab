@@ -5,9 +5,27 @@ const homeHero = document.getElementById("homeHero");
 const heroChips = document.getElementById("heroChips");
 const heroStatement = document.getElementById("heroStatement");
 
-const hasCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
+let pointerActive = false;
+let cursorHideTimer = null;
 
-/* CURSOR + SPARKS */
+/* CURSOR HELPERS */
+
+function showCursor(x, y) {
+  if (!cursor) return;
+  cursor.style.opacity = "1";
+  cursor.style.left = `${x}px`;
+  cursor.style.top = `${y}px`;
+  pointerActive = true;
+}
+
+function fadeCursorLater(delay = 700) {
+  if (!cursor) return;
+  if (cursorHideTimer) clearTimeout(cursorHideTimer);
+  cursorHideTimer = setTimeout(() => {
+    cursor.style.opacity = "0";
+    pointerActive = false;
+  }, delay);
+}
 
 function createSparkBurst(x, y, amount = 10) {
   for (let i = 0; i < amount; i++) {
@@ -25,55 +43,221 @@ function createSparkBurst(x, y, amount = 10) {
   }
 }
 
-/* Desktop / mouse / trackpad */
-if (cursor && !hasCoarsePointer) {
-  document.addEventListener("mousemove", (e) => {
-    cursor.style.opacity = "1";
-    cursor.style.left = `${e.clientX}px`;
-    cursor.style.top = `${e.clientY}px`;
-    createSparkBurst(e.clientX, e.clientY, 8);
-  });
-}
+/* DESKTOP / TRACKPAD / MOUSE */
 
-/* iPad / touch: niente cursore persistente, solo scintille al tocco */
+document.addEventListener("mousemove", (e) => {
+  showCursor(e.clientX, e.clientY);
+  createSparkBurst(e.clientX, e.clientY, 8);
+  handleTitleWaveAtPoint(e.clientX, e.clientY);
+  fadeCursorLater(1200);
+});
+
+/* TOUCH / IPAD */
+
 document.addEventListener("touchstart", (e) => {
   const touch = e.touches[0];
   if (!touch) return;
+  showCursor(touch.clientX, touch.clientY);
   createSparkBurst(touch.clientX, touch.clientY, 14);
+  handleTitleWaveAtPoint(touch.clientX, touch.clientY);
+  fadeCursorLater(900);
 }, { passive: true });
 
 document.addEventListener("touchmove", (e) => {
   const touch = e.touches[0];
   if (!touch) return;
+  showCursor(touch.clientX, touch.clientY);
   createSparkBurst(touch.clientX, touch.clientY, 6);
+  handleTitleWaveAtPoint(touch.clientX, touch.clientY);
+  fadeCursorLater(900);
 }, { passive: true });
 
-/* TITLE WAVE */
+document.addEventListener("touchend", () => {
+  waveTargetIndex = null;
+  startWaveLoop();
+  fadeCursorLater(500);
+}, { passive: true });
 
-if (homeTitle && !hasCoarsePointer) {
-  const titleLetters = homeTitle.querySelectorAll("span");
+/* TITLE WAVE + AUDIO */
 
-  function resetWave() {
-    titleLetters.forEach((letter) => {
-      letter.style.setProperty("--wave-strength", "0");
-    });
+let titleLetters = [];
+let waveTargetIndex = null;
+let waveCurrentIndex = null;
+let waveRAF = null;
+
+let audioCtx = null;
+let audioUnlocked = false;
+let lastSoundTime = 0;
+
+if (homeTitle) {
+  titleLetters = Array.from(homeTitle.querySelectorAll("span"));
+}
+
+function ensureAudioContext() {
+  try {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    return audioCtx;
+  } catch (e) {
+    return null;
+  }
+}
+
+function unlockAudio() {
+  const ctx = ensureAudioContext();
+  if (!ctx) return;
+  if (ctx.state === "suspended") {
+    ctx.resume();
+  }
+  audioUnlocked = true;
+}
+
+document.addEventListener("click", unlockAudio, { passive: true });
+document.addEventListener("touchstart", unlockAudio, { passive: true });
+document.addEventListener("pointerdown", unlockAudio, { passive: true });
+
+function playLetterSound(intensity = 1) {
+  const now = performance.now();
+  if (now - lastSoundTime < 70) return;
+  lastSoundTime = now;
+
+  const ctx = ensureAudioContext();
+  if (!ctx || !audioUnlocked) return;
+
+  try {
+    if (ctx.state === "suspended") ctx.resume();
+
+    const oscA = ctx.createOscillator();
+    const oscB = ctx.createOscillator();
+    const gain = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+
+    oscA.type = "sine";
+    oscB.type = "triangle";
+
+    const baseA = 920 + (intensity * 60);
+    const baseB = 640 + (intensity * 40);
+
+    oscA.frequency.setValueAtTime(baseA, ctx.currentTime);
+    oscA.frequency.exponentialRampToValueAtTime(baseA * 0.74, ctx.currentTime + 0.09);
+
+    oscB.frequency.setValueAtTime(baseB, ctx.currentTime);
+    oscB.frequency.exponentialRampToValueAtTime(baseB * 0.82, ctx.currentTime + 0.09);
+
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(2400, ctx.currentTime);
+
+    gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.018, ctx.currentTime + 0.012);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.16);
+
+    oscA.connect(filter);
+    oscB.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+
+    oscA.start();
+    oscB.start();
+    oscA.stop(ctx.currentTime + 0.17);
+    oscB.stop(ctx.currentTime + 0.17);
+  } catch (e) {}
+}
+
+function applyWave(indexValue) {
+  if (!titleLetters.length || indexValue === null) return;
+
+  titleLetters.forEach((letter, index) => {
+    const distance = Math.abs(index - indexValue);
+    const strength = Math.max(0, 1 - distance / 2.6);
+    letter.style.setProperty("--wave-strength", strength.toFixed(3));
+  });
+}
+
+function clearWave() {
+  if (!titleLetters.length) return;
+  titleLetters.forEach((letter) => {
+    letter.style.setProperty("--wave-strength", "0");
+  });
+}
+
+function animateWave() {
+  if (waveTargetIndex === null) {
+    waveCurrentIndex = null;
+    clearWave();
+    waveRAF = null;
+    return;
   }
 
-  homeTitle.addEventListener("mousemove", (e) => {
-    const rect = homeTitle.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const progress = x / rect.width;
-    const activeIndex = progress * (titleLetters.length - 1);
+  if (waveCurrentIndex === null) {
+    waveCurrentIndex = waveTargetIndex;
+  } else {
+    waveCurrentIndex += (waveTargetIndex - waveCurrentIndex) * 0.18;
+  }
 
-    titleLetters.forEach((letter, index) => {
-      const distance = Math.abs(index - activeIndex);
-      const strength = Math.max(0, 1 - distance / 2.35);
-      letter.style.setProperty("--wave-strength", strength.toFixed(3));
-    });
+  applyWave(waveCurrentIndex);
+
+  if (Math.abs(waveTargetIndex - waveCurrentIndex) < 0.002) {
+    waveCurrentIndex = waveTargetIndex;
+  }
+
+  waveRAF = requestAnimationFrame(animateWave);
+}
+
+function startWaveLoop() {
+  if (!waveRAF) {
+    waveRAF = requestAnimationFrame(animateWave);
+  }
+}
+
+function setWaveFromClientX(clientX) {
+  if (!homeTitle || !titleLetters.length) return;
+
+  const rect = homeTitle.getBoundingClientRect();
+  const x = clientX - rect.left;
+  const progress = Math.max(0, Math.min(1, x / rect.width));
+  const nextIndex = progress * (titleLetters.length - 1);
+
+  const previousIndex = waveTargetIndex;
+  waveTargetIndex = nextIndex;
+  startWaveLoop();
+
+  if (previousIndex === null || Math.abs(previousIndex - nextIndex) > 0.18) {
+    playLetterSound(1);
+  }
+}
+
+function handleTitleWaveAtPoint(clientX, clientY) {
+  if (!homeTitle) return;
+  const rect = homeTitle.getBoundingClientRect();
+
+  if (
+    clientX >= rect.left &&
+    clientX <= rect.right &&
+    clientY >= rect.top &&
+    clientY <= rect.bottom
+  ) {
+    setWaveFromClientX(clientX);
+  } else {
+    waveTargetIndex = null;
+    startWaveLoop();
+  }
+}
+
+if (homeTitle) {
+  homeTitle.addEventListener("mousemove", (e) => {
+    setWaveFromClientX(e.clientX);
   });
 
-  homeTitle.addEventListener("mouseleave", resetWave);
-  resetWave();
+  homeTitle.addEventListener("mouseenter", (e) => {
+    setWaveFromClientX(e.clientX);
+    playLetterSound(0.9);
+  });
+
+  homeTitle.addEventListener("mouseleave", () => {
+    waveTargetIndex = null;
+    startWaveLoop();
+  });
 }
 
 /* REVEAL */
@@ -94,7 +278,7 @@ if ("IntersectionObserver" in window) {
 
 /* HERO DOCK */
 
-if (homeHero && homeTitle && homeTitleDock && !hasCoarsePointer) {
+if (homeHero && homeTitle && homeTitleDock) {
   function updateHomeHeroMotion() {
     const scrollY = window.scrollY || window.pageYOffset || 0;
     const limit = window.innerHeight * 0.55;
