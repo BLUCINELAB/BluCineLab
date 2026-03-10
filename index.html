@@ -9,9 +9,8 @@
     content="BluCineLab — laboratorio visivo tra cinema, spazio, identità, direzione artistica e ambienti digitali."
   />
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 </head>
-
 <body class="page-home">
   <div class="background">
     <canvas id="bgCanvas"></canvas>
@@ -36,86 +35,78 @@
 
   <header class="home-hero" id="homeHero">
     <div class="home-hero-inner">
-      <div class="home-copy">
-        <div class="eyebrow hero-eyebrow">BLUCINELAB / IMAGE / SPACE / DIRECTION</div>
+      <div class="hero-eyebrow">BLUCINELAB / IMAGE / SPACE / DIRECTION</div>
 
-        <div class="home-title-clip">
-          <h1 class="title home-title title-wave" id="homeTitle" aria-label="BLUCINELAB">
-            <span data-index="0">B</span>
-            <span data-index="1">L</span>
-            <span data-index="2">U</span>
-            <span data-index="3">C</span>
-            <span data-index="4">I</span>
-            <span data-index="5">N</span>
-            <span data-index="6">E</span>
-            <span data-index="7">L</span>
-            <span data-index="8">A</span>
-            <span data-index="9">B</span>
-          </h1>
-        </div>
-
-        <div class="home-actions hero-chips" id="heroChips">
-          <a href="archive.html" class="button-chip">
-            <span class="chip-title">ARCHIVE</span>
-            <span class="chip-meta">works / catalogue</span>
-          </a>
-
-          <a href="studio.html" class="button-chip">
-            <span class="chip-title">STUDIO</span>
-            <span class="chip-meta">identity / method</span>
-          </a>
-
-          <a href="contact.html" class="button-chip">
-            <span class="chip-title">CONTACT</span>
-            <span class="chip-meta">collaborations / access</span>
-          </a>
-
-          <a href="#manifesto" class="button-chip">
-            <span class="chip-title">MANIFESTO</span>
-            <span class="chip-meta">position / statement</span>
-          </a>
-
-          <a href="#fields" class="button-chip">
-            <span class="chip-title">FIELDS</span>
-            <span class="chip-meta">image / space / digital</span>
-          </a>
-        </div>
-
-        <aside class="home-side-panel hero-statement" id="heroStatement">
-          <div class="panel-label">STATEMENT</div>
-          <p>
-            BluCineLab è una struttura visiva indipendente che lavora tra cinema,
-            spazio, identità, direzione artistica e ambienti digitali.
-            Ogni progetto viene costruito come un sistema coerente:
-            immagine, atmosfera, gerarchia, materia e presenza devono parlare la stessa lingua.
-          </p>
-        </aside>
+      <div class="home-title-clip">
+        <h1 class="title home-title title-wave" id="homeTitle" aria-label="BLUCINELAB">
+          <span data-index="0">B</span>
+          <span data-index="1">L</span>
+          <span data-index="2">U</span>
+          <span data-index="3">C</span>
+          <span data-index="4">I</span>
+          <span data-index="5">N</span>
+          <span data-index="6">E</span>
+          <span data-index="7">L</span>
+          <span data-index="8">A</span>
+          <span data-index="9">B</span>
+        </h1>
       </div>
+
+      <div class="hero-chips" id="heroChips">
+        <a href="archive.html" class="button-chip panel-button">
+          <span class="chip-title">ARCHIVE</span>
+          <span class="chip-meta">works / catalogue</span>
+        </a>
+        <a href="studio.html" class="button-chip panel-button">
+          <span class="chip-title">STUDIO</span>
+          <span class="chip-meta">identity / method</span>
+        </a>
+        <a href="contact.html" class="button-chip panel-button">
+          <span class="chip-title">CONTACT</span>
+          <span class="chip-meta">collaborations / access</span>
+        </a>
+        <a href="#manifesto" class="button-chip panel-button">
+          <span class="chip-title">MANIFESTO</span>
+          <span class="chip-meta">position / statement</span>
+        </a>
+        <a href="#fields" class="button-chip panel-button">
+          <span class="chip-title">FIELDS</span>
+          <span class="chip-meta">image / space / digital</span>
+        </a>
+      </div>
+
+      <aside class="hero-statement panel-button" id="heroStatement">
+        <div class="panel-label">STATEMENT</div>
+        <p>
+          BluCineLab è una struttura visiva indipendente che lavora tra cinema, spazio,
+          identità, direzione artistica e ambienti digitali. Ogni progetto viene costruito
+          come un sistema coerente: immagine, atmosfera, gerarchia, materia e presenza
+          devono parlare la stessa lingua.
+        </p>
+      </aside>
     </div>
   </header>
 
-  <main class="home-main">
-    <section class="section reveal-section manifesto-section" id="manifesto">
+  <main class="main-shell">
+    <section class="section manifesto-section reveal-section" id="manifesto">
       <div class="manifesto-block panel-button">
-        <div class="manifesto-kicker">MANIFESTO</div>
+        <div class="panel-label">MANIFESTO</div>
 
         <div class="manifesto-layout">
           <h2>
-            NON UNA VETRINA GENERICA. UN AMBIENTE EDITORIALE
-            CHE ORGANIZZA IMMAGINI, SPAZI E DIREZIONE
-            IN UN LINGUAGGIO UNICO.
+            NON UNA VETRINA GENERICA. UN AMBIENTE EDITORIALE CHE ORGANIZZA
+            IMMAGINI, SPAZI E DIREZIONE IN UN LINGUAGGIO UNICO.
           </h2>
 
           <p>
-            Il lavoro si muove tra ricerca visiva, costruzione di atmosfera,
-            sistemi di identità e ambienti digitali.
-            La forma non decora: orienta, tiene insieme, rende leggibile.
+            Il lavoro si muove tra ricerca visiva, costruzione di atmosfera, sistemi di identità
+            e ambienti digitali. La forma non decora: orienta, tiene insieme, rende leggibile.
           </p>
         </div>
       </div>
     </section>
 
-    <section class="section reveal-section reveal-stagger featured-section">
+    <section class="section reveal-section">
       <div class="section-head">
         <div class="section-kicker">SELECTED ACCESS</div>
         <h2>DUE SOGLIE PRINCIPALI</h2>
@@ -123,23 +114,23 @@
       </div>
 
       <div class="featured-grid">
-        <a href="archive.html" class="featured-card panel-button reveal-item">
+        <a href="archive.html" class="featured-card panel-button">
           <div class="featured-media">
             <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1600&auto=format&fit=crop" alt="Archive" />
           </div>
           <div class="featured-body">
-            <div class="cardKicker">ARCHIVE</div>
+            <div class="card-kicker">ARCHIVE</div>
             <h3>CATALOGO LAVORI</h3>
             <p>Progetti, documentazione, collaborazioni e materiali organizzati come archivio curatoriale.</p>
           </div>
         </a>
 
-        <a href="studio.html" class="featured-card panel-button reveal-item">
+        <a href="studio.html" class="featured-card panel-button">
           <div class="featured-media">
             <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600&auto=format&fit=crop" alt="Studio" />
           </div>
           <div class="featured-body">
-            <div class="cardKicker">STUDIO</div>
+            <div class="card-kicker">STUDIO</div>
             <h3>IDENTITÀ E METODO</h3>
             <p>Posizione, campi di lavoro e logica operativa con cui le forme prendono struttura.</p>
           </div>
@@ -147,7 +138,7 @@
       </div>
     </section>
 
-    <section class="section reveal-section reveal-stagger" id="fields">
+    <section class="section reveal-section" id="fields">
       <div class="section-head">
         <div class="section-kicker">FIELDS</div>
         <h2>MAPPA DEI CAMPI</h2>
@@ -155,47 +146,33 @@
       </div>
 
       <div class="cluster-grid">
-        <article class="cluster-card panel-button reveal-item">
-          <div class="cluster-label">IMAGE</div>
-          <div class="cluster-title">CINEMA / SET</div>
-          <div class="cluster-text">Scena, atmosfera, materia e costruzione visiva del racconto.</div>
+        <article class="cluster-card panel-button">
+          <div class="panel-label">IMAGE</div>
+          <h3>CINEMA / SET</h3>
+          <p>Scena, atmosfera, materia e costruzione visiva del racconto.</p>
         </article>
 
-        <article class="cluster-card panel-button reveal-item">
-          <div class="cluster-label">IDENTITY</div>
-          <div class="cluster-title">SISTEMI VISIVI</div>
-          <div class="cluster-text">Identità, direzione, struttura grafica e coerenza formale.</div>
+        <article class="cluster-card panel-button">
+          <div class="panel-label">IDENTITY</div>
+          <h3>SISTEMI VISIVI</h3>
+          <p>Identità, direzione, struttura grafica e coerenza formale.</p>
         </article>
 
-        <article class="cluster-card panel-button reveal-item">
-          <div class="cluster-label">SPATIAL</div>
-          <div class="cluster-title">EVENTI / SPAZIO</div>
-          <div class="cluster-text">Allestimenti, installazioni, mostre e ambienti temporanei.</div>
+        <article class="cluster-card panel-button">
+          <div class="panel-label">SPATIAL</div>
+          <h3>EVENTI / SPAZIO</h3>
+          <p>Allestimenti, installazioni, mostre e ambienti temporanei.</p>
         </article>
 
-        <article class="cluster-card panel-button reveal-item">
-          <div class="cluster-label">DIGITAL</div>
-          <div class="cluster-title">AMBIENTI WEB</div>
-          <div class="cluster-text">Showcase, front-end e presenza digitale con taglio editoriale.</div>
+        <article class="cluster-card panel-button">
+          <div class="panel-label">DIGITAL</div>
+          <h3>AMBIENTI WEB</h3>
+          <p>Showcase, front-end e presenza digitale con taglio editoriale.</p>
         </article>
       </div>
     </section>
 
-    <section class="section reveal-section reveal-stagger footer-cta-section">
-      <div class="footer-cta panel-button reveal-item">
-        <div class="footer-cta-kicker">NEXT STEP</div>
-        <h2>ARCHIVE, STUDIO, CONTACT.</h2>
-        <p>Tre ingressi, un solo linguaggio.</p>
-
-        <div class="footer-cta-links">
-          <a href="archive.html" class="text-link">ARCHIVE</a>
-          <a href="studio.html" class="text-link">STUDIO</a>
-          <a href="contact.html" class="text-link">CONTACT</a>
-        </div>
-      </div>
-    </section>
-
-    <div class="archive-footer-space"></div>
+    <div class="bottom-space"></div>
   </main>
 
   <script src="script.js"></script>
