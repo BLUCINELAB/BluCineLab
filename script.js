@@ -359,7 +359,7 @@ if ("IntersectionObserver" in window) {
   revealSections.forEach((section) => section.classList.add("is-visible"));
 }
 
-/* HERO DOCK */
+/* HERO DOCK + TITLE MOTION */
 
 if (homeHero && homeTitle && homeTitleDock) {
   function updateHomeHeroMotion() {
@@ -368,7 +368,7 @@ if (homeHero && homeTitle && homeTitleDock) {
     const progress = Math.min(scrollY / limit, 1);
 
     const titleScale = 1 - progress * 0.14;
-    const titleY = progress * -68;
+    const titleY = (progress * -68) - (progress * 14);
     const titleOpacity = 1 - progress * 0.34;
 
     homeTitle.style.transform = `translateY(${titleY}px) scale(${titleScale})`;
