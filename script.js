@@ -4,6 +4,7 @@ const homeTitleDock = document.getElementById("homeTitleDock");
 const homeHero = document.getElementById("homeHero");
 const heroChips = document.getElementById("heroChips");
 const heroStatement = document.getElementById("heroStatement");
+const pageProgressFill = document.querySelector(".page-progress-fill");
 
 let cursorHideTimer = null;
 
@@ -119,7 +120,6 @@ async function unlockAudio() {
   } catch (e) {}
 }
 
-/* iPad-safe unlock */
 ["pointerdown", "touchstart", "touchend", "click"].forEach((eventName) => {
   document.addEventListener(eventName, unlockAudio, { passive: true });
 });
@@ -360,7 +360,6 @@ if (homeTitle) {
     startWaveLoop();
   });
 
-  /* extra trigger for iPad */
   homeTitle.addEventListener("touchstart", (e) => {
     const touch = e.touches[0];
     if (!touch) return;
@@ -381,7 +380,15 @@ function attachClickToInteractivePanels() {
     ".cluster-card",
     ".project-card",
     ".archive-panel",
-    ".hero-project"
+    ".hero-project",
+    ".project-hero",
+    ".project-meta-card",
+    ".project-text-card",
+    ".project-footer-card",
+    ".back-link",
+    ".project-gallery-card",
+    ".project-sticky-card",
+    ".related-project-card"
   ];
 
   const panels = document.querySelectorAll(selectors.join(","));
@@ -456,6 +463,22 @@ if (homeHero && homeTitle && homeTitleDock) {
   updateHomeHeroMotion();
   window.addEventListener("scroll", updateHomeHeroMotion, { passive: true });
 }
+
+/* PAGE PROGRESS */
+
+function updatePageProgress() {
+  if (!pageProgressFill) return;
+
+  const scrollTop = window.scrollY || window.pageYOffset;
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = maxScroll > 0 ? (scrollTop / maxScroll) * 100 : 0;
+
+  pageProgressFill.style.height = `${Math.min(100, Math.max(0, progress))}%`;
+}
+
+updatePageProgress();
+window.addEventListener("scroll", updatePageProgress, { passive: true });
+window.addEventListener("resize", updatePageProgress);
 
 /* BACKGROUND CANVAS */
 
