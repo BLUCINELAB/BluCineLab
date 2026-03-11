@@ -46,6 +46,7 @@ a{
 img{
   display:block;
   width:100%;
+  max-width:100%;
 }
 
 /* BACKGROUND */
@@ -200,7 +201,10 @@ img{
 .project-text-card h2,
 .project-footer-card h2,
 .project-sticky-card h3,
-.related-projects-head h2{
+.related-projects-head h2,
+.service-card h3,
+.contact-card h3,
+.studio-card h3{
   font-family:Oswald,sans-serif;
   text-transform:uppercase;
   letter-spacing:.08em;
@@ -223,7 +227,8 @@ p,
 .project-footer-card p,
 .related-project-card p,
 .contact-card p,
-.studio-card p{
+.studio-card p,
+.service-card p{
   font-family:Inter,sans-serif;
   text-transform:none;
 }
@@ -288,6 +293,7 @@ p,
   color:#fff;
   font-size:11px;
   position:relative;
+  white-space:nowrap;
 }
 
 .nav a::after{
@@ -372,7 +378,8 @@ p,
 .related-project-card,
 .back-link,
 .contact-card,
-.studio-card{
+.studio-card,
+.service-card{
   position:relative;
   overflow:hidden;
   border:1px solid var(--panel-line);
@@ -405,7 +412,8 @@ p,
 .related-project-card::before,
 .back-link::before,
 .contact-card::before,
-.studio-card::before{
+.studio-card::before,
+.service-card::before{
   content:"";
   position:absolute;
   inset:0;
@@ -440,7 +448,8 @@ p,
 .related-project-card:hover::before,
 .back-link:hover::before,
 .contact-card:hover::before,
-.studio-card:hover::before{
+.studio-card:hover::before,
+.service-card:hover::before{
   transform:translateX(130%);
 }
 
@@ -461,7 +470,8 @@ p,
 .related-project-card:hover,
 .back-link:hover,
 .contact-card:hover,
-.studio-card:hover{
+.studio-card:hover,
+.service-card:hover{
   border-color:var(--panel-line-strong);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.12),
@@ -487,7 +497,8 @@ p,
 .related-project-card:active,
 .back-link:active,
 .contact-card:active,
-.studio-card:active{
+.studio-card:active,
+.service-card:active{
   transform:translateY(2px) scale(.992);
 }
 
@@ -545,7 +556,8 @@ p,
 .project-footer-card p,
 .related-project-card p,
 .contact-card p,
-.studio-card p{
+.studio-card p,
+.service-card p{
   line-height:1.72;
   color:var(--text-soft);
   font-size:.89rem;
@@ -599,11 +611,11 @@ body.page-home .main-shell{
   width:auto;
   max-width:none;
   overflow:visible;
-  font-size:clamp(9rem,26vw,30rem);
-  line-height:.78;
+  font-size:clamp(8rem,24vw,26rem);
+  line-height:.80;
   letter-spacing:.01em;
   margin:0 auto;
-  padding-right:.06em;
+  padding-right:.04em;
 }
 
 .hero-chips{
@@ -644,7 +656,7 @@ body.page-home .main-shell{
 }
 
 .hero-statement{
-  width:min(900px,100%);
+  width:min(920px,100%);
   margin:26px auto 0;
   text-align:center;
   padding:24px;
@@ -699,10 +711,6 @@ body.page-home .main-shell{
 .cluster-card{
   padding:22px 20px 20px;
   min-height:200px;
-}
-
-.bottom-space{
-  height:110px;
 }
 
 /* ARCHIVE + GENERIC HERO */
@@ -790,16 +798,29 @@ body.page-home .main-shell{
 /* STUDIO / CONTACT */
 
 .studio-grid,
-.contact-grid{
+.contact-grid,
+.services-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:22px;
 }
 
 .studio-card,
-.contact-card{
+.contact-card,
+.service-card{
   padding:26px;
   min-height:220px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+}
+
+.studio-card h3,
+.contact-card h3,
+.service-card h3{
+  font-size:clamp(1.05rem,1.3vw,1.35rem);
+  line-height:1.1;
+  margin-bottom:12px;
 }
 
 .contact-list{
@@ -1015,7 +1036,17 @@ body.page-home .main-shell{
   padding:28px;
 }
 
+.bottom-space{
+  height:110px;
+}
+
 /* RESPONSIVE */
+
+@media (max-width:1180px){
+  .home-title{
+    font-size:clamp(7rem,20vw,18rem);
+  }
+}
 
 @media (max-width:1100px){
   .manifesto-layout,
@@ -1026,7 +1057,8 @@ body.page-home .main-shell{
   .project-text-grid,
   .project-detail-grid,
   .studio-grid,
-  .contact-grid{
+  .contact-grid,
+  .services-grid{
     grid-template-columns:1fr;
   }
 
@@ -1084,9 +1116,9 @@ body.page-home .main-shell{
   }
 
   .home-title{
-    font-size:clamp(4.9rem,23vw,9rem);
+    font-size:clamp(4.8rem,22vw,8.5rem);
     line-height:.84;
-    padding-right:.08em;
+    padding-right:.04em;
   }
 
   .archive-title{
@@ -1150,7 +1182,34 @@ body.page-home .main-shell{
 
   .project-text-card,
   .studio-card,
-  .contact-card{
+  .contact-card,
+  .service-card{
     min-height:auto;
+  }
+}
+
+@media (max-width:540px){
+  .nav a{
+    font-size:10px;
+  }
+
+  .hero-statement,
+  .manifesto-block,
+  .archive-panel,
+  .studio-card,
+  .contact-card,
+  .service-card,
+  .project-meta-card,
+  .project-text-card,
+  .project-sticky-card{
+    padding:20px;
+  }
+
+  .section-head h2,
+  .manifesto-block h2,
+  .project-text-card h2,
+  .project-footer-card h2,
+  .related-projects-head h2{
+    font-size:clamp(1.5rem,7vw,2rem);
   }
 }
