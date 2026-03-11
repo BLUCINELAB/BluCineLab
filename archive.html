@@ -1,109 +1,415 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BLUCINE — ARCHIVE</title>
-  <meta name="description" content="Archivio lavori BluCine." />
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Archive — Blucine</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
 </head>
-<body class="page-archive">
-  <div class="background">
-    <canvas id="bgCanvas"></canvas>
-    <div class="background-noise"></div>
-    <div class="background-vignette"></div>
-  </div>
 
-  <div class="cursor"></div>
+<body>
 
-  <nav class="nav">
-    <a href="index.html">HOME</a>
-    <a href="archive.html" class="is-active">ARCHIVE</a>
-    <a href="studio.html">STUDIO</a>
-    <a href="contact.html">CONTACT</a>
-  </nav>
+<div class="background">
 
-  <header class="archive-hero">
-    <div class="archive-hero-inner">
-      <div class="archive-copy">
-        <div class="hero-eyebrow">BLUCINE / WORKS / CATALOGUE</div>
+<canvas id="bgCanvas"></canvas>
 
-        <h1 class="title archive-title">
-          <span>A</span><span>R</span><span>C</span><span>H</span><span>I</span><span>V</span><span>E</span>
-        </h1>
+<div class="background-noise"></div>
 
-        <p class="archive-intro">
-          Archivio in crescita di lavori, collaborazioni e sistemi visivi.
-          Una struttura pensata per ospitare progetti reali, immagini, contesti e descrizioni brevi.
-        </p>
-      </div>
+<div class="background-vignette"></div>
 
-      <aside class="archive-panel panel-button">
-        <div class="panel-label">ARCHIVE</div>
-        <p>Un catalogo leggibile, denso e ordinato: cluster chiari, card consistenti e continuità visiva.</p>
-      </aside>
-    </div>
-  </header>
+</div>
 
-  <main class="main-shell">
-    <section class="section reveal-section">
-      <div class="section-head">
-        <div class="section-kicker">CLUSTER</div>
-        <h2>IDENTITY / DIRECTION</h2>
-        <p>Qui il blocco passa a scorrimento orizzontale invece di spezzarsi male su più righe.</p>
-      </div>
 
-      <div class="projects-rail">
-        <article class="project-card panel-button">
-          <div class="project-media">
-            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1400&auto=format&fit=crop" alt="Identity project" />
-          </div>
-          <div class="project-body">
-            <div class="card-kicker">IDENTITY</div>
-            <h3>PROJECT PLACEHOLDER</h3>
-            <p>Spazio pronto per brand identity, visual systems e direzione della presenza visiva.</p>
-          </div>
-        </article>
+<div class="cursor"></div>
 
-        <article class="project-card panel-button">
-          <div class="project-media">
-            <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1400&auto=format&fit=crop" alt="Editorial direction" />
-          </div>
-          <div class="project-body">
-            <div class="card-kicker">GRAPHIC SYSTEM</div>
-            <h3>PROJECT PLACEHOLDER</h3>
-            <p>Campagne, coordinati e strutture di progetto pensate come sistemi unitari.</p>
-          </div>
-        </article>
 
-        <article class="project-card panel-button">
-          <div class="project-media">
-            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1400&auto=format&fit=crop" alt="Design system" />
-          </div>
-          <div class="project-body">
-            <div class="card-kicker">DIRECTION</div>
-            <h3>PROJECT PLACEHOLDER</h3>
-            <p>Card aggiuntiva per dare densità, ritmo e continuità al sistema archivio.</p>
-          </div>
-        </article>
+<nav class="nav">
 
-        <article class="project-card panel-button">
-          <div class="project-media">
-            <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1400&auto=format&fit=crop" alt="Art direction project" />
-          </div>
-          <div class="project-body">
-            <div class="card-kicker">ART DIRECTION</div>
-            <h3>PROJECT PLACEHOLDER</h3>
-            <p>Quarta card per dare più densità visiva e più massa alla pagina archive.</p>
-          </div>
-        </article>
-      </div>
-    </section>
+<a href="index.html">Home</a>
+<a href="archive.html" class="is-active">Archive</a>
+<a href="studio.html">Studio</a>
+<a href="contact.html">Contact</a>
 
-    <div class="bottom-space"></div>
-  </main>
+</nav>
 
-  <script src="script.js"></script>
+
+<section class="archive-hero">
+
+<div class="archive-hero-inner">
+
+<div>
+
+<div class="hero-eyebrow">
+Selected works
+</div>
+
+<h1 class="archive-title title-wave">
+
+<span>A</span>
+<span>R</span>
+<span>C</span>
+<span>H</span>
+<span>I</span>
+<span>V</span>
+<span>E</span>
+
+</h1>
+
+</div>
+
+
+<div class="archive-intro">
+
+<p>
+
+Selected projects across identity, spatial work, exhibitions and digital systems.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<main class="main-shell">
+
+
+<!-- IDENTITY -->
+
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-kicker">
+Cluster
+</div>
+
+<h2>
+Identity
+</h2>
+
+<p>
+
+Visual systems and brand identities developed for cultural and commercial contexts.
+
+</p>
+
+</div>
+
+
+<div class="projects-rail">
+
+
+<article class="project-card">
+
+<div class="project-media">
+
+<img src="https://picsum.photos/900/700?random=1">
+
+</div>
+
+<div class="project-body">
+
+<div class="card-kicker">
+Brand System
+</div>
+
+<h3>
+Part X Studio
+</h3>
+
+<p>
+Identity development and catalog design.
+</p>
+
+</div>
+
+</article>
+
+
+
+<article class="project-card">
+
+<div class="project-media">
+
+<img src="https://picsum.photos/900/700?random=2">
+
+</div>
+
+<div class="project-body">
+
+<div class="card-kicker">
+Brand Identity
+</div>
+
+<h3>
+Stand-Up Comedy Bologna
+</h3>
+
+<p>
+Visual identity and communication system.
+</p>
+
+</div>
+
+</article>
+
+
+
+<article class="project-card">
+
+<div class="project-media">
+
+<img src="https://picsum.photos/900/700?random=3">
+
+</div>
+
+<div class="project-body">
+
+<div class="card-kicker">
+Visual System
+</div>
+
+<h3>
+ICNN
+</h3>
+
+<p>
+Open day identity and communication design.
+</p>
+
+</div>
+
+</article>
+
+
+</div>
+
+</section>
+
+
+<!-- SPATIAL -->
+
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-kicker">
+Cluster
+</div>
+
+<h2>
+Spatial
+</h2>
+
+<p>
+
+Scenography, exhibition design and spatial storytelling.
+
+</p>
+
+</div>
+
+
+<div class="projects-rail">
+
+
+<article class="project-card">
+
+<div class="project-media">
+
+<img src="https://picsum.photos/900/700?random=4">
+
+</div>
+
+<div class="project-body">
+
+<div class="card-kicker">
+Exhibition
+</div>
+
+<h3>
+Marco Glaviano
+</h3>
+
+<p>
+Exhibition design at Palazzo Vassé.
+</p>
+
+</div>
+
+</article>
+
+
+
+<article class="project-card">
+
+<div class="project-media">
+
+<img src="https://picsum.photos/900/700?random=5">
+
+</div>
+
+<div class="project-body">
+
+<div class="card-kicker">
+Scenography
+</div>
+
+<h3>
+Short Film
+</h3>
+
+<p>
+Set design for independent cinema.
+</p>
+
+</div>
+
+</article>
+
+</div>
+
+</section>
+
+
+<!-- DIGITAL -->
+
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-kicker">
+Cluster
+</div>
+
+<h2>
+Digital
+</h2>
+
+<p>
+
+Web design, motion interfaces and digital visual systems.
+
+</p>
+
+</div>
+
+
+<div class="projects-rail">
+
+
+<article class="project-card">
+
+<div class="project-media">
+
+<img src="https://picsum.photos/900/700?random=6">
+
+</div>
+
+<div class="project-body">
+
+<div class="card-kicker">
+Web
+</div>
+
+<h3>
+Blucine
+</h3>
+
+<p>
+Experimental visual portfolio.
+</p>
+
+</div>
+
+</article>
+
+</div>
+
+</section>
+
+
+<!-- DIRECTION -->
+
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-kicker">
+Cluster
+</div>
+
+<h2>
+Direction
+</h2>
+
+<p>
+
+Art direction and visual research across media.
+
+</p>
+
+</div>
+
+
+<div class="projects-rail">
+
+
+<article class="project-card">
+
+<div class="project-media">
+
+<img src="https://picsum.photos/900/700?random=7">
+
+</div>
+
+<div class="project-body">
+
+<div class="card-kicker">
+Art Direction
+</div>
+
+<h3>
+Cardo
+</h3>
+
+<p>
+Visual direction for music video production.
+</p>
+
+</div>
+
+</article>
+
+</div>
+
+</section>
+
+
+<div class="bottom-space"></div>
+
+</main>
+
+
+<script src="script.js"></script>
+
 </body>
+
 </html>
