@@ -8,7 +8,7 @@ const pageProgressFill = document.querySelector(".page-progress-fill");
 
 let cursorHideTimer = null;
 
-/* CURSOR HELPERS */
+/* CURSOR */
 
 function showCursor(x, y) {
   if (!cursor) return;
@@ -36,12 +36,10 @@ function createSparkBurst(x, y, amount = 10) {
     document.body.appendChild(spark);
 
     setTimeout(() => {
-      if (spark.parentNode) spark.parentNode.removeChild(spark);
+      spark.remove();
     }, 900);
   }
 }
-
-/* POINTER */
 
 document.addEventListener("mousemove", (e) => {
   showCursor(e.clientX, e.clientY);
@@ -74,7 +72,7 @@ document.addEventListener("touchend", () => {
   fadeCursorLater(500);
 }, { passive: true });
 
-/* AUDIO ENGINE */
+/* AUDIO */
 
 let audioCtx = null;
 let audioUnlocked = false;
@@ -123,8 +121,6 @@ async function unlockAudio() {
 ["pointerdown", "touchstart", "touchend", "click"].forEach((eventName) => {
   document.addEventListener(eventName, unlockAudio, { passive: true });
 });
-
-/* SOUNDS */
 
 function playLetterSound(intensity = 1) {
   const now = performance.now();
@@ -254,7 +250,7 @@ function playAppleClickSound(strength = 1) {
   } catch (e) {}
 }
 
-/* TITLE WAVE - GLOW */
+/* TITLE GLOW */
 
 let titleLetters = [];
 let waveTargetIndex = null;
@@ -368,7 +364,7 @@ if (homeTitle) {
   }, { passive: true });
 }
 
-/* CLICK SOUND ON PANELS */
+/* CLICK SOUND */
 
 function attachClickToInteractivePanels() {
   const selectors = [
@@ -380,15 +376,16 @@ function attachClickToInteractivePanels() {
     ".cluster-card",
     ".project-card",
     ".archive-panel",
-    ".hero-project",
     ".project-hero",
     ".project-meta-card",
     ".project-text-card",
+    ".project-sticky-card",
     ".project-footer-card",
     ".back-link",
     ".project-gallery-card",
-    ".project-sticky-card",
-    ".related-project-card"
+    ".related-project-card",
+    ".contact-card",
+    ".studio-card"
   ];
 
   const panels = document.querySelectorAll(selectors.join(","));
@@ -428,7 +425,7 @@ if ("IntersectionObserver" in window) {
   revealSections.forEach((section) => section.classList.add("is-visible"));
 }
 
-/* HERO DOCK + SCROLL MOTION */
+/* HOME SCROLL */
 
 if (homeHero && homeTitle && homeTitleDock) {
   function updateHomeHeroMotion() {
@@ -480,7 +477,7 @@ updatePageProgress();
 window.addEventListener("scroll", updatePageProgress, { passive: true });
 window.addEventListener("resize", updatePageProgress);
 
-/* BACKGROUND CANVAS */
+/* BG CANVAS */
 
 const canvas = document.getElementById("bgCanvas");
 
