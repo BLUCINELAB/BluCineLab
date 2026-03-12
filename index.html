@@ -4,15 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BLUCINE</title>
-
+  <meta
+    name="description"
+    content="Blucine — visual structure working across image, space, direction, web design and visual identity."
+  />
   <link rel="stylesheet" href="style.css" />
-
   <link
     href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap"
     rel="stylesheet"
   />
 </head>
-
 <body class="page-home">
 
 <div class="background">
@@ -27,14 +28,17 @@
   <a href="index.html" class="is-active">HOME</a>
   <a href="archive.html">ARCHIVE</a>
   <a href="studio.html">STUDIO</a>
+  <a href="lab.html">LAB</a>
   <a href="contact.html">CONTACT</a>
 </nav>
 
-
-<!-- HERO -->
+<div class="home-title-dock" id="homeTitleDock" aria-hidden="true">
+  <div class="home-title-dock-inner">
+    <div class="dock-wordmark">BLUCINE</div>
+  </div>
+</div>
 
 <header class="home-hero" id="homeHero">
-
   <div class="home-hero-inner">
 
     <div class="hero-eyebrow">
@@ -42,24 +46,12 @@
     </div>
 
     <div class="home-title-wrap">
-
-      <h1 class="title home-title title-wave" id="homeTitle">
-
-        <span>B</span>
-        <span>L</span>
-        <span>U</span>
-        <span>C</span>
-        <span>I</span>
-        <span>N</span>
-        <span>E</span>
-
+      <h1 class="title home-title title-wave" id="homeTitle" aria-label="BLUCINE">
+        <span>B</span><span>L</span><span>U</span><span>C</span><span>I</span><span>N</span><span>E</span>
       </h1>
-
     </div>
 
-
     <div class="hero-chips">
-
       <a href="archive.html" class="button-chip panel-button">
         <span class="chip-title">ARCHIVE</span>
         <span class="chip-meta">selected works / case studies</span>
@@ -70,399 +62,55 @@
         <span class="chip-meta">method / services / positioning</span>
       </a>
 
+      <a href="lab.html" class="button-chip panel-button">
+        <span class="chip-title">LAB</span>
+        <span class="chip-meta">materials / fragments / process</span>
+      </a>
+
       <a href="contact.html" class="button-chip panel-button">
         <span class="chip-title">CONTACT</span>
         <span class="chip-meta">access / collaborations</span>
       </a>
-
     </div>
 
-
     <aside class="hero-statement panel-button">
-
-      <div class="panel-label">
-        STATEMENT
-      </div>
-
+      <div class="panel-label">STATEMENT</div>
       <p>
         Blucine works where image, space and direction become one system.
         The goal is not decoration, but coherence:
         hierarchy, atmosphere and rhythm aligned in one visual language.
       </p>
-
     </aside>
 
   </div>
-
 </header>
-
-
 
 <main class="main-shell">
 
+  <section class="section manifesto-section reveal-section">
+    <div class="manifesto-block panel-button">
+      <div class="panel-label">POSITION</div>
 
-<!-- ===================== -->
-<!-- SELECTED WORKS -->
-<!-- ===================== -->
+      <div class="manifesto-layout">
+        <h2>
+          NOT A GENERIC PORTFOLIO. AN EDITORIAL ENVIRONMENT FOR PROJECTS, BRANDS AND VISUAL DIRECTION.
+        </h2>
 
-<section class="section reveal-section">
+        <p>
+          The site is organised as a selective sequence rather than a feed.
+          Fewer elements, stronger hierarchy, better rhythm across desktop, iPad and phone.
+        </p>
+      </div>
+    </div>
+  </section>
 
-  <div class="section-head">
-
-    <div class="section-kicker">
-      SELECTED WORKS
+  <section class="section reveal-section">
+    <div class="section-head">
+      <div class="section-kicker">SELECTED WORKS</div>
+      <h2>THREE CURRENT CASE STUDIES</h2>
+      <p>Three entry points that describe the studio better than a generic overview.</p>
     </div>
 
-    <h2>
-      CURRENT CASE STUDIES
-    </h2>
-
-    <p>
-      Few projects, strong structure, clear direction.
-    </p>
-
-  </div>
-
-
-  <div class="selected-grid">
-
-
-    <a href="project-exhibition.html" class="featured-card panel-button">
-
-      <div class="featured-media">
-        <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1600&auto=format&fit=crop">
-      </div>
-
-      <div class="featured-body">
-
-        <div class="card-kicker">
-          CONFIDENTIAL / EXHIBITION
-        </div>
-
-        <h3>
-          DISPLAY SYSTEM
-        </h3>
-
-        <p>
-          Spatial pacing, image relation and atmosphere.
-        </p>
-
-      </div>
-
-    </a>
-
-
-
-    <a href="project-installation.html" class="featured-card panel-button">
-
-      <div class="featured-media">
-        <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1600&auto=format&fit=crop">
-      </div>
-
-      <div class="featured-body">
-
-        <div class="card-kicker">
-          CONFIDENTIAL / INSTALLATION
-        </div>
-
-        <h3>
-          SPATIAL OBJECT
-        </h3>
-
-        <p>
-          Large-scale gesture designed for presence.
-        </p>
-
-      </div>
-
-    </a>
-
-
-
-    <a href="project-direction.html" class="featured-card panel-button">
-
-      <div class="featured-media">
-        <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1600&auto=format&fit=crop">
-      </div>
-
-      <div class="featured-body">
-
-        <div class="card-kicker">
-          CONFIDENTIAL / DIRECTION
-        </div>
-
-        <h3>
-          IMAGE FRAMEWORK
-        </h3>
-
-        <p>
-          Tone, continuity and visual logic.
-        </p>
-
-      </div>
-
-    </a>
-
-
-  </div>
-
-</section>
-
-
-
-<!-- ===================== -->
-<!-- CORE AREAS -->
-<!-- ===================== -->
-
-<section class="section reveal-section">
-
-  <div class="section-head">
-
-    <div class="section-kicker">
-      FIELDS
-    </div>
-
-    <h2>
-      CORE AREAS
-    </h2>
-
-    <p>
-      Web, identity, space and direction.
-    </p>
-
-  </div>
-
-
-  <div class="cluster-grid">
-
-
-    <article class="cluster-card panel-button">
-      <div class="panel-label">WEB</div>
-      <h3>WEB DESIGN</h3>
-      <p>Editorial websites and front-end systems.</p>
-    </article>
-
-
-    <article class="cluster-card panel-button">
-      <div class="panel-label">IDENTITY</div>
-      <h3>VISUAL IDENTITY</h3>
-      <p>Graphic coherence and brand language.</p>
-    </article>
-
-
-    <article class="cluster-card panel-button">
-      <div class="panel-label">SPATIAL</div>
-      <h3>EXHIBITION</h3>
-      <p>Atmosphere, installation, space.</p>
-    </article>
-
-
-    <article class="cluster-card panel-button">
-      <div class="panel-label">DIRECTION</div>
-      <h3>ART DIRECTION</h3>
-      <p>Image logic and visual system.</p>
-    </article>
-
-
-  </div>
-
-</section>
-
-
-
-<!-- ===================== -->
-<!-- LAB PREVIEW -->
-<!-- ===================== -->
-
-<section class="section reveal-section">
-
-  <div class="section-head">
-
-    <div class="section-kicker">
-      LAB
-    </div>
-
-    <h2>
-      MATERIALS IN FORMATION
-    </h2>
-
-    <p>
-      Fragments, tests, notes and visual studies.
-      The work exists also while it is forming.
-    </p>
-
-  </div>
-
-
-  <div class="cluster-grid">
-
-
-    <article class="cluster-card panel-button">
-
-      <div class="panel-label">
-        LIGHT
-      </div>
-
-      <h3>
-        LIGHT TESTS
-      </h3>
-
-      <p>
-        Studies of tone, shadow and color.
-      </p>
-
-    </article>
-
-
-
-    <article class="cluster-card panel-button">
-
-      <div class="panel-label">
-        NOTES
-      </div>
-
-      <h3>
-        VISUAL NOTES
-      </h3>
-
-      <p>
-        References, fragments, visual thoughts.
-      </p>
-
-    </article>
-
-
-
-    <article class="cluster-card panel-button">
-
-      <div class="panel-label">
-        PROCESS
-      </div>
-
-      <h3>
-        PROCESS FRAGMENTS
-      </h3>
-
-      <p>
-        Materials that belong to the making.
-      </p>
-
-    </article>
-
-
-
-    <article class="cluster-card panel-button">
-
-      <div class="panel-label">
-        LAB
-      </div>
-
-      <h3>
-        ONGOING WORK
-      </h3>
-
-      <p>
-        Not finished. Still alive.
-      </p>
-
-    </article>
-
-
-  </div>
-
-</section>
-
-
-
-<!-- ===================== -->
-<!-- STUDIO -->
-<!-- ===================== -->
-
-<section class="section reveal-section">
-
-  <div class="section-head">
-
-    <div class="section-kicker">
-      STUDIO
-    </div>
-
-    <h2>
-      METHOD BEFORE STYLE
-    </h2>
-
-    <p>
-      Projects built through structure and atmosphere.
-    </p>
-
-  </div>
-
-
-  <div class="featured-grid">
-
-
-    <a href="studio.html" class="featured-card panel-button">
-
-      <div class="featured-media">
-        <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=1600&auto=format&fit=crop">
-      </div>
-
-      <div class="featured-body">
-
-        <div class="card-kicker">
-          STUDIO
-        </div>
-
-        <h3>
-          SERVICES AND METHOD
-        </h3>
-
-        <p>
-          Structure, hierarchy, coherence.
-        </p>
-
-      </div>
-
-    </a>
-
-
-
-    <a href="contact.html" class="featured-card panel-button">
-
-      <div class="featured-media">
-        <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=1600&auto=format&fit=crop">
-      </div>
-
-      <div class="featured-body">
-
-        <div class="card-kicker">
-          CONTACT
-        </div>
-
-        <h3>
-          SELECTED COMMISSIONS
-        </h3>
-
-        <p>
-          Open to collaborations.
-        </p>
-
-      </div>
-
-    </a>
-
-
-  </div>
-
-</section>
-
-
-
-<div class="bottom-space"></div>
-
-
-</main>
-
-<script src="script.js"></script>
-
-</body>
-</html>
+    <div class="selected-grid">
+      <a href="project-exhibition.html" class="featured-card panel-button">
+        <
