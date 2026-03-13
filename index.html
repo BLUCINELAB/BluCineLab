@@ -3,213 +3,273 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BluCine — studio</title>
-  <meta name="description" content="BluCine è un laboratorio visivo che unisce cinema, design, spazio, identità e ricerca." />
+  <title>BLUCINELAB — Home</title>
+  <meta
+    name="description"
+    content="BluCineLab è un laboratorio visivo che unisce cinema, design, spazio, identità e ricerca. Home editoriale con manifesto, archivio, metodo e accesso ai progetti."
+  />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Oswald per i titoli, Inter per i testi -->
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- cursore personalizzato -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-trail" id="cursorTrail"></div>
-
-  <!-- navigazione -->
-  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <a href="#home" class="nav-logo">
-        <span class="nav-logo-mark">B</span><span class="nav-logo-text">luCine</span>
-      </a>
-      <div class="nav-links">
-        <a href="#archive" class="nav-link" data-nav-link="archive">Archive</a>
-        <a href="#studio" class="nav-link" data-nav-link="studio">Studio</a>
-        <a href="#lab" class="nav-link" data-nav-link="lab">Lab</a>
-        <a href="#contact" class="nav-link" data-nav-link="contact">Contact</a>
-      </div>
-      <button class="nav-menu-btn" id="nav-menu-btn" aria-label="Menu">
-        <span></span><span></span>
-      </button>
-    </div>
-    <div class="nav-mobile" id="nav-mobile">
-      <a href="#archive" class="nav-mobile-link">Archive</a>
-      <a href="#studio" class="nav-mobile-link">Studio</a>
-      <a href="#lab" class="nav-mobile-link">Lab</a>
-      <a href="#contact" class="nav-mobile-link">Contact</a>
-    </div>
-  </nav>
-
-  <!-- hero -->
-  <section class="section-home" id="home">
-    <canvas class="hero-canvas" id="heroCanvas"></canvas>
-    <div class="hero-inner">
-      <div class="hero-index">
-        <span class="mono-label">001 — HOME</span>
-        <span class="mono-label hero-year">Est. 2019 · Bologna</span>
-      </div>
-      <div class="hero-headline-block">
-        <!-- manteniamo il titolo grande con gradiente metallico -->
-        <h1 class="hero-title title-wave">
-          <span data-sound="letter1">B</span><span data-sound="letter2">l</span><span data-sound="letter3">u</span>
-          <span data-sound="letter4">C</span><span data-sound="letter5">i</span><span data-sound="letter6">n</span><span data-sound="letter7">e</span>
-        </h1>
-        <!-- tagline -->
-        <h2 class="hero-tagline">
-          <span class="hero-line" data-delay="0">Costruire</span>
-          <span class="hero-line italic" data-delay="120">immagini</span>
-          <span class="hero-line" data-delay="240">che pensano.</span>
-        </h2>
-      </div>
-      <!-- descrizione -->
-      <div class="hero-descriptor">
-        <p class="hero-desc-text">
-          BluCine è un laboratorio visivo.<br/>
-          Cinema, identità, spazio, direzione.<br/>
-          Ricerca come metodo di lavoro.
-        </p>
-        <div class="hero-desc-disciplines">
-          <span class="discipline-tag">Web Design</span><span class="discipline-sep">·</span>
-          <span class="discipline-tag">Visual Identity</span><span class="discipline-sep">·</span>
-          <span class="discipline-tag">Exhibition</span><span class="discipline-sep">·</span>
-          <span class="discipline-tag">Film Direction</span><span class="discipline-sep">·</span>
-          <span class="discipline-tag">Research</span>
-        </div>
-      </div>
-      <!-- indicatore di scroll -->
-      <div class="hero-scroll">
-        <div class="hero-scroll-line"></div>
-        <span class="mono-label">Scroll</span>
-      </div>
-    </div>
-    <!-- teaser lavori recenti -->
-    <div class="hero-work-teaser">
-      <div class="hwt-label"><span class="mono-label">Lavoro recente</span></div>
-      <div class="hwt-items">
-        <a href="#project-1" class="hwt-item"><span class="hwt-num mono-label">01</span><span class="hwt-title">Paesaggi di una mente</span><span class="hwt-type mono-label">Exhibition · 2024</span></a>
-        <a href="#project-3" class="hwt-item"><span class="hwt-num mono-label">02</span><span class="hwt-title">Superficie Confidenziale</span><span class="hwt-type mono-label">Brand Direction · 2024</span></a>
-        <a href="#project-4" class="hwt-item"><span class="hwt-num mono-label">03</span><span class="hwt-title">Forma in divenire</span><span class="hwt-type mono-label">Film · 2023</span></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- archive -->
-  <section class="section-archive section" id="archive">
-    <div class="section-header">
-      <div class="section-index"><span class="mono-label">002 — ARCHIVE</span></div>
-      <div class="section-title-block">
-        <h2 class="section-title">Archivio</h2>
-        <p class="section-subtitle">Una selezione di lavori, processi e superfici.</p>
-      </div>
-      <div class="archive-filter">
-        <button class="filter-btn active" data-filter="all">Tutto</button>
-        <button class="filter-btn" data-filter="case-study">Case Study</button>
-        <button class="filter-btn" data-filter="confidential">Confidenziale</button>
-        <button class="filter-btn" data-filter="process">Processo</button>
-      </div>
-    </div>
-    <div class="archive-grid">
-      <!-- esempio di card aperta -->
-      <article class="archive-item" data-category="case-study" data-index="01">
-        <div class="archive-item-visual">
-          <div class="archive-visual-placeholder apv-1">
-            <div class="avp-noise"></div>
-            <span class="avp-label mono-label">Exhibition</span>
-          </div>
-        </div>
-        <div class="archive-item-info">
-          <div class="aii-meta"><span class="mono-label">01</span><span class="aii-tag aii-tag-open mono-label">Case Study</span></div>
-          <h3 class="aii-title">Paesaggi di una mente</h3>
-          <p class="aii-desc">Progetto espositivo per una mostra di fotografia contemporanea.</p>
-          <div class="aii-footer"><span class="mono-label aii-year">2024</span><a href="#project-1" class="aii-link">Apri →</a></div>
-        </div>
-      </article>
-      <!-- altre card come da template di Claude -->
-      ...
-    </div>
-    <div class="archive-footer"><span class="mono-label archive-count">6 voci · 3 categorie</span></div>
-  </section>
-
-  <!-- studio -->
-  <section class="section-studio section" id="studio">
-    <div class="section-header">
-      <div class="section-index"><span class="mono-label">003 — STUDIO</span></div>
-      <div class="section-title-block">
-        <h2 class="section-title">Il metodo</h2>
-        <p class="section-subtitle">Non offriamo servizi. Costruiamo sistemi visivi.</p>
-      </div>
-    </div>
-    <div class="studio-body">
-      <div class="studio-manifesto">
-        <p class="studio-manifesto-text">
-          BluCine nasce dall'incrocio tra il rigore del cinema e la precisione del design.
-          Non partiamo da brief: partiamo da domande. Ogni progetto è un atto di ricerca prima di essere un atto di forma.
-        </p>
-        <div class="studio-manifesto-rule"></div>
-      </div>
-      <div class="studio-areas">
-        <div class="studio-area"><div class="sa-index mono-label">01</div><div class="sa-content"><h3 class="sa-title">Identità visiva</h3><p class="sa-desc">Sistemi d'identità per studi, istituzioni e progetti culturali.</p><div class="sa-tags"><span class="sa-tag mono-label">Brand</span><span class="sa-tag mono-label">Sistema</span><span class="sa-tag mono-label">Identità</span></div></div></div>
-        <!-- altre aree -->
-      </div>
-      <div class="studio-interlocutors">
-        <div class="si-label"><span class="mono-label">Con chi lavoriamo</span></div>
-        <div class="si-content"><p>Istituzioni culturali, studi di architettura, registi, fotografi, brand selettivi, festival, gallerie, spazi indipendenti.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- lab -->
-  <section class="section-lab section" id="lab">
-    <div class="section-header">
-      <div class="section-index"><span class="mono-label">004 — LAB</span></div>
-      <div class="section-title-block">
-        <h2 class="section-title">Laboratorio</h2>
-        <p class="section-subtitle">Frammenti, studi, materiali in divenire.</p>
-      </div>
-    </div>
-    <div class="lab-pulse">
-      <div class="lab-pulse-dot"></div><span class="mono-label">Attivo · In ricerca</span>
-    </div>
-    <div class="lab-grid">
-      <article class="lab-entry lab-entry-text" data-lab-type="nota"><div class="le-meta"><span class="mono-label le-type">Nota</span><span class="mono-label le-date">Mar 2025</span></div><h4 class="le-title">Sul tempo dell'immagine</h4><p class="le-body">Un frame non è un momento. È una scelta. Ogni immagine cinematografica porta con sé il peso di tutto ciò che è stato escluso.</p><div class="le-tag mono-label">Pensiero</div></article>
-      <!-- altre entries -->
-    </div>
-  </section>
-
-  <!-- contact -->
-  <section class="section-contact section" id="contact">
-    <div class="contact-inner">
-      <div class="section-index"><span class="mono-label">005 — CONTACT</span></div>
-      <div class="contact-headline-block">
-        <h2 class="contact-headline">Hai un progetto<br/><em>che vale la pena fare.</em></h2>
-      </div>
-      <div class="contact-body">
-        <div class="contact-left">
-          <p class="contact-note">Preferiamo lavorare su pochi progetti, fatti bene. Se hai qualcosa di rilevante — scrivi.</p>
-          <div class="contact-links">
-            <a href="mailto:blucinelab@gmail.com" class="contact-email"><span class="mono-label ce-label">Email</span><span class="ce-address">blucinelab@gmail.com</span><span class="ce-arrow">→</span></a>
-          </div>
-          <div class="contact-location"><span class="mono-label">Bologna, Italia</span><span class="contact-sep">·</span><span class="mono-label">Progetti internazionali</span></div>
-        </div>
-        <div class="contact-right">
-          <div class="contact-availability"><div class="ca-indicator ca-available"></div><span class="mono-label">Disponibili per nuovi progetti</span></div>
-          <div class="contact-response"><span class="mono-label">Risposta entro 48h</span></div>
-          <div class="contact-socials"><a href="#" class="cs-link mono-label">Instagram →</a><a href="#" class="cs-link mono-label">Vimeo →</a></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- overlay progetti -->
-  <div class="project-overlay" id="project-overlay">
-    <div class="po-header">
-      <button class="po-close" id="po-close"><span>Chiudi</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><line x1="5" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="1.5"/><line x1="19" y1="5" x2="5" y2="19" stroke="currentColor" stroke-width="1.5"/></svg></button>
-      <span class="mono-label po-label" id="po-label">Progetto</span>
-    </div>
-    <div class="po-body" id="po-body"></div>
+  <div class="background">
+    <canvas id="bgCanvas"></canvas>
+    <div class="background-noise"></div>
+    <div class="background-vignette"></div>
   </div>
 
-  <!-- scripts -->
+  <div class="cursor"></div>
+
+  <nav class="nav">
+    <a href="index.html" class="is-active">HOME</a>
+    <a href="archive.html">ARCHIVE</a>
+    <a href="studio.html">STUDIO</a>
+    <a href="lab.html">LAB</a>
+    <a href="contact.html">CONTACT</a>
+  </nav>
+
+  <header class="page-hero">
+    <div class="page-hero-inner">
+      <div class="archive-copy">
+        <div class="hero-eyebrow">
+          BLUCINELAB / VISUAL LAB / BOLOGNA
+        </div>
+
+        <h1 class="title archive-title title-wave">
+          <span>B</span><span>L</span><span>U</span><span>C</span><span>I</span><span>N</span><span>E</span><span>L</span><span>A</span><span>B</span>
+        </h1>
+
+        <div class="archive-panel panel-button hero-panel">
+          <div class="panel-label">HOME</div>
+          <h3>COSTRUIRE IMMAGINI CHE PENSANO</h3>
+          <p>
+            BluCineLab è un laboratorio visivo che lavora tra cinema, identità,
+            spazio, direzione e ricerca.
+          </p>
+          <p>
+            Non trattiamo l’immagine come decorazione, ma come struttura,
+            atmosfera e dispositivo di lettura.
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-shell">
+    <section class="section reveal-section">
+      <div class="section-head">
+        <div class="section-kicker">POSITION</div>
+        <h2>UN LABORATORIO VISIVO, NON UN SITO GENERICO</h2>
+        <p>
+          BluCineLab tiene insieme produzione, ricerca e costruzione di sistemi
+          visivi. Il lavoro si muove tra web design editoriale, identità,
+          exhibition, installazione e direzione d’immagine.
+        </p>
+      </div>
+
+      <div class="cluster-grid">
+        <article class="cluster-card panel-button">
+          <div class="panel-label">FIELD 01</div>
+          <h3>WEB DESIGN</h3>
+          <p>
+            Ambienti digitali con gerarchia chiara, ritmo editoriale e presenza visiva.
+          </p>
+        </article>
+
+        <article class="cluster-card panel-button">
+          <div class="panel-label">FIELD 02</div>
+          <h3>VISUAL IDENTITY</h3>
+          <p>
+            Sistemi di identità costruiti come linguaggio coerente, non come sola immagine.
+          </p>
+        </article>
+
+        <article class="cluster-card panel-button">
+          <div class="panel-label">FIELD 03</div>
+          <h3>EXHIBITION</h3>
+          <p>
+            Spazio, display e atmosfera pensati come superficie narrativa continua.
+          </p>
+        </article>
+
+        <article class="cluster-card panel-button">
+          <div class="panel-label">FIELD 04</div>
+          <h3>IMAGE DIRECTION</h3>
+          <p>
+            Continuità tonale, selezione e costruzione percettiva attraverso più media.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section reveal-section">
+      <div class="section-head">
+        <div class="section-kicker">ARCHIVE</div>
+        <h2>UNA SELEZIONE DI LAVORI, PROCESSI E SUPERFICI</h2>
+        <p>
+          L’archivio distingue tra case study pubblici, materiali confidenziali e
+          stati di formazione. Non una griglia anonima, ma una lettura editoriale del lavoro.
+        </p>
+      </div>
+
+      <div class="featured-grid">
+        <a href="archive.html" class="featured-card panel-button">
+          <div class="featured-body">
+            <div class="card-kicker">PUBLIC WORKS</div>
+            <h3>ENTRA NELL’ARCHIVIO</h3>
+            <p>
+              Case study, progetti protetti e pagine ibride organizzati per stato di visibilità,
+              metodo e funzione.
+            </p>
+          </div>
+        </a>
+
+        <article class="featured-card panel-button">
+          <div class="featured-body">
+            <div class="card-kicker">RECENT FOCUS</div>
+            <h3>PAESAGGI DI UNA MENTE · SUPERFICIE CONFIDENZIALE · FORMA IN DIVENIRE</h3>
+            <p>
+              Exhibition, brand direction e processo filmico come tre stati diversi di costruzione visiva.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section reveal-section">
+      <div class="section-head">
+        <div class="section-kicker">STUDIO</div>
+        <h2>METODO, STRUTTURA, COERENZA</h2>
+        <p>
+          Il lavoro dello studio parte da domande e riduzione. Prima si chiarisce il campo,
+          poi si costruisce la forma.
+        </p>
+      </div>
+
+      <div class="studio-grid">
+        <article class="studio-card panel-button">
+          <div class="panel-label">SELECTION</div>
+          <h3>TOGLIERE CIÒ CHE INDEBOLISCE</h3>
+          <p>
+            Gerarchia, ordine e precisione vengono prima dell’accumulo.
+          </p>
+        </article>
+
+        <article class="studio-card panel-button">
+          <div class="panel-label">ATMOSPHERE</div>
+          <h3>COSTRUIRE IL CAMPO PERCETTIVO</h3>
+          <p>
+            Luce, tipo, spazio e immagine lavorano come un unico sistema.
+          </p>
+        </article>
+
+        <article class="studio-card panel-button">
+          <div class="panel-label">COHERENCE</div>
+          <h3>MANTENERE UN LINGUAGGIO INTERNO</h3>
+          <p>
+            Il progetto deve restare riconoscibile tra pagina, spazio e direzione.
+          </p>
+        </article>
+
+        <article class="studio-card panel-button">
+          <div class="panel-label">ACCESS</div>
+          <h3>LEGGI IL METODO COMPLETO</h3>
+          <p>
+            Approfondisci aree operative, contesti adatti e logica di costruzione dello studio.
+          </p>
+          <p style="margin-top:12px;">
+            <a href="studio.html">Apri Studio →</a>
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section reveal-section">
+      <div class="section-head">
+        <div class="section-kicker">LAB</div>
+        <h2>MATERIALI IN FORMAZIONE</h2>
+        <p>
+          Il Lab raccoglie note, test luce, frammenti, processi e superfici ancora in divenire.
+          È il luogo dove il making resta visibile.
+        </p>
+      </div>
+
+      <div class="featured-grid">
+        <a href="lab.html" class="featured-card panel-button">
+          <div class="featured-body">
+            <div class="card-kicker">ACTIVE RESEARCH</div>
+            <h3>ENTRA NEL LABORATORIO</h3>
+            <p>
+              Frammenti, studi, materiali aperti e pagine ibride tra archivio e processo.
+            </p>
+          </div>
+        </a>
+
+        <article class="featured-card panel-button">
+          <div class="featured-body">
+            <div class="card-kicker">WORKING STATE</div>
+            <h3>LA RICERCA NON È SCARTO</h3>
+            <p>
+              Le tracce di lavorazione restano parte dell’intelligenza visibile del progetto.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section reveal-section">
+      <div class="section-head">
+        <div class="section-kicker">CONTACT</div>
+        <h2>POCHI PROGETTI, FATTI BENE</h2>
+        <p>
+          BluCineLab lavora meglio quando il contesto è chiaro, il progetto ha peso
+          e la collaborazione richiede visione, rigore e costruzione percettiva.
+        </p>
+      </div>
+
+      <div class="contact-grid">
+        <article class="contact-card panel-button">
+          <div class="panel-label">EMAIL</div>
+          <h3>SCRIVI DIRETTAMENTE</h3>
+          <div class="contact-list">
+            <div class="contact-item">
+              <span class="label">Address</span>
+              <p>blucinelab@gmail.com</p>
+            </div>
+            <div class="contact-item">
+              <span class="label">Use</span>
+              <p>Commissioni, collaborazioni, progetti culturali, direzione visiva e sviluppo digitale.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="contact-card panel-button">
+          <div class="panel-label">ACCESS</div>
+          <h3>APRIRE UNA CONVERSAZIONE UTILE</h3>
+          <div class="contact-list">
+            <div class="contact-item">
+              <span class="label">Context</span>
+              <p>Descrivi il progetto, il momento in cui si trova e cosa deve diventare.</p>
+            </div>
+            <div class="contact-item">
+              <span class="label">Timing</span>
+              <p>Indica scadenze, materiali già esistenti e finestra di lavoro prevista.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="bottom-space"></div>
+  </main>
+
   <script src="script.js"></script>
 </body>
 </html>
