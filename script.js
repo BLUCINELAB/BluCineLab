@@ -1,547 +1,263 @@
-const cursor = document.querySelector(".cursor");
-const homeTitle = document.getElementById("homeTitle");
-const homeTitleDock = document.getElementById("homeTitleDock");
-const homeHero = document.getElementById("homeHero");
-const heroChips = document.getElementById("heroChips");
-const heroStatement = document.getElementById("heroStatement");
-const pageProgressFill = document.querySelector(".page-progress-fill");
+'use strict';
 
-let cursorHideTimer = null;
+const $ = (sel, ctx = document) => ctx.querySelector(sel);
+const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+const lerp = (a, b, t) => a + (b - a) * t;
 
-/* CURSOR */
-
-function showCursor(x, y) {
-  if (!cursor) return;
-  cursor.style.opacity = "1";
-  cursor.style.left = `${x}px`;
-  cursor.style.top = `${y}px`;
-}
-
-function fadeCursorLater(delay = 700) {
-  if (!cursor) return;
-  if (cursorHideTimer) clearTimeout(cursorHideTimer);
-  cursorHideTimer = setTimeout(() => {
-    cursor.style.opacity = "0";
-  }, delay);
-}
-
-function createSparkBurst(x, y, amount = 10) {
-  for (let i = 0; i < amount; i++) {
-    const spark = document.createElement("div");
-    spark.className = "spark";
-    spark.style.left = `${x}px`;
-    spark.style.top = `${y}px`;
-    spark.style.setProperty("--dx", `${(Math.random() - 0.5) * 34}px`);
-    spark.style.setProperty("--dy", `${-4 - Math.random() * 24}px`);
-    document.body.appendChild(spark);
-
-    setTimeout(() => {
-      spark.remove();
-    }, 900);
-  }
-}
-
-document.addEventListener("mousemove", (e) => {
-  showCursor(e.clientX, e.clientY);
-  createSparkBurst(e.clientX, e.clientY, 8);
-  handleTitleWaveAtPoint(e.clientX, e.clientY);
-  fadeCursorLater(1200);
-});
-
-document.addEventListener("touchstart", (e) => {
-  const touch = e.touches[0];
-  if (!touch) return;
-  showCursor(touch.clientX, touch.clientY);
-  createSparkBurst(touch.clientX, touch.clientY, 14);
-  handleTitleWaveAtPoint(touch.clientX, touch.clientY);
-  fadeCursorLater(900);
-}, { passive: true });
-
-document.addEventListener("touchmove", (e) => {
-  const touch = e.touches[0];
-  if (!touch) return;
-  showCursor(touch.clientX, touch.clientY);
-  createSparkBurst(touch.clientX, touch.clientY, 6);
-  handleTitleWaveAtPoint(touch.clientX, touch.clientY);
-  fadeCursorLater(900);
-}, { passive: true });
-
-document.addEventListener("touchend", () => {
-  waveTargetIndex = null;
-  startWaveLoop();
-  fadeCursorLater(500);
-}, { passive: true });
-
-/* AUDIO */
-
-let audioCtx = null;
-let audioUnlocked = false;
-let lastLetterSoundTime = 0;
-let lastClickSoundTime = 0;
-
-function ensureAudioContext() {
-  try {
-    if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)({
-        latencyHint: "interactive"
-      });
-    }
-    return audioCtx;
-  } catch (e) {
-    return null;
-  }
-}
-
-function playSilentUnlockBuffer(ctx) {
-  try {
-    const buffer = ctx.createBuffer(1, 1, 22050);
-    const source = ctx.createBufferSource();
-    const gain = ctx.createGain();
-    gain.gain.value = 0.0001;
-    source.buffer = buffer;
-    source.connect(gain);
-    gain.connect(ctx.destination);
-    source.start(0);
-  } catch (e) {}
-}
-
-async function unlockAudio() {
-  const ctx = ensureAudioContext();
-  if (!ctx) return;
-
-  try {
-    if (ctx.state !== "running") {
-      await ctx.resume();
-    }
-    playSilentUnlockBuffer(ctx);
-    audioUnlocked = true;
-  } catch (e) {}
-}
-
-["pointerdown", "touchstart", "touchend", "click"].forEach((eventName) => {
-  document.addEventListener(eventName, unlockAudio, { passive: true });
-});
-
-function playLetterSound(intensity = 1) {
-  const now = performance.now();
-  if (now - lastLetterSoundTime < 95) return;
-  lastLetterSoundTime = now;
-
-  const ctx = ensureAudioContext();
-  if (!ctx || !audioUnlocked) return;
-
-  try {
-    const t = ctx.currentTime;
-
-    const master = ctx.createGain();
-    const lowpass = ctx.createBiquadFilter();
-    const air = ctx.createBiquadFilter();
-
-    const oscA = ctx.createOscillator();
-    const oscB = ctx.createOscillator();
-    const oscC = ctx.createOscillator();
-
-    oscA.type = "triangle";
-    oscB.type = "sine";
-    oscC.type = "sine";
-
-    const baseA = 430 + (intensity * 14);
-    const baseB = 295 + (intensity * 10);
-    const baseC = 690 + (intensity * 12);
-
-    oscA.frequency.setValueAtTime(baseA, t);
-    oscA.frequency.exponentialRampToValueAtTime(baseA * 0.88, t + 0.15);
-
-    oscB.frequency.setValueAtTime(baseB, t);
-    oscB.frequency.exponentialRampToValueAtTime(baseB * 0.92, t + 0.16);
-
-    oscC.frequency.setValueAtTime(baseC, t);
-    oscC.frequency.exponentialRampToValueAtTime(baseC * 0.84, t + 0.09);
-
-    lowpass.type = "lowpass";
-    lowpass.frequency.setValueAtTime(950, t);
-    lowpass.Q.setValueAtTime(0.75, t);
-
-    air.type = "peaking";
-    air.frequency.setValueAtTime(1200, t);
-    air.Q.setValueAtTime(0.6, t);
-    air.gain.setValueAtTime(1.2, t);
-
-    master.gain.setValueAtTime(0.0001, t);
-    master.gain.exponentialRampToValueAtTime(0.02, t + 0.02);
-    master.gain.exponentialRampToValueAtTime(0.012, t + 0.08);
-    master.gain.exponentialRampToValueAtTime(0.0001, t + 0.23);
-
-    oscA.connect(lowpass);
-    oscB.connect(lowpass);
-    oscC.connect(air);
-    air.connect(lowpass);
-    lowpass.connect(master);
-    master.connect(ctx.destination);
-
-    oscA.start(t);
-    oscB.start(t);
-    oscC.start(t);
-
-    oscA.stop(t + 0.24);
-    oscB.stop(t + 0.24);
-    oscC.stop(t + 0.14);
-  } catch (e) {}
-}
-
-function playAppleClickSound(strength = 1) {
-  const now = performance.now();
-  if (now - lastClickSoundTime < 110) return;
-  lastClickSoundTime = now;
-
-  const ctx = ensureAudioContext();
-  if (!ctx || !audioUnlocked) return;
-
-  try {
-    const t = ctx.currentTime;
-
-    const master = ctx.createGain();
-    const lowpass = ctx.createBiquadFilter();
-    const highpass = ctx.createBiquadFilter();
-
-    const osc1 = ctx.createOscillator();
-    const osc2 = ctx.createOscillator();
-    const osc3 = ctx.createOscillator();
-
-    osc1.type = "sine";
-    osc2.type = "triangle";
-    osc3.type = "sine";
-
-    osc1.frequency.setValueAtTime(310 * strength, t);
-    osc1.frequency.exponentialRampToValueAtTime(230, t + 0.08);
-
-    osc2.frequency.setValueAtTime(620 * strength, t);
-    osc2.frequency.exponentialRampToValueAtTime(320, t + 0.05);
-
-    osc3.frequency.setValueAtTime(980, t);
-    osc3.frequency.exponentialRampToValueAtTime(540, t + 0.035);
-
-    highpass.type = "highpass";
-    highpass.frequency.setValueAtTime(180, t);
-
-    lowpass.type = "lowpass";
-    lowpass.frequency.setValueAtTime(1350, t);
-    lowpass.Q.setValueAtTime(0.7, t);
-
-    master.gain.setValueAtTime(0.0001, t);
-    master.gain.exponentialRampToValueAtTime(0.03, t + 0.007);
-    master.gain.exponentialRampToValueAtTime(0.012, t + 0.035);
-    master.gain.exponentialRampToValueAtTime(0.0001, t + 0.14);
-
-    osc1.connect(highpass);
-    osc2.connect(highpass);
-    osc3.connect(highpass);
-    highpass.connect(lowpass);
-    lowpass.connect(master);
-    master.connect(ctx.destination);
-
-    osc1.start(t);
-    osc2.start(t);
-    osc3.start(t);
-
-    osc1.stop(t + 0.15);
-    osc2.stop(t + 0.12);
-    osc3.stop(t + 0.08);
-  } catch (e) {}
-}
-
-/* TITLE GLOW */
-
-let titleLetters = [];
-let waveTargetIndex = null;
-let waveCurrentIndex = null;
-let waveRAF = null;
-
-if (homeTitle) {
-  titleLetters = Array.from(homeTitle.querySelectorAll("span"));
-}
-
-function applyWave(indexValue) {
-  if (!titleLetters.length || indexValue === null) return;
-
-  titleLetters.forEach((letter, index) => {
-    const distance = Math.abs(index - indexValue);
-    const strength = Math.max(0, 1 - distance / 2.45);
-    letter.style.setProperty("--wave-strength", strength.toFixed(3));
+(function initCursor() {
+  const cursor = $('#cursor');
+  const trail = $('#cursor-trail');
+  if (!cursor || !trail) return;
+  let mouse = { x: -100, y: -100 };
+  let trailPos = { x: -100, y: -100 };
+  const isMobile = () => window.innerWidth <= 768 || window.matchMedia('(hover: none)').matches;
+  document.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX; mouse.y = e.clientY;
+    cursor.style.left = mouse.x + 'px'; cursor.style.top = mouse.y + 'px';
   });
-}
+  const updateTrail = () => {
+    trailPos.x = lerp(trailPos.x, mouse.x, 0.1);
+    trailPos.y = lerp(trailPos.y, mouse.y, 0.1);
+    trail.style.left = trailPos.x + 'px'; trail.style.top = trailPos.y + 'px';
+    requestAnimationFrame(updateTrail);
+  };
+  if (!isMobile()) updateTrail();
+  const hoverTargets = 'a, button, .archive-item, .hwt-item, .studio-area, .lab-entry, .filter-btn';
+  document.addEventListener('mouseover', (e) => { if (e.target.closest(hoverTargets)) document.body.classList.add('cursor-hover'); });
+  document.addEventListener('mouseout', (e) => { if (e.target.closest(hoverTargets)) document.body.classList.remove('cursor-hover'); });
+})();
 
-function clearWave() {
-  if (!titleLetters.length) return;
-  titleLetters.forEach((letter) => {
-    letter.style.setProperty("--wave-strength", "0");
-  });
-}
-
-function animateWave() {
-  if (waveTargetIndex === null) {
-    waveCurrentIndex = null;
-    clearWave();
-    waveRAF = null;
-    return;
-  }
-
-  if (waveCurrentIndex === null) {
-    waveCurrentIndex = waveTargetIndex;
-  } else {
-    waveCurrentIndex += (waveTargetIndex - waveCurrentIndex) * 0.24;
-  }
-
-  applyWave(waveCurrentIndex);
-
-  if (Math.abs(waveTargetIndex - waveCurrentIndex) < 0.002) {
-    waveCurrentIndex = waveTargetIndex;
-  }
-
-  waveRAF = requestAnimationFrame(animateWave);
-}
-
-function startWaveLoop() {
-  if (!waveRAF) {
-    waveRAF = requestAnimationFrame(animateWave);
-  }
-}
-
-function setWaveFromClientX(clientX) {
-  if (!homeTitle || !titleLetters.length) return;
-
-  const rect = homeTitle.getBoundingClientRect();
-  const x = clientX - rect.left;
-  const progress = Math.max(0, Math.min(1, x / rect.width));
-  const nextIndex = progress * (titleLetters.length - 1);
-
-  const previousIndex = waveTargetIndex;
-  waveTargetIndex = nextIndex;
-  startWaveLoop();
-
-  if (previousIndex === null || Math.abs(previousIndex - nextIndex) > 0.14) {
-    playLetterSound(1);
-  }
-}
-
-function handleTitleWaveAtPoint(clientX, clientY) {
-  if (!homeTitle) return;
-  const rect = homeTitle.getBoundingClientRect();
-
-  if (
-    clientX >= rect.left &&
-    clientX <= rect.right &&
-    clientY >= rect.top &&
-    clientY <= rect.bottom
-  ) {
-    setWaveFromClientX(clientX);
-  } else {
-    waveTargetIndex = null;
-    startWaveLoop();
-  }
-}
-
-if (homeTitle) {
-  homeTitle.addEventListener("mousemove", (e) => {
-    setWaveFromClientX(e.clientX);
-  });
-
-  homeTitle.addEventListener("mouseenter", (e) => {
-    setWaveFromClientX(e.clientX);
-    playLetterSound(0.9);
-  });
-
-  homeTitle.addEventListener("mouseleave", () => {
-    waveTargetIndex = null;
-    startWaveLoop();
-  });
-
-  homeTitle.addEventListener("touchstart", (e) => {
-    const touch = e.touches[0];
-    if (!touch) return;
-    setWaveFromClientX(touch.clientX);
-    playLetterSound(0.95);
-  }, { passive: true });
-}
-
-/* CLICK SOUND */
-
-function attachClickToInteractivePanels() {
-  const selectors = [
-    ".button-chip",
-    ".panel-button",
-    ".hero-statement",
-    ".manifesto-block",
-    ".featured-card",
-    ".cluster-card",
-    ".project-card",
-    ".archive-panel",
-    ".project-hero",
-    ".project-meta-card",
-    ".project-text-card",
-    ".project-sticky-card",
-    ".project-footer-card",
-    ".back-link",
-    ".project-gallery-card",
-    ".related-project-card",
-    ".contact-card",
-    ".studio-card"
-  ];
-
-  const panels = document.querySelectorAll(selectors.join(","));
-
-  panels.forEach((panel) => {
-    panel.addEventListener("mousedown", () => {
-      playAppleClickSound(1);
+(function initNav() {
+  const nav = $('#nav');
+  const menuBtn = $('#nav-menu-btn');
+  const mobileNav = $('#nav-mobile');
+  const navLinks = $$('.nav-link');
+  let isMenuOpen = false;
+  const handleScroll = () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+    updateActiveNavLink();
+  };
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll();
+  if (menuBtn && mobileNav) {
+    menuBtn.addEventListener('click', () => {
+      isMenuOpen = !isMenuOpen;
+      menuBtn.classList.toggle('open', isMenuOpen);
+      mobileNav.classList.toggle('open', isMenuOpen);
     });
+    $$('[data-mobile-nav]').forEach(link => {
+      link.addEventListener('click', () => {
+        isMenuOpen = false;
+        menuBtn.classList.remove('open');
+        mobileNav.classList.remove('open');
+      });
+    });
+  }
+  const sections = [
+    { id: 'home', el: $('#home') }, { id: 'archive', el: $('#archive') },
+    { id: 'studio', el: $('#studio') }, { id: 'lab', el: $('#lab') },
+    { id: 'contact', el: $('#contact') },
+  ].filter(s => s.el);
+  function updateActiveNavLink() {
+    const scrollMid = window.scrollY + window.innerHeight * 0.4;
+    let active = sections[0];
+    for (const section of sections) { if (section.el.offsetTop <= scrollMid) active = section; }
+    navLinks.forEach(link => link.classList.toggle('active', link.dataset.navLink === active.id));
+  }
+})();
 
-    panel.addEventListener("touchstart", () => {
-      playAppleClickSound(1);
-    }, { passive: true });
+(function initHeroCanvas() {
+  const canvas = $('#hero-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], animating = true;
+  const PARTICLE_COUNT = window.innerWidth > 768 ? 80 : 30;
 
-    panel.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        playAppleClickSound(0.95);
+  function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+
+  class Particle {
+    constructor() { this.reset(true); }
+    reset(initial = false) {
+      this.x = Math.random() * W;
+      this.y = initial ? Math.random() * H : H + 10;
+      this.size = Math.random() * 1.5 + 0.3;
+      this.speedY = -(Math.random() * 0.3 + 0.05);
+      this.speedX = (Math.random() - 0.5) * 0.1;
+      this.opacity = Math.random() * 0.5 + 0.1;
+      this.fadeTarget = Math.random() * 0.4 + 0.05;
+      this.hue = Math.random() > 0.7 ? 220 : 210;
+      this.sat = Math.random() * 30 + 50;
+    }
+    update() {
+      this.y += this.speedY; this.x += this.speedX;
+      this.opacity += (this.fadeTarget - this.opacity) * 0.005;
+      if (this.y < -10) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${this.hue}, ${this.sat}%, 70%, ${this.opacity})`;
+      ctx.fill();
+    }
+  }
+
+  class Streak {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = -200; this.y = Math.random() * H;
+      this.w = Math.random() * 120 + 40;
+      this.speed = Math.random() * 0.4 + 0.1;
+      this.opacity = Math.random() * 0.04 + 0.01;
+      this.born = Date.now() + Math.random() * 8000;
+    }
+    update() { if (Date.now() < this.born) return; this.x += this.speed; if (this.x > W + 200) this.reset(); }
+    draw() {
+      if (Date.now() < this.born) return;
+      const grad = ctx.createLinearGradient(this.x - this.w, this.y, this.x + this.w, this.y);
+      grad.addColorStop(0, `rgba(74, 127, 212, 0)`);
+      grad.addColorStop(0.5, `rgba(74, 127, 212, ${this.opacity})`);
+      grad.addColorStop(1, `rgba(74, 127, 212, 0)`);
+      ctx.beginPath(); ctx.moveTo(this.x - this.w, this.y); ctx.lineTo(this.x + this.w, this.y);
+      ctx.strokeStyle = grad; ctx.lineWidth = 1; ctx.stroke();
+    }
+  }
+
+  function init() {
+    particles = [];
+    for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+    for (let i = 0; i < 5; i++) particles.push(new Streak());
+  }
+
+  function draw() {
+    if (!animating) return;
+    ctx.clearRect(0, 0, W, H);
+    const bg = ctx.createRadialGradient(W * 0.3, H * 0.6, 0, W * 0.3, H * 0.6, W * 0.9);
+    bg.addColorStop(0, 'rgba(27, 58, 107, 0.15)');
+    bg.addColorStop(0.5, 'rgba(15, 25, 55, 0.05)');
+    bg.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(draw);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { animating = e.isIntersecting; });
+  });
+  observer.observe(canvas.closest('.section-home') || canvas);
+  window.addEventListener('resize', () => { resize(); init(); }, { passive: true });
+  resize(); init(); draw();
+})();
+
+(function initScrollReveal() {
+  const targets = $$('.archive-item, .lab-entry, .studio-area');
+  if (!targets.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const siblings = [...entry.target.parentElement.children];
+        const index = siblings.indexOf(entry.target);
+        setTimeout(() => entry.target.classList.add('visible'), (index % 3) * 80);
+        observer.unobserve(entry.target);
       }
     });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  targets.forEach(el => observer.observe(el));
+})();
+
+(function initArchiveFilter() {
+  const filterBtns = $$('.filter-btn');
+  const items = $$('.archive-item');
+  const countEl = $('#archive-count');
+  if (!filterBtns.length) return;
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      let visible = 0;
+      items.forEach(item => {
+        const show = filter === 'all' || item.dataset.category === filter;
+        if (show) {
+          item.classList.remove('hidden');
+          if (!item.classList.contains('visible')) setTimeout(() => item.classList.add('visible'), 50);
+          visible++;
+        } else {
+          item.classList.add('hidden');
+          item.classList.remove('visible');
+        }
+      });
+      if (countEl) countEl.textContent = filter === 'all' ? `${visible} voci · 3 categorie` : `${visible} voci · ${btn.textContent}`;
+    });
   });
-}
+})();
 
-attachClickToInteractivePanels();
-
-/* REVEAL */
-
-const revealSections = document.querySelectorAll(".reveal-section, .section");
-
-if ("IntersectionObserver" in window) {
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) entry.target.classList.add("is-visible");
+(function initSmoothScroll() {
+  $$('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      const target = $(anchor.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 72;
+      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - navH, behavior: 'smooth' });
     });
-  }, { threshold: 0.16 });
+  });
+})();
 
-  revealSections.forEach((section) => revealObserver.observe(section));
-} else {
-  revealSections.forEach((section) => section.classList.add("is-visible"));
-}
+(function initProjectLinks() {
+  const overlay = $('#project-overlay');
+  const closeBtn = $('#po-close');
+  const poBody = $('#po-body');
+  const poLabel = $('#po-label');
+  if (!overlay || !closeBtn) return;
 
-/* HOME SCROLL */
-
-if (homeHero && homeTitle && homeTitleDock) {
-  function updateHomeHeroMotion() {
-    const scrollY = window.scrollY || window.pageYOffset || 0;
-    const limit = window.innerHeight * 0.55;
-    const progress = Math.min(scrollY / limit, 1);
-
-    const titleScale = 1 - progress * 0.14;
-    const titleY = (progress * -68) - (progress * 14);
-    const titleOpacity = 1 - progress * 0.34;
-
-    homeTitle.style.transform = `translateY(${titleY}px) scale(${titleScale})`;
-    homeTitle.style.opacity = titleOpacity;
-
-    if (heroChips) {
-      heroChips.style.transform = `translateY(${-18 * progress}px)`;
-      heroChips.style.opacity = 1 - progress * 0.20;
+  const projects = {
+    'project-1': {
+      title: 'Paesaggi di una mente', subtitle: 'Exhibition · Bologna · 2024',
+      category: 'Identità visiva espositiva',
+      body: `<div class="po-project"><div class="po-project-visual po-visual-1"></div><div class="po-project-intro"><p class="po-text-lead">Una mostra di fotografia contemporanea richiedeva un sistema visivo capace di parlare senza sovrastare le immagini esposte.</p><p class="po-text-body">Il progetto nasce da un vincolo: il sistema visivo della mostra doveva essere presente ma non competitivo. Ogni elemento grafico —dalla segnaletica al catalogo, dal packaging agli inviti— doveva servire le fotografie, non rappresentarle.</p><p class="po-text-body">Abbiamo scelto un registro quasi assente: inchiostro su bianco, spaziatura estrema, un solo accento cromatico derivato dall'opera più rappresentativa della selezione.</p></div><div class="po-project-meta"><div class="po-meta-item"><span class="mono-label">Ruolo</span><span>Direzione artistica, identità visiva, segnaletica</span></div><div class="po-meta-item"><span class="mono-label">Cliente</span><span>Istituzione culturale, Bologna</span></div><div class="po-meta-item"><span class="mono-label">Anno</span><span>2024</span></div></div></div>`
+    },
+    'project-3': {
+      title: 'Forma in divenire', subtitle: 'Film · Documentario breve · 2023',
+      category: 'Ricerca cinematografica',
+      body: `<div class="po-project"><div class="po-project-visual po-visual-3"></div><div class="po-project-intro"><p class="po-text-lead">Studio cinematografico sull'identità di un luogo urbano in trasformazione.</p><p class="po-text-body">Un quartiere che cambia. Non documentiamo la trasformazione: documentiamo come i residenti percepiscono il tempo di quella trasformazione.</p></div><div class="po-project-meta"><div class="po-meta-item"><span class="mono-label">Formato</span><span>Documentario breve, 18 min</span></div><div class="po-meta-item"><span class="mono-label">Anno</span><span>2023</span></div></div></div>`
     }
+  };
 
-    if (heroStatement) {
-      heroStatement.style.transform = `translateY(${-14 * progress}px)`;
-      heroStatement.style.opacity = 1 - progress * 0.12;
-    }
+  const style = document.createElement('style');
+  style.textContent = `.po-project{display:flex;flex-direction:column;gap:48px}.po-project-visual{height:400px;border-radius:4px}.po-visual-1{background:linear-gradient(135deg,#0A1525,#152B52)}.po-visual-3{background:linear-gradient(135deg,#080D1A,#0A1E35)}.po-text-lead{font-family:var(--f-display);font-size:clamp(22px,2.5vw,30px);font-weight:300;font-style:italic;color:var(--c-text-white);line-height:1.4;margin-bottom:24px}.po-text-body{font-family:var(--f-mono);font-size:13px;color:var(--c-text-secondary);line-height:1.8;margin-top:16px}.po-project-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding-top:32px;border-top:1px solid var(--c-border)}.po-meta-item{display:flex;flex-direction:column;gap:8px}.po-meta-item span:last-child{font-family:var(--f-display);font-size:17px;color:var(--c-text-primary)}@media(max-width:768px){.po-project-meta{grid-template-columns:1fr}.po-project-visual{height:240px}}`;
+  document.head.appendChild(style);
 
-    if (progress > 0.34) {
-      homeTitleDock.classList.add("is-visible");
-    } else {
-      homeTitleDock.classList.remove("is-visible");
-    }
-  }
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('.aii-link');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    if (!href || !href.startsWith('#project-')) return;
+    const project = projects[href.slice(1)];
+    if (!project) return;
+    e.preventDefault();
+    poLabel.textContent = project.category;
+    poBody.innerHTML = `<div style="margin-bottom:48px"><h2 style="font-family:var(--f-display);font-size:clamp(36px,5vw,64px);font-weight:300;color:var(--c-text-white);letter-spacing:-0.02em;line-height:1">${project.title}</h2><p class="mono-label" style="margin-top:12px">${project.subtitle}</p></div>${project.body}`;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
 
-  updateHomeHeroMotion();
-  window.addEventListener("scroll", updateHomeHeroMotion, { passive: true });
-}
+  closeBtn.addEventListener('click', () => { overlay.classList.remove('open'); document.body.style.overflow = ''; });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('open')) { overlay.classList.remove('open'); document.body.style.overflow = ''; } });
+})();
 
-/* PAGE PROGRESS */
+(function initSectionLabels() {
+  const sections = [
+    { el: $('#archive'), num: '002' }, { el: $('#studio'), num: '003' },
+    { el: $('#lab'), num: '004' }, { el: $('#contact'), num: '005' },
+  ].filter(s => s.el);
+  sections.forEach(({ el, num }) => {
+    const ghost = document.createElement('div');
+    ghost.textContent = num;
+    ghost.style.cssText = `position:absolute;right:var(--margin-h);top:50%;transform:translateY(-50%);font-family:var(--f-display);font-size:clamp(120px,20vw,280px);font-weight:300;color:rgba(74,127,212,0.03);pointer-events:none;user-select:none;line-height:1;z-index:0;letter-spacing:-0.05em;`;
+    el.style.position = 'relative';
+    el.insertBefore(ghost, el.firstChild);
+  });
+})();
 
-function updatePageProgress() {
-  if (!pageProgressFill) return;
-
-  const scrollTop = window.scrollY || window.pageYOffset;
-  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = maxScroll > 0 ? (scrollTop / maxScroll) * 100 : 0;
-
-  pageProgressFill.style.height = `${Math.min(100, Math.max(0, progress))}%`;
-}
-
-updatePageProgress();
-window.addEventListener("scroll", updatePageProgress, { passive: true });
-window.addEventListener("resize", updatePageProgress);
-
-/* BG CANVAS */
-
-const canvas = document.getElementById("bgCanvas");
-
-if (canvas) {
-  const ctx = canvas.getContext("2d");
-
-  function resizeCanvas() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.floor(window.innerWidth * dpr);
-    canvas.height = Math.floor(window.innerHeight * dpr);
-    canvas.style.width = `${window.innerWidth}px`;
-    canvas.style.height = `${window.innerHeight}px`;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-
-  resizeCanvas();
-  window.addEventListener("resize", resizeCanvas);
-
-  const blobs = [];
-
-  for (let i = 0; i < 10; i++) {
-    blobs.push({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      r: 180 + Math.random() * 280,
-      dx: (Math.random() - 0.5) * 0.16,
-      dy: (Math.random() - 0.5) * 0.13,
-      drift: Math.random() * 1000
-    });
-  }
-
-  function drawBackground(t = 0) {
-    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-    ctx.globalCompositeOperation = "screen";
-
-    blobs.forEach((b) => {
-      b.x += b.dx;
-      b.y += b.dy;
-
-      if (b.x < -b.r || b.x > window.innerWidth + b.r) b.dx *= -1;
-      if (b.y < -b.r || b.y > window.innerHeight + b.r) b.dy *= -1;
-
-      const wobbleX = Math.sin(t * 0.00025 + b.drift) * 10;
-      const wobbleY = Math.cos(t * 0.00018 + b.drift) * 8;
-
-      const g = ctx.createRadialGradient(
-        b.x + wobbleX, b.y + wobbleY, 0,
-        b.x + wobbleX, b.y + wobbleY, b.r
-      );
-
-      g.addColorStop(0, "rgba(205,225,255,0.075)");
-      g.addColorStop(0.30, "rgba(150,190,255,0.045)");
-      g.addColorStop(0.55, "rgba(120,165,255,0.022)");
-      g.addColorStop(1, "transparent");
-
-      ctx.fillStyle = g;
-      ctx.beginPath();
-      ctx.arc(b.x + wobbleX, b.y + wobbleY, b.r, 0, Math.PI * 2);
-      ctx.fill();
-    });
-
-    ctx.globalCompositeOperation = "source-over";
-    requestAnimationFrame(drawBackground);
-  }
-
-  drawBackground();
-}
+console.log('%cBluCine Studio — v2.0', 'font-family:serif;font-size:16px;color:#4A7FD4;font-style:italic;');
+console.log('%cBologna · Laboratorio visivo', 'font-family:monospace;font-size:10px;color:#6B82A8;letter-spacing:2px;');
