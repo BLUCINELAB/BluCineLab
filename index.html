@@ -7,38 +7,41 @@
   <title>BLUCINELAB — Studio visivo indipendente</title>
   <meta
     name="description"
-    content="BLUCINELAB è uno studio visivo indipendente tra immagine, spazio, direzione e ricerca. Archivio, metodo, laboratorio e accesso ai progetti."
+    content="BLUCINELAB è uno studio visivo indipendente che lavora tra immagine, spazio, direzione e ricerca. Un laboratorio contemporaneo per progetti culturali, editoriali, installativi e digitali."
   />
+  <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#02060d" />
 
   <meta property="og:title" content="BLUCINELAB — Studio visivo indipendente" />
   <meta
     property="og:description"
-    content="Un laboratorio visivo tra cinema, identità, spazio, direzione e ricerca."
+    content="Un laboratorio contemporaneo dell’immagine tra cultura, ricerca, spazio, direzione e costruzione percettiva."
   />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://blucinelab.it/" />
 
+  <link rel="canonical" href="https://blucinelab.it/" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=DM+Mono:wght@300;400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap"
     rel="stylesheet"
   />
 
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="page-home">
-  <div class="background">
+  <div class="background" aria-hidden="true">
     <canvas id="bgCanvas"></canvas>
     <div class="background-noise"></div>
     <div class="background-vignette"></div>
   </div>
 
-  <div class="cursor"></div>
+  <div class="cursor" aria-hidden="true"></div>
 
   <nav class="nav" aria-label="Navigazione principale">
-    <a href="index.html" class="is-active">HOME</a>
+    <a href="index.html" class="is-active" aria-current="page">HOME</a>
     <a href="archive.html">ARCHIVE</a>
     <a href="studio.html">STUDIO</a>
     <a href="lab.html">LAB</a>
@@ -60,27 +63,55 @@
           <div class="panel-label">HOME</div>
           <h3>COSTRUIRE IMMAGINI CHE PENSANO</h3>
           <p>
-            BLUCINELAB è uno studio visivo indipendente che lavora tra cinema,
-            identità, spazio, direzione e ricerca.
+            BLUCINELAB è uno studio visivo indipendente che lavora tra immagine,
+            spazio, direzione e ricerca.
           </p>
           <p>
-            Il lavoro non viene trattato come decorazione ma come struttura,
-            atmosfera, ritmo e costruzione della percezione.
+            Cinema, identità, ambienti digitali, installazioni, archivi, processi:
+            non come servizi separati, ma come un unico campo di costruzione
+            percettiva, culturale e narrativa.
           </p>
         </div>
       </div>
     </div>
   </header>
 
-  <main class="main-shell">
-    <section class="section reveal-section" aria-labelledby="home-position-title">
+  <main class="main-shell" id="main-content">
+    <section class="section manifesto-section reveal-section" aria-labelledby="manifesto-title">
+      <div class="manifesto-block">
+        <div class="panel-label">MANIFESTO</div>
+
+        <div class="manifesto-layout">
+          <div>
+            <h2 id="manifesto-title">UN LABORATORIO CONTEMPORANEO DELL’IMMAGINE</h2>
+          </div>
+
+          <div>
+            <p>
+              BLUCINELAB nasce dall’idea che l’immagine non sia una superficie
+              da riempire, ma una forma di lettura del mondo. Per questo lavoriamo
+              tra rigore e immaginazione, metodo e sensibilità, costruzione tecnica
+              e profondità emotiva.
+            </p>
+            <p>
+              Ci interessano progetti capaci di generare presenza, esperienza,
+              memoria, relazione. Progetti culturali, editoriali, installativi,
+              digitali o ibridi, in cui la forma non decora ma orienta, chiarisce
+              e intensifica.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal-section" aria-labelledby="position-title">
       <div class="section-head">
         <div class="section-kicker">POSITION</div>
-        <h2 id="home-position-title">UN LABORATORIO VISIVO, NON UNA VETRINA GENERICA</h2>
+        <h2 id="position-title">NON UNA VETRINA GENERICA, MA UNA STRUTTURA DI VISIONE</h2>
         <p>
-          Il sito tiene insieme studio, archivio e superficie di ricerca.
-          Non presenta servizi isolati ma un sistema di lavoro che attraversa
-          immagine, spazio e costruzione editoriale.
+          Il sito tiene insieme studio, archivio e ricerca. Non presenta una
+          somma di prestazioni, ma una postura. Un modo di pensare e costruire
+          immagini, spazi e sistemi visivi con coerenza, precisione e apertura.
         </p>
       </div>
 
@@ -89,7 +120,8 @@
           <div class="panel-label">FIELD 01</div>
           <h3>WEB DESIGN</h3>
           <p>
-            Ambienti digitali con gerarchia leggibile, ritmo editoriale e presenza visiva controllata.
+            Ambienti digitali con gerarchia chiara, qualità editoriale e presenza
+            visiva controllata.
           </p>
         </article>
 
@@ -97,15 +129,15 @@
           <div class="panel-label">FIELD 02</div>
           <h3>VISUAL IDENTITY</h3>
           <p>
-            Sistemi di identità costruiti come linguaggio coerente, non come semplice segno.
+            Sistemi di identità costruiti come linguaggio, continuità e riconoscibilità nel tempo.
           </p>
         </article>
 
         <article class="cluster-card panel-button">
           <div class="panel-label">FIELD 03</div>
-          <h3>EXHIBITION</h3>
+          <h3>EXHIBITION &amp; SPACE</h3>
           <p>
-            Display, installazione e costruzione spaziale pensati come esperienza narrativa.
+            Display, installazione e costruzione dello spazio come esperienza narrativa e percettiva.
           </p>
         </article>
 
@@ -113,19 +145,100 @@
           <div class="panel-label">FIELD 04</div>
           <h3>IMAGE DIRECTION</h3>
           <p>
-            Continuità tonale, selezione e direzione percettiva tra superfici, media e contesti.
+            Direzione tonale, selezione, ritmo e coerenza tra media, superfici e contesti.
           </p>
         </article>
       </div>
     </section>
 
-    <section class="section reveal-section" aria-labelledby="home-archive-title">
+    <section class="section reveal-section" aria-labelledby="horizons-title">
+      <div class="section-head">
+        <div class="section-kicker">HORIZONS</div>
+        <h2 id="horizons-title">CULTURA, RICERCA, ESPANSIONE</h2>
+        <p>
+          BLUCINELAB non si muove in un solo territorio. Tiene insieme lavoro
+          professionale, orizzonte culturale e possibilità future.
+        </p>
+      </div>
+
+      <div class="featured-grid">
+        <article class="featured-card panel-button">
+          <div class="featured-body">
+            <div class="card-kicker">CULTURAL</div>
+            <h3>PROGETTI CHE HANNO DENSITÀ, NON SOLO VISIBILITÀ</h3>
+            <p>
+              Mostre, film, archivi, installazioni, progetti educativi, processi editoriali
+              e collaborazioni in cui immagine e pensiero restano inseparabili.
+            </p>
+          </div>
+        </article>
+
+        <article class="featured-card panel-button">
+          <div class="featured-body">
+            <div class="card-kicker">INTERNATIONAL</div>
+            <h3>APERTURA REALE, NON POSE COSMOPOLITE</h3>
+            <p>
+              Ci interessano contesti capaci di attraversare linguaggi, discipline,
+              territori e pubblici diversi mantenendo precisione, leggibilità e identità.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section reveal-section" aria-labelledby="values-title">
+      <div class="section-head">
+        <div class="section-kicker">VALUES</div>
+        <h2 id="values-title">CURA, RESPONSABILITÀ, ESPERIENZA</h2>
+        <p>
+          Ci interessa una pratica capace di unire rigore e umanità. Cura non
+          come morbidezza generica, ma come qualità della forma, del tempo e
+          della relazione.
+        </p>
+      </div>
+
+      <div class="studio-grid">
+        <article class="studio-card panel-button">
+          <div class="panel-label">CARE</div>
+          <h3>ATTENZIONE ALLA FORMA E A CHI LA ATTRAVERSA</h3>
+          <p>
+            Progetti leggibili, sensibili, non rumorosi. Forme che sanno contenere esperienza.
+          </p>
+        </article>
+
+        <article class="studio-card panel-button">
+          <div class="panel-label">PRECISION</div>
+          <h3>RIGORE SENZA ARIDITÀ</h3>
+          <p>
+            Ridurre, ordinare, dare peso. La precisione serve a far respirare meglio il lavoro.
+          </p>
+        </article>
+
+        <article class="studio-card panel-button">
+          <div class="panel-label">RESEARCH</div>
+          <h3>IL PROCESSO NON È SCARTO</h3>
+          <p>
+            Studi, prove, note e frammenti restano parte della costruzione dell’opera.
+          </p>
+        </article>
+
+        <article class="studio-card panel-button">
+          <div class="panel-label">EXPERIENCE</div>
+          <h3>L’ARTE COME INTENSIFICAZIONE DEL REALE</h3>
+          <p>
+            Non un ornamento, ma un modo di produrre emozione, consapevolezza e presenza.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section reveal-section" aria-labelledby="archive-title">
       <div class="section-head">
         <div class="section-kicker">ARCHIVE</div>
-        <h2 id="home-archive-title">LAVORI, PROCESSI, STATI DI VISIBILITÀ</h2>
+        <h2 id="archive-title">LAVORI, PROCESSI, STATI DI VISIBILITÀ</h2>
         <p>
-          L’archivio distingue tra case study pubblici, superfici confidenziali
-          e formati ibridi. Non una lista generica ma una lettura editoriale del lavoro.
+          L’archivio distingue tra case study pubblici, materiali confidenziali
+          e formati ibridi. Non una griglia neutra, ma una lettura editoriale del lavoro.
         </p>
       </div>
 
@@ -135,8 +248,8 @@
             <div class="card-kicker">PUBLIC WORKS</div>
             <h3>ENTRA NELL’ARCHIVIO</h3>
             <p>
-              Case study, materiali protetti e pagine di processo organizzati
-              per funzione, stato e leggibilità.
+              Case study, superfici protette e pagine di processo organizzate
+              per funzione, stato e profondità di accesso.
             </p>
           </div>
         </a>
@@ -146,21 +259,21 @@
             <div class="card-kicker">CURRENT LOGIC</div>
             <h3>CASE STUDY · CONFIDENTIAL · PROCESS ENTRY</h3>
             <p>
-              Tre modi diversi di mostrare il lavoro senza forzare tutto dentro
-              la stessa grammatica da portfolio standard.
+              Tre modi diversi di mostrare il lavoro senza forzarlo dentro
+              una grammatica da portfolio standard.
             </p>
           </div>
         </article>
       </div>
     </section>
 
-    <section class="section reveal-section" aria-labelledby="home-studio-title">
+    <section class="section reveal-section" aria-labelledby="studio-title">
       <div class="section-head">
         <div class="section-kicker">STUDIO</div>
-        <h2 id="home-studio-title">METODO, RIDUZIONE, COERENZA</h2>
+        <h2 id="studio-title">METODO, RIDUZIONE, COERENZA</h2>
         <p>
-          Il metodo parte da domande, taglio e struttura.
-          Prima si chiarisce il campo, poi si costruisce la forma.
+          Il metodo parte da domande, selezione e campo percettivo.
+          Prima si chiarisce il necessario, poi si costruisce ciò che regge.
         </p>
       </div>
 
@@ -169,7 +282,7 @@
           <div class="panel-label">SELECTION</div>
           <h3>TOGLIERE CIÒ CHE INDEBOLISCE</h3>
           <p>
-            La prima mossa è spesso sottrattiva: meno dispersione, più gerarchia, più tensione.
+            La prima mossa è spesso sottrattiva. Meno dispersione, più struttura, più tensione.
           </p>
         </article>
 
@@ -177,7 +290,7 @@
           <div class="panel-label">ATMOSPHERE</div>
           <h3>COSTRUIRE IL CAMPO PERCETTIVO</h3>
           <p>
-            Luce, tipo, spazio e immagine lavorano come un unico campo continuo.
+            Luce, tipo, immagine, spazio e ritmo lavorano come un unico sistema continuo.
           </p>
         </article>
 
@@ -185,7 +298,7 @@
           <div class="panel-label">COHERENCE</div>
           <h3>MANTENERE UN LINGUAGGIO INTERNO</h3>
           <p>
-            Il progetto deve restare riconoscibile tra pagina, immagine, spazio e direzione.
+            Il progetto deve restare riconoscibile tra pagina, ambiente, racconto e direzione.
           </p>
         </article>
 
@@ -193,19 +306,19 @@
           <div class="panel-label">OPEN</div>
           <h3>LEGGI IL METODO COMPLETO</h3>
           <p>
-            Aree operative, contesti adatti, logica di lavoro e struttura percettiva dello studio.
+            Aree operative, logica di lavoro, contesti adatti e struttura dello studio.
           </p>
         </a>
       </div>
     </section>
 
-    <section class="section reveal-section" aria-labelledby="home-lab-title">
+    <section class="section reveal-section" aria-labelledby="lab-title">
       <div class="section-head">
         <div class="section-kicker">LAB</div>
-        <h2 id="home-lab-title">MATERIALI IN FORMAZIONE</h2>
+        <h2 id="lab-title">MATERIALI IN FORMAZIONE, FUTURI POSSIBILI</h2>
         <p>
-          Il laboratorio raccoglie note, test, frammenti e stati di ricerca.
-          È il luogo dove il processo resta leggibile invece di essere nascosto.
+          Il laboratorio raccoglie note, test, frammenti e superfici di ricerca.
+          È il luogo dove il lavoro resta aperto, osservabile, interrogabile.
         </p>
       </div>
 
@@ -215,30 +328,32 @@
             <div class="card-kicker">ACTIVE RESEARCH</div>
             <h3>ENTRA NEL LABORATORIO</h3>
             <p>
-              Studi di luce, materiali in divenire, processi aperti e formati ibridi tra archivio e ricerca.
+              Studi di luce, materiali in divenire, archivi, processi aperti
+              e pagine ibride tra pratica e pensiero.
             </p>
           </div>
         </a>
 
         <article class="featured-card panel-button">
           <div class="featured-body">
-            <div class="card-kicker">WORKING STATE</div>
-            <h3>LA RICERCA NON È SCARTO</h3>
+            <div class="card-kicker">FUTURE LAYER</div>
+            <h3>RICERCA, AI, ARCHIVI INTELLIGENTI, FORMATI IBRIDI</h3>
             <p>
-              Le tracce di lavorazione restano parte dell’intelligenza visibile del progetto.
+              Un ecosistema capace di crescere tra cultura, tecnologia, educazione,
+              installazione e costruzione di nuovi dispositivi di esperienza.
             </p>
           </div>
         </article>
       </div>
     </section>
 
-    <section class="section reveal-section" aria-labelledby="home-contact-title">
+    <section class="section reveal-section" aria-labelledby="contact-title">
       <div class="section-head">
         <div class="section-kicker">CONTACT</div>
-        <h2 id="home-contact-title">POCHI PROGETTI, FATTI BENE</h2>
+        <h2 id="contact-title">POCHI PROGETTI, FATTI BENE</h2>
         <p>
-          BLUCINELAB lavora meglio quando il contesto è chiaro, il progetto ha peso
-          e la collaborazione richiede struttura, visione e precisione.
+          BLUCINELAB lavora meglio quando il contesto è chiaro, il progetto ha
+          peso e la collaborazione richiede visione, rigore e qualità della relazione.
         </p>
       </div>
 
@@ -246,14 +361,19 @@
         <article class="contact-card panel-button">
           <div class="panel-label">EMAIL</div>
           <h3>SCRIVI DIRETTAMENTE</h3>
+
           <div class="contact-list">
             <div class="contact-item">
               <span class="label">Address</span>
               <p>blucinelab@gmail.com</p>
             </div>
+
             <div class="contact-item">
               <span class="label">Use</span>
-              <p>Commissioni, collaborazioni, progetti culturali, direzione visiva e sviluppo digitale.</p>
+              <p>
+                Commissioni, collaborazioni, progetti culturali, direzione visiva,
+                sistemi digitali, installazioni e sviluppo editoriale.
+              </p>
             </div>
           </div>
         </article>
@@ -261,14 +381,20 @@
         <a href="contact.html" class="contact-card panel-button">
           <div class="panel-label">ACCESS</div>
           <h3>APRIRE UNA CONVERSAZIONE UTILE</h3>
+
           <div class="contact-list">
             <div class="contact-item">
               <span class="label">Context</span>
-              <p>Descrivi il progetto, il momento in cui si trova e cosa deve diventare.</p>
+              <p>
+                Descrivi il progetto, il momento in cui si trova e il tipo di trasformazione che richiede.
+              </p>
             </div>
+
             <div class="contact-item">
               <span class="label">Timing</span>
-              <p>Indica scadenze, materiali disponibili e finestra di lavoro prevista.</p>
+              <p>
+                Indica scadenze, materiali già esistenti, vincoli e finestra di lavoro prevista.
+              </p>
             </div>
           </div>
         </a>
@@ -278,6 +404,6 @@
     <div class="bottom-space"></div>
   </main>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
