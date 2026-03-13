@@ -11,6 +11,84 @@
     href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap"
     rel="stylesheet"
   />
+
+  <style>
+    .home-selected-editorial{
+      display:grid;
+      grid-template-columns:1.28fr .72fr;
+      gap:22px;
+      align-items:stretch;
+    }
+
+    .home-selected-main,
+    .home-selected-side-card{
+      position:relative;
+      overflow:hidden;
+      border-radius:18px;
+    }
+
+    .home-selected-main .featured-media img{
+      height:540px;
+    }
+
+    .home-selected-main .featured-body{
+      padding:24px;
+    }
+
+    .home-selected-main .featured-body h3{
+      font-size:clamp(1.45rem,1.8vw,2rem);
+      line-height:1.02;
+      margin-bottom:12px;
+    }
+
+    .home-selected-side{
+      display:grid;
+      grid-template-rows:1fr 1fr;
+      gap:22px;
+    }
+
+    .home-selected-side-card .featured-media img{
+      height:259px;
+    }
+
+    .home-selected-side-card .featured-body{
+      padding:18px 20px 20px;
+    }
+
+    .home-selected-side-card .featured-body h3{
+      font-size:clamp(1.06rem,1.2vw,1.3rem);
+      line-height:1.08;
+      margin-bottom:10px;
+    }
+
+    .home-selected-side-card .featured-body p,
+    .home-selected-main .featured-body p{
+      max-width:52ch;
+    }
+
+    @media (max-width: 1100px){
+      .home-selected-editorial{
+        grid-template-columns:1fr;
+      }
+
+      .home-selected-side{
+        grid-template-columns:1fr;
+        grid-template-rows:auto;
+      }
+
+      .home-selected-main .featured-media img,
+      .home-selected-side-card .featured-media img{
+        height:360px;
+      }
+    }
+
+    @media (max-width: 820px){
+      .home-selected-main .featured-media img,
+      .home-selected-side-card .featured-media img{
+        height:300px;
+      }
+    }
+  </style>
 </head>
 
 <body class="page-home">
@@ -120,39 +198,48 @@
         <p>Three entry points that describe the studio better than a generic overview.</p>
       </div>
 
-      <div class="selected-grid">
-        <a href="project-exhibition.html" class="featured-card panel-button">
+      <div class="home-selected-editorial">
+        <a href="project-exhibition.html" class="featured-card panel-button home-selected-main">
           <div class="featured-media">
-            <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1600&auto=format&fit=crop" alt="Exhibition structure and display environment" />
+            <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1800&auto=format&fit=crop" alt="Exhibition structure and display environment" />
           </div>
           <div class="featured-body">
             <div class="card-kicker">CONFIDENTIAL / EXHIBITION</div>
             <h3>DISPLAY SYSTEM</h3>
-            <p>Spatial pacing, wall-image relation and atmosphere built as one controlled sequence.</p>
+            <p>
+              Spatial pacing, wall-image relation and atmosphere built as one controlled sequence.
+              A case where display is treated as reading structure, not as backdrop.
+            </p>
           </div>
         </a>
 
-        <a href="project-installation.html" class="featured-card panel-button">
-          <div class="featured-media">
-            <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1600&auto=format&fit=crop" alt="Installation and event structure" />
-          </div>
-          <div class="featured-body">
-            <div class="card-kicker">CONFIDENTIAL / INSTALLATION</div>
-            <h3>SPATIAL OBJECT</h3>
-            <p>Large-format gesture designed for presence, clarity and immediate visual impact.</p>
-          </div>
-        </a>
+        <div class="home-selected-side">
+          <a href="project-installation.html" class="featured-card panel-button home-selected-side-card">
+            <div class="featured-media">
+              <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1600&auto=format&fit=crop" alt="Installation and event structure" />
+            </div>
+            <div class="featured-body">
+              <div class="card-kicker">CONFIDENTIAL / INSTALLATION</div>
+              <h3>SPATIAL OBJECT</h3>
+              <p>
+                Large-format gesture designed for presence, clarity and immediate visual impact.
+              </p>
+            </div>
+          </a>
 
-        <a href="project-direction.html" class="featured-card panel-button">
-          <div class="featured-media">
-            <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1600&auto=format&fit=crop" alt="Image direction and visual production" />
-          </div>
-          <div class="featured-body">
-            <div class="card-kicker">CONFIDENTIAL / DIRECTION</div>
-            <h3>IMAGE FRAMEWORK</h3>
-            <p>Tone, continuity and visual logic organised into a stable direction system.</p>
-          </div>
-        </a>
+          <a href="project-direction.html" class="featured-card panel-button home-selected-side-card">
+            <div class="featured-media">
+              <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1600&auto=format&fit=crop" alt="Image direction and visual production" />
+            </div>
+            <div class="featured-body">
+              <div class="card-kicker">CONFIDENTIAL / DIRECTION</div>
+              <h3>IMAGE FRAMEWORK</h3>
+              <p>
+                Tone, continuity and visual logic organised into a stable direction system.
+              </p>
+            </div>
+          </a>
+        </div>
       </div>
     </section>
 
