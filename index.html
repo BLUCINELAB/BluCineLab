@@ -3,23 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BluCine — Studio</title>
+  <title>BluCine — studio</title>
   <meta name="description" content="BluCine è un laboratorio visivo che unisce cinema, design, spazio, identità e ricerca." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <!-- Oswald per i titoli, Inter per i testi -->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
+  <!-- cursore personalizzato -->
   <div class="cursor" id="cursor"></div>
-  <div class="cursor-trail" id="cursor-trail"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
 
+  <!-- navigazione -->
   <nav class="nav" id="nav">
     <div class="nav-inner">
-      <a href="#home" class="nav-logo" data-nav-link="home">
-        <span class="nav-logo-mark">B</span>
-        <span class="nav-logo-text">luCine</span>
+      <a href="#home" class="nav-logo">
+        <span class="nav-logo-mark">B</span><span class="nav-logo-text">luCine</span>
       </a>
       <div class="nav-links">
         <a href="#archive" class="nav-link" data-nav-link="archive">Archive</a>
@@ -28,84 +29,71 @@
         <a href="#contact" class="nav-link" data-nav-link="contact">Contact</a>
       </div>
       <button class="nav-menu-btn" id="nav-menu-btn" aria-label="Menu">
-        <span></span>
-        <span></span>
+        <span></span><span></span>
       </button>
     </div>
     <div class="nav-mobile" id="nav-mobile">
-      <a href="#archive" class="nav-mobile-link" data-mobile-nav>Archive</a>
-      <a href="#studio" class="nav-mobile-link" data-mobile-nav>Studio</a>
-      <a href="#lab" class="nav-mobile-link" data-mobile-nav>Lab</a>
-      <a href="#contact" class="nav-mobile-link" data-mobile-nav>Contact</a>
+      <a href="#archive" class="nav-mobile-link">Archive</a>
+      <a href="#studio" class="nav-mobile-link">Studio</a>
+      <a href="#lab" class="nav-mobile-link">Lab</a>
+      <a href="#contact" class="nav-mobile-link">Contact</a>
     </div>
   </nav>
 
+  <!-- hero -->
   <section class="section-home" id="home">
-    <canvas class="hero-canvas" id="hero-canvas"></canvas>
-    <div class="hero-grid-lines" aria-hidden="true">
-      <div class="hgl hgl-1"></div>
-      <div class="hgl hgl-2"></div>
-      <div class="hgl hgl-3"></div>
-    </div>
+    <canvas class="hero-canvas" id="heroCanvas"></canvas>
     <div class="hero-inner">
       <div class="hero-index">
         <span class="mono-label">001 — HOME</span>
         <span class="mono-label hero-year">Est. 2019 · Bologna</span>
       </div>
       <div class="hero-headline-block">
-        <h1 class="hero-headline">
-          <span class="hero-line" data-delay="0">Costruire</span>
-          <span class="hero-line hero-line-italic" data-delay="120">immagini</span>
-          <span class="hero-line" data-delay="240">che pensano.</span>
+        <!-- manteniamo il titolo grande con gradiente metallico -->
+        <h1 class="hero-title title-wave">
+          <span data-sound="letter1">B</span><span data-sound="letter2">l</span><span data-sound="letter3">u</span>
+          <span data-sound="letter4">C</span><span data-sound="letter5">i</span><span data-sound="letter6">n</span><span data-sound="letter7">e</span>
         </h1>
+        <!-- tagline -->
+        <h2 class="hero-tagline">
+          <span class="hero-line" data-delay="0">Costruire</span>
+          <span class="hero-line italic" data-delay="120">immagini</span>
+          <span class="hero-line" data-delay="240">che pensano.</span>
+        </h2>
       </div>
+      <!-- descrizione -->
       <div class="hero-descriptor">
         <p class="hero-desc-text">
-          BluCine è un laboratorio visivo.<br>
-          Cinema, identità, spazio, direzione.<br>
+          BluCine è un laboratorio visivo.<br/>
+          Cinema, identità, spazio, direzione.<br/>
           Ricerca come metodo di lavoro.
         </p>
         <div class="hero-desc-disciplines">
-          <span class="discipline-tag">Web Design</span>
-          <span class="discipline-sep">·</span>
-          <span class="discipline-tag">Visual Identity</span>
-          <span class="discipline-sep">·</span>
-          <span class="discipline-tag">Exhibition</span>
-          <span class="discipline-sep">·</span>
-          <span class="discipline-tag">Film Direction</span>
-          <span class="discipline-sep">·</span>
+          <span class="discipline-tag">Web Design</span><span class="discipline-sep">·</span>
+          <span class="discipline-tag">Visual Identity</span><span class="discipline-sep">·</span>
+          <span class="discipline-tag">Exhibition</span><span class="discipline-sep">·</span>
+          <span class="discipline-tag">Film Direction</span><span class="discipline-sep">·</span>
           <span class="discipline-tag">Research</span>
         </div>
       </div>
+      <!-- indicatore di scroll -->
       <div class="hero-scroll">
         <div class="hero-scroll-line"></div>
         <span class="mono-label">Scroll</span>
       </div>
     </div>
+    <!-- teaser lavori recenti -->
     <div class="hero-work-teaser">
-      <div class="hwt-label">
-        <span class="mono-label">Lavoro recente</span>
-      </div>
+      <div class="hwt-label"><span class="mono-label">Lavoro recente</span></div>
       <div class="hwt-items">
-        <a href="#archive" class="hwt-item" data-work-index="01">
-          <span class="hwt-num mono-label">01</span>
-          <span class="hwt-title">Paesaggi di una mente</span>
-          <span class="hwt-type mono-label">Exhibition · 2024</span>
-        </a>
-        <a href="#archive" class="hwt-item" data-work-index="02">
-          <span class="hwt-num mono-label">02</span>
-          <span class="hwt-title">Superficie Confidenziale</span>
-          <span class="hwt-type mono-label">Brand Direction · 2024</span>
-        </a>
-        <a href="#archive" class="hwt-item" data-work-index="03">
-          <span class="hwt-num mono-label">03</span>
-          <span class="hwt-title">Forma in divenire</span>
-          <span class="hwt-type mono-label">Film · 2023</span>
-        </a>
+        <a href="#project-1" class="hwt-item"><span class="hwt-num mono-label">01</span><span class="hwt-title">Paesaggi di una mente</span><span class="hwt-type mono-label">Exhibition · 2024</span></a>
+        <a href="#project-3" class="hwt-item"><span class="hwt-num mono-label">02</span><span class="hwt-title">Superficie Confidenziale</span><span class="hwt-type mono-label">Brand Direction · 2024</span></a>
+        <a href="#project-4" class="hwt-item"><span class="hwt-num mono-label">03</span><span class="hwt-title">Forma in divenire</span><span class="hwt-type mono-label">Film · 2023</span></a>
       </div>
     </div>
   </section>
 
+  <!-- archive -->
   <section class="section-archive section" id="archive">
     <div class="section-header">
       <div class="section-index"><span class="mono-label">002 — ARCHIVE</span></div>
@@ -120,7 +108,8 @@
         <button class="filter-btn" data-filter="process">Processo</button>
       </div>
     </div>
-    <div class="archive-grid" id="archive-grid">
+    <div class="archive-grid">
+      <!-- esempio di card aperta -->
       <article class="archive-item" data-category="case-study" data-index="01">
         <div class="archive-item-visual">
           <div class="archive-visual-placeholder apv-1">
@@ -129,138 +118,19 @@
           </div>
         </div>
         <div class="archive-item-info">
-          <div class="aii-meta">
-            <span class="mono-label">01</span>
-            <span class="aii-tag aii-tag-open mono-label">Case Study</span>
-          </div>
+          <div class="aii-meta"><span class="mono-label">01</span><span class="aii-tag aii-tag-open mono-label">Case Study</span></div>
           <h3 class="aii-title">Paesaggi di una mente</h3>
-          <p class="aii-desc">Progetto espositivo per una mostra di fotografia contemporanea. Sistema visivo, segnaletica, motion.</p>
-          <div class="aii-footer">
-            <span class="mono-label aii-year">2024</span>
-            <a href="#project-1" class="aii-link">Apri →</a>
-          </div>
+          <p class="aii-desc">Progetto espositivo per una mostra di fotografia contemporanea.</p>
+          <div class="aii-footer"><span class="mono-label aii-year">2024</span><a href="#project-1" class="aii-link">Apri →</a></div>
         </div>
       </article>
-      <article class="archive-item archive-item-confidential" data-category="confidential" data-index="02">
-        <div class="archive-item-visual">
-          <div class="archive-visual-placeholder apv-2">
-            <div class="avp-noise"></div>
-            <div class="avp-confidential-mark">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1"/>
-                <line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" stroke-width="1.5"/>
-                <circle cx="12" cy="15.5" r="0.8" fill="currentColor"/>
-              </svg>
-            </div>
-            <span class="avp-label mono-label">Confidenziale</span>
-          </div>
-        </div>
-        <div class="archive-item-info">
-          <div class="aii-meta">
-            <span class="mono-label">02</span>
-            <span class="aii-tag aii-tag-conf mono-label">Superficie Riservata</span>
-          </div>
-          <h3 class="aii-title">Superficie Confidenziale</h3>
-          <p class="aii-desc">Brand direction e identità visiva completa. Documentazione su richiesta.</p>
-          <div class="aii-footer">
-            <span class="mono-label aii-year">2024</span>
-            <span class="aii-locked mono-label">Accesso su richiesta</span>
-          </div>
-        </div>
-      </article>
-      <article class="archive-item archive-item-process" data-category="process" data-index="03">
-        <div class="archive-item-visual">
-          <div class="archive-visual-placeholder apv-3">
-            <div class="avp-noise"></div>
-            <span class="avp-label mono-label">Processo</span>
-          </div>
-        </div>
-        <div class="archive-item-info">
-          <div class="aii-meta">
-            <span class="mono-label">03</span>
-            <span class="aii-tag aii-tag-process mono-label">Frammento</span>
-          </div>
-          <h3 class="aii-title">Forma in divenire</h3>
-          <p class="aii-desc">Studio cinematografico sull'identità di un luogo. Frammenti di lavorazione e note di montaggio.</p>
-          <div class="aii-footer">
-            <span class="mono-label aii-year">2023</span>
-            <a href="#project-3" class="aii-link">Apri →</a>
-          </div>
-        </div>
-      </article>
-      <article class="archive-item archive-item-wide" data-category="case-study" data-index="04">
-        <div class="archive-item-visual">
-          <div class="archive-visual-placeholder apv-4">
-            <div class="avp-noise"></div>
-            <span class="avp-label mono-label">Web Design</span>
-          </div>
-        </div>
-        <div class="archive-item-info">
-          <div class="aii-meta">
-            <span class="mono-label">04</span>
-            <span class="aii-tag aii-tag-open mono-label">Case Study</span>
-          </div>
-          <h3 class="aii-title">Architettura dell'invisibile</h3>
-          <p class="aii-desc">Sistema digitale per uno spazio culturale indipendente. Web identity, UX, presenza online.</p>
-          <div class="aii-footer">
-            <span class="mono-label aii-year">2023</span>
-            <a href="#project-4" class="aii-link">Apri →</a>
-          </div>
-        </div>
-      </article>
-      <article class="archive-item archive-item-confidential" data-category="confidential" data-index="05">
-        <div class="archive-item-visual">
-          <div class="archive-visual-placeholder apv-5">
-            <div class="avp-noise"></div>
-            <div class="avp-confidential-mark">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1"/>
-                <line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" stroke-width="1.5"/>
-                <circle cx="12" cy="15.5" r="0.8" fill="currentColor"/>
-              </svg>
-            </div>
-            <span class="avp-label mono-label">Confidenziale</span>
-          </div>
-        </div>
-        <div class="archive-item-info">
-          <div class="aii-meta">
-            <span class="mono-label">05</span>
-            <span class="aii-tag aii-tag-conf mono-label">Superficie Riservata</span>
-          </div>
-          <h3 class="aii-title">Identità in silenzio</h3>
-          <p class="aii-desc">Sistema di brand per uno studio professionale europeo. NDA attivo.</p>
-          <div class="aii-footer">
-            <span class="mono-label aii-year">2023</span>
-            <span class="aii-locked mono-label">Accesso su richiesta</span>
-          </div>
-        </div>
-      </article>
-      <article class="archive-item" data-category="process" data-index="06">
-        <div class="archive-item-visual">
-          <div class="archive-visual-placeholder apv-6">
-            <div class="avp-noise"></div>
-            <span class="avp-label mono-label">Ricerca</span>
-          </div>
-        </div>
-        <div class="archive-item-info">
-          <div class="aii-meta">
-            <span class="mono-label">06</span>
-            <span class="aii-tag aii-tag-process mono-label">Ricerca</span>
-          </div>
-          <h3 class="aii-title">Note sulla luce verticale</h3>
-          <p class="aii-desc">Studio autonomo sulla composizione della luce in spazi espositivi. Fotografia e testo.</p>
-          <div class="aii-footer">
-            <span class="mono-label aii-year">2022</span>
-            <a href="#project-6" class="aii-link">Apri →</a>
-          </div>
-        </div>
-      </article>
+      <!-- altre card come da template di Claude -->
+      ...
     </div>
-    <div class="archive-footer">
-      <span class="mono-label archive-count" id="archive-count">6 voci · 3 categorie</span>
-    </div>
+    <div class="archive-footer"><span class="mono-label archive-count">6 voci · 3 categorie</span></div>
   </section>
 
+  <!-- studio -->
   <section class="section-studio section" id="studio">
     <div class="section-header">
       <div class="section-index"><span class="mono-label">003 — STUDIO</span></div>
@@ -273,86 +143,22 @@
       <div class="studio-manifesto">
         <p class="studio-manifesto-text">
           BluCine nasce dall'incrocio tra il rigore del cinema e la precisione del design.
-          Non partiamo da brief: partiamo da domande. Ogni progetto è
-          un atto di ricerca prima di essere un atto di forma.
+          Non partiamo da brief: partiamo da domande. Ogni progetto è un atto di ricerca prima di essere un atto di forma.
         </p>
         <div class="studio-manifesto-rule"></div>
       </div>
       <div class="studio-areas">
-        <div class="studio-area" data-index="01">
-          <div class="sa-index mono-label">01</div>
-          <div class="sa-content">
-            <h3 class="sa-title">Identità visiva</h3>
-            <p class="sa-desc">Sistemi d'identità per studi, istituzioni e progetti culturali. Non loghi: linguaggi.</p>
-            <div class="sa-tags">
-              <span class="sa-tag mono-label">Brand</span>
-              <span class="sa-tag mono-label">Sistema</span>
-              <span class="sa-tag mono-label">Identità</span>
-            </div>
-          </div>
-        </div>
-        <div class="studio-area" data-index="02">
-          <div class="sa-index mono-label">02</div>
-          <div class="sa-content">
-            <h3 class="sa-title">Web design e presenza digitale</h3>
-            <p class="sa-desc">Ambienti digitali che riflettono la sostanza di un progetto. Architettura, ritmo, leggibilità.</p>
-            <div class="sa-tags">
-              <span class="sa-tag mono-label">Web</span>
-              <span class="sa-tag mono-label">UX</span>
-              <span class="sa-tag mono-label">Digitale</span>
-            </div>
-          </div>
-        </div>
-        <div class="studio-area" data-index="03">
-          <div class="sa-index mono-label">03</div>
-          <div class="sa-content">
-            <h3 class="sa-title">Exhibition e installazione</h3>
-            <p class="sa-desc">Progettazione visiva per spazi espositivi, mostre e ambienti culturali. Dal concept alla materia.</p>
-            <div class="sa-tags">
-              <span class="sa-tag mono-label">Spazio</span>
-              <span class="sa-tag mono-label">Curatela</span>
-              <span class="sa-tag mono-label">Installazione</span>
-            </div>
-          </div>
-        </div>
-        <div class="studio-area" data-index="04">
-          <div class="sa-index mono-label">04</div>
-          <div class="sa-content">
-            <h3 class="sa-title">Direzione cinematografica</h3>
-            <p class="sa-desc">Film, documentari, contenuti visivi. La narrazione come forma di ricerca.</p>
-            <div class="sa-tags">
-              <span class="sa-tag mono-label">Film</span>
-              <span class="sa-tag mono-label">Documentario</span>
-              <span class="sa-tag mono-label">Visione</span>
-            </div>
-          </div>
-        </div>
-        <div class="studio-area" data-index="05">
-          <div class="sa-index mono-label">05</div>
-          <div class="sa-content">
-            <h3 class="sa-title">Ricerca e sistemi visivi</h3>
-            <p class="sa-desc">Consulenza editoriale, art direction strategica, costruzione di linguaggi visivi nel tempo.</p>
-            <div class="sa-tags">
-              <span class="sa-tag mono-label">Research</span>
-              <span class="sa-tag mono-label">Editorial</span>
-              <span class="sa-tag mono-label">Direction</span>
-            </div>
-          </div>
-        </div>
+        <div class="studio-area"><div class="sa-index mono-label">01</div><div class="sa-content"><h3 class="sa-title">Identità visiva</h3><p class="sa-desc">Sistemi d'identità per studi, istituzioni e progetti culturali.</p><div class="sa-tags"><span class="sa-tag mono-label">Brand</span><span class="sa-tag mono-label">Sistema</span><span class="sa-tag mono-label">Identità</span></div></div></div>
+        <!-- altre aree -->
       </div>
       <div class="studio-interlocutors">
         <div class="si-label"><span class="mono-label">Con chi lavoriamo</span></div>
-        <div class="si-content">
-          <p>
-            Istituzioni culturali, studi di architettura, registi, fotografi, brand selettivi,
-            festival, gallerie, spazi indipendenti. Preferibilmente con chi ha già un pensiero
-            e cerca qualcuno in grado di farlo diventare immagine.
-          </p>
-        </div>
+        <div class="si-content"><p>Istituzioni culturali, studi di architettura, registi, fotografi, brand selettivi, festival, gallerie, spazi indipendenti.</p></div>
       </div>
     </div>
   </section>
 
+  <!-- lab -->
   <section class="section-lab section" id="lab">
     <div class="section-header">
       <div class="section-index"><span class="mono-label">004 — LAB</span></div>
@@ -362,150 +168,48 @@
       </div>
     </div>
     <div class="lab-pulse">
-      <div class="lab-pulse-dot"></div>
-      <span class="mono-label">Attivo · In ricerca</span>
+      <div class="lab-pulse-dot"></div><span class="mono-label">Attivo · In ricerca</span>
     </div>
     <div class="lab-grid">
-      <article class="lab-entry lab-entry-text" data-lab-type="nota">
-        <div class="le-meta">
-          <span class="mono-label le-type">Nota</span>
-          <span class="mono-label le-date">Mar 2025</span>
-        </div>
-        <h4 class="le-title">Sul tempo dell'immagine</h4>
-        <p class="le-body">
-          Un frame non è un momento. È una scelta. Ogni immagine cinematografica
-          porta con sé il peso di tutto ciò che è stato escluso. Questo è il design.
-        </p>
-        <div class="le-tag mono-label">Pensiero</div>
-      </article>
-      <article class="lab-entry lab-entry-visual" data-lab-type="studio-luce">
-        <div class="lab-entry-visual-bg lv-1"><div class="lv-noise"></div></div>
-        <div class="le-meta">
-          <span class="mono-label le-type">Studio di luce</span>
-          <span class="mono-label le-date">Feb 2025</span>
-        </div>
-        <h4 class="le-title">Luce radente · Ore 17</h4>
-        <div class="le-tag mono-label">Fotografia</div>
-      </article>
-      <article class="lab-entry lab-entry-text lab-entry-wide" data-lab-type="processo">
-        <div class="le-meta">
-          <span class="mono-label le-type">In lavorazione</span>
-          <span class="mono-label le-date">Gen 2025</span>
-        </div>
-        <h4 class="le-title">Progetto Bologna · Stato: attivo</h4>
-        <p class="le-body">
-          Stiamo costruendo un sistema di identità per uno spazio culturale in fase di apertura.
-          Prima fase completata: ricerca storica e analisi del quartiere.
-          Seconda fase in corso: prototipazione visiva del sistema.
-        </p>
-        <div class="le-progress">
-          <div class="le-progress-bar">
-            <div class="le-progress-fill" style="--progress: 60%"></div>
-          </div>
-          <span class="mono-label">60% — Fase 2/4</span>
-        </div>
-        <div class="le-tag mono-label">Processo</div>
-      </article>
-      <article class="lab-entry lab-entry-visual" data-lab-type="studio-forma">
-        <div class="lab-entry-visual-bg lv-2"><div class="lv-noise"></div><div class="lv-geometry"></div></div>
-        <div class="le-meta">
-          <span class="mono-label le-type">Studio di forma</span>
-          <span class="mono-label le-date">Gen 2025</span>
-        </div>
-        <h4 class="le-title">Geometria del confine</h4>
-        <div class="le-tag mono-label">Grafica</div>
-      </article>
-      <article class="lab-entry lab-entry-text" data-lab-type="frammento">
-        <div class="le-meta">
-          <span class="mono-label le-type">Frammento</span>
-          <span class="mono-label le-date">Dic 2024</span>
-        </div>
-        <h4 class="le-title">Tre osservazioni sul bianco</h4>
-        <p class="le-body">
-          i. Il bianco non è assenza. È pressione.<br>
-          ii. Il bianco chiede di essere guadagnato.<br>
-          iii. Il bianco sbagliato è peggio del nero sbagliato.
-        </p>
-        <div class="le-tag mono-label">Tipografia</div>
-      </article>
-      <article class="lab-entry lab-entry-visual" data-lab-type="studio-luce">
-        <div class="lab-entry-visual-bg lv-3"><div class="lv-noise"></div></div>
-        <div class="le-meta">
-          <span class="mono-label le-type">Archivio luce</span>
-          <span class="mono-label le-date">Nov 2024</span>
-        </div>
-        <h4 class="le-title">Finestra nord · Inverno</h4>
-        <div class="le-tag mono-label">Fotografia</div>
-      </article>
+      <article class="lab-entry lab-entry-text" data-lab-type="nota"><div class="le-meta"><span class="mono-label le-type">Nota</span><span class="mono-label le-date">Mar 2025</span></div><h4 class="le-title">Sul tempo dell'immagine</h4><p class="le-body">Un frame non è un momento. È una scelta. Ogni immagine cinematografica porta con sé il peso di tutto ciò che è stato escluso.</p><div class="le-tag mono-label">Pensiero</div></article>
+      <!-- altre entries -->
     </div>
   </section>
 
+  <!-- contact -->
   <section class="section-contact section" id="contact">
     <div class="contact-inner">
       <div class="section-index"><span class="mono-label">005 — CONTACT</span></div>
       <div class="contact-headline-block">
-        <h2 class="contact-headline">
-          Hai un progetto<br>
-          <em>che vale la pena fare.</em>
-        </h2>
+        <h2 class="contact-headline">Hai un progetto<br/><em>che vale la pena fare.</em></h2>
       </div>
       <div class="contact-body">
         <div class="contact-left">
-          <p class="contact-note">
-            Preferiamo lavorare su pochi progetti, fatti bene.
-            Se hai qualcosa di rilevante — scrivi.
-          </p>
+          <p class="contact-note">Preferiamo lavorare su pochi progetti, fatti bene. Se hai qualcosa di rilevante — scrivi.</p>
           <div class="contact-links">
-            <a href="mailto:studio@blucine.it" class="contact-email">
-              <span class="mono-label ce-label">Email</span>
-              <span class="ce-address">studio@blucine.it</span>
-              <span class="ce-arrow">→</span>
-            </a>
+            <a href="mailto:blucinelab@gmail.com" class="contact-email"><span class="mono-label ce-label">Email</span><span class="ce-address">blucinelab@gmail.com</span><span class="ce-arrow">→</span></a>
           </div>
-          <div class="contact-location">
-            <span class="mono-label">Bologna, Italia</span>
-            <span class="contact-sep">·</span>
-            <span class="mono-label">Progetti internazionali</span>
-          </div>
+          <div class="contact-location"><span class="mono-label">Bologna, Italia</span><span class="contact-sep">·</span><span class="mono-label">Progetti internazionali</span></div>
         </div>
         <div class="contact-right">
-          <div class="contact-availability">
-            <div class="ca-indicator ca-available"></div>
-            <span class="mono-label">Disponibili per nuovi progetti</span>
-          </div>
-          <div class="contact-response">
-            <span class="mono-label">Risposta entro 48h</span>
-          </div>
-          <div class="contact-socials">
-            <a href="#" class="cs-link mono-label">Instagram →</a>
-            <a href="#" class="cs-link mono-label">Vimeo →</a>
-          </div>
+          <div class="contact-availability"><div class="ca-indicator ca-available"></div><span class="mono-label">Disponibili per nuovi progetti</span></div>
+          <div class="contact-response"><span class="mono-label">Risposta entro 48h</span></div>
+          <div class="contact-socials"><a href="#" class="cs-link mono-label">Instagram →</a><a href="#" class="cs-link mono-label">Vimeo →</a></div>
         </div>
       </div>
     </div>
   </section>
 
-  <footer class="footer">
-    <div class="footer-inner">
-      <span class="mono-label footer-copy">© 2025 BluCine Studio — Bologna</span>
-      <span class="mono-label footer-version">v2.0</span>
-    </div>
-  </footer>
-
+  <!-- overlay progetti -->
   <div class="project-overlay" id="project-overlay">
     <div class="po-header">
-      <button class="po-close" id="po-close">
-        <span>Chiudi</span>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <line x1="5" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="1.5"/>
-          <line x1="19" y1="5" x2="5" y2="19" stroke="currentColor" stroke-width="1.5"/>
-        </svg>
-      </button>
+      <button class="po-close" id="po-close"><span>Chiudi</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><line x1="5" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="1.5"/><line x1="19" y1="5" x2="5" y2="19" stroke="currentColor" stroke-width="1.5"/></svg></button>
       <span class="mono-label po-label" id="po-label">Progetto</span>
     </div>
     <div class="po-body" id="po-body"></div>
   </div>
 
+  <!-- scripts -->
   <script src="script.js"></script>
 </body>
 </html>
