@@ -1,1338 +1,914 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>BLUCINELAB OS v1.0 — BOOT SEQUENCE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&family=Oswald:wght@300;400;500&display=swap" rel="stylesheet"/>
-
-<style>
-:root{
-  --c-bg:#0a0a1a;
-  --c-win:#0d1117;
-  --c-bar:#1a1aff;
-  --c-bar2:#000080;
-  --c-yellow:#ffff00;
-  --c-cyan:#00ffff;
-  --c-magenta:#ff00ff;
-  --c-green:#00ff00;
-  --c-red:#ff0044;
-  --c-white:#ffffff;
-  --c-gray:#c0c0c0;
-  --c-darkgray:#808080;
-  --c-orange:#ff8c00;
-  --win-border:2px solid #c0c0c0;
-  --win-shadow:4px 4px 0 #000;
-}
-
-*{margin:0;padding:0;box-sizing:border-box;}
-
-body{
-  background:var(--c-bg);
-  font-family:'Press Start 2P',monospace;
-  color:var(--c-white);
-  min-height:100vh;
-  overflow-x:hidden;
-  cursor:none;
-}
-
-/* ─── CUSTOM CURSOR ─── */
-.cursor-outer{
-  position:fixed;
-  width:20px;height:20px;
-  pointer-events:none;
-  z-index:99999;
-  transform:translate(-50%,-50%);
-}
-.cursor-outer::before{
-  content:'';
-  display:block;
-  width:0;height:0;
-  border-left:10px solid transparent;
-  border-right:0;
-  border-top:0;
-  border-bottom:10px solid transparent;
-  border-left:10px solid var(--c-yellow);
-  filter:drop-shadow(0 0 4px var(--c-yellow));
-}
-
-/* ─── DESKTOP BG ─── */
-#desktop{
-  position:fixed;
-  inset:0;
-  background:
-    repeating-linear-gradient(0deg,transparent,transparent 31px,rgba(0,255,0,.03) 31px,rgba(0,255,0,.03) 32px),
-    repeating-linear-gradient(90deg,transparent,transparent 31px,rgba(0,255,0,.03) 31px,rgba(0,255,0,.03) 32px),
-    radial-gradient(ellipse at 30% 60%,#0d0038 0%,transparent 60%),
-    radial-gradient(ellipse at 70% 20%,#00003a 0%,transparent 50%),
-    #0a0a1a;
-  z-index:0;
-  overflow:hidden;
-}
-
-/* Scanlines */
-#desktop::after{
-  content:'';
-  position:absolute;
-  inset:0;
-  background:repeating-linear-gradient(to bottom,transparent 0,transparent 2px,rgba(0,0,0,.15) 2px,rgba(0,0,0,.15) 4px);
-  pointer-events:none;
-  z-index:10;
-}
-
-/* ─── TASKBAR ─── */
-#taskbar{
-  position:fixed;
-  bottom:0;left:0;right:0;
-  height:34px;
-  background:linear-gradient(to bottom,#c0c0c0 0%,#808080 100%);
-  border-top:3px solid #fff;
-  display:flex;
-  align-items:center;
-  padding:0 6px;
-  gap:6px;
-  z-index:9000;
-  font-size:8px;
-  color:#000;
-}
-
-#taskbar-start{
-  background:linear-gradient(135deg,#008000,#005000);
-  color:#fff;
-  border:2px solid #fff;
-  border-right-color:#000;
-  border-bottom-color:#000;
-  padding:4px 10px;
-  font-family:'Press Start 2P',monospace;
-  font-size:7px;
-  cursor:none;
-  white-space:nowrap;
-  display:flex;align-items:center;gap:6px;
-  text-shadow:1px 1px 0 #000;
-}
-#taskbar-start:hover{background:linear-gradient(135deg,#00a000,#006000);}
-#taskbar-start::before{content:'⊞';font-size:10px;}
-
-.taskbar-btn{
-  background:linear-gradient(to bottom,#d4d0c8,#a09890);
-  border:2px solid #fff;
-  border-right-color:#808080;
-  border-bottom-color:#808080;
-  color:#000;
-  padding:3px 8px;
-  font-family:'Press Start 2P',monospace;
-  font-size:6px;
-  cursor:none;
-  max-width:140px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-.taskbar-btn:active,.taskbar-btn.active{
-  border-color:#808080 #fff #fff #808080;
-}
-
-#clock{
-  margin-left:auto;
-  font-family:'VT323',monospace;
-  font-size:16px;
-  color:#000;
-  padding:2px 8px;
-  border:1px inset #808080;
-  background:#d4d0c8;
-  min-width:70px;
-  text-align:center;
-}
-
-/* ─── WINDOWS ─── */
-.win{
-  position:fixed;
-  background:var(--c-win);
-  border:var(--win-border);
-  box-shadow:var(--win-shadow);
-  min-width:280px;
-  z-index:100;
-  display:flex;
-  flex-direction:column;
-  resize:both;
-  overflow:hidden;
-}
-
-.win-titlebar{
-  background:linear-gradient(90deg,var(--c-bar),var(--c-bar2));
-  color:#fff;
-  font-family:'Press Start 2P',monospace;
-  font-size:7px;
-  padding:5px 8px;
-  display:flex;align-items:center;gap:6px;
-  cursor:move;
-  user-select:none;
-  flex-shrink:0;
-  white-space:nowrap;
-}
-
-.win-icon{font-size:10px;}
-
-.win-title{flex:1;overflow:hidden;text-overflow:ellipsis;}
-
-.win-controls{display:flex;gap:3px;flex-shrink:0;}
-
-.win-btn{
-  width:14px;height:14px;
-  border:1px solid #fff;
-  background:var(--c-gray);
-  color:#000;
-  font-family:'Press Start 2P',monospace;
-  font-size:6px;
-  cursor:none;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-}
-.win-btn:hover{background:#fff;}
-.win-btn.close:hover{background:var(--c-red);color:#fff;}
-
-.win-menubar{
-  background:var(--c-gray);
-  color:#000;
-  font-family:'VT323',monospace;
-  font-size:14px;
-  padding:2px 6px;
-  display:flex;gap:14px;
-  border-bottom:1px solid #808080;
-  flex-shrink:0;
-}
-.win-menubar span{cursor:none;padding:0 4px;}
-.win-menubar span:hover{background:#000;color:#fff;}
-
-.win-body{
-  flex:1;
-  overflow-y:auto;
-  padding:12px;
-  font-family:'VT323',monospace;
-  font-size:16px;
-  line-height:1.5;
-  color:#c8ffc8;
-  scrollbar-width:thin;
-  scrollbar-color:#00ff00 #000;
-}
-
-.win-body::-webkit-scrollbar{width:10px;}
-.win-body::-webkit-scrollbar-track{background:#000;}
-.win-body::-webkit-scrollbar-thumb{background:#00ff00;}
-
-.win-body h2{
-  font-family:'Press Start 2P',monospace;
-  font-size:9px;
-  color:var(--c-yellow);
-  margin:10px 0 6px;
-  text-shadow:0 0 8px var(--c-yellow);
-}
-.win-body h3{
-  font-family:'Press Start 2P',monospace;
-  font-size:7px;
-  color:var(--c-cyan);
-  margin:8px 0 4px;
-  text-shadow:0 0 6px var(--c-cyan);
-}
-.win-body p{font-size:15px;margin-bottom:6px;color:#a0ffa0;}
-
-.win-body .label{
-  font-family:'Press Start 2P',monospace;
-  font-size:6px;
-  color:var(--c-magenta);
-  text-shadow:0 0 4px var(--c-magenta);
-  margin-bottom:4px;
-  display:block;
-}
-
-.win-body .field-card{
-  border:1px solid #00ff0044;
-  padding:8px;
-  margin-bottom:8px;
-  background:rgba(0,255,0,.04);
-}
-.win-body .field-card:hover{
-  border-color:#00ff00;
-  background:rgba(0,255,0,.1);
-}
-
-/* ─── BOOT SCREEN ─── */
-#boot{
-  position:fixed;
-  inset:0;
-  background:#000;
-  z-index:99998;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:14px;
-}
-
-#boot-logo{
-  font-family:'Press Start 2P',monospace;
-  font-size:clamp(14px,3vw,28px);
-  color:#00ff00;
-  text-shadow:0 0 20px #00ff00,0 0 40px #00ff00;
-  letter-spacing:4px;
-  animation:logoGlow 1s ease-in-out infinite alternate;
-}
-@keyframes logoGlow{
-  from{text-shadow:0 0 10px #00ff00;}
-  to{text-shadow:0 0 30px #00ff00,0 0 60px #00ff00;}
-}
-
-#boot-sub{
-  font-family:'VT323',monospace;
-  font-size:20px;
-  color:#808080;
-  letter-spacing:2px;
-}
-
-#boot-bar-wrap{
-  width:280px;
-  border:2px solid #00ff00;
-  height:18px;
-  position:relative;
-  overflow:hidden;
-}
-#boot-bar{
-  height:100%;
-  background:linear-gradient(90deg,#00ff00,#00aa00);
-  width:0%;
-  transition:width .1s linear;
-  box-shadow:0 0 10px #00ff00;
-}
-
-#boot-text{
-  font-family:'VT323',monospace;
-  font-size:15px;
-  color:#00ff00;
-  height:80px;
-  overflow:hidden;
-  width:320px;
-  text-align:left;
-}
-
-/* ─── START MENU ─── */
-#start-menu{
-  position:fixed;
-  bottom:34px;
-  left:0;
-  width:220px;
-  background:linear-gradient(to right,#808080 0%,#c0c0c0 100%);
-  border:3px solid #fff;
-  border-bottom:none;
-  z-index:9999;
-  display:none;
-  flex-direction:column;
-}
-#start-menu.open{display:flex;}
-
-.start-banner{
-  background:linear-gradient(to bottom,#000080,#1a1aff);
-  color:#fff;
-  font-family:'Press Start 2P',monospace;
-  font-size:8px;
-  writing-mode:vertical-rl;
-  transform:rotate(180deg);
-  padding:8px 6px;
-  letter-spacing:2px;
-  text-shadow:1px 1px 0 #000;
-  position:absolute;
-  left:0;top:0;bottom:0;
-  width:30px;
-}
-
-.start-items{
-  margin-left:30px;
-  display:flex;
-  flex-direction:column;
-}
-
-.start-item{
-  padding:8px 12px;
-  font-family:'VT323',monospace;
-  font-size:17px;
-  color:#000;
-  cursor:none;
-  display:flex;align-items:center;gap:8px;
-  border-bottom:1px solid #a0a0a0;
-}
-.start-item:hover{background:#000080;color:#fff;}
-.start-item-icon{font-size:14px;}
-
-/* ─── DESKTOP ICONS ─── */
-.desktop-icon{
-  position:fixed;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:4px;
-  cursor:none;
-  width:72px;
-  z-index:50;
-  padding:4px;
-}
-.desktop-icon:hover .icon-label{background:#000080;color:#fff;}
-.desktop-icon .icon-img{font-size:32px;line-height:1;filter:drop-shadow(2px 2px 0 #000);}
-.desktop-icon .icon-label{
-  font-family:'Press Start 2P',monospace;
-  font-size:6px;
-  color:#fff;
-  text-shadow:1px 1px 0 #000;
-  text-align:center;
-  line-height:1.4;
-  padding:2px 4px;
-}
-
-/* ─── PAC-MAN OVERLAY ─── */
-#pacman-layer{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:200;
-}
-
-.pac{
-  position:absolute;
-  width:28px;height:28px;
-  border-radius:50%;
-  background:var(--c-yellow);
-  clip-path:polygon(100% 50%,0% 0%,0% 100%);
-  animation:chomp .2s steps(2) infinite;
-  filter:drop-shadow(0 0 6px var(--c-yellow));
-  transition:left .04s linear, top .04s linear;
-}
-@keyframes chomp{
-  0%{clip-path:polygon(100% 50%,0% 5%,0% 95%);}
-  50%{clip-path:polygon(100% 50%,0% 50%,0% 50%);}
-  100%{clip-path:polygon(100% 50%,0% 5%,0% 95%);}
-}
-
-.dot{
-  position:absolute;
-  width:6px;height:6px;
-  border-radius:50%;
-  background:#fff;
-  box-shadow:0 0 4px #fff;
-  transition:opacity .1s;
-}
-.power-dot{
-  width:14px;height:14px;
-  background:var(--c-cyan);
-  box-shadow:0 0 8px var(--c-cyan),0 0 16px var(--c-cyan);
-  animation:powerPulse .5s ease-in-out infinite alternate;
-}
-@keyframes powerPulse{
-  from{transform:scale(1);}
-  to{transform:scale(1.3);}
-}
-
-.ghost{
-  position:absolute;
-  font-size:22px;
-  transition:left .06s linear, top .06s linear;
-  filter:drop-shadow(0 0 6px currentColor);
-}
-
-/* ─── GLITCH TEXT ─── */
-.glitch{
-  position:relative;
-  animation:glitchText 4s infinite;
-}
-@keyframes glitchText{
-  0%,90%,100%{text-shadow:none;}
-  91%{text-shadow:3px 0 var(--c-red),-3px 0 var(--c-cyan);}
-  93%{text-shadow:-3px 0 var(--c-magenta),3px 0 var(--c-yellow);}
-  95%{text-shadow:2px 0 var(--c-cyan),-2px 0 var(--c-red);}
-}
-
-/* ─── HERO WINDOW ─── */
-#hero-win{
-  top:40px;left:calc(50% - 300px);
-  width:600px;
-  min-height:300px;
-}
-
-/* ─── SCORE DISPLAY ─── */
-#score-bar{
-  position:fixed;
-  top:0;left:0;right:0;
-  height:28px;
-  background:linear-gradient(90deg,#000 60%,transparent);
-  z-index:8000;
-  display:flex;
-  align-items:center;
-  padding:0 10px;
-  gap:20px;
-  font-size:8px;
-  border-bottom:1px solid #00ff0044;
-}
-#score-bar .sc{color:var(--c-yellow);text-shadow:0 0 6px var(--c-yellow);}
-#score-bar .nm{color:var(--c-green);font-family:'VT323',monospace;font-size:16px;}
-#lives-disp{color:var(--c-red);}
-
-/* ─── EASTER EGG button ─── */
-#egg-btn{
-  position:fixed;
-  top:4px;right:10px;
-  font-size:7px;
-  background:none;
-  border:1px solid #ff00ff44;
-  color:var(--c-magenta);
-  padding:3px 8px;
-  font-family:'Press Start 2P',monospace;
-  cursor:none;
-  z-index:8001;
-  animation:eggBlink 3s step-end infinite;
-}
-@keyframes eggBlink{0%,100%{opacity:1;}50%{opacity:0;}}
-
-/* ─── ALERTS / POPUPS ─── */
-.win-alert{
-  min-width:260px;
-  max-width:360px;
-}
-.win-alert .win-body{
-  font-size:13px;
-  padding:16px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  align-items:flex-start;
-}
-.win-alert .alert-row{display:flex;align-items:flex-start;gap:10px;}
-.win-alert .alert-icon{font-size:24px;flex-shrink:0;}
-.win-alert .alert-msg{font-size:14px;color:#c8ffc8;line-height:1.4;}
-.win-alert .alert-btns{display:flex;gap:8px;margin-top:6px;}
-.alert-ok{
-  font-family:'Press Start 2P',monospace;
-  font-size:7px;
-  padding:6px 16px;
-  background:var(--c-gray);
-  border:2px solid #fff;
-  border-right-color:#000;
-  border-bottom-color:#000;
-  color:#000;
-  cursor:none;
-}
-.alert-ok:active{border-color:#000 #fff #fff #000;}
-
-/* ─── TYPEWRITER ─── */
-.typewriter{overflow:hidden;white-space:pre-wrap;}
-
-/* ─── LOADING spinner ─── */
-.spinner{
-  display:inline-block;
-  animation:spin .6s steps(8) infinite;
-  font-size:20px;
-}
-@keyframes spin{to{transform:rotate(360deg);}}
-
-/* ─── PIXEL DECORATIONS ─── */
-.pixel-border{
-  border:2px solid var(--c-cyan);
-  box-shadow:0 0 0 2px #000,0 0 12px var(--c-cyan);
-}
-
-.win-body a{color:var(--c-cyan);text-decoration:none;text-shadow:0 0 4px var(--c-cyan);}
-.win-body a:hover{color:var(--c-yellow);}
-
-.tag{
-  display:inline-block;
-  font-family:'Press Start 2P',monospace;
-  font-size:5px;
-  padding:2px 6px;
-  border:1px solid;
-  margin:2px;
-}
-.tag.yellow{border-color:var(--c-yellow);color:var(--c-yellow);}
-.tag.cyan{border-color:var(--c-cyan);color:var(--c-cyan);}
-.tag.magenta{border-color:var(--c-magenta);color:var(--c-magenta);}
-.tag.green{border-color:var(--c-green);color:var(--c-green);}
-
-/* win bounce-in */
-.win{animation:winPop .2s cubic-bezier(.17,.67,.24,1.44);}
-@keyframes winPop{from{transform:scale(.5);opacity:0;}to{transform:scale(1);opacity:1;}}
-
-/* responsive */
-@media(max-width:600px){
-  #hero-win{left:4px;right:4px;width:calc(100% - 8px);top:50px;}
-  .win{min-width:200px;}
-}
-</style>
-</head>
-<body>
-
-<!-- ─── CUSTOM CURSOR ─── -->
-<div class="cursor-outer" id="cur"></div>
-
-<!-- ─── SCORE BAR ─── -->
-<div id="score-bar">
-  <span class="nm">BLUCINELAB OS</span>
-  <span class="sc">SCORE: <span id="score-num">0</span></span>
-  <span id="lives-disp">LIVES: ♥♥♥</span>
-</div>
-<button id="egg-btn" title="???">INSERT COIN</button>
-
-<!-- ─── PAC-MAN LAYER ─── -->
-<div id="pacman-layer">
-  <div class="pac" id="pac"></div>
-</div>
-
-<!-- ─── DESKTOP ─── -->
-<div id="desktop"></div>
-
-<!-- ─── DESKTOP ICONS ─── -->
-<div class="desktop-icon" style="top:50px;left:14px" id="icon-archive" data-win="win-archive">
-  <div class="icon-img">📁</div>
-  <div class="icon-label">ARCHIVE</div>
-</div>
-<div class="desktop-icon" style="top:130px;left:14px" id="icon-studio" data-win="win-studio">
-  <div class="icon-img">🎨</div>
-  <div class="icon-label">STUDIO</div>
-</div>
-<div class="desktop-icon" style="top:210px;left:14px" id="icon-lab" data-win="win-lab">
-  <div class="icon-img">🔬</div>
-  <div class="icon-label">LAB.EXE</div>
-</div>
-<div class="desktop-icon" style="top:290px;left:14px" id="icon-contact" data-win="win-contact">
-  <div class="icon-img">📧</div>
-  <div class="icon-label">CONTACT</div>
-</div>
-<div class="desktop-icon" style="top:370px;left:14px" id="icon-manifesto" data-win="win-manifesto">
-  <div class="icon-img">📜</div>
-  <div class="icon-label">MANIFEST</div>
-</div>
-
-<!-- ─── HERO WINDOW ─── -->
-<div class="win" id="hero-win" style="top:44px;left:90px;width:580px;">
-  <div class="win-titlebar" data-drag="hero-win">
-    <span class="win-icon">🖥</span>
-    <span class="win-title glitch">BLUCINELAB OS v1.0 — VISUAL STUDIO</span>
-    <div class="win-controls">
-      <button class="win-btn" data-minimize="hero-win">_</button>
-      <button class="win-btn" data-maximize="hero-win">□</button>
-      <button class="win-btn close" data-close="hero-win">✕</button>
-    </div>
-  </div>
-  <div class="win-menubar">
-    <span>File</span><span>Edit</span><span>View</span><span>Help</span>
-  </div>
-  <div class="win-body" style="min-height:220px;">
-    <span class="label">HOME / BOLOGNA</span>
-    <h2>COSTRUIRE IMMAGINI CHE PENSANO</h2>
-    <p>BLUCINELAB è uno studio visivo indipendente che lavora tra immagine, spazio, direzione e ricerca.</p>
-    <p>Cinema, identità, ambienti digitali, installazioni, archivi, processi: non come servizi separati, ma come un unico campo di costruzione percettiva, culturale e narrativa.</p>
-    <div style="margin-top:10px;display:flex;flex-wrap:wrap;">
-      <span class="tag yellow">WEB DESIGN</span>
-      <span class="tag cyan">VISUAL IDENTITY</span>
-      <span class="tag magenta">EXHIBITION</span>
-      <span class="tag green">IMAGE DIRECTION</span>
-    </div>
-    <div style="margin-top:12px;font-family:'Press Start 2P',monospace;font-size:6px;color:#808080;">
-      <span class="spinner">◐</span> &nbsp;SISTEMA OPERATIVO CARICATO — CLICCA LE ICONE PER NAVIGARE
-    </div>
-  </div>
-</div>
-
-<!-- ─── ARCHIVE WINDOW ─── -->
-<div class="win" id="win-archive" style="top:80px;left:160px;width:420px;display:none;">
-  <div class="win-titlebar" data-drag="win-archive">
-    <span class="win-icon">📁</span>
-    <span class="win-title">ARCHIVE — Lavori e processi</span>
-    <div class="win-controls">
-      <button class="win-btn" data-minimize="win-archive">_</button>
-      <button class="win-btn close" data-close="win-archive">✕</button>
-    </div>
-  </div>
-  <div class="win-menubar"><span>File</span><span>Sort</span><span>View</span></div>
-  <div class="win-body" style="min-height:180px;">
-    <span class="label">ARCHIVE / PUBLIC WORKS</span>
-    <h2>LAVORI, PROCESSI, STATI DI VISIBILITÀ</h2>
-    <div class="field-card">
-      <span class="label">PUBLIC WORKS</span>
-      <h3>ENTRA NELL'ARCHIVIO</h3>
-      <p>Case study, superfici protette e pagine di processo organizzate per funzione, stato e profondità di accesso.</p>
-    </div>
-    <div class="field-card">
-      <span class="label">CURRENT LOGIC</span>
-      <h3>CASE STUDY · CONFIDENTIAL · PROCESS</h3>
-      <p>Tre modi diversi di mostrare il lavoro senza forzarlo dentro una grammatica da portfolio standard.</p>
-    </div>
-    <p style="font-size:13px;color:#606060;">► Doppio click sull'icona per riaprire.</p>
-  </div>
-</div>
-
-<!-- ─── STUDIO WINDOW ─── -->
-<div class="win" id="win-studio" style="top:100px;left:200px;width:440px;display:none;">
-  <div class="win-titlebar" data-drag="win-studio">
-    <span class="win-icon">🎨</span>
-    <span class="win-title">STUDIO — Metodo e coerenza</span>
-    <div class="win-controls">
-      <button class="win-btn" data-minimize="win-studio">_</button>
-      <button class="win-btn close" data-close="win-studio">✕</button>
-    </div>
-  </div>
-  <div class="win-menubar"><span>File</span><span>Method</span><span>Values</span></div>
-  <div class="win-body" style="min-height:220px;">
-    <span class="label">STUDIO / METODO</span>
-    <h2>METODO, RIDUZIONE, COERENZA</h2>
-    <div class="field-card">
-      <span class="label">SELECTION</span>
-      <h3>TOGLIERE CIÒ CHE INDEBOLISCE</h3>
-      <p>La prima mossa è spesso sottrattiva. Meno dispersione, più struttura, più tensione.</p>
-    </div>
-    <div class="field-card">
-      <span class="label">ATMOSPHERE</span>
-      <h3>COSTRUIRE IL CAMPO PERCETTIVO</h3>
-      <p>Luce, tipo, immagine, spazio e ritmo lavorano come un unico sistema continuo.</p>
-    </div>
-    <div class="field-card">
-      <span class="label">COHERENCE</span>
-      <h3>MANTENERE UN LINGUAGGIO INTERNO</h3>
-      <p>Il progetto deve restare riconoscibile tra pagina, ambiente, racconto e direzione.</p>
-    </div>
-    <h2 style="margin-top:14px;">VALORI</h2>
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">
-      <span class="tag cyan">CARE</span>
-      <span class="tag yellow">PRECISION</span>
-      <span class="tag magenta">RESEARCH</span>
-      <span class="tag green">EXPERIENCE</span>
-    </div>
-  </div>
-</div>
-
-<!-- ─── LAB WINDOW ─── -->
-<div class="win" id="win-lab" style="top:120px;left:240px;width:400px;display:none;">
-  <div class="win-titlebar" data-drag="win-lab">
-    <span class="win-icon">🔬</span>
-    <span class="win-title">LAB.EXE — Ricerca attiva</span>
-    <div class="win-controls">
-      <button class="win-btn" data-minimize="win-lab">_</button>
-      <button class="win-btn close" data-close="win-lab">✕</button>
-    </div>
-  </div>
-  <div class="win-menubar"><span>File</span><span>Research</span><span>Future</span></div>
-  <div class="win-body" style="min-height:200px;">
-    <span class="label">LAB / ACTIVE RESEARCH</span>
-    <h2>MATERIALI IN FORMAZIONE, FUTURI POSSIBILI</h2>
-    <p>Il laboratorio raccoglie note, test, frammenti e superfici di ricerca. È il luogo dove il lavoro resta aperto, osservabile, interrogabile.</p>
-    <div class="field-card" style="margin-top:10px;">
-      <span class="label">FUTURE LAYER</span>
-      <h3>RICERCA, AI, ARCHIVI INTELLIGENTI</h3>
-      <p>Un ecosistema capace di crescere tra cultura, tecnologia, educazione, installazione e costruzione di nuovi dispositivi di esperienza.</p>
-    </div>
-    <div style="margin-top:10px;font-size:13px;color:var(--c-magenta);">
-      <span class="spinner">◑</span> &nbsp;CARICAMENTO FUTURI IN CORSO...
-    </div>
-  </div>
-</div>
-
-<!-- ─── CONTACT WINDOW ─── -->
-<div class="win" id="win-contact" style="top:140px;left:180px;width:380px;display:none;">
-  <div class="win-titlebar" data-drag="win-contact">
-    <span class="win-icon">📧</span>
-    <span class="win-title">CONTACT — Apri una conversazione</span>
-    <div class="win-controls">
-      <button class="win-btn" data-minimize="win-contact">_</button>
-      <button class="win-btn close" data-close="win-contact">✕</button>
-    </div>
-  </div>
-  <div class="win-menubar"><span>File</span><span>Send</span></div>
-  <div class="win-body" style="min-height:180px;">
-    <span class="label">CONTACT / EMAIL</span>
-    <h2>POCHI PROGETTI, FATTI BENE</h2>
-    <p>BLUCINELAB lavora meglio quando il contesto è chiaro, il progetto ha peso e la collaborazione richiede visione, rigore e qualità della relazione.</p>
-    <div class="field-card" style="margin-top:10px;">
-      <span class="label">ADDRESS</span>
-      <h3><a href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a></h3>
-      <p>Commissioni, collaborazioni, progetti culturali, direzione visiva, sistemi digitali, installazioni.</p>
-    </div>
-    <div class="field-card">
-      <span class="label">TIMING</span>
-      <p>Indica scadenze, materiali già esistenti, vincoli e finestra di lavoro prevista.</p>
-    </div>
-  </div>
-</div>
-
-<!-- ─── MANIFESTO WINDOW ─── -->
-<div class="win" id="win-manifesto" style="top:160px;left:130px;width:460px;display:none;">
-  <div class="win-titlebar" data-drag="win-manifesto">
-    <span class="win-icon">📜</span>
-    <span class="win-title">MANIFESTO — Un laboratorio contemporaneo</span>
-    <div class="win-controls">
-      <button class="win-btn" data-minimize="win-manifesto">_</button>
-      <button class="win-btn close" data-close="win-manifesto">✕</button>
-    </div>
-  </div>
-  <div class="win-menubar"><span>File</span><span>Print</span><span>Share</span></div>
-  <div class="win-body" style="min-height:200px;">
-    <span class="label">MANIFESTO</span>
-    <h2>UN LABORATORIO CONTEMPORANEO DELL'IMMAGINE</h2>
-    <p>BLUCINELAB nasce dall'idea che l'immagine non sia una superficie da riempire, ma una forma di lettura del mondo. Per questo lavoriamo tra rigore e immaginazione, metodo e sensibilità, costruzione tecnica e profondità emotiva.</p>
-    <p>Ci interessano progetti capaci di generare presenza, esperienza, memoria, relazione. Progetti culturali, editoriali, installativi, digitali o ibridi, in cui la forma non decora ma orienta, chiarisce e intensifica.</p>
-    <div style="margin-top:14px;">
-      <h2>POSIZIONE</h2>
-      <p>Il sito tiene insieme studio, archivio e ricerca. Non presenta una somma di prestazioni, ma una postura. Un modo di pensare e costruire immagini, spazi e sistemi visivi con coerenza, precisione e apertura.</p>
-    </div>
-  </div>
-</div>
-
-<!-- ─── TASKBAR ─── -->
-<div id="taskbar">
-  <button id="taskbar-start">START</button>
-  <div id="taskbar-tasks"></div>
-  <div id="clock">00:00:00</div>
-</div>
-
-<!-- ─── START MENU ─── -->
-<div id="start-menu">
-  <div class="start-banner">BLUCINELAB</div>
-  <div class="start-items">
-    <div class="start-item" data-open="win-archive"><span class="start-item-icon">📁</span> Archive</div>
-    <div class="start-item" data-open="win-studio"><span class="start-item-icon">🎨</span> Studio</div>
-    <div class="start-item" data-open="win-lab"><span class="start-item-icon">🔬</span> Lab</div>
-    <div class="start-item" data-open="win-contact"><span class="start-item-icon">📧</span> Contact</div>
-    <div class="start-item" data-open="win-manifesto"><span class="start-item-icon">📜</span> Manifesto</div>
-    <div class="start-item" id="sm-pacman"><span class="start-item-icon">👾</span> Pac-Man</div>
-    <div class="start-item" id="sm-shutdown"><span class="start-item-icon">🔴</span> Shut Down</div>
-  </div>
-</div>
-
-<!-- ─── BOOT SCREEN ─── -->
-<div id="boot">
-  <div id="boot-logo">BLUCINELAB</div>
-  <div id="boot-sub">VISUAL STUDIO OS — BOLOGNA</div>
-  <div id="boot-bar-wrap"><div id="boot-bar"></div></div>
-  <div id="boot-text"></div>
-</div>
-
 <script>
-// ─── CURSOR ───
-const cur = document.getElementById('cur');
-document.addEventListener('mousemove', e => {
-  cur.style.left = e.clientX + 'px';
-  cur.style.top = e.clientY + 'px';
-});
+// ======================================================
+// BLUCINELAB OS — SCRIPT OPTIMIZED v2
+// Mantiene il concept, riduce il rumore
+// ======================================================
 
-// ─── CLOCK ───
-function updateClock(){
+// ─────────────────────────────────────
+// BASIC HELPERS
+// ─────────────────────────────────────
+const $ = (sel, ctx = document) => ctx.querySelector(sel);
+const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+
+// ─────────────────────────────────────
+// GLOBAL STATE
+// ─────────────────────────────────────
+const state = {
+  topZ: 200,
+  bootDone: false,
+  popupShown: false,
+  konamiSeq: [],
+  pac: {
+    active: false,
+    x: 200,
+    y: 200,
+    dirX: 2.4,
+    dirY: 0,
+    score: 0,
+    lives: 3,
+    powerMode: false,
+    powerTimer: 0,
+    dots: [],
+    ghosts: [],
+    animationId: null
+  }
+};
+
+// ─────────────────────────────────────
+// CURSOR
+// ─────────────────────────────────────
+(function initCursor() {
+  const cur = $('#cur');
+  if (!cur) return;
+
+  const hasFinePointer = window.matchMedia('(pointer:fine)').matches;
+  if (!hasFinePointer) {
+    cur.style.display = 'none';
+    document.body.style.cursor = 'auto';
+    return;
+  }
+
+  document.body.style.cursor = 'none';
+
+  document.addEventListener('mousemove', e => {
+    cur.style.left = e.clientX + 'px';
+    cur.style.top = e.clientY + 'px';
+  });
+})();
+
+// ─────────────────────────────────────
+// CLOCK
+// ─────────────────────────────────────
+function updateClock() {
   const now = new Date();
-  document.getElementById('clock').textContent =
-    String(now.getHours()).padStart(2,'0')+':'+
-    String(now.getMinutes()).padStart(2,'0')+':'+
-    String(now.getSeconds()).padStart(2,'0');
+  const clock = $('#clock');
+  if (!clock) return;
+
+  clock.textContent =
+    String(now.getHours()).padStart(2, '0') + ':' +
+    String(now.getMinutes()).padStart(2, '0') + ':' +
+    String(now.getSeconds()).padStart(2, '0');
 }
 setInterval(updateClock, 1000);
 updateClock();
 
-// ─── BOOT SEQUENCE ───
-const bootLines = [
-  'BLUCINELAB OS v1.0 — AVVIO SISTEMA',
-  'Caricamento driver visivi... OK',
-  'Inizializzazione archivio immagini... OK',
-  'Montaggio unità creativa... OK',
-  'Caricamento moduli percettivi... OK',
-  'Connessione al campo culturale... OK',
-  'Avvio interfaccia utente... OK',
-  'SISTEMA PRONTO.',
-];
-
-let bootDone = false;
-const bootBar = document.getElementById('boot-bar');
-const bootTextEl = document.getElementById('boot-text');
-let bootProgress = 0;
-let bootLineIdx = 0;
-
-function bootStep(){
-  if(bootLineIdx < bootLines.length){
-    bootTextEl.textContent += bootLines[bootLineIdx]+'\n';
-    bootLineIdx++;
-    bootProgress = Math.round((bootLineIdx / bootLines.length) * 100);
-    bootBar.style.width = bootProgress + '%';
-    setTimeout(bootStep, 160 + Math.random()*180);
-  } else {
-    setTimeout(()=>{
-      document.getElementById('boot').style.opacity = '0';
-      document.getElementById('boot').style.transition = 'opacity .5s';
-      setTimeout(()=>{ document.getElementById('boot').remove(); bootDone = true; }, 500);
-    }, 500);
+// ─────────────────────────────────────
+// BOOT SEQUENCE
+// ─────────────────────────────────────
+(function initBoot() {
+  const boot = $('#boot');
+  const bootBar = $('#boot-bar');
+  const bootTextEl = $('#boot-text');
+  if (!boot || !bootBar || !bootTextEl) {
+    state.bootDone = true;
+    return;
   }
+
+  const alreadyBooted = sessionStorage.getItem('blucinelab_booted');
+
+  if (alreadyBooted) {
+    boot.remove();
+    state.bootDone = true;
+    showWelcomePopupOnce();
+    return;
+  }
+
+  const bootLines = [
+    'BLUCINELAB OS v1.0 — AVVIO SISTEMA',
+    'Caricamento driver visivi... OK',
+    'Inizializzazione archivio immagini... OK',
+    'Avvio interfaccia utente... OK',
+    'SISTEMA PRONTO.'
+  ];
+
+  let lineIdx = 0;
+
+  function bootStep() {
+    if (lineIdx < bootLines.length) {
+      bootTextEl.textContent += bootLines[lineIdx] + '\n';
+      lineIdx++;
+
+      const progress = Math.round((lineIdx / bootLines.length) * 100);
+      bootBar.style.width = progress + '%';
+
+      setTimeout(bootStep, 180);
+    } else {
+      sessionStorage.setItem('blucinelab_booted', '1');
+      setTimeout(() => {
+        boot.style.transition = 'opacity .45s ease';
+        boot.style.opacity = '0';
+        setTimeout(() => {
+          boot.remove();
+          state.bootDone = true;
+          showWelcomePopupOnce();
+        }, 450);
+      }, 350);
+    }
+  }
+
+  setTimeout(bootStep, 350);
+})();
+
+// ─────────────────────────────────────
+// WINDOW MANAGEMENT
+// ─────────────────────────────────────
+function bringToFront(win) {
+  if (!win) return;
+  win.style.zIndex = ++state.topZ;
 }
-setTimeout(bootStep, 600);
 
-// ─── WINDOW MANAGEMENT ───
-let topZ = 200;
-const windows = {};
-
-function bringToFront(win){
-  win.style.zIndex = ++topZ;
+function isWindowVisible(win) {
+  return win && getComputedStyle(win).display !== 'none';
 }
 
-function openWindow(id){
+function openWindow(id) {
   const win = document.getElementById(id);
-  if(!win) return;
+  if (!win) return;
+
   win.style.display = 'flex';
   win.style.flexDirection = 'column';
+
+  if (win.dataset.minimized === '1') {
+    restoreWindowBody(win);
+    win.dataset.minimized = '0';
+  }
+
   bringToFront(win);
   updateTaskbar();
 }
 
-function closeWindow(id){
+function closeWindow(id) {
   const win = document.getElementById(id);
-  if(!win) return;
+  if (!win) return;
+
+  // la hero window non deve sparire davvero
+  if (id === 'hero-win') {
+    openWindow(id);
+    bringToFront(win);
+    return;
+  }
+
   win.style.display = 'none';
   updateTaskbar();
 }
 
-function minimizeWindow(id){
-  const win = document.getElementById(id);
-  if(!win) return;
-  if(win.dataset.minimized === '1'){
-    win.style.height = '';
-    win.dataset.minimized = '0';
-    const body = win.querySelector('.win-body');
-    const menubar = win.querySelector('.win-menubar');
-    if(body) body.style.display = '';
-    if(menubar) menubar.style.display = '';
-  } else {
-    const body = win.querySelector('.win-body');
-    const menubar = win.querySelector('.win-menubar');
-    if(body) body.style.display = 'none';
-    if(menubar) menubar.style.display = 'none';
-    win.dataset.minimized = '1';
-  }
+function restoreWindowBody(win) {
+  const body = $('.win-body', win);
+  const menubar = $('.win-menubar', win);
+  if (body) body.style.display = '';
+  if (menubar) menubar.style.display = '';
 }
 
-function maximizeWindow(id){
+function minimizeWindow(id) {
   const win = document.getElementById(id);
-  if(!win) return;
-  if(win.dataset.maximized === '1'){
-    win.style.top = win.dataset.prevTop;
-    win.style.left = win.dataset.prevLeft;
-    win.style.width = win.dataset.prevW;
-    win.style.height = win.dataset.prevH;
+  if (!win) return;
+
+  const body = $('.win-body', win);
+  const menubar = $('.win-menubar', win);
+
+  if (win.dataset.minimized === '1') {
+    restoreWindowBody(win);
+    win.dataset.minimized = '0';
+  } else {
+    if (body) body.style.display = 'none';
+    if (menubar) menubar.style.display = 'none';
+    win.dataset.minimized = '1';
+  }
+
+  updateTaskbar();
+}
+
+function maximizeWindow(id) {
+  const win = document.getElementById(id);
+  if (!win) return;
+
+  if (win.dataset.maximized === '1') {
+    win.style.top = win.dataset.prevTop || '';
+    win.style.left = win.dataset.prevLeft || '';
+    win.style.width = win.dataset.prevW || '';
+    win.style.height = win.dataset.prevH || '';
     win.dataset.maximized = '0';
   } else {
     win.dataset.prevTop = win.style.top;
     win.dataset.prevLeft = win.style.left;
     win.dataset.prevW = win.style.width;
     win.dataset.prevH = win.style.height;
-    win.style.top = '28px';
+
+    win.style.top = '36px';
     win.style.left = '80px';
-    win.style.width = (window.innerWidth - 88)+'px';
-    win.style.height = (window.innerHeight - 70)+'px';
+    win.style.width = (window.innerWidth - 90) + 'px';
+    win.style.height = (window.innerHeight - 78) + 'px';
     win.dataset.maximized = '1';
+
     bringToFront(win);
   }
 }
 
-function updateTaskbar(){
-  const container = document.getElementById('taskbar-tasks');
+function updateTaskbar() {
+  const container = $('#taskbar-tasks');
+  if (!container) return;
+
   container.innerHTML = '';
-  document.querySelectorAll('.win').forEach(w=>{
-    if(w.style.display !== 'none'){
-      const btn = document.createElement('button');
-      btn.className = 'taskbar-btn';
-      btn.textContent = (w.querySelector('.win-title')||{}).textContent?.slice(0,18)||w.id;
-      btn.onclick = ()=>{ bringToFront(w); };
-      container.appendChild(btn);
+
+  $$('.win').forEach(win => {
+    if (!isWindowVisible(win)) return;
+
+    const btn = document.createElement('button');
+    btn.className = 'taskbar-btn';
+
+    const title = $('.win-title', win)?.textContent?.trim() || win.id;
+    btn.textContent = title.slice(0, 20);
+
+    if (win.dataset.minimized === '1') {
+      btn.classList.remove('active');
+    } else {
+      btn.classList.add('active');
     }
+
+    btn.addEventListener('click', () => {
+      if (win.dataset.minimized === '1') {
+        minimizeWindow(win.id);
+      }
+      bringToFront(win);
+    });
+
+    container.appendChild(btn);
   });
 }
 
-// ─── DRAG ───
-document.querySelectorAll('[data-drag]').forEach(titlebar=>{
+// ─────────────────────────────────────
+// DRAG WINDOWS
+// ─────────────────────────────────────
+function makeWindowDraggable(titlebar) {
   const winId = titlebar.dataset.drag;
   const win = document.getElementById(winId);
-  let dragging = false, ox, oy;
-  titlebar.addEventListener('mousedown', e=>{
-    if(e.target.closest('.win-btn')) return;
+  if (!win) return;
+
+  let dragging = false;
+  let ox = 0;
+  let oy = 0;
+
+  titlebar.addEventListener('mousedown', e => {
+    if (e.target.closest('.win-btn')) return;
     dragging = true;
+
     const rect = win.getBoundingClientRect();
     ox = e.clientX - rect.left;
     oy = e.clientY - rect.top;
+
     bringToFront(win);
     e.preventDefault();
   });
-  document.addEventListener('mousemove', e=>{
-    if(!dragging) return;
-    win.style.left = Math.max(0, e.clientX - ox)+'px';
-    win.style.top = Math.max(28, Math.min(window.innerHeight-60, e.clientY - oy))+'px';
+
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+
+    const maxLeft = window.innerWidth - 120;
+    const maxTop = window.innerHeight - 60;
+
+    win.style.left = Math.max(0, Math.min(maxLeft, e.clientX - ox)) + 'px';
+    win.style.top = Math.max(28, Math.min(maxTop, e.clientY - oy)) + 'px';
   });
-  document.addEventListener('mouseup', ()=>{ dragging = false; });
-  // touch
-  titlebar.addEventListener('touchstart', e=>{
-    if(e.target.closest('.win-btn')) return;
+
+  document.addEventListener('mouseup', () => {
+    dragging = false;
+  });
+
+  titlebar.addEventListener('touchstart', e => {
+    if (e.target.closest('.win-btn')) return;
+
     dragging = true;
     const t = e.touches[0];
     const rect = win.getBoundingClientRect();
     ox = t.clientX - rect.left;
     oy = t.clientY - rect.top;
     bringToFront(win);
-  },{passive:true});
-  document.addEventListener('touchmove', e=>{
-    if(!dragging) return;
+  }, { passive: true });
+
+  document.addEventListener('touchmove', e => {
+    if (!dragging) return;
+
     const t = e.touches[0];
-    win.style.left = Math.max(0, t.clientX - ox)+'px';
-    win.style.top = Math.max(28, Math.min(window.innerHeight-60, t.clientY - oy))+'px';
-  },{passive:true});
-  document.addEventListener('touchend', ()=>{ dragging = false; });
+    const maxLeft = window.innerWidth - 120;
+    const maxTop = window.innerHeight - 60;
+
+    win.style.left = Math.max(0, Math.min(maxLeft, t.clientX - ox)) + 'px';
+    win.style.top = Math.max(28, Math.min(maxTop, t.clientY - oy)) + 'px';
+  }, { passive: true });
+
+  document.addEventListener('touchend', () => {
+    dragging = false;
+  });
+}
+
+$$('[data-drag]').forEach(makeWindowDraggable);
+
+// ─────────────────────────────────────
+// BUTTON BINDINGS
+// ─────────────────────────────────────
+$$('[data-close]').forEach(btn => {
+  btn.addEventListener('click', () => closeWindow(btn.dataset.close));
 });
 
-// ─── WIN BUTTONS ───
-document.querySelectorAll('[data-close]').forEach(btn=>{
-  btn.addEventListener('click', ()=>closeWindow(btn.dataset.close));
-});
-document.querySelectorAll('[data-minimize]').forEach(btn=>{
-  btn.addEventListener('click', ()=>minimizeWindow(btn.dataset.minimize));
-});
-document.querySelectorAll('[data-maximize]').forEach(btn=>{
-  btn.addEventListener('click', ()=>maximizeWindow(btn.dataset.maximize));
+$$('[data-minimize]').forEach(btn => {
+  btn.addEventListener('click', () => minimizeWindow(btn.dataset.minimize));
 });
 
-// ─── DESKTOP ICONS ───
-document.querySelectorAll('.desktop-icon[data-win]').forEach(icon=>{
-  let clicks = 0, timer;
-  icon.addEventListener('click', ()=>{
+$$('[data-maximize]').forEach(btn => {
+  btn.addEventListener('click', () => maximizeWindow(btn.dataset.maximize));
+});
+
+// ─────────────────────────────────────
+// DESKTOP ICONS
+// Mantengo doppio click desktop, ma senza goffaggini inutili
+// ─────────────────────────────────────
+$$('.desktop-icon[data-win]').forEach(icon => {
+  let clicks = 0;
+  let timer = null;
+
+  icon.addEventListener('click', () => {
     clicks++;
     clearTimeout(timer);
-    timer = setTimeout(()=>{
-      if(clicks >= 2) openWindow(icon.dataset.win);
+
+    timer = setTimeout(() => {
+      if (clicks >= 2) openWindow(icon.dataset.win);
       clicks = 0;
-    }, 300);
+    }, 260);
+  });
+
+  icon.addEventListener('dblclick', () => {
+    clearTimeout(timer);
+    clicks = 0;
+    openWindow(icon.dataset.win);
   });
 });
 
-// ─── START MENU ───
-const startMenu = document.getElementById('start-menu');
-document.getElementById('taskbar-start').addEventListener('click', e=>{
-  e.stopPropagation();
-  startMenu.classList.toggle('open');
+// ─────────────────────────────────────
+// START MENU
+// ─────────────────────────────────────
+const startMenu = $('#start-menu');
+const startButton = $('#taskbar-start');
+
+if (startButton && startMenu) {
+  startButton.addEventListener('click', e => {
+    e.stopPropagation();
+    startMenu.classList.toggle('open');
+  });
+
+  document.addEventListener('click', e => {
+    if (!startMenu.contains(e.target) && e.target !== startButton) {
+      startMenu.classList.remove('open');
+    }
+  });
+}
+
+$$('[data-open]').forEach(item => {
+  item.addEventListener('click', () => {
+    openWindow(item.dataset.open);
+    startMenu?.classList.remove('open');
+  });
 });
-document.addEventListener('click', ()=>startMenu.classList.remove('open'));
 
-document.querySelectorAll('[data-open]').forEach(item=>{
-  item.addEventListener('click', ()=>{ openWindow(item.dataset.open); startMenu.classList.remove('open'); });
+const shutdownBtn = $('#sm-shutdown');
+if (shutdownBtn) {
+  shutdownBtn.addEventListener('click', () => {
+    document.body.innerHTML = `
+      <div style="background:#000;color:#00ff00;font-family:'Press Start 2P',monospace;font-size:14px;display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:20px;">
+        <div>È SICURO SPEGNERE IL COMPUTER</div>
+        <div style="font-size:9px;color:#808080;">BLUCINELAB OS v1.0</div>
+        <button onclick="location.reload()" style="font-family:'Press Start 2P',monospace;font-size:8px;padding:10px 20px;background:#000;color:#00ff00;border:2px solid #00ff00;cursor:pointer;margin-top:20px;">
+          ↺ RIAVVIA
+        </button>
+      </div>
+    `;
+  });
+}
+
+// ─────────────────────────────────────
+// FOCUS WINDOWS
+// ─────────────────────────────────────
+$$('.win').forEach(win => {
+  win.addEventListener('mousedown', () => bringToFront(win));
 });
 
-document.getElementById('sm-shutdown').addEventListener('click', ()=>{
-  document.body.innerHTML = '<div style="background:#000;color:#00ff00;font-family:\'Press Start 2P\',monospace;font-size:14px;display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:20px;"><div>È SICURO SPEGNERE IL COMPUTER</div><div style="font-size:9px;color:#808080;">BLUCINELAB OS v1.0</div><button onclick="location.reload()" style="font-family:\'Press Start 2P\',monospace;font-size:8px;padding:10px 20px;background:#000;color:#00ff00;border:2px solid #00ff00;cursor:pointer;margin-top:20px;">↺ RIAVVIA</button></div>';
+// ─────────────────────────────────────
+// ALERT SYSTEM
+// un solo sistema, niente mitragliata di popup
+// ─────────────────────────────────────
+let alertZ = 9000;
+
+function showAlert(title, msg, onOk = null) {
+  const w = document.createElement('div');
+  w.className = 'win win-alert';
+  w.style.top = (110 + Math.random() * 80) + 'px';
+  w.style.left = (Math.max(20, window.innerWidth / 2 - 170 + Math.random() * 40)) + 'px';
+  w.style.zIndex = ++alertZ;
+
+  w.innerHTML = `
+    <div class="win-titlebar" style="background:linear-gradient(90deg,#800000,#400000)">
+      <span class="win-icon">⚠</span>
+      <span class="win-title">${title}</span>
+      <div class="win-controls">
+        <button class="win-btn close">✕</button>
+      </div>
+    </div>
+    <div class="win-body">
+      <div class="alert-row">
+        <span class="alert-icon">🔔</span>
+        <span class="alert-msg">${msg.replace(/\n/g, '<br>')}</span>
+      </div>
+      <div class="alert-btns">
+        <button class="alert-ok">OK</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(w);
+  bringToFront(w);
+
+  const closeBtn = $('.close', w);
+  const okBtn = $('.alert-ok', w);
+  const titlebar = $('.win-titlebar', w);
+
+  let dragging = false;
+  let ox = 0;
+  let oy = 0;
+
+  titlebar.addEventListener('mousedown', e => {
+    if (e.target.closest('.win-btn')) return;
+    dragging = true;
+    const r = w.getBoundingClientRect();
+    ox = e.clientX - r.left;
+    oy = e.clientY - r.top;
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    w.style.left = Math.max(0, e.clientX - ox) + 'px';
+    w.style.top = Math.max(20, e.clientY - oy) + 'px';
+  });
+
+  document.addEventListener('mouseup', () => {
+    dragging = false;
+  });
+
+  const destroy = () => {
+    w.remove();
+    if (typeof onOk === 'function') onOk();
+  };
+
+  closeBtn?.addEventListener('click', () => w.remove());
+  okBtn?.addEventListener('click', destroy);
+}
+
+function showWelcomePopupOnce() {
+  if (state.popupShown) return;
+  state.popupShown = true;
+
+  setTimeout(() => {
+    showAlert(
+      'BENVENUTO',
+      'Esplora il desktop.\nApri Archive, Studio, Lab, Contact e Manifesto.'
+    );
+  }, 900);
+}
+
+// ─────────────────────────────────────
+// EASTER EGG
+// ─────────────────────────────────────
+const eggBtn = $('#egg-btn');
+if (eggBtn) {
+  eggBtn.addEventListener('click', () => {
+    showAlert(
+      '??? INSERT COIN ???',
+      'Hai trovato il segreto.\nLa modalità arcade è opzionale.\nApri Start > Pac-Man oppure usa il codice classico.'
+    );
+  });
+}
+
+const KONAMI = [
+  'ArrowUp', 'ArrowUp',
+  'ArrowDown', 'ArrowDown',
+  'ArrowLeft', 'ArrowRight',
+  'ArrowLeft', 'ArrowRight',
+  'b', 'a'
+];
+
+document.addEventListener('keydown', e => {
+  state.konamiSeq.push(e.key);
+  state.konamiSeq = state.konamiSeq.slice(-10);
+
+  if (JSON.stringify(state.konamiSeq) === JSON.stringify(KONAMI)) {
+    if (!$('#rainbow-style')) {
+      const style = document.createElement('style');
+      style.id = 'rainbow-style';
+      style.textContent = `
+        @keyframes rainbowShift {
+          0% { filter:hue-rotate(0deg); }
+          100% { filter:hue-rotate(360deg); }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    document.body.style.animation = 'rainbowShift 1.2s linear infinite';
+    showAlert('🌈 CHEAT CODE!', 'MODALITÀ ARCOBALENO ATTIVATA!');
+  }
 });
 
-// ─── WIN FOCUS ───
-document.querySelectorAll('.win').forEach(win=>{
-  win.addEventListener('mousedown', ()=>bringToFront(win));
-});
+// ─────────────────────────────────────
+// PAC MAN
+// ora è opzionale, non dominante
+// ─────────────────────────────────────
+const pacLayer = $('#pacman-layer');
+const pacEl = $('#pac');
 
-// ─── PAC-MAN ───
-const pacEl = document.getElementById('pac');
-const pacLayer = document.getElementById('pacman-layer');
-let pacX = 200, pacY = 200;
-let pacDirX = 2.4, pacDirY = 0;
-let pacScore = 0;
-let pacLives = 3;
-let pacActive = true;
+function resetPacDisplay() {
+  if (!pacEl || !pacLayer) return;
 
-// Generate dots
-const dots = [];
-const NUM_DOTS = 60;
-function spawnDots(){
-  pacLayer.querySelectorAll('.dot').forEach(d=>d.remove());
-  dots.length = 0;
-  for(let i=0;i<NUM_DOTS;i++){
-    const d = document.createElement('div');
-    d.className = i%12===0 ? 'dot power-dot' : 'dot';
-    const x = 120 + Math.random()*(window.innerWidth - 200);
-    const y = 60 + Math.random()*(window.innerHeight - 120);
-    d.style.left = x+'px';
-    d.style.top = y+'px';
-    d.style.display = 'block';
-    pacLayer.appendChild(d);
-    dots.push({el:d, x, y, eaten:false, power:i%12===0});
+  pacEl.style.display = state.pac.active ? 'block' : 'none';
+
+  $$('.ghost', pacLayer).forEach(g => {
+    g.style.display = state.pac.active ? 'block' : 'none';
+  });
+
+  $$('.dot', pacLayer).forEach(d => {
+    d.style.display = state.pac.active ? 'block' : 'none';
+  });
+}
+
+function updatePacHUD() {
+  const scoreNum = $('#score-num');
+  const livesDisp = $('#lives-disp');
+
+  if (scoreNum) scoreNum.textContent = String(state.pac.score);
+  if (livesDisp) {
+    livesDisp.textContent =
+      'LIVES: ' +
+      '♥'.repeat(state.pac.lives) +
+      '♡'.repeat(3 - state.pac.lives);
   }
 }
-spawnDots();
 
-// Ghosts
-const ghostColors = ['👻','👹','👺','🤡'];
-const ghosts = [];
-function spawnGhosts(){
-  pacLayer.querySelectorAll('.ghost').forEach(g=>g.remove());
-  ghosts.length = 0;
-  for(let i=0;i<3;i++){
+function spawnDots() {
+  if (!pacLayer) return;
+
+  $$('.dot', pacLayer).forEach(d => d.remove());
+  state.pac.dots.length = 0;
+
+  const NUM_DOTS = 42;
+
+  for (let i = 0; i < NUM_DOTS; i++) {
+    const d = document.createElement('div');
+    const power = i % 10 === 0;
+    d.className = power ? 'dot power-dot' : 'dot';
+
+    const x = 120 + Math.random() * Math.max(100, window.innerWidth - 200);
+    const y = 60 + Math.random() * Math.max(100, window.innerHeight - 130);
+
+    d.style.left = x + 'px';
+    d.style.top = y + 'px';
+    pacLayer.appendChild(d);
+
+    state.pac.dots.push({
+      el: d,
+      x,
+      y,
+      eaten: false,
+      power
+    });
+  }
+}
+
+function spawnGhosts() {
+  if (!pacLayer) return;
+
+  $$('.ghost', pacLayer).forEach(g => g.remove());
+  state.pac.ghosts.length = 0;
+
+  const ghostGlyphs = ['👻', '👹', '👺'];
+  const ghostColors = ['#ff0000', '#ffb8ff', '#00ffff'];
+
+  for (let i = 0; i < 3; i++) {
     const g = document.createElement('div');
     g.className = 'ghost';
-    g.textContent = ghostColors[i];
-    g.style.color = ['#ff0000','#ffb8ff','#00ffff'][i];
-    const gx = 300 + i*180;
-    const gy = 300;
-    g.style.left = gx+'px';
-    g.style.top = gy+'px';
+    g.textContent = ghostGlyphs[i];
+    g.style.color = ghostColors[i];
+    g.style.left = (300 + i * 140) + 'px';
+    g.style.top = '300px';
     pacLayer.appendChild(g);
-    ghosts.push({el:g, x:gx, y:gy, vx:(Math.random()-.5)*2, vy:(Math.random()-.5)*2, scared:false});
+
+    state.pac.ghosts.push({
+      el: g,
+      x: 300 + i * 140,
+      y: 300,
+      vx: (Math.random() - 0.5) * 2,
+      vy: (Math.random() - 0.5) * 2,
+      scared: false
+    });
   }
 }
-spawnGhosts();
 
-let powerMode = false;
-let powerTimer = 0;
+function resetPacGame() {
+  state.pac.x = Math.max(160, window.innerWidth / 2);
+  state.pac.y = Math.max(160, window.innerHeight / 2);
+  state.pac.dirX = 2.4;
+  state.pac.dirY = 0;
+  state.pac.score = 0;
+  state.pac.lives = 3;
+  state.pac.powerMode = false;
+  state.pac.powerTimer = 0;
 
-function pacLoop(){
-  if(!pacActive) return;
+  updatePacHUD();
+  spawnDots();
+  spawnGhosts();
+  resetPacDisplay();
+}
 
-  // Move pac
-  pacX += pacDirX;
-  pacY += pacDirY;
+function pacLoop() {
+  if (!state.pac.active || !pacEl) return;
 
-  // Bounce off walls
-  if(pacX < 10 || pacX > window.innerWidth - 40){ pacDirX *= -1; }
-  if(pacY < 40 || pacY > window.innerHeight - 50){ pacDirY *= -1; }
+  const p = state.pac;
 
-  // Slight random direction drift
-  if(Math.random() < 0.01){
-    if(Math.random()<.5){ pacDirX = (Math.random()-.5)*5; pacDirY = (Math.random()-.5)*3; }
+  p.x += p.dirX;
+  p.y += p.dirY;
+
+  if (p.x < 10 || p.x > window.innerWidth - 40) p.dirX *= -1;
+  if (p.y < 40 || p.y > window.innerHeight - 50) p.dirY *= -1;
+
+  if (Math.random() < 0.008) {
+    p.dirX += (Math.random() - 0.5) * 0.8;
+    p.dirY += (Math.random() - 0.5) * 0.8;
   }
 
-  pacEl.style.left = pacX+'px';
-  pacEl.style.top = pacY+'px';
+  pacEl.style.left = p.x + 'px';
+  pacEl.style.top = p.y + 'px';
 
-  // Direction rotation
-  const angle = Math.atan2(pacDirY, pacDirX) * 180/Math.PI;
+  const angle = Math.atan2(p.dirY, p.dirX) * 180 / Math.PI;
   pacEl.style.transform = `rotate(${angle}deg)`;
 
-  // Power timer
-  if(powerMode){
-    powerTimer--;
-    if(powerTimer<=0){ powerMode=false; ghosts.forEach(g=>{ g.el.style.filter=''; g.scared=false; }); }
+  if (p.powerMode) {
+    p.powerTimer--;
+    if (p.powerTimer <= 0) {
+      p.powerMode = false;
+      p.ghosts.forEach(g => {
+        g.scared = false;
+        g.el.style.filter = '';
+      });
+    }
   }
 
-  // Eat dots
-  dots.forEach(dot=>{
-    if(dot.eaten) return;
-    const dx = pacX - dot.x, dy = pacY - dot.y;
-    if(Math.sqrt(dx*dx+dy*dy) < 22){
+  p.dots.forEach(dot => {
+    if (dot.eaten) return;
+
+    const dx = p.x - dot.x;
+    const dy = p.y - dot.y;
+
+    if (Math.sqrt(dx * dx + dy * dy) < 22) {
       dot.eaten = true;
       dot.el.style.opacity = '0';
-      setTimeout(()=>dot.el.remove(),300);
-      if(dot.power){
-        pacScore += 50;
-        powerMode = true; powerTimer = 200;
-        ghosts.forEach(g=>{ g.el.style.filter='hue-rotate(180deg) brightness(.6)'; g.scared=true; });
+      setTimeout(() => dot.el.remove(), 200);
+
+      if (dot.power) {
+        p.score += 50;
+        p.powerMode = true;
+        p.powerTimer = 180;
+        p.ghosts.forEach(g => {
+          g.scared = true;
+          g.el.style.filter = 'hue-rotate(180deg) brightness(.7)';
+        });
       } else {
-        pacScore += 10;
+        p.score += 10;
       }
-      document.getElementById('score-num').textContent = pacScore;
-      // Respawn if all eaten
-      if(dots.every(d=>d.eaten)) setTimeout(spawnDots,1000);
+
+      updatePacHUD();
+
+      if (p.dots.every(d => d.eaten)) {
+        setTimeout(() => {
+          spawnDots();
+          resetPacDisplay();
+        }, 700);
+      }
     }
   });
 
-  // Move ghosts
-  ghosts.forEach(g=>{
-    if(g.scared){
-      // Run away
-      const dx = pacX - g.x, dy = pacY - g.y;
-      g.x -= dx*.02; g.y -= dy*.02;
-      g.vx = -dx*.04; g.vy = -dy*.04;
-    } else {
-      // Chase pac slowly
-      const dx = pacX - g.x, dy = pacY - g.y;
-      g.vx = g.vx*.95 + dx*.0012;
-      g.vy = g.vy*.95 + dy*.0012;
-    }
-    g.x += g.vx; g.y += g.vy;
-    g.x = Math.max(10, Math.min(window.innerWidth-40, g.x));
-    g.y = Math.max(40, Math.min(window.innerHeight-50, g.y));
-    g.el.style.left = g.x+'px';
-    g.el.style.top = g.y+'px';
+  p.ghosts.forEach(g => {
+    const dx = p.x - g.x;
+    const dy = p.y - g.y;
 
-    // Collision with pac
-    const dx = pacX - g.x, dy = pacY - g.y;
-    if(Math.sqrt(dx*dx+dy*dy) < 26){
-      if(g.scared){
-        // eat ghost
-        pacScore += 200;
-        document.getElementById('score-num').textContent = pacScore;
-        g.x = 300 + Math.random()*200;
-        g.y = 300 + Math.random()*100;
+    if (g.scared) {
+      g.vx = g.vx * 0.9 - dx * 0.0022;
+      g.vy = g.vy * 0.9 - dy * 0.0022;
+    } else {
+      g.vx = g.vx * 0.94 + dx * 0.0012;
+      g.vy = g.vy * 0.94 + dy * 0.0012;
+    }
+
+    g.x += g.vx;
+    g.y += g.vy;
+
+    g.x = Math.max(10, Math.min(window.innerWidth - 40, g.x));
+    g.y = Math.max(40, Math.min(window.innerHeight - 50, g.y));
+
+    g.el.style.left = g.x + 'px';
+    g.el.style.top = g.y + 'px';
+
+    const cdx = p.x - g.x;
+    const cdy = p.y - g.y;
+
+    if (Math.sqrt(cdx * cdx + cdy * cdy) < 26) {
+      if (g.scared) {
+        p.score += 200;
+        updatePacHUD();
+
+        g.x = 260 + Math.random() * 220;
+        g.y = 180 + Math.random() * 180;
+        g.vx = (Math.random() - 0.5) * 2;
+        g.vy = (Math.random() - 0.5) * 2;
         g.scared = false;
         g.el.style.filter = '';
       } else {
-        // lose life
-        pacLives = Math.max(0,pacLives-1);
-        const livesEl = document.getElementById('lives-disp');
-        livesEl.textContent = 'LIVES: ' + '♥'.repeat(pacLives) + '♡'.repeat(3-pacLives);
-        // Respawn pac
-        pacX = window.innerWidth/2; pacY = window.innerHeight/2;
-        pacDirX = 2.4; pacDirY = 0;
-        if(pacLives === 0){
-          showAlert('GAME OVER','Hai perso tutte le vite!\nPunteggio: '+pacScore, ()=>{
-            pacLives=3;
-            livesEl.textContent='LIVES: ♥♥♥';
-            pacScore=0;
-            document.getElementById('score-num').textContent='0';
+        p.lives = Math.max(0, p.lives - 1);
+        updatePacHUD();
+
+        p.x = window.innerWidth / 2;
+        p.y = window.innerHeight / 2;
+        p.dirX = 2.4;
+        p.dirY = 0;
+
+        if (p.lives === 0) {
+          p.active = false;
+          resetPacDisplay();
+          showAlert('GAME OVER', 'Hai perso tutte le vite.\nPunteggio: ' + p.score, () => {
+            resetPacGame();
           });
+          return;
         }
       }
     }
   });
 
-  requestAnimationFrame(pacLoop);
-}
-requestAnimationFrame(pacLoop);
-
-// Keyboard control of pac
-document.addEventListener('keydown', e=>{
-  const spd = 3.5;
-  if(e.key==='ArrowLeft'){ pacDirX=-spd;pacDirY=0; }
-  if(e.key==='ArrowRight'){ pacDirX=spd;pacDirY=0; }
-  if(e.key==='ArrowUp'){ pacDirX=0;pacDirY=-spd; }
-  if(e.key==='ArrowDown'){ pacDirX=0;pacDirY=spd; }
-  e.preventDefault();
-});
-
-// ─── PAC-MAN TOGGLE ───
-document.getElementById('sm-pacman').addEventListener('click', ()=>{
-  pacActive = !pacActive;
-  pacEl.style.display = pacActive ? 'block' : 'none';
-  pacLayer.querySelectorAll('.ghost').forEach(g=>g.style.display=pacActive?'block':'none');
-  startMenu.classList.remove('open');
-  if(pacActive) requestAnimationFrame(pacLoop);
-});
-
-// ─── ALERT SYSTEM ───
-let alertZ = 9000;
-function showAlert(title, msg, onOk){
-  const w = document.createElement('div');
-  w.className = 'win win-alert';
-  w.style.top = (100+Math.random()*100)+'px';
-  w.style.left = (window.innerWidth/2 - 160 + Math.random()*60)+'px';
-  w.style.zIndex = ++alertZ;
-  w.innerHTML = `
-    <div class="win-titlebar" style="background:linear-gradient(90deg,#800000,#400000)">
-      <span class="win-icon">⚠</span>
-      <span class="win-title">${title}</span>
-      <div class="win-controls"><button class="win-btn close" id="alert-x-${alertZ}">✕</button></div>
-    </div>
-    <div class="win-body">
-      <div class="alert-row">
-        <span class="alert-icon">🔔</span>
-        <span class="alert-msg">${msg.replace(/\n/g,'<br>')}</span>
-      </div>
-      <div class="alert-btns">
-        <button class="alert-ok" id="alert-ok-${alertZ}">OK</button>
-        <button class="alert-ok" id="alert-cancel-${alertZ}">ANNULLA</button>
-      </div>
-    </div>`;
-  document.body.appendChild(w);
-
-  // Make draggable
-  const tb = w.querySelector('.win-titlebar');
-  let dragging=false,ox,oy;
-  tb.addEventListener('mousedown',e=>{ if(e.target.closest('.win-btn'))return; dragging=true; const r=w.getBoundingClientRect(); ox=e.clientX-r.left; oy=e.clientY-r.top; e.preventDefault(); });
-  document.addEventListener('mousemove',e=>{ if(!dragging)return; w.style.left=Math.max(0,e.clientX-ox)+'px'; w.style.top=Math.max(0,e.clientY-oy)+'px'; });
-  document.addEventListener('mouseup',()=>dragging=false);
-
-  const ok = ()=>{ w.remove(); if(onOk) onOk(); };
-  document.getElementById(`alert-ok-${alertZ}`).onclick = ok;
-  document.getElementById(`alert-cancel-${alertZ}`).onclick = ()=>w.remove();
-  document.getElementById(`alert-x-${alertZ}`).onclick = ()=>w.remove();
+  state.pac.animationId = requestAnimationFrame(pacLoop);
 }
 
-// ─── EASTER EGG ───
-document.getElementById('egg-btn').addEventListener('click',()=>{
-  showAlert('??? INSERT COIN ???',
-  'Hai trovato il segreto!\nBLUCINELAB è uno studio visivo\nma anche un gioco.\nPremi ↑↑↓↓←→←→BA per sbloccare\nil livello segreto.'
-  );
-});
+function togglePacman() {
+  state.pac.active = !state.pac.active;
+  resetPacDisplay();
 
-// Konami code
-let konamiSeq=[];
-const KONAMI=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
-document.addEventListener('keydown',e=>{
-  konamiSeq.push(e.key);
-  konamiSeq=konamiSeq.slice(-10);
-  if(JSON.stringify(konamiSeq)===JSON.stringify(KONAMI)){
-    document.body.style.animation='rainbowShift 1s infinite';
-    const style=document.createElement('style');
-    style.textContent='@keyframes rainbowShift{0%{filter:hue-rotate(0deg);}100%{filter:hue-rotate(360deg);}}';
-    document.head.appendChild(style);
-    showAlert('🌈 CHEAT CODE!','MODALITÀ ARCOBALENO ATTIVATA!\nTutti i pixel celebrano BLUCINELAB!');
-  }
-});
-
-// ─── RANDOM POPUPS (contextual) ───
-const randomPopups = [
-  {title:'💡 SUGGERIMENTO', msg:'Trascina le finestre per\nriorganizzare il tuo desktop\nvisivo personale.'},
-  {title:'📡 SEGNALE RICEVUTO', msg:'blucinelab@gmail.com\nè in linea e pronto a\nricevere la tua idea.'},
-  {title:'🎨 CURIOSITÀ', msg:'BLUCINELAB lavora a Bologna\ntra immagine, spazio\ne costruzione percettiva.'},
-];
-let popupIdx = 0;
-setTimeout(()=>{
-  function nextPopup(){
-    if(popupIdx < randomPopups.length){
-      const p = randomPopups[popupIdx++];
-      showAlert(p.title, p.msg);
-      setTimeout(nextPopup, 8000 + Math.random()*6000);
+  if (state.pac.active) {
+    if (state.pac.dots.length === 0 || state.pac.ghosts.length === 0) {
+      resetPacGame();
     }
+    cancelAnimationFrame(state.pac.animationId);
+    state.pac.animationId = requestAnimationFrame(pacLoop);
+  } else {
+    cancelAnimationFrame(state.pac.animationId);
   }
-  nextPopup();
-}, 4000);
-
-// ─── INIT taskbar ───
-updateTaskbar();
-
-// ─── WINDOW BG CANVAS ───
-const bgCanvas = document.createElement('canvas');
-bgCanvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;';
-document.getElementById('desktop').appendChild(bgCanvas);
-
-function resizeBg(){
-  bgCanvas.width=window.innerWidth;
-  bgCanvas.height=window.innerHeight;
 }
-resizeBg();
-window.addEventListener('resize',resizeBg);
 
-const bgCtx = bgCanvas.getContext('2d');
-let bgT = 0;
-// Draw pixel art city skyline bg
-function drawBg(){
-  bgCtx.clearRect(0,0,bgCanvas.width,bgCanvas.height);
-  bgT++;
-  // City silhouette
-  bgCtx.fillStyle='#0d0030';
-  const W=bgCanvas.width, H=bgCanvas.height;
-  const buildingData=[.05,.12,.07,.18,.09,.22,.06,.14,.08,.2,.1,.16,.07,.11,.09,.19,.06,.15,.08,.13,.1,.2,.07,.17,.09,.12];
-  const bw = W/(buildingData.length/2);
-  for(let i=0;i<buildingData.length;i+=2){
-    const bx=i/2*bw;
-    const bh=buildingData[i+1]*H*0.55;
-    bgCtx.fillRect(bx,H-bh-30,bw-2,bh);
-    // windows
-    for(let wy=H-bh-20;wy<H-40;wy+=12){
-      for(let wx=bx+4;wx<bx+bw-8;wx+=10){
-        const on=Math.sin(bgT*.01+wx+wy)>.3;
-        bgCtx.fillStyle=on?`rgba(255,220,80,${.3+.2*Math.sin(bgT*.05+wx)})` :'rgba(0,20,60,.6)';
-        bgCtx.fillRect(wx,wy,6,8);
+const pacToggleBtn = $('#sm-pacman');
+if (pacToggleBtn) {
+  pacToggleBtn.addEventListener('click', () => {
+    togglePacman();
+    startMenu?.classList.remove('open');
+  });
+}
+
+document.addEventListener('keydown', e => {
+  if (!state.pac.active) return;
+
+  const spd = 3.5;
+
+  if (e.key === 'ArrowLeft') {
+    state.pac.dirX = -spd;
+    state.pac.dirY = 0;
+    e.preventDefault();
+  }
+  if (e.key === 'ArrowRight') {
+    state.pac.dirX = spd;
+    state.pac.dirY = 0;
+    e.preventDefault();
+  }
+  if (e.key === 'ArrowUp') {
+    state.pac.dirX = 0;
+    state.pac.dirY = -spd;
+    e.preventDefault();
+  }
+  if (e.key === 'ArrowDown') {
+    state.pac.dirX = 0;
+    state.pac.dirY = spd;
+    e.preventDefault();
+  }
+});
+
+resetPacGame();
+state.pac.active = false;
+resetPacDisplay();
+
+// ─────────────────────────────────────
+// BACKGROUND CANVAS
+// lo tengo, ma solo come atmosfera
+// ─────────────────────────────────────
+(function initBackgroundCanvas() {
+  const desktop = $('#desktop');
+  if (!desktop) return;
+
+  const bgCanvas = document.createElement('canvas');
+  bgCanvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;';
+  desktop.appendChild(bgCanvas);
+
+  const ctx = bgCanvas.getContext('2d');
+  let t = 0;
+
+  function resizeBg() {
+    bgCanvas.width = window.innerWidth;
+    bgCanvas.height = window.innerHeight;
+  }
+
+  function drawBg() {
+    const W = bgCanvas.width;
+    const H = bgCanvas.height;
+
+    ctx.clearRect(0, 0, W, H);
+    t++;
+
+    ctx.fillStyle = '#0d0030';
+
+    const buildingData = [.05,.12,.07,.18,.09,.22,.06,.14,.08,.2,.1,.16,.07,.11,.09,.19,.06,.15,.08,.13,.1,.2,.07,.17,.09,.12];
+    const bw = W / (buildingData.length / 2);
+
+    for (let i = 0; i < buildingData.length; i += 2) {
+      const bx = i / 2 * bw;
+      const bh = buildingData[i + 1] * H * 0.55;
+
+      ctx.fillRect(bx, H - bh - 30, bw - 2, bh);
+
+      for (let wy = H - bh - 20; wy < H - 40; wy += 12) {
+        for (let wx = bx + 4; wx < bx + bw - 8; wx += 10) {
+          const on = Math.sin(t * 0.01 + wx + wy) > 0.55;
+          ctx.fillStyle = on
+            ? `rgba(255,220,80,${0.18 + 0.16 * Math.sin(t * 0.04 + wx)})`
+            : 'rgba(0,20,60,.36)';
+          ctx.fillRect(wx, wy, 6, 8);
+        }
       }
     }
+
+    for (let i = 0; i < 90; i++) {
+      const sx = (i * 137.5) % W;
+      const sy = (i * 79.3) % (H * 0.58);
+      const alpha = 0.18 + 0.25 * Math.sin(t * 0.03 + i);
+      ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+      ctx.fillRect(sx, sy, i % 3 === 0 ? 2 : 1, i % 3 === 0 ? 2 : 1);
+    }
+
+    requestAnimationFrame(drawBg);
   }
-  // Stars
-  for(let i=0;i<120;i++){
-    const sx=(i*137.5)%W;
-    const sy=(i*79.3)%(H*.6);
-    const alpha=.3+.4*Math.sin(bgT*.05+i);
-    bgCtx.fillStyle=`rgba(255,255,255,${alpha})`;
-    bgCtx.fillRect(sx,sy,i%3===0?2:1,i%3===0?2:1);
-  }
-  requestAnimationFrame(drawBg);
-}
-drawBg();
+
+  resizeBg();
+  window.addEventListener('resize', resizeBg);
+  drawBg();
+})();
+
+// ─────────────────────────────────────
+// RESIZE SAFETY
+// ─────────────────────────────────────
+window.addEventListener('resize', () => {
+  $$('.win').forEach(win => {
+    const rect = win.getBoundingClientRect();
+    if (rect.right > window.innerWidth) {
+      win.style.left = Math.max(0, window.innerWidth - rect.width - 10) + 'px';
+    }
+    if (rect.bottom > window.innerHeight - 30) {
+      win.style.top = Math.max(28, window.innerHeight - rect.height - 42) + 'px';
+    }
+  });
+});
+
+// ─────────────────────────────────────
+// INIT
+// ─────────────────────────────────────
+updateTaskbar();
+updatePacHUD();
 </script>
-</body>
-</html>
