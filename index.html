@@ -1,498 +1,1338 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BLUCINELAB OS v1.0 — BOOT SEQUENCE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&family=Oswald:wght@300;400;500&display=swap" rel="stylesheet"/>
 
-  <title>BLUCINELAB — Studio visivo indipendente</title>
-  <meta
-    name="description"
-    content="BLUCINELAB è uno studio visivo indipendente che lavora tra immagine, spazio, direzione e ricerca. Un laboratorio contemporaneo per progetti culturali, editoriali, installativi e digitali."
-  />
-  <meta name="author" content="BLUCINELAB" />
-  <meta name="robots" content="index, follow" />
-  <meta name="theme-color" content="#02060d" />
-  <meta name="color-scheme" content="dark" />
+<style>
+:root{
+  --c-bg:#0a0a1a;
+  --c-win:#0d1117;
+  --c-bar:#1a1aff;
+  --c-bar2:#000080;
+  --c-yellow:#ffff00;
+  --c-cyan:#00ffff;
+  --c-magenta:#ff00ff;
+  --c-green:#00ff00;
+  --c-red:#ff0044;
+  --c-white:#ffffff;
+  --c-gray:#c0c0c0;
+  --c-darkgray:#808080;
+  --c-orange:#ff8c00;
+  --win-border:2px solid #c0c0c0;
+  --win-shadow:4px 4px 0 #000;
+}
 
-  <meta property="og:title" content="BLUCINELAB — Studio visivo indipendente" />
-  <meta
-    property="og:description"
-    content="Un laboratorio contemporaneo dell’immagine tra cultura, ricerca, spazio, direzione e costruzione percettiva."
-  />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://blucinelab.it/" />
-  <meta property="og:image" content="https://blucinelab.it/assets/og-image.jpg" />
-  <meta property="og:locale" content="it_IT" />
+*{margin:0;padding:0;box-sizing:border-box;}
 
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="BLUCINELAB — Studio visivo indipendente" />
-  <meta
-    name="twitter:description"
-    content="Un laboratorio contemporaneo dell’immagine tra cultura, ricerca, spazio, direzione e costruzione percettiva."
-  />
-  <meta name="twitter:image" content="https://blucinelab.it/assets/og-image.jpg" />
+body{
+  background:var(--c-bg);
+  font-family:'Press Start 2P',monospace;
+  color:var(--c-white);
+  min-height:100vh;
+  overflow-x:hidden;
+  cursor:none;
+}
 
-  <link rel="canonical" href="https://blucinelab.it/" />
+/* ─── CUSTOM CURSOR ─── */
+.cursor-outer{
+  position:fixed;
+  width:20px;height:20px;
+  pointer-events:none;
+  z-index:99999;
+  transform:translate(-50%,-50%);
+}
+.cursor-outer::before{
+  content:'';
+  display:block;
+  width:0;height:0;
+  border-left:10px solid transparent;
+  border-right:0;
+  border-top:0;
+  border-bottom:10px solid transparent;
+  border-left:10px solid var(--c-yellow);
+  filter:drop-shadow(0 0 4px var(--c-yellow));
+}
 
-  <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+/* ─── DESKTOP BG ─── */
+#desktop{
+  position:fixed;
+  inset:0;
+  background:
+    repeating-linear-gradient(0deg,transparent,transparent 31px,rgba(0,255,0,.03) 31px,rgba(0,255,0,.03) 32px),
+    repeating-linear-gradient(90deg,transparent,transparent 31px,rgba(0,255,0,.03) 31px,rgba(0,255,0,.03) 32px),
+    radial-gradient(ellipse at 30% 60%,#0d0038 0%,transparent 60%),
+    radial-gradient(ellipse at 70% 20%,#00003a 0%,transparent 50%),
+    #0a0a1a;
+  z-index:0;
+  overflow:hidden;
+}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Inter:wght@300;400;500&display=swap"
-    rel="stylesheet"
-    media="print"
-    onload="this.media='all'"
-  />
-  <noscript>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Inter:wght@300;400;500&display=swap"
-      rel="stylesheet"
-    />
-  </noscript>
+/* Scanlines */
+#desktop::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:repeating-linear-gradient(to bottom,transparent 0,transparent 2px,rgba(0,0,0,.15) 2px,rgba(0,0,0,.15) 4px);
+  pointer-events:none;
+  z-index:10;
+}
 
-  <link rel="stylesheet" href="style.css" />
+/* ─── TASKBAR ─── */
+#taskbar{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  height:34px;
+  background:linear-gradient(to bottom,#c0c0c0 0%,#808080 100%);
+  border-top:3px solid #fff;
+  display:flex;
+  align-items:center;
+  padding:0 6px;
+  gap:6px;
+  z-index:9000;
+  font-size:8px;
+  color:#000;
+}
 
-  <style>
-    .skip-link{
-      position:absolute;
-      left:-9999px;
-      top:auto;
-      width:1px;
-      height:1px;
-      overflow:hidden;
-      z-index:99999;
+#taskbar-start{
+  background:linear-gradient(135deg,#008000,#005000);
+  color:#fff;
+  border:2px solid #fff;
+  border-right-color:#000;
+  border-bottom-color:#000;
+  padding:4px 10px;
+  font-family:'Press Start 2P',monospace;
+  font-size:7px;
+  cursor:none;
+  white-space:nowrap;
+  display:flex;align-items:center;gap:6px;
+  text-shadow:1px 1px 0 #000;
+}
+#taskbar-start:hover{background:linear-gradient(135deg,#00a000,#006000);}
+#taskbar-start::before{content:'⊞';font-size:10px;}
+
+.taskbar-btn{
+  background:linear-gradient(to bottom,#d4d0c8,#a09890);
+  border:2px solid #fff;
+  border-right-color:#808080;
+  border-bottom-color:#808080;
+  color:#000;
+  padding:3px 8px;
+  font-family:'Press Start 2P',monospace;
+  font-size:6px;
+  cursor:none;
+  max-width:140px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.taskbar-btn:active,.taskbar-btn.active{
+  border-color:#808080 #fff #fff #808080;
+}
+
+#clock{
+  margin-left:auto;
+  font-family:'VT323',monospace;
+  font-size:16px;
+  color:#000;
+  padding:2px 8px;
+  border:1px inset #808080;
+  background:#d4d0c8;
+  min-width:70px;
+  text-align:center;
+}
+
+/* ─── WINDOWS ─── */
+.win{
+  position:fixed;
+  background:var(--c-win);
+  border:var(--win-border);
+  box-shadow:var(--win-shadow);
+  min-width:280px;
+  z-index:100;
+  display:flex;
+  flex-direction:column;
+  resize:both;
+  overflow:hidden;
+}
+
+.win-titlebar{
+  background:linear-gradient(90deg,var(--c-bar),var(--c-bar2));
+  color:#fff;
+  font-family:'Press Start 2P',monospace;
+  font-size:7px;
+  padding:5px 8px;
+  display:flex;align-items:center;gap:6px;
+  cursor:move;
+  user-select:none;
+  flex-shrink:0;
+  white-space:nowrap;
+}
+
+.win-icon{font-size:10px;}
+
+.win-title{flex:1;overflow:hidden;text-overflow:ellipsis;}
+
+.win-controls{display:flex;gap:3px;flex-shrink:0;}
+
+.win-btn{
+  width:14px;height:14px;
+  border:1px solid #fff;
+  background:var(--c-gray);
+  color:#000;
+  font-family:'Press Start 2P',monospace;
+  font-size:6px;
+  cursor:none;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.win-btn:hover{background:#fff;}
+.win-btn.close:hover{background:var(--c-red);color:#fff;}
+
+.win-menubar{
+  background:var(--c-gray);
+  color:#000;
+  font-family:'VT323',monospace;
+  font-size:14px;
+  padding:2px 6px;
+  display:flex;gap:14px;
+  border-bottom:1px solid #808080;
+  flex-shrink:0;
+}
+.win-menubar span{cursor:none;padding:0 4px;}
+.win-menubar span:hover{background:#000;color:#fff;}
+
+.win-body{
+  flex:1;
+  overflow-y:auto;
+  padding:12px;
+  font-family:'VT323',monospace;
+  font-size:16px;
+  line-height:1.5;
+  color:#c8ffc8;
+  scrollbar-width:thin;
+  scrollbar-color:#00ff00 #000;
+}
+
+.win-body::-webkit-scrollbar{width:10px;}
+.win-body::-webkit-scrollbar-track{background:#000;}
+.win-body::-webkit-scrollbar-thumb{background:#00ff00;}
+
+.win-body h2{
+  font-family:'Press Start 2P',monospace;
+  font-size:9px;
+  color:var(--c-yellow);
+  margin:10px 0 6px;
+  text-shadow:0 0 8px var(--c-yellow);
+}
+.win-body h3{
+  font-family:'Press Start 2P',monospace;
+  font-size:7px;
+  color:var(--c-cyan);
+  margin:8px 0 4px;
+  text-shadow:0 0 6px var(--c-cyan);
+}
+.win-body p{font-size:15px;margin-bottom:6px;color:#a0ffa0;}
+
+.win-body .label{
+  font-family:'Press Start 2P',monospace;
+  font-size:6px;
+  color:var(--c-magenta);
+  text-shadow:0 0 4px var(--c-magenta);
+  margin-bottom:4px;
+  display:block;
+}
+
+.win-body .field-card{
+  border:1px solid #00ff0044;
+  padding:8px;
+  margin-bottom:8px;
+  background:rgba(0,255,0,.04);
+}
+.win-body .field-card:hover{
+  border-color:#00ff00;
+  background:rgba(0,255,0,.1);
+}
+
+/* ─── BOOT SCREEN ─── */
+#boot{
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:99998;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+}
+
+#boot-logo{
+  font-family:'Press Start 2P',monospace;
+  font-size:clamp(14px,3vw,28px);
+  color:#00ff00;
+  text-shadow:0 0 20px #00ff00,0 0 40px #00ff00;
+  letter-spacing:4px;
+  animation:logoGlow 1s ease-in-out infinite alternate;
+}
+@keyframes logoGlow{
+  from{text-shadow:0 0 10px #00ff00;}
+  to{text-shadow:0 0 30px #00ff00,0 0 60px #00ff00;}
+}
+
+#boot-sub{
+  font-family:'VT323',monospace;
+  font-size:20px;
+  color:#808080;
+  letter-spacing:2px;
+}
+
+#boot-bar-wrap{
+  width:280px;
+  border:2px solid #00ff00;
+  height:18px;
+  position:relative;
+  overflow:hidden;
+}
+#boot-bar{
+  height:100%;
+  background:linear-gradient(90deg,#00ff00,#00aa00);
+  width:0%;
+  transition:width .1s linear;
+  box-shadow:0 0 10px #00ff00;
+}
+
+#boot-text{
+  font-family:'VT323',monospace;
+  font-size:15px;
+  color:#00ff00;
+  height:80px;
+  overflow:hidden;
+  width:320px;
+  text-align:left;
+}
+
+/* ─── START MENU ─── */
+#start-menu{
+  position:fixed;
+  bottom:34px;
+  left:0;
+  width:220px;
+  background:linear-gradient(to right,#808080 0%,#c0c0c0 100%);
+  border:3px solid #fff;
+  border-bottom:none;
+  z-index:9999;
+  display:none;
+  flex-direction:column;
+}
+#start-menu.open{display:flex;}
+
+.start-banner{
+  background:linear-gradient(to bottom,#000080,#1a1aff);
+  color:#fff;
+  font-family:'Press Start 2P',monospace;
+  font-size:8px;
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);
+  padding:8px 6px;
+  letter-spacing:2px;
+  text-shadow:1px 1px 0 #000;
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:30px;
+}
+
+.start-items{
+  margin-left:30px;
+  display:flex;
+  flex-direction:column;
+}
+
+.start-item{
+  padding:8px 12px;
+  font-family:'VT323',monospace;
+  font-size:17px;
+  color:#000;
+  cursor:none;
+  display:flex;align-items:center;gap:8px;
+  border-bottom:1px solid #a0a0a0;
+}
+.start-item:hover{background:#000080;color:#fff;}
+.start-item-icon{font-size:14px;}
+
+/* ─── DESKTOP ICONS ─── */
+.desktop-icon{
+  position:fixed;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  cursor:none;
+  width:72px;
+  z-index:50;
+  padding:4px;
+}
+.desktop-icon:hover .icon-label{background:#000080;color:#fff;}
+.desktop-icon .icon-img{font-size:32px;line-height:1;filter:drop-shadow(2px 2px 0 #000);}
+.desktop-icon .icon-label{
+  font-family:'Press Start 2P',monospace;
+  font-size:6px;
+  color:#fff;
+  text-shadow:1px 1px 0 #000;
+  text-align:center;
+  line-height:1.4;
+  padding:2px 4px;
+}
+
+/* ─── PAC-MAN OVERLAY ─── */
+#pacman-layer{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:200;
+}
+
+.pac{
+  position:absolute;
+  width:28px;height:28px;
+  border-radius:50%;
+  background:var(--c-yellow);
+  clip-path:polygon(100% 50%,0% 0%,0% 100%);
+  animation:chomp .2s steps(2) infinite;
+  filter:drop-shadow(0 0 6px var(--c-yellow));
+  transition:left .04s linear, top .04s linear;
+}
+@keyframes chomp{
+  0%{clip-path:polygon(100% 50%,0% 5%,0% 95%);}
+  50%{clip-path:polygon(100% 50%,0% 50%,0% 50%);}
+  100%{clip-path:polygon(100% 50%,0% 5%,0% 95%);}
+}
+
+.dot{
+  position:absolute;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 0 4px #fff;
+  transition:opacity .1s;
+}
+.power-dot{
+  width:14px;height:14px;
+  background:var(--c-cyan);
+  box-shadow:0 0 8px var(--c-cyan),0 0 16px var(--c-cyan);
+  animation:powerPulse .5s ease-in-out infinite alternate;
+}
+@keyframes powerPulse{
+  from{transform:scale(1);}
+  to{transform:scale(1.3);}
+}
+
+.ghost{
+  position:absolute;
+  font-size:22px;
+  transition:left .06s linear, top .06s linear;
+  filter:drop-shadow(0 0 6px currentColor);
+}
+
+/* ─── GLITCH TEXT ─── */
+.glitch{
+  position:relative;
+  animation:glitchText 4s infinite;
+}
+@keyframes glitchText{
+  0%,90%,100%{text-shadow:none;}
+  91%{text-shadow:3px 0 var(--c-red),-3px 0 var(--c-cyan);}
+  93%{text-shadow:-3px 0 var(--c-magenta),3px 0 var(--c-yellow);}
+  95%{text-shadow:2px 0 var(--c-cyan),-2px 0 var(--c-red);}
+}
+
+/* ─── HERO WINDOW ─── */
+#hero-win{
+  top:40px;left:calc(50% - 300px);
+  width:600px;
+  min-height:300px;
+}
+
+/* ─── SCORE DISPLAY ─── */
+#score-bar{
+  position:fixed;
+  top:0;left:0;right:0;
+  height:28px;
+  background:linear-gradient(90deg,#000 60%,transparent);
+  z-index:8000;
+  display:flex;
+  align-items:center;
+  padding:0 10px;
+  gap:20px;
+  font-size:8px;
+  border-bottom:1px solid #00ff0044;
+}
+#score-bar .sc{color:var(--c-yellow);text-shadow:0 0 6px var(--c-yellow);}
+#score-bar .nm{color:var(--c-green);font-family:'VT323',monospace;font-size:16px;}
+#lives-disp{color:var(--c-red);}
+
+/* ─── EASTER EGG button ─── */
+#egg-btn{
+  position:fixed;
+  top:4px;right:10px;
+  font-size:7px;
+  background:none;
+  border:1px solid #ff00ff44;
+  color:var(--c-magenta);
+  padding:3px 8px;
+  font-family:'Press Start 2P',monospace;
+  cursor:none;
+  z-index:8001;
+  animation:eggBlink 3s step-end infinite;
+}
+@keyframes eggBlink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+/* ─── ALERTS / POPUPS ─── */
+.win-alert{
+  min-width:260px;
+  max-width:360px;
+}
+.win-alert .win-body{
+  font-size:13px;
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  align-items:flex-start;
+}
+.win-alert .alert-row{display:flex;align-items:flex-start;gap:10px;}
+.win-alert .alert-icon{font-size:24px;flex-shrink:0;}
+.win-alert .alert-msg{font-size:14px;color:#c8ffc8;line-height:1.4;}
+.win-alert .alert-btns{display:flex;gap:8px;margin-top:6px;}
+.alert-ok{
+  font-family:'Press Start 2P',monospace;
+  font-size:7px;
+  padding:6px 16px;
+  background:var(--c-gray);
+  border:2px solid #fff;
+  border-right-color:#000;
+  border-bottom-color:#000;
+  color:#000;
+  cursor:none;
+}
+.alert-ok:active{border-color:#000 #fff #fff #000;}
+
+/* ─── TYPEWRITER ─── */
+.typewriter{overflow:hidden;white-space:pre-wrap;}
+
+/* ─── LOADING spinner ─── */
+.spinner{
+  display:inline-block;
+  animation:spin .6s steps(8) infinite;
+  font-size:20px;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ─── PIXEL DECORATIONS ─── */
+.pixel-border{
+  border:2px solid var(--c-cyan);
+  box-shadow:0 0 0 2px #000,0 0 12px var(--c-cyan);
+}
+
+.win-body a{color:var(--c-cyan);text-decoration:none;text-shadow:0 0 4px var(--c-cyan);}
+.win-body a:hover{color:var(--c-yellow);}
+
+.tag{
+  display:inline-block;
+  font-family:'Press Start 2P',monospace;
+  font-size:5px;
+  padding:2px 6px;
+  border:1px solid;
+  margin:2px;
+}
+.tag.yellow{border-color:var(--c-yellow);color:var(--c-yellow);}
+.tag.cyan{border-color:var(--c-cyan);color:var(--c-cyan);}
+.tag.magenta{border-color:var(--c-magenta);color:var(--c-magenta);}
+.tag.green{border-color:var(--c-green);color:var(--c-green);}
+
+/* win bounce-in */
+.win{animation:winPop .2s cubic-bezier(.17,.67,.24,1.44);}
+@keyframes winPop{from{transform:scale(.5);opacity:0;}to{transform:scale(1);opacity:1;}}
+
+/* responsive */
+@media(max-width:600px){
+  #hero-win{left:4px;right:4px;width:calc(100% - 8px);top:50px;}
+  .win{min-width:200px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── CUSTOM CURSOR ─── -->
+<div class="cursor-outer" id="cur"></div>
+
+<!-- ─── SCORE BAR ─── -->
+<div id="score-bar">
+  <span class="nm">BLUCINELAB OS</span>
+  <span class="sc">SCORE: <span id="score-num">0</span></span>
+  <span id="lives-disp">LIVES: ♥♥♥</span>
+</div>
+<button id="egg-btn" title="???">INSERT COIN</button>
+
+<!-- ─── PAC-MAN LAYER ─── -->
+<div id="pacman-layer">
+  <div class="pac" id="pac"></div>
+</div>
+
+<!-- ─── DESKTOP ─── -->
+<div id="desktop"></div>
+
+<!-- ─── DESKTOP ICONS ─── -->
+<div class="desktop-icon" style="top:50px;left:14px" id="icon-archive" data-win="win-archive">
+  <div class="icon-img">📁</div>
+  <div class="icon-label">ARCHIVE</div>
+</div>
+<div class="desktop-icon" style="top:130px;left:14px" id="icon-studio" data-win="win-studio">
+  <div class="icon-img">🎨</div>
+  <div class="icon-label">STUDIO</div>
+</div>
+<div class="desktop-icon" style="top:210px;left:14px" id="icon-lab" data-win="win-lab">
+  <div class="icon-img">🔬</div>
+  <div class="icon-label">LAB.EXE</div>
+</div>
+<div class="desktop-icon" style="top:290px;left:14px" id="icon-contact" data-win="win-contact">
+  <div class="icon-img">📧</div>
+  <div class="icon-label">CONTACT</div>
+</div>
+<div class="desktop-icon" style="top:370px;left:14px" id="icon-manifesto" data-win="win-manifesto">
+  <div class="icon-img">📜</div>
+  <div class="icon-label">MANIFEST</div>
+</div>
+
+<!-- ─── HERO WINDOW ─── -->
+<div class="win" id="hero-win" style="top:44px;left:90px;width:580px;">
+  <div class="win-titlebar" data-drag="hero-win">
+    <span class="win-icon">🖥</span>
+    <span class="win-title glitch">BLUCINELAB OS v1.0 — VISUAL STUDIO</span>
+    <div class="win-controls">
+      <button class="win-btn" data-minimize="hero-win">_</button>
+      <button class="win-btn" data-maximize="hero-win">□</button>
+      <button class="win-btn close" data-close="hero-win">✕</button>
+    </div>
+  </div>
+  <div class="win-menubar">
+    <span>File</span><span>Edit</span><span>View</span><span>Help</span>
+  </div>
+  <div class="win-body" style="min-height:220px;">
+    <span class="label">HOME / BOLOGNA</span>
+    <h2>COSTRUIRE IMMAGINI CHE PENSANO</h2>
+    <p>BLUCINELAB è uno studio visivo indipendente che lavora tra immagine, spazio, direzione e ricerca.</p>
+    <p>Cinema, identità, ambienti digitali, installazioni, archivi, processi: non come servizi separati, ma come un unico campo di costruzione percettiva, culturale e narrativa.</p>
+    <div style="margin-top:10px;display:flex;flex-wrap:wrap;">
+      <span class="tag yellow">WEB DESIGN</span>
+      <span class="tag cyan">VISUAL IDENTITY</span>
+      <span class="tag magenta">EXHIBITION</span>
+      <span class="tag green">IMAGE DIRECTION</span>
+    </div>
+    <div style="margin-top:12px;font-family:'Press Start 2P',monospace;font-size:6px;color:#808080;">
+      <span class="spinner">◐</span> &nbsp;SISTEMA OPERATIVO CARICATO — CLICCA LE ICONE PER NAVIGARE
+    </div>
+  </div>
+</div>
+
+<!-- ─── ARCHIVE WINDOW ─── -->
+<div class="win" id="win-archive" style="top:80px;left:160px;width:420px;display:none;">
+  <div class="win-titlebar" data-drag="win-archive">
+    <span class="win-icon">📁</span>
+    <span class="win-title">ARCHIVE — Lavori e processi</span>
+    <div class="win-controls">
+      <button class="win-btn" data-minimize="win-archive">_</button>
+      <button class="win-btn close" data-close="win-archive">✕</button>
+    </div>
+  </div>
+  <div class="win-menubar"><span>File</span><span>Sort</span><span>View</span></div>
+  <div class="win-body" style="min-height:180px;">
+    <span class="label">ARCHIVE / PUBLIC WORKS</span>
+    <h2>LAVORI, PROCESSI, STATI DI VISIBILITÀ</h2>
+    <div class="field-card">
+      <span class="label">PUBLIC WORKS</span>
+      <h3>ENTRA NELL'ARCHIVIO</h3>
+      <p>Case study, superfici protette e pagine di processo organizzate per funzione, stato e profondità di accesso.</p>
+    </div>
+    <div class="field-card">
+      <span class="label">CURRENT LOGIC</span>
+      <h3>CASE STUDY · CONFIDENTIAL · PROCESS</h3>
+      <p>Tre modi diversi di mostrare il lavoro senza forzarlo dentro una grammatica da portfolio standard.</p>
+    </div>
+    <p style="font-size:13px;color:#606060;">► Doppio click sull'icona per riaprire.</p>
+  </div>
+</div>
+
+<!-- ─── STUDIO WINDOW ─── -->
+<div class="win" id="win-studio" style="top:100px;left:200px;width:440px;display:none;">
+  <div class="win-titlebar" data-drag="win-studio">
+    <span class="win-icon">🎨</span>
+    <span class="win-title">STUDIO — Metodo e coerenza</span>
+    <div class="win-controls">
+      <button class="win-btn" data-minimize="win-studio">_</button>
+      <button class="win-btn close" data-close="win-studio">✕</button>
+    </div>
+  </div>
+  <div class="win-menubar"><span>File</span><span>Method</span><span>Values</span></div>
+  <div class="win-body" style="min-height:220px;">
+    <span class="label">STUDIO / METODO</span>
+    <h2>METODO, RIDUZIONE, COERENZA</h2>
+    <div class="field-card">
+      <span class="label">SELECTION</span>
+      <h3>TOGLIERE CIÒ CHE INDEBOLISCE</h3>
+      <p>La prima mossa è spesso sottrattiva. Meno dispersione, più struttura, più tensione.</p>
+    </div>
+    <div class="field-card">
+      <span class="label">ATMOSPHERE</span>
+      <h3>COSTRUIRE IL CAMPO PERCETTIVO</h3>
+      <p>Luce, tipo, immagine, spazio e ritmo lavorano come un unico sistema continuo.</p>
+    </div>
+    <div class="field-card">
+      <span class="label">COHERENCE</span>
+      <h3>MANTENERE UN LINGUAGGIO INTERNO</h3>
+      <p>Il progetto deve restare riconoscibile tra pagina, ambiente, racconto e direzione.</p>
+    </div>
+    <h2 style="margin-top:14px;">VALORI</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">
+      <span class="tag cyan">CARE</span>
+      <span class="tag yellow">PRECISION</span>
+      <span class="tag magenta">RESEARCH</span>
+      <span class="tag green">EXPERIENCE</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── LAB WINDOW ─── -->
+<div class="win" id="win-lab" style="top:120px;left:240px;width:400px;display:none;">
+  <div class="win-titlebar" data-drag="win-lab">
+    <span class="win-icon">🔬</span>
+    <span class="win-title">LAB.EXE — Ricerca attiva</span>
+    <div class="win-controls">
+      <button class="win-btn" data-minimize="win-lab">_</button>
+      <button class="win-btn close" data-close="win-lab">✕</button>
+    </div>
+  </div>
+  <div class="win-menubar"><span>File</span><span>Research</span><span>Future</span></div>
+  <div class="win-body" style="min-height:200px;">
+    <span class="label">LAB / ACTIVE RESEARCH</span>
+    <h2>MATERIALI IN FORMAZIONE, FUTURI POSSIBILI</h2>
+    <p>Il laboratorio raccoglie note, test, frammenti e superfici di ricerca. È il luogo dove il lavoro resta aperto, osservabile, interrogabile.</p>
+    <div class="field-card" style="margin-top:10px;">
+      <span class="label">FUTURE LAYER</span>
+      <h3>RICERCA, AI, ARCHIVI INTELLIGENTI</h3>
+      <p>Un ecosistema capace di crescere tra cultura, tecnologia, educazione, installazione e costruzione di nuovi dispositivi di esperienza.</p>
+    </div>
+    <div style="margin-top:10px;font-size:13px;color:var(--c-magenta);">
+      <span class="spinner">◑</span> &nbsp;CARICAMENTO FUTURI IN CORSO...
+    </div>
+  </div>
+</div>
+
+<!-- ─── CONTACT WINDOW ─── -->
+<div class="win" id="win-contact" style="top:140px;left:180px;width:380px;display:none;">
+  <div class="win-titlebar" data-drag="win-contact">
+    <span class="win-icon">📧</span>
+    <span class="win-title">CONTACT — Apri una conversazione</span>
+    <div class="win-controls">
+      <button class="win-btn" data-minimize="win-contact">_</button>
+      <button class="win-btn close" data-close="win-contact">✕</button>
+    </div>
+  </div>
+  <div class="win-menubar"><span>File</span><span>Send</span></div>
+  <div class="win-body" style="min-height:180px;">
+    <span class="label">CONTACT / EMAIL</span>
+    <h2>POCHI PROGETTI, FATTI BENE</h2>
+    <p>BLUCINELAB lavora meglio quando il contesto è chiaro, il progetto ha peso e la collaborazione richiede visione, rigore e qualità della relazione.</p>
+    <div class="field-card" style="margin-top:10px;">
+      <span class="label">ADDRESS</span>
+      <h3><a href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a></h3>
+      <p>Commissioni, collaborazioni, progetti culturali, direzione visiva, sistemi digitali, installazioni.</p>
+    </div>
+    <div class="field-card">
+      <span class="label">TIMING</span>
+      <p>Indica scadenze, materiali già esistenti, vincoli e finestra di lavoro prevista.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── MANIFESTO WINDOW ─── -->
+<div class="win" id="win-manifesto" style="top:160px;left:130px;width:460px;display:none;">
+  <div class="win-titlebar" data-drag="win-manifesto">
+    <span class="win-icon">📜</span>
+    <span class="win-title">MANIFESTO — Un laboratorio contemporaneo</span>
+    <div class="win-controls">
+      <button class="win-btn" data-minimize="win-manifesto">_</button>
+      <button class="win-btn close" data-close="win-manifesto">✕</button>
+    </div>
+  </div>
+  <div class="win-menubar"><span>File</span><span>Print</span><span>Share</span></div>
+  <div class="win-body" style="min-height:200px;">
+    <span class="label">MANIFESTO</span>
+    <h2>UN LABORATORIO CONTEMPORANEO DELL'IMMAGINE</h2>
+    <p>BLUCINELAB nasce dall'idea che l'immagine non sia una superficie da riempire, ma una forma di lettura del mondo. Per questo lavoriamo tra rigore e immaginazione, metodo e sensibilità, costruzione tecnica e profondità emotiva.</p>
+    <p>Ci interessano progetti capaci di generare presenza, esperienza, memoria, relazione. Progetti culturali, editoriali, installativi, digitali o ibridi, in cui la forma non decora ma orienta, chiarisce e intensifica.</p>
+    <div style="margin-top:14px;">
+      <h2>POSIZIONE</h2>
+      <p>Il sito tiene insieme studio, archivio e ricerca. Non presenta una somma di prestazioni, ma una postura. Un modo di pensare e costruire immagini, spazi e sistemi visivi con coerenza, precisione e apertura.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── TASKBAR ─── -->
+<div id="taskbar">
+  <button id="taskbar-start">START</button>
+  <div id="taskbar-tasks"></div>
+  <div id="clock">00:00:00</div>
+</div>
+
+<!-- ─── START MENU ─── -->
+<div id="start-menu">
+  <div class="start-banner">BLUCINELAB</div>
+  <div class="start-items">
+    <div class="start-item" data-open="win-archive"><span class="start-item-icon">📁</span> Archive</div>
+    <div class="start-item" data-open="win-studio"><span class="start-item-icon">🎨</span> Studio</div>
+    <div class="start-item" data-open="win-lab"><span class="start-item-icon">🔬</span> Lab</div>
+    <div class="start-item" data-open="win-contact"><span class="start-item-icon">📧</span> Contact</div>
+    <div class="start-item" data-open="win-manifesto"><span class="start-item-icon">📜</span> Manifesto</div>
+    <div class="start-item" id="sm-pacman"><span class="start-item-icon">👾</span> Pac-Man</div>
+    <div class="start-item" id="sm-shutdown"><span class="start-item-icon">🔴</span> Shut Down</div>
+  </div>
+</div>
+
+<!-- ─── BOOT SCREEN ─── -->
+<div id="boot">
+  <div id="boot-logo">BLUCINELAB</div>
+  <div id="boot-sub">VISUAL STUDIO OS — BOLOGNA</div>
+  <div id="boot-bar-wrap"><div id="boot-bar"></div></div>
+  <div id="boot-text"></div>
+</div>
+
+<script>
+// ─── CURSOR ───
+const cur = document.getElementById('cur');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX + 'px';
+  cur.style.top = e.clientY + 'px';
+});
+
+// ─── CLOCK ───
+function updateClock(){
+  const now = new Date();
+  document.getElementById('clock').textContent =
+    String(now.getHours()).padStart(2,'0')+':'+
+    String(now.getMinutes()).padStart(2,'0')+':'+
+    String(now.getSeconds()).padStart(2,'0');
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ─── BOOT SEQUENCE ───
+const bootLines = [
+  'BLUCINELAB OS v1.0 — AVVIO SISTEMA',
+  'Caricamento driver visivi... OK',
+  'Inizializzazione archivio immagini... OK',
+  'Montaggio unità creativa... OK',
+  'Caricamento moduli percettivi... OK',
+  'Connessione al campo culturale... OK',
+  'Avvio interfaccia utente... OK',
+  'SISTEMA PRONTO.',
+];
+
+let bootDone = false;
+const bootBar = document.getElementById('boot-bar');
+const bootTextEl = document.getElementById('boot-text');
+let bootProgress = 0;
+let bootLineIdx = 0;
+
+function bootStep(){
+  if(bootLineIdx < bootLines.length){
+    bootTextEl.textContent += bootLines[bootLineIdx]+'\n';
+    bootLineIdx++;
+    bootProgress = Math.round((bootLineIdx / bootLines.length) * 100);
+    bootBar.style.width = bootProgress + '%';
+    setTimeout(bootStep, 160 + Math.random()*180);
+  } else {
+    setTimeout(()=>{
+      document.getElementById('boot').style.opacity = '0';
+      document.getElementById('boot').style.transition = 'opacity .5s';
+      setTimeout(()=>{ document.getElementById('boot').remove(); bootDone = true; }, 500);
+    }, 500);
+  }
+}
+setTimeout(bootStep, 600);
+
+// ─── WINDOW MANAGEMENT ───
+let topZ = 200;
+const windows = {};
+
+function bringToFront(win){
+  win.style.zIndex = ++topZ;
+}
+
+function openWindow(id){
+  const win = document.getElementById(id);
+  if(!win) return;
+  win.style.display = 'flex';
+  win.style.flexDirection = 'column';
+  bringToFront(win);
+  updateTaskbar();
+}
+
+function closeWindow(id){
+  const win = document.getElementById(id);
+  if(!win) return;
+  win.style.display = 'none';
+  updateTaskbar();
+}
+
+function minimizeWindow(id){
+  const win = document.getElementById(id);
+  if(!win) return;
+  if(win.dataset.minimized === '1'){
+    win.style.height = '';
+    win.dataset.minimized = '0';
+    const body = win.querySelector('.win-body');
+    const menubar = win.querySelector('.win-menubar');
+    if(body) body.style.display = '';
+    if(menubar) menubar.style.display = '';
+  } else {
+    const body = win.querySelector('.win-body');
+    const menubar = win.querySelector('.win-menubar');
+    if(body) body.style.display = 'none';
+    if(menubar) menubar.style.display = 'none';
+    win.dataset.minimized = '1';
+  }
+}
+
+function maximizeWindow(id){
+  const win = document.getElementById(id);
+  if(!win) return;
+  if(win.dataset.maximized === '1'){
+    win.style.top = win.dataset.prevTop;
+    win.style.left = win.dataset.prevLeft;
+    win.style.width = win.dataset.prevW;
+    win.style.height = win.dataset.prevH;
+    win.dataset.maximized = '0';
+  } else {
+    win.dataset.prevTop = win.style.top;
+    win.dataset.prevLeft = win.style.left;
+    win.dataset.prevW = win.style.width;
+    win.dataset.prevH = win.style.height;
+    win.style.top = '28px';
+    win.style.left = '80px';
+    win.style.width = (window.innerWidth - 88)+'px';
+    win.style.height = (window.innerHeight - 70)+'px';
+    win.dataset.maximized = '1';
+    bringToFront(win);
+  }
+}
+
+function updateTaskbar(){
+  const container = document.getElementById('taskbar-tasks');
+  container.innerHTML = '';
+  document.querySelectorAll('.win').forEach(w=>{
+    if(w.style.display !== 'none'){
+      const btn = document.createElement('button');
+      btn.className = 'taskbar-btn';
+      btn.textContent = (w.querySelector('.win-title')||{}).textContent?.slice(0,18)||w.id;
+      btn.onclick = ()=>{ bringToFront(w); };
+      container.appendChild(btn);
     }
+  });
+}
 
-    .skip-link:focus{
-      left:16px;
-      top:16px;
-      width:auto;
-      height:auto;
-      padding:12px 16px;
-      border-radius:12px;
-      background:#0c1323;
-      color:#eef2f7;
-      border:1px solid rgba(239,207,148,.28);
-      box-shadow:0 10px 24px rgba(0,0,0,.28);
+// ─── DRAG ───
+document.querySelectorAll('[data-drag]').forEach(titlebar=>{
+  const winId = titlebar.dataset.drag;
+  const win = document.getElementById(winId);
+  let dragging = false, ox, oy;
+  titlebar.addEventListener('mousedown', e=>{
+    if(e.target.closest('.win-btn')) return;
+    dragging = true;
+    const rect = win.getBoundingClientRect();
+    ox = e.clientX - rect.left;
+    oy = e.clientY - rect.top;
+    bringToFront(win);
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove', e=>{
+    if(!dragging) return;
+    win.style.left = Math.max(0, e.clientX - ox)+'px';
+    win.style.top = Math.max(28, Math.min(window.innerHeight-60, e.clientY - oy))+'px';
+  });
+  document.addEventListener('mouseup', ()=>{ dragging = false; });
+  // touch
+  titlebar.addEventListener('touchstart', e=>{
+    if(e.target.closest('.win-btn')) return;
+    dragging = true;
+    const t = e.touches[0];
+    const rect = win.getBoundingClientRect();
+    ox = t.clientX - rect.left;
+    oy = t.clientY - rect.top;
+    bringToFront(win);
+  },{passive:true});
+  document.addEventListener('touchmove', e=>{
+    if(!dragging) return;
+    const t = e.touches[0];
+    win.style.left = Math.max(0, t.clientX - ox)+'px';
+    win.style.top = Math.max(28, Math.min(window.innerHeight-60, t.clientY - oy))+'px';
+  },{passive:true});
+  document.addEventListener('touchend', ()=>{ dragging = false; });
+});
+
+// ─── WIN BUTTONS ───
+document.querySelectorAll('[data-close]').forEach(btn=>{
+  btn.addEventListener('click', ()=>closeWindow(btn.dataset.close));
+});
+document.querySelectorAll('[data-minimize]').forEach(btn=>{
+  btn.addEventListener('click', ()=>minimizeWindow(btn.dataset.minimize));
+});
+document.querySelectorAll('[data-maximize]').forEach(btn=>{
+  btn.addEventListener('click', ()=>maximizeWindow(btn.dataset.maximize));
+});
+
+// ─── DESKTOP ICONS ───
+document.querySelectorAll('.desktop-icon[data-win]').forEach(icon=>{
+  let clicks = 0, timer;
+  icon.addEventListener('click', ()=>{
+    clicks++;
+    clearTimeout(timer);
+    timer = setTimeout(()=>{
+      if(clicks >= 2) openWindow(icon.dataset.win);
+      clicks = 0;
+    }, 300);
+  });
+});
+
+// ─── START MENU ───
+const startMenu = document.getElementById('start-menu');
+document.getElementById('taskbar-start').addEventListener('click', e=>{
+  e.stopPropagation();
+  startMenu.classList.toggle('open');
+});
+document.addEventListener('click', ()=>startMenu.classList.remove('open'));
+
+document.querySelectorAll('[data-open]').forEach(item=>{
+  item.addEventListener('click', ()=>{ openWindow(item.dataset.open); startMenu.classList.remove('open'); });
+});
+
+document.getElementById('sm-shutdown').addEventListener('click', ()=>{
+  document.body.innerHTML = '<div style="background:#000;color:#00ff00;font-family:\'Press Start 2P\',monospace;font-size:14px;display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:20px;"><div>È SICURO SPEGNERE IL COMPUTER</div><div style="font-size:9px;color:#808080;">BLUCINELAB OS v1.0</div><button onclick="location.reload()" style="font-family:\'Press Start 2P\',monospace;font-size:8px;padding:10px 20px;background:#000;color:#00ff00;border:2px solid #00ff00;cursor:pointer;margin-top:20px;">↺ RIAVVIA</button></div>';
+});
+
+// ─── WIN FOCUS ───
+document.querySelectorAll('.win').forEach(win=>{
+  win.addEventListener('mousedown', ()=>bringToFront(win));
+});
+
+// ─── PAC-MAN ───
+const pacEl = document.getElementById('pac');
+const pacLayer = document.getElementById('pacman-layer');
+let pacX = 200, pacY = 200;
+let pacDirX = 2.4, pacDirY = 0;
+let pacScore = 0;
+let pacLives = 3;
+let pacActive = true;
+
+// Generate dots
+const dots = [];
+const NUM_DOTS = 60;
+function spawnDots(){
+  pacLayer.querySelectorAll('.dot').forEach(d=>d.remove());
+  dots.length = 0;
+  for(let i=0;i<NUM_DOTS;i++){
+    const d = document.createElement('div');
+    d.className = i%12===0 ? 'dot power-dot' : 'dot';
+    const x = 120 + Math.random()*(window.innerWidth - 200);
+    const y = 60 + Math.random()*(window.innerHeight - 120);
+    d.style.left = x+'px';
+    d.style.top = y+'px';
+    d.style.display = 'block';
+    pacLayer.appendChild(d);
+    dots.push({el:d, x, y, eaten:false, power:i%12===0});
+  }
+}
+spawnDots();
+
+// Ghosts
+const ghostColors = ['👻','👹','👺','🤡'];
+const ghosts = [];
+function spawnGhosts(){
+  pacLayer.querySelectorAll('.ghost').forEach(g=>g.remove());
+  ghosts.length = 0;
+  for(let i=0;i<3;i++){
+    const g = document.createElement('div');
+    g.className = 'ghost';
+    g.textContent = ghostColors[i];
+    g.style.color = ['#ff0000','#ffb8ff','#00ffff'][i];
+    const gx = 300 + i*180;
+    const gy = 300;
+    g.style.left = gx+'px';
+    g.style.top = gy+'px';
+    pacLayer.appendChild(g);
+    ghosts.push({el:g, x:gx, y:gy, vx:(Math.random()-.5)*2, vy:(Math.random()-.5)*2, scared:false});
+  }
+}
+spawnGhosts();
+
+let powerMode = false;
+let powerTimer = 0;
+
+function pacLoop(){
+  if(!pacActive) return;
+
+  // Move pac
+  pacX += pacDirX;
+  pacY += pacDirY;
+
+  // Bounce off walls
+  if(pacX < 10 || pacX > window.innerWidth - 40){ pacDirX *= -1; }
+  if(pacY < 40 || pacY > window.innerHeight - 50){ pacDirY *= -1; }
+
+  // Slight random direction drift
+  if(Math.random() < 0.01){
+    if(Math.random()<.5){ pacDirX = (Math.random()-.5)*5; pacDirY = (Math.random()-.5)*3; }
+  }
+
+  pacEl.style.left = pacX+'px';
+  pacEl.style.top = pacY+'px';
+
+  // Direction rotation
+  const angle = Math.atan2(pacDirY, pacDirX) * 180/Math.PI;
+  pacEl.style.transform = `rotate(${angle}deg)`;
+
+  // Power timer
+  if(powerMode){
+    powerTimer--;
+    if(powerTimer<=0){ powerMode=false; ghosts.forEach(g=>{ g.el.style.filter=''; g.scared=false; }); }
+  }
+
+  // Eat dots
+  dots.forEach(dot=>{
+    if(dot.eaten) return;
+    const dx = pacX - dot.x, dy = pacY - dot.y;
+    if(Math.sqrt(dx*dx+dy*dy) < 22){
+      dot.eaten = true;
+      dot.el.style.opacity = '0';
+      setTimeout(()=>dot.el.remove(),300);
+      if(dot.power){
+        pacScore += 50;
+        powerMode = true; powerTimer = 200;
+        ghosts.forEach(g=>{ g.el.style.filter='hue-rotate(180deg) brightness(.6)'; g.scared=true; });
+      } else {
+        pacScore += 10;
+      }
+      document.getElementById('score-num').textContent = pacScore;
+      // Respawn if all eaten
+      if(dots.every(d=>d.eaten)) setTimeout(spawnDots,1000);
     }
+  });
 
-    .hero-panel-title{
-      font-family:var(--font-display);
-      text-transform:uppercase;
-      letter-spacing:.05em;
-      font-weight:400;
-      font-size:clamp(1.36rem,2vw,1.94rem);
-      line-height:1;
-      margin-bottom:14px;
-      max-width:16ch;
+  // Move ghosts
+  ghosts.forEach(g=>{
+    if(g.scared){
+      // Run away
+      const dx = pacX - g.x, dy = pacY - g.y;
+      g.x -= dx*.02; g.y -= dy*.02;
+      g.vx = -dx*.04; g.vy = -dy*.04;
+    } else {
+      // Chase pac slowly
+      const dx = pacX - g.x, dy = pacY - g.y;
+      g.vx = g.vx*.95 + dx*.0012;
+      g.vy = g.vy*.95 + dy*.0012;
     }
+    g.x += g.vx; g.y += g.vy;
+    g.x = Math.max(10, Math.min(window.innerWidth-40, g.x));
+    g.y = Math.max(40, Math.min(window.innerHeight-50, g.y));
+    g.el.style.left = g.x+'px';
+    g.el.style.top = g.y+'px';
 
-    .contact-list dd{
-      margin:0;
-      color:var(--text-soft);
-      font-size:.94rem;
-      line-height:1.76;
-    }
-
-    .site-footer{
-      width:min(var(--max), calc(100% - 40px));
-      margin:0 auto 44px;
-      text-align:center;
-      color:var(--text-dim);
-      font-size:.82rem;
-      line-height:1.6;
-    }
-
-    @media (max-width:820px){
-      .site-footer{
-        width:calc(100% - 20px);
-        margin-bottom:28px;
+    // Collision with pac
+    const dx = pacX - g.x, dy = pacY - g.y;
+    if(Math.sqrt(dx*dx+dy*dy) < 26){
+      if(g.scared){
+        // eat ghost
+        pacScore += 200;
+        document.getElementById('score-num').textContent = pacScore;
+        g.x = 300 + Math.random()*200;
+        g.y = 300 + Math.random()*100;
+        g.scared = false;
+        g.el.style.filter = '';
+      } else {
+        // lose life
+        pacLives = Math.max(0,pacLives-1);
+        const livesEl = document.getElementById('lives-disp');
+        livesEl.textContent = 'LIVES: ' + '♥'.repeat(pacLives) + '♡'.repeat(3-pacLives);
+        // Respawn pac
+        pacX = window.innerWidth/2; pacY = window.innerHeight/2;
+        pacDirX = 2.4; pacDirY = 0;
+        if(pacLives === 0){
+          showAlert('GAME OVER','Hai perso tutte le vite!\nPunteggio: '+pacScore, ()=>{
+            pacLives=3;
+            livesEl.textContent='LIVES: ♥♥♥';
+            pacScore=0;
+            document.getElementById('score-num').textContent='0';
+          });
+        }
       }
     }
-  </style>
-</head>
-<body class="page-home">
-  <a class="skip-link" href="#main-content">Vai al contenuto principale</a>
+  });
 
-  <div class="background" aria-hidden="true">
-    <canvas id="bgCanvas" width="1" height="1"></canvas>
-    <div class="background-noise"></div>
-    <div class="background-vignette"></div>
-  </div>
+  requestAnimationFrame(pacLoop);
+}
+requestAnimationFrame(pacLoop);
 
-  <div class="cursor" aria-hidden="true"></div>
+// Keyboard control of pac
+document.addEventListener('keydown', e=>{
+  const spd = 3.5;
+  if(e.key==='ArrowLeft'){ pacDirX=-spd;pacDirY=0; }
+  if(e.key==='ArrowRight'){ pacDirX=spd;pacDirY=0; }
+  if(e.key==='ArrowUp'){ pacDirX=0;pacDirY=-spd; }
+  if(e.key==='ArrowDown'){ pacDirX=0;pacDirY=spd; }
+  e.preventDefault();
+});
 
-  <header role="banner">
-    <nav class="nav" aria-label="Navigazione principale">
-      <a href="index.html" class="is-active" aria-current="page">HOME</a>
-      <a href="archive.html">ARCHIVE</a>
-      <a href="studio.html">STUDIO</a>
-      <a href="lab.html">LAB</a>
-      <a href="contact.html">CONTACT</a>
-    </nav>
+// ─── PAC-MAN TOGGLE ───
+document.getElementById('sm-pacman').addEventListener('click', ()=>{
+  pacActive = !pacActive;
+  pacEl.style.display = pacActive ? 'block' : 'none';
+  pacLayer.querySelectorAll('.ghost').forEach(g=>g.style.display=pacActive?'block':'none');
+  startMenu.classList.remove('open');
+  if(pacActive) requestAnimationFrame(pacLoop);
+});
 
-    <div class="page-hero">
-      <div class="page-hero-inner">
-        <div class="archive-copy">
-          <div class="hero-eyebrow">
-            BLUCINELAB / VISUAL STUDIO / BOLOGNA
-          </div>
-
-          <h1 class="archive-title title-wave" aria-label="BLUCINELAB">
-            <span aria-hidden="true">B</span><span aria-hidden="true">L</span><span aria-hidden="true">U</span><span aria-hidden="true">C</span><span aria-hidden="true">I</span><span aria-hidden="true">N</span><span aria-hidden="true">E</span><span aria-hidden="true">L</span><span aria-hidden="true">A</span><span aria-hidden="true">B</span>
-          </h1>
-
-          <div class="archive-panel hero-panel">
-            <div class="panel-label">HOME</div>
-            <h2 class="hero-panel-title">COSTRUIRE IMMAGINI CHE PENSANO</h2>
-            <p>
-              BLUCINELAB è uno studio visivo indipendente che lavora tra immagine,
-              spazio, direzione e ricerca.
-            </p>
-            <p>
-              Cinema, identità, ambienti digitali, installazioni, archivi, processi:
-              non come servizi separati, ma come un unico campo di costruzione
-              percettiva, culturale e narrativa.
-            </p>
-          </div>
-        </div>
-      </div>
+// ─── ALERT SYSTEM ───
+let alertZ = 9000;
+function showAlert(title, msg, onOk){
+  const w = document.createElement('div');
+  w.className = 'win win-alert';
+  w.style.top = (100+Math.random()*100)+'px';
+  w.style.left = (window.innerWidth/2 - 160 + Math.random()*60)+'px';
+  w.style.zIndex = ++alertZ;
+  w.innerHTML = `
+    <div class="win-titlebar" style="background:linear-gradient(90deg,#800000,#400000)">
+      <span class="win-icon">⚠</span>
+      <span class="win-title">${title}</span>
+      <div class="win-controls"><button class="win-btn close" id="alert-x-${alertZ}">✕</button></div>
     </div>
-  </header>
-
-  <main class="main-shell" id="main-content">
-    <section class="section manifesto-section" aria-labelledby="manifesto-title">
-      <div class="manifesto-block">
-        <div class="panel-label">MANIFESTO</div>
-
-        <div class="manifesto-layout">
-          <div>
-            <h2 id="manifesto-title">UN LABORATORIO CONTEMPORANEO DELL’IMMAGINE</h2>
-          </div>
-
-          <div>
-            <p>
-              BLUCINELAB nasce dall’idea che l’immagine non sia una superficie da riempire,
-              ma una forma di lettura del mondo. Per questo lavoriamo tra rigore e immaginazione,
-              metodo e sensibilità, costruzione tecnica e profondità emotiva.
-            </p>
-            <p>
-              Ci interessano progetti capaci di generare presenza, esperienza, memoria, relazione.
-              Progetti culturali, editoriali, installativi, digitali o ibridi, in cui la forma non
-              decora ma orienta, chiarisce e intensifica.
-            </p>
-          </div>
-        </div>
+    <div class="win-body">
+      <div class="alert-row">
+        <span class="alert-icon">🔔</span>
+        <span class="alert-msg">${msg.replace(/\n/g,'<br>')}</span>
       </div>
-    </section>
-
-    <section class="section" aria-labelledby="position-title">
-      <div class="section-head">
-        <div class="section-kicker">POSITION</div>
-        <h2 id="position-title">NON UNA VETRINA GENERICA, MA UNA STRUTTURA DI VISIONE</h2>
-        <p>
-          Il sito tiene insieme studio, archivio e ricerca. Non presenta una somma
-          di prestazioni, ma una postura. Un modo di pensare e costruire immagini,
-          spazi e sistemi visivi con coerenza, precisione e apertura.
-        </p>
+      <div class="alert-btns">
+        <button class="alert-ok" id="alert-ok-${alertZ}">OK</button>
+        <button class="alert-ok" id="alert-cancel-${alertZ}">ANNULLA</button>
       </div>
+    </div>`;
+  document.body.appendChild(w);
 
-      <div class="cluster-grid">
-        <article class="cluster-card">
-          <div class="panel-label">FIELD 01</div>
-          <h3>WEB DESIGN</h3>
-          <p>
-            Ambienti digitali con gerarchia chiara, qualità editoriale e presenza visiva controllata.
-          </p>
-        </article>
+  // Make draggable
+  const tb = w.querySelector('.win-titlebar');
+  let dragging=false,ox,oy;
+  tb.addEventListener('mousedown',e=>{ if(e.target.closest('.win-btn'))return; dragging=true; const r=w.getBoundingClientRect(); ox=e.clientX-r.left; oy=e.clientY-r.top; e.preventDefault(); });
+  document.addEventListener('mousemove',e=>{ if(!dragging)return; w.style.left=Math.max(0,e.clientX-ox)+'px'; w.style.top=Math.max(0,e.clientY-oy)+'px'; });
+  document.addEventListener('mouseup',()=>dragging=false);
 
-        <article class="cluster-card">
-          <div class="panel-label">FIELD 02</div>
-          <h3>VISUAL IDENTITY</h3>
-          <p>
-            Sistemi di identità costruiti come linguaggio, continuità e riconoscibilità nel tempo.
-          </p>
-        </article>
+  const ok = ()=>{ w.remove(); if(onOk) onOk(); };
+  document.getElementById(`alert-ok-${alertZ}`).onclick = ok;
+  document.getElementById(`alert-cancel-${alertZ}`).onclick = ()=>w.remove();
+  document.getElementById(`alert-x-${alertZ}`).onclick = ()=>w.remove();
+}
 
-        <article class="cluster-card">
-          <div class="panel-label">FIELD 03</div>
-          <h3>EXHIBITION &amp; SPACE</h3>
-          <p>
-            Display, installazione e costruzione dello spazio come esperienza narrativa e percettiva.
-          </p>
-        </article>
+// ─── EASTER EGG ───
+document.getElementById('egg-btn').addEventListener('click',()=>{
+  showAlert('??? INSERT COIN ???',
+  'Hai trovato il segreto!\nBLUCINELAB è uno studio visivo\nma anche un gioco.\nPremi ↑↑↓↓←→←→BA per sbloccare\nil livello segreto.'
+  );
+});
 
-        <article class="cluster-card">
-          <div class="panel-label">FIELD 04</div>
-          <h3>IMAGE DIRECTION</h3>
-          <p>
-            Direzione tonale, selezione, ritmo e coerenza tra media, superfici e contesti.
-          </p>
-        </article>
-      </div>
-    </section>
+// Konami code
+let konamiSeq=[];
+const KONAMI=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+document.addEventListener('keydown',e=>{
+  konamiSeq.push(e.key);
+  konamiSeq=konamiSeq.slice(-10);
+  if(JSON.stringify(konamiSeq)===JSON.stringify(KONAMI)){
+    document.body.style.animation='rainbowShift 1s infinite';
+    const style=document.createElement('style');
+    style.textContent='@keyframes rainbowShift{0%{filter:hue-rotate(0deg);}100%{filter:hue-rotate(360deg);}}';
+    document.head.appendChild(style);
+    showAlert('🌈 CHEAT CODE!','MODALITÀ ARCOBALENO ATTIVATA!\nTutti i pixel celebrano BLUCINELAB!');
+  }
+});
 
-    <section class="section" aria-labelledby="horizons-title">
-      <div class="section-head">
-        <div class="section-kicker">HORIZONS</div>
-        <h2 id="horizons-title">CULTURA, RICERCA, ESPANSIONE</h2>
-        <p>
-          BLUCINELAB non si muove in un solo territorio. Tiene insieme lavoro
-          professionale, orizzonte culturale e possibilità future.
-        </p>
-      </div>
+// ─── RANDOM POPUPS (contextual) ───
+const randomPopups = [
+  {title:'💡 SUGGERIMENTO', msg:'Trascina le finestre per\nriorganizzare il tuo desktop\nvisivo personale.'},
+  {title:'📡 SEGNALE RICEVUTO', msg:'blucinelab@gmail.com\nè in linea e pronto a\nricevere la tua idea.'},
+  {title:'🎨 CURIOSITÀ', msg:'BLUCINELAB lavora a Bologna\ntra immagine, spazio\ne costruzione percettiva.'},
+];
+let popupIdx = 0;
+setTimeout(()=>{
+  function nextPopup(){
+    if(popupIdx < randomPopups.length){
+      const p = randomPopups[popupIdx++];
+      showAlert(p.title, p.msg);
+      setTimeout(nextPopup, 8000 + Math.random()*6000);
+    }
+  }
+  nextPopup();
+}, 4000);
 
-      <div class="featured-grid">
-        <article class="featured-card">
-          <div class="featured-body">
-            <div class="card-kicker">CULTURAL</div>
-            <h3>PROGETTI CHE HANNO DENSITÀ, NON SOLO VISIBILITÀ</h3>
-            <p>
-              Mostre, film, archivi, installazioni, progetti educativi, processi editoriali
-              e collaborazioni in cui immagine e pensiero restano inseparabili.
-            </p>
-          </div>
-        </article>
+// ─── INIT taskbar ───
+updateTaskbar();
 
-        <article class="featured-card">
-          <div class="featured-body">
-            <div class="card-kicker">INTERNATIONAL</div>
-            <h3>APERTURA REALE, NON POSE COSMOPOLITE</h3>
-            <p>
-              Ci interessano contesti capaci di attraversare linguaggi, discipline,
-              territori e pubblici diversi mantenendo precisione, leggibilità e identità.
-            </p>
-          </div>
-        </article>
-      </div>
-    </section>
+// ─── WINDOW BG CANVAS ───
+const bgCanvas = document.createElement('canvas');
+bgCanvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;';
+document.getElementById('desktop').appendChild(bgCanvas);
 
-    <section class="section" aria-labelledby="archive-title">
-      <div class="section-head">
-        <div class="section-kicker">ARCHIVE</div>
-        <h2 id="archive-title">LAVORI, PROCESSI, STATI DI VISIBILITÀ</h2>
-        <p>
-          L’archivio distingue tra case study pubblici, materiali confidenziali
-          e formati ibridi. Non una griglia neutra, ma una lettura editoriale del lavoro.
-        </p>
-      </div>
+function resizeBg(){
+  bgCanvas.width=window.innerWidth;
+  bgCanvas.height=window.innerHeight;
+}
+resizeBg();
+window.addEventListener('resize',resizeBg);
 
-      <div class="featured-grid">
-        <a href="archive.html" class="featured-card panel-button">
-          <div class="featured-body">
-            <div class="card-kicker">PUBLIC WORKS</div>
-            <h3>ENTRA NELL’ARCHIVIO</h3>
-            <p>
-              Case study, superfici protette e pagine di processo organizzate
-              per funzione, stato e profondità di accesso.
-            </p>
-          </div>
-        </a>
-
-        <article class="featured-card">
-          <div class="featured-body">
-            <div class="card-kicker">CURRENT LOGIC</div>
-            <h3>CASE STUDY · CONFIDENTIAL · PROCESS ENTRY</h3>
-            <p>
-              Tre modi diversi di mostrare il lavoro senza forzarlo dentro
-              una grammatica da portfolio standard.
-            </p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="studio-title">
-      <div class="section-head">
-        <div class="section-kicker">STUDIO</div>
-        <h2 id="studio-title">METODO, RIDUZIONE, COERENZA</h2>
-        <p>
-          Il metodo parte da domande, selezione e campo percettivo.
-          Prima si chiarisce il necessario, poi si costruisce ciò che regge.
-        </p>
-      </div>
-
-      <div class="studio-grid">
-        <article class="studio-card">
-          <div class="panel-label">SELECTION</div>
-          <h3>TOGLIERE CIÒ CHE INDEBOLISCE</h3>
-          <p>
-            La prima mossa è spesso sottrattiva. Meno dispersione, più struttura, più tensione.
-          </p>
-        </article>
-
-        <article class="studio-card">
-          <div class="panel-label">ATMOSPHERE</div>
-          <h3>COSTRUIRE IL CAMPO PERCETTIVO</h3>
-          <p>
-            Luce, tipo, immagine, spazio e ritmo lavorano come un unico sistema continuo.
-          </p>
-        </article>
-
-        <article class="studio-card">
-          <div class="panel-label">COHERENCE</div>
-          <h3>MANTENERE UN LINGUAGGIO INTERNO</h3>
-          <p>
-            Il progetto deve restare riconoscibile tra pagina, ambiente, racconto e direzione.
-          </p>
-        </article>
-
-        <a href="studio.html" class="studio-card panel-button">
-          <div class="panel-label">OPEN</div>
-          <h3>LEGGI IL METODO COMPLETO</h3>
-          <p>
-            Aree operative, logica di lavoro, contesti adatti e struttura dello studio.
-          </p>
-        </a>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="values-title">
-      <div class="section-head">
-        <div class="section-kicker">VALUES</div>
-        <h2 id="values-title">CURA, RESPONSABILITÀ, ESPERIENZA</h2>
-        <p>
-          Ci interessa una pratica capace di unire rigore e umanità. Cura non come
-          morbidezza generica, ma come qualità della forma, del tempo e della relazione.
-        </p>
-      </div>
-
-      <div class="studio-grid">
-        <article class="studio-card">
-          <div class="panel-label">CARE</div>
-          <h3>ATTENZIONE ALLA FORMA E A CHI LA ATTRAVERSA</h3>
-          <p>
-            Progetti leggibili, sensibili, non rumorosi. Forme che sanno contenere esperienza.
-          </p>
-        </article>
-
-        <article class="studio-card">
-          <div class="panel-label">PRECISION</div>
-          <h3>RIGORE SENZA ARIDITÀ</h3>
-          <p>
-            Ridurre, ordinare, dare peso. La precisione serve a far respirare meglio il lavoro.
-          </p>
-        </article>
-
-        <article class="studio-card">
-          <div class="panel-label">RESEARCH</div>
-          <h3>IL PROCESSO NON È SCARTO</h3>
-          <p>
-            Studi, prove, note e frammenti restano parte della costruzione dell’opera.
-          </p>
-        </article>
-
-        <article class="studio-card">
-          <div class="panel-label">EXPERIENCE</div>
-          <h3>L’ARTE COME INTENSIFICAZIONE DEL REALE</h3>
-          <p>
-            Non un ornamento, ma un modo di produrre emozione, consapevolezza e presenza.
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="lab-title">
-      <div class="section-head">
-        <div class="section-kicker">LAB</div>
-        <h2 id="lab-title">MATERIALI IN FORMAZIONE, FUTURI POSSIBILI</h2>
-        <p>
-          Il laboratorio raccoglie note, test, frammenti e superfici di ricerca.
-          È il luogo dove il lavoro resta aperto, osservabile, interrogabile.
-        </p>
-      </div>
-
-      <div class="featured-grid">
-        <a href="lab.html" class="featured-card panel-button">
-          <div class="featured-body">
-            <div class="card-kicker">ACTIVE RESEARCH</div>
-            <h3>ENTRA NEL LABORATORIO</h3>
-            <p>
-              Studi di luce, materiali in divenire, archivi, processi aperti
-              e pagine ibride tra pratica e pensiero.
-            </p>
-          </div>
-        </a>
-
-        <article class="featured-card">
-          <div class="featured-body">
-            <div class="card-kicker">FUTURE LAYER</div>
-            <h3>RICERCA, AI, ARCHIVI INTELLIGENTI, FORMATI IBRIDI</h3>
-            <p>
-              Un ecosistema capace di crescere tra cultura, tecnologia, educazione,
-              installazione e costruzione di nuovi dispositivi di esperienza.
-            </p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="contact-title">
-      <div class="section-head">
-        <div class="section-kicker">CONTACT</div>
-        <h2 id="contact-title">POCHI PROGETTI, FATTI BENE</h2>
-        <p>
-          BLUCINELAB lavora meglio quando il contesto è chiaro, il progetto ha
-          peso e la collaborazione richiede visione, rigore e qualità della relazione.
-        </p>
-      </div>
-
-      <div class="contact-grid">
-        <article class="contact-card">
-          <div class="panel-label">EMAIL</div>
-          <h3>SCRIVI DIRETTAMENTE</h3>
-
-          <dl class="contact-list">
-            <div class="contact-item">
-              <dt class="label">Address</dt>
-              <dd>
-                <a href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a>
-              </dd>
-            </div>
-
-            <div class="contact-item">
-              <dt class="label">Use</dt>
-              <dd>
-                Commissioni, collaborazioni, progetti culturali, direzione visiva,
-                sistemi digitali, installazioni e sviluppo editoriale.
-              </dd>
-            </div>
-          </dl>
-        </article>
-
-        <a href="contact.html" class="contact-card panel-button">
-          <div class="panel-label">ACCESS</div>
-          <h3>APRIRE UNA CONVERSAZIONE UTILE</h3>
-
-          <dl class="contact-list">
-            <div class="contact-item">
-              <dt class="label">Context</dt>
-              <dd>
-                Descrivi il progetto, il momento in cui si trova e il tipo di trasformazione che richiede.
-              </dd>
-            </div>
-
-            <div class="contact-item">
-              <dt class="label">Timing</dt>
-              <dd>
-                Indica scadenze, materiali già esistenti, vincoli e finestra di lavoro prevista.
-              </dd>
-            </div>
-          </dl>
-        </a>
-      </div>
-    </section>
-
-    <div class="bottom-space" aria-hidden="true"></div>
-  </main>
-
-  <footer class="site-footer">
-    <p>© 2026 BLUCINELAB — Studio visivo indipendente, Bologna.</p>
-  </footer>
-
-  <script src="script.js" defer></script>
+const bgCtx = bgCanvas.getContext('2d');
+let bgT = 0;
+// Draw pixel art city skyline bg
+function drawBg(){
+  bgCtx.clearRect(0,0,bgCanvas.width,bgCanvas.height);
+  bgT++;
+  // City silhouette
+  bgCtx.fillStyle='#0d0030';
+  const W=bgCanvas.width, H=bgCanvas.height;
+  const buildingData=[.05,.12,.07,.18,.09,.22,.06,.14,.08,.2,.1,.16,.07,.11,.09,.19,.06,.15,.08,.13,.1,.2,.07,.17,.09,.12];
+  const bw = W/(buildingData.length/2);
+  for(let i=0;i<buildingData.length;i+=2){
+    const bx=i/2*bw;
+    const bh=buildingData[i+1]*H*0.55;
+    bgCtx.fillRect(bx,H-bh-30,bw-2,bh);
+    // windows
+    for(let wy=H-bh-20;wy<H-40;wy+=12){
+      for(let wx=bx+4;wx<bx+bw-8;wx+=10){
+        const on=Math.sin(bgT*.01+wx+wy)>.3;
+        bgCtx.fillStyle=on?`rgba(255,220,80,${.3+.2*Math.sin(bgT*.05+wx)})` :'rgba(0,20,60,.6)';
+        bgCtx.fillRect(wx,wy,6,8);
+      }
+    }
+  }
+  // Stars
+  for(let i=0;i<120;i++){
+    const sx=(i*137.5)%W;
+    const sy=(i*79.3)%(H*.6);
+    const alpha=.3+.4*Math.sin(bgT*.05+i);
+    bgCtx.fillStyle=`rgba(255,255,255,${alpha})`;
+    bgCtx.fillRect(sx,sy,i%3===0?2:1,i%3===0?2:1);
+  }
+  requestAnimationFrame(drawBg);
+}
+drawBg();
+</script>
 </body>
 </html>
