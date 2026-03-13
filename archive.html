@@ -1,110 +1,370 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ARCHIVE — BLUCINE</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<link rel="stylesheet" href="style.css" />
+  <title>ARCHIVE — BLUCINE</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+
+    .archive-shell{
+      width:min(1320px, calc(100% - 40px));
+      margin:0 auto;
+      padding:140px 0 120px;
+    }
+
+    .archive-hero{
+
+      border:1px solid rgba(239,207,148,.56);
+      border-radius:18px;
+
+      padding:34px;
+
+      margin-bottom:40px;
+
+      background:
+        radial-gradient(circle at 20% 20%, rgba(59,103,173,.18), transparent 30%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)),
+        rgba(10,15,22,.84);
+
+    }
+
+    .archive-kicker{
+
+      font-family:Oswald,sans-serif;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-size:11px;
+
+      color:rgba(226,219,206,.62);
+
+      margin-bottom:14px;
+
+    }
+
+    .archive-title{
+
+      font-family:Oswald,sans-serif;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+
+      font-size:clamp(3rem,6vw,6rem);
+
+      margin:0 0 14px;
+
+    }
+
+    .archive-intro{
+
+      max-width:60ch;
+
+      line-height:1.75;
+
+      color:rgba(226,219,206,.85);
+
+    }
+
+    .archive-section{
+
+      margin-top:50px;
+
+    }
+
+    .archive-section-head{
+
+      margin-bottom:20px;
+
+    }
+
+    .archive-section-head h2{
+
+      font-family:Oswald,sans-serif;
+      text-transform:uppercase;
+
+      font-size:1.8rem;
+
+      margin-bottom:6px;
+
+    }
+
+    .archive-section-head p{
+
+      max-width:60ch;
+      color:rgba(226,219,206,.8);
+
+      font-size:.9rem;
+
+    }
+
+    .archive-grid{
+
+      display:grid;
+
+      grid-template-columns:repeat(3,1fr);
+
+      gap:22px;
+
+    }
+
+    .archive-card{
+
+      border:1px solid rgba(239,207,148,.56);
+      border-radius:18px;
+
+      overflow:hidden;
+
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)),
+        rgba(10,15,22,.84);
+
+      display:flex;
+      flex-direction:column;
+
+      text-decoration:none;
+      color:inherit;
+
+    }
+
+    .archive-card img{
+
+      width:100%;
+      height:220px;
+      object-fit:cover;
+
+    }
+
+    .archive-card-body{
+
+      padding:20px;
+
+    }
+
+    .archive-card-body h3{
+
+      font-family:Oswald,sans-serif;
+      text-transform:uppercase;
+
+      font-size:1.2rem;
+
+      margin-bottom:8px;
+
+    }
+
+    .archive-card-body p{
+
+      font-size:.85rem;
+
+      color:rgba(226,219,206,.8);
+
+    }
+
+    @media(max-width:900px){
+
+      .archive-grid{
+
+        grid-template-columns:1fr;
+
+      }
+
+    }
+
+  </style>
+
 </head>
 
-<body class="page-archive">
+<body>
 
 <div class="background">
-<canvas id="bgCanvas"></canvas>
-<div class="background-noise"></div>
-<div class="background-vignette"></div>
+  <canvas id="bgCanvas"></canvas>
+  <div class="background-noise"></div>
+  <div class="background-vignette"></div>
 </div>
 
 <div class="cursor"></div>
 
 <nav class="nav">
-<a href="index.html">HOME</a>
-<a href="archive.html" class="is-active">ARCHIVE</a>
-<a href="studio.html">STUDIO</a>
-<a href="lab.html">LAB</a>
-<a href="contact.html">CONTACT</a>
+
+  <a href="index.html">HOME</a>
+  <a href="archive.html" class="is-active">ARCHIVE</a>
+  <a href="studio.html">STUDIO</a>
+  <a href="lab.html">LAB</a>
+  <a href="contact.html">CONTACT</a>
+
 </nav>
 
-<header class="page-hero">
-<div class="page-hero-inner">
-<div class="archive-copy">
 
-<div class="hero-eyebrow">
-BLUCINE / SELECTED WORKS / CATALOGUE
+<main class="archive-shell">
+
+
+<!-- HERO -->
+
+
+<section class="archive-hero">
+
+<div class="archive-kicker">
+BLUCINE / ARCHIVE / WORKS
 </div>
 
-<h1 class="title archive-title">
-<span>A</span><span>R</span><span>C</span><span>H</span><span>I</span><span>V</span><span>E</span>
+<h1 class="archive-title">
+ARCHIVE
 </h1>
 
-<div class="archive-panel panel-button hero-panel">
-<div class="panel-label">ARCHIVE</div>
-<h3>CURATED CASE STUDIES</h3>
-<p>
-A selected archive across exhibition design, installation and visual direction.
+<p class="archive-intro">
+
+Selected works, ongoing material and confidential surfaces.  
+Some projects appear complete, others remain partially visible while still forming.
+
 </p>
-<p>
-Public and confidential works are presented through a controlled editorial structure,
-not as a generic list of projects.
-</p>
-</div>
 
-</div>
-</div>
-</header>
-
-<main class="main-shell">
-
-<section class="section reveal-section">
-<div class="section-head">
-<div class="section-kicker">CATALOGUE</div>
-<h2>SELECTED CASE STUDIES</h2>
-<p>A compact archive designed to read as a curated set.</p>
-</div>
-
-<div class="projects-rail">
-<a href="project-exhibition.html" class="project-card panel-button">
-<div class="project-media">
-<img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1400&auto=format&fit=crop" alt="Exhibition structure and display environment" />
-</div>
-<div class="project-body">
-<div class="card-kicker">CONFIDENTIAL / EXHIBITION</div>
-<h3>DISPLAY SYSTEM</h3>
-<p>Spatial design, pacing and image-to-space relation organised as one sequence.</p>
-</div>
-</a>
-
-<a href="project-installation.html" class="project-card panel-button">
-<div class="project-media">
-<img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1400&auto=format&fit=crop" alt="Installation and event structure" />
-</div>
-<div class="project-body">
-<div class="card-kicker">CONFIDENTIAL / INSTALLATION</div>
-<h3>SPATIAL OBJECT</h3>
-<p>Large-scale installation designed for presence, clarity and immediate impact.</p>
-</div>
-</a>
-
-<a href="project-direction.html" class="project-card panel-button">
-<div class="project-media">
-<img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1400&auto=format&fit=crop" alt="Image direction and visual production" />
-</div>
-<div class="project-body">
-<div class="card-kicker">CONFIDENTIAL / DIRECTION</div>
-<h3>IMAGE FRAMEWORK</h3>
-<p>Visual direction developed through tone, continuity and image logic.</p>
-</div>
-</a>
-</div>
 </section>
 
-<div class="bottom-space"></div>
+
+
+<!-- CASE STUDIES -->
+
+
+<section class="archive-section">
+
+<div class="archive-section-head">
+
+<h2>
+SELECTED CASE STUDIES
+</h2>
+
+<p>
+
+Public works presented in their complete form.
+
+</p>
+
+</div>
+
+
+<div class="archive-grid">
+
+
+<a href="project-exhibition.html" class="archive-card">
+
+<img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1600&auto=format&fit=crop">
+
+<div class="archive-card-body">
+
+<h3>DISPLAY SYSTEM</h3>
+
+<p>Exhibition / spatial design / display structure</p>
+
+</div>
+
+</a>
+
+
+<a href="project-installation.html" class="archive-card">
+
+<img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?q=80&w=1600&auto=format&fit=crop">
+
+<div class="archive-card-body">
+
+<h3>SPATIAL OBJECT</h3>
+
+<p>Installation / event / temporary architecture</p>
+
+</div>
+
+</a>
+
+
+<a href="project-direction.html" class="archive-card">
+
+<img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1600&auto=format&fit=crop">
+
+<div class="archive-card-body">
+
+<h3>IMAGE FRAMEWORK</h3>
+
+<p>Direction / visual system / tone</p>
+
+</div>
+
+</a>
+
+
+</div>
+
+</section>
+
+
+
+<!-- CONFIDENTIAL -->
+
+
+<section class="archive-section">
+
+<div class="archive-section-head">
+
+<h2>
+ONGOING / CONFIDENTIAL
+</h2>
+
+<p>
+
+Projects in development or partially protected.
+
+</p>
+
+</div>
+
+
+<div class="archive-grid">
+
+
+<a href="project-process.html" class="archive-card">
+
+<img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1600&auto=format&fit=crop">
+
+<div class="archive-card-body">
+
+<h3>PROCESS ENTRY</h3>
+
+<p>Hybrid page / lab surface / ongoing work</p>
+
+</div>
+
+</a>
+
+
+
+<a href="lab.html" class="archive-card">
+
+<img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=1600&auto=format&fit=crop">
+
+<div class="archive-card-body">
+
+<h3>LAB MATERIAL</h3>
+
+<p>Notes / tests / visual fragments</p>
+
+</div>
+
+</a>
+
+
+</div>
+
+</section>
+
+
 
 </main>
 
 <script src="script.js"></script>
+
 </body>
 </html>
