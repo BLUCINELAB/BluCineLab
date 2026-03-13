@@ -6,95 +6,134 @@
   <title>IMAGE FRAMEWORK — BLUCINE</title>
 
   <link rel="stylesheet" href="style.css" />
-
   <link
     href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap"
     rel="stylesheet"
   />
 
   <style>
-    .project-editorial-hero{
-      display:grid;
-      grid-template-columns:1.05fr .95fr;
-      gap:22px;
-      align-items:stretch;
-      margin-bottom:22px;
+    .project-tone-night{
+      --tone-line: rgba(155, 187, 236, 0.32);
+      --tone-glow: rgba(73, 123, 211, 0.16);
     }
 
-    .project-editorial-panel,
-    .project-editorial-image,
-    .project-editorial-block,
-    .project-editorial-meta,
-    .project-editorial-gallery-card{
+    .project-night-shell{
+      width:min(1320px, calc(100% - 40px));
+      margin:0 auto;
+      padding:140px 0 120px;
+    }
+
+    .project-night-back{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:14px 18px;
+      margin-bottom:20px;
+      border-radius:999px;
+      border:1px solid var(--tone-line);
+      background:rgba(12,18,28,.72);
+      font-family:Oswald,sans-serif;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-size:11px;
+    }
+
+    .project-night-hero{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:22px;
+      margin-bottom:22px;
+      align-items:stretch;
+    }
+
+    .project-night-panel,
+    .project-night-image,
+    .project-night-meta,
+    .project-night-block,
+    .project-night-gallery-card{
       position:relative;
       overflow:hidden;
+      border:1px solid var(--tone-line);
       border-radius:18px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)),
+        rgba(8,12,20,.88);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.08),
+        inset 0 -1px 0 rgba(0,0,0,.26),
+        0 14px 32px rgba(0,0,0,.22),
+        0 0 0 1px rgba(120,155,215,.04);
     }
 
-    .project-editorial-panel{
-      padding:34px;
-      min-height:600px;
+    .project-night-panel{
+      min-height:620px;
+      padding:36px;
       display:flex;
       flex-direction:column;
       justify-content:flex-end;
+      background:
+        radial-gradient(circle at 18% 16%, var(--tone-glow), transparent 28%),
+        radial-gradient(circle at 84% 22%, rgba(101,140,224,.08), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.008)),
+        rgba(8,12,20,.90);
     }
 
-    .project-editorial-image img,
-    .project-editorial-gallery-card img{
+    .project-night-image{
+      min-height:620px;
+    }
+
+    .project-night-image img,
+    .project-night-gallery-card img{
       width:100%;
       height:100%;
       object-fit:cover;
-      filter:saturate(.96) contrast(1.03) brightness(.92);
+      filter:saturate(.95) contrast(1.05) brightness(.84);
     }
 
-    .project-editorial-image{
-      min-height:600px;
-    }
-
-    .project-editorial-kicker,
-    .project-editorial-label{
+    .project-night-kicker,
+    .project-night-label{
       font-family:Oswald,sans-serif;
       text-transform:uppercase;
       letter-spacing:.14em;
       font-size:10px;
-      color:rgba(226,219,206,.62);
+      color:rgba(198,212,236,.62);
     }
 
-    .project-editorial-kicker{
+    .project-night-kicker{
       margin-bottom:14px;
     }
 
-    .project-editorial-title{
+    .project-night-title{
       font-family:Oswald,sans-serif;
       text-transform:uppercase;
       letter-spacing:.06em;
-      line-height:.92;
-      font-size:clamp(2.8rem, 4.8vw, 5.6rem);
-      margin:0 0 16px;
-      max-width:9ch;
+      line-height:.90;
+      font-size:clamp(3rem, 5vw, 6rem);
+      margin:0 0 18px;
+      max-width:7.8ch;
     }
 
-    .project-editorial-intro{
-      color:rgba(226,219,206,.84);
-      line-height:1.8;
-      font-size:.96rem;
+    .project-night-intro{
       max-width:54ch;
+      color:rgba(226,219,206,.84);
+      line-height:1.82;
+      font-size:.96rem;
     }
 
-    .project-editorial-meta-grid{
+    .project-night-meta-grid{
       display:grid;
       grid-template-columns:repeat(3, minmax(0,1fr));
       gap:22px;
       margin-bottom:22px;
     }
 
-    .project-editorial-meta{
+    .project-night-meta{
       padding:22px;
-      min-height:170px;
+      min-height:176px;
     }
 
-    .project-editorial-meta h3,
-    .project-editorial-block h3{
+    .project-night-meta h3,
+    .project-night-block h3{
       font-family:Oswald,sans-serif;
       text-transform:uppercase;
       letter-spacing:.07em;
@@ -103,56 +142,72 @@
       margin:10px 0 10px;
     }
 
-    .project-editorial-meta p,
-    .project-editorial-block p{
+    .project-night-meta p,
+    .project-night-block p{
       color:rgba(226,219,206,.82);
-      line-height:1.72;
+      line-height:1.74;
       font-size:.88rem;
     }
 
-    .project-editorial-content{
+    .project-night-content{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:22px;
       margin-bottom:22px;
     }
 
-    .project-editorial-block{
+    .project-night-block{
       padding:26px;
       min-height:260px;
     }
 
-    .project-editorial-gallery{
+    .project-night-gallery{
       display:grid;
-      grid-template-columns:repeat(3, minmax(0,1fr));
+      grid-template-columns:1fr 1fr 1fr;
       gap:22px;
-      margin-bottom:22px;
     }
 
-    .project-editorial-gallery-card{
-      min-height:300px;
+    .project-night-gallery-card{
+      min-height:320px;
     }
 
     @media (max-width:1100px){
-      .project-editorial-hero,
-      .project-editorial-meta-grid,
-      .project-editorial-content,
-      .project-editorial-gallery{
+      .project-night-hero,
+      .project-night-meta-grid,
+      .project-night-content,
+      .project-night-gallery{
         grid-template-columns:1fr;
       }
 
-      .project-editorial-image{
+      .project-night-image{
         min-height:380px;
       }
 
-      .project-editorial-gallery-card{
+      .project-night-gallery-card{
         min-height:260px;
+      }
+    }
+
+    @media (max-width:820px){
+      .project-night-shell{
+        width:calc(100% - 20px);
+        padding-top:110px;
+      }
+
+      .project-night-panel,
+      .project-night-meta,
+      .project-night-block{
+        padding:20px;
+      }
+
+      .project-night-title{
+        font-size:clamp(2.3rem, 11vw, 4.2rem);
       }
     }
   </style>
 </head>
 
-<body>
+<body class="project-tone-night">
 
   <div class="background">
     <canvas id="bgCanvas"></canvas>
@@ -170,83 +225,80 @@
     <a href="contact.html">CONTACT</a>
   </nav>
 
-  <main class="main-shell project-shell">
+  <main class="project-night-shell">
+    <a href="archive.html" class="project-night-back">← BACK TO ARCHIVE</a>
 
-    <section class="section project-top is-visible">
-      <a href="archive.html" class="back-link panel-button">← BACK TO ARCHIVE</a>
+    <section class="project-night-hero">
+      <article class="project-night-panel">
+        <div class="project-night-kicker">CONFIDENTIAL / DIRECTION / IMAGE SYSTEM</div>
+        <h1 class="project-night-title">IMAGE FRAMEWORK</h1>
+        <p class="project-night-intro">
+          A case-study placeholder for a direction-oriented project where visual coherence,
+          tonal continuity and image selection are treated as a system rather than as surface styling.
+          The page is built as a nocturnal field: monitor light, sequence, control.
+        </p>
+      </article>
 
-      <div class="project-editorial-hero">
-        <article class="project-editorial-panel panel-button">
-          <div class="project-editorial-kicker">CONFIDENTIAL / DIRECTION / IMAGE SYSTEM</div>
-          <h1 class="project-editorial-title">IMAGE FRAMEWORK</h1>
-          <p class="project-editorial-intro">
-            A placeholder case study for a direction-oriented project where visual coherence,
-            tonal continuity and image selection are treated as a system rather than as styling.
-          </p>
-        </article>
-
-        <article class="project-editorial-image panel-button">
-          <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1800&auto=format&fit=crop" alt="Image direction and visual production" />
-        </article>
-      </div>
-
-      <div class="project-editorial-meta-grid">
-        <article class="project-editorial-meta panel-button">
-          <div class="project-editorial-label">Role</div>
-          <h3>Art Direction</h3>
-          <p>Tone, image logic, selection criteria and structural visual continuity.</p>
-        </article>
-
-        <article class="project-editorial-meta panel-button">
-          <div class="project-editorial-label">Field</div>
-          <h3>Audiovisual Context</h3>
-          <p>Direction work intended to hold a project together across surfaces and moments.</p>
-        </article>
-
-        <article class="project-editorial-meta panel-button">
-          <div class="project-editorial-label">Status</div>
-          <h3>Editorial Placeholder</h3>
-          <p>The current page translates the logic of the work without disclosing the real material.</p>
-        </article>
-      </div>
-
-      <div class="project-editorial-content">
-        <article class="project-editorial-block panel-button">
-          <div class="project-editorial-label">Context</div>
-          <h3>THE PROJECT</h3>
-          <p>
-            The aim is to build a perceptive frame for the work:
-            a way of deciding how images relate, how tone holds,
-            and how atmosphere remains recognisable across outputs.
-          </p>
-        </article>
-
-        <article class="project-editorial-block panel-button">
-          <div class="project-editorial-label">Method</div>
-          <h3>CONSISTENCY BEFORE EFFECT</h3>
-          <p>
-            Direction is treated here as system-building.
-            That means fewer arbitrary gestures, more internal consistency,
-            and a controlled relation between image, rhythm, material and emotional temperature.
-          </p>
-        </article>
-      </div>
-
-      <div class="project-editorial-gallery">
-        <article class="project-editorial-gallery-card panel-button">
-          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1400&auto=format&fit=crop" alt="Screens, editing and image selection" />
-        </article>
-
-        <article class="project-editorial-gallery-card panel-button">
-          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1400&auto=format&fit=crop" alt="Blue screen glow and studio night" />
-        </article>
-
-        <article class="project-editorial-gallery-card panel-button">
-          <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=1400&auto=format&fit=crop" alt="Workstation and direction environment" />
-        </article>
-      </div>
+      <article class="project-night-image">
+        <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1800&auto=format&fit=crop" alt="Image direction and visual production" />
+      </article>
     </section>
 
+    <section class="project-night-meta-grid">
+      <article class="project-night-meta">
+        <div class="project-night-label">Role</div>
+        <h3>Art Direction</h3>
+        <p>Tone, image logic, selection criteria and structural visual continuity.</p>
+      </article>
+
+      <article class="project-night-meta">
+        <div class="project-night-label">Field</div>
+        <h3>Audiovisual Context</h3>
+        <p>Direction work intended to hold a project together across surfaces and moments.</p>
+      </article>
+
+      <article class="project-night-meta">
+        <div class="project-night-label">Status</div>
+        <h3>Editorial Placeholder</h3>
+        <p>The page translates the logic of the work without disclosing the real material.</p>
+      </article>
+    </section>
+
+    <section class="project-night-content">
+      <article class="project-night-block">
+        <div class="project-night-label">Context</div>
+        <h3>TONE AS STRUCTURE</h3>
+        <p>
+          The aim is to build a perceptive frame for the work:
+          a way of deciding how images relate, how tone holds,
+          and how atmosphere remains recognisable across outputs.
+        </p>
+      </article>
+
+      <article class="project-night-block">
+        <div class="project-night-label">Method</div>
+        <h3>CONSISTENCY BEFORE EFFECT</h3>
+        <p>
+          Direction is treated here as system-building.
+          That means fewer arbitrary gestures, more internal consistency,
+          and a controlled relation between image, rhythm, material and emotional temperature.
+        </p>
+      </article>
+    </section>
+
+    <section class="project-night-gallery">
+      <article class="project-night-gallery-card">
+        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1400&auto=format&fit=crop" alt="Screens, editing and image selection" />
+      </article>
+
+      <article class="project-night-gallery-card">
+        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1400&auto=format&fit=crop" alt="Blue screen glow and studio night" />
+      </article>
+
+      <article class="project-night-gallery-card">
+        <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=1400&auto=format&fit=crop" alt="Workstation and direction environment" />
+      </article>
+    </section>
   </main>
 
   <script src="script.js"></script>
