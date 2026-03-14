@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BLUCINELAB OS — XP Home + Lab</title>
+  <title>BLUCINELAB OS — XP Worlds</title>
   <meta
     name="description"
     content="BLUCINELAB — studio visivo indipendente tra immagine, spazio, direzione, ricerca e costruzione percettiva."
@@ -50,6 +50,33 @@
       --chaos-green: #3cff6a;
       --chaos-red: #ff2b4f;
       --chaos-gray: #cfcfcf;
+
+      --sims-green-1:#8be36b;
+      --sims-green-2:#4cbf4a;
+      --sims-green-3:#1d6f35;
+      --sims-blue:#ccefff;
+
+      --city-black:#070707;
+      --city-gray:#171717;
+      --city-yellow:#ffd331;
+      --city-orange:#ff8c1a;
+      --city-red:#ff5b37;
+      --city-green:#8cff87;
+
+      --arcade-black:#050505;
+      --arcade-blue:#1320b5;
+      --arcade-yellow:#ffe600;
+      --arcade-pink:#ff4df5;
+      --arcade-cyan:#52f2ff;
+
+      --signal-bg:#08110a;
+      --signal-green:#57ff7a;
+      --signal-green-dim:#1d6a30;
+
+      --lcd-bg:#d7e8b2;
+      --lcd-mid:#95b16f;
+      --lcd-dark:#405731;
+      --lcd-ink:#1e2d16;
     }
 
     *{
@@ -252,7 +279,7 @@
     .desktop-icon{
       position:fixed;
       z-index:60;
-      width:96px;
+      width:102px;
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -343,10 +370,6 @@
       filter:brightness(1.08);
     }
 
-    #taskbar-start:active{
-      border-color:#000 #fff #fff #000;
-    }
-
     #taskbar-tasks{
       display:flex;
       align-items:center;
@@ -395,7 +418,7 @@
       position:fixed;
       left:0;
       bottom:var(--taskbar-h);
-      width:280px;
+      width:300px;
       z-index:9999;
       display:none;
       flex-direction:column;
@@ -457,7 +480,7 @@
       font-size:18px;
     }
 
-    /* XP WINDOWS */
+    /* WINDOWS BASE */
     .win{
       position:fixed;
       z-index:100;
@@ -494,6 +517,7 @@
       text-shadow:1px 1px 0 rgba(0,0,0,.95);
       box-shadow:inset 0 1px 0 rgba(255,255,255,.22);
       min-height:34px;
+      flex-shrink:0;
     }
 
     .win-icon{
@@ -555,6 +579,7 @@
       color:#000;
       background:#cfcfcf;
       border-bottom:2px solid #707070;
+      flex-shrink:0;
     }
 
     .win-menubar span{
@@ -641,7 +666,7 @@
       min-height:300px;
     }
 
-    /* FULLSCREEN-LIKE WINDOW */
+    /* FULLSCREEN WORLD WINDOW */
     .fullscreen-window{
       top: var(--scorebar-h) !important;
       left: 0 !important;
@@ -654,7 +679,7 @@
       border-width: 4px !important;
     }
 
-    /* LAB WINDOW */
+    /* ========= LAB / CHAOS ========= */
     .chaos-window{
       background:
         linear-gradient(to bottom, rgba(255,255,255,.04), rgba(255,255,255,0)),
@@ -671,10 +696,6 @@
       background:
         linear-gradient(90deg, var(--chaos-bar) 0%, #2d4cff 48%, var(--chaos-bar2) 100%) !important;
       color:#fff !important;
-      font-size:9px;
-      text-shadow:
-        1px 1px 0 rgba(0,0,0,.95),
-        0 0 6px rgba(255,255,255,.08);
     }
 
     .chaos-window .win-menubar{
@@ -688,11 +709,7 @@
         linear-gradient(to bottom, rgba(0,0,0,.1), rgba(0,0,0,0)) !important;
       color:var(--chaos-green) !important;
       font-size:26px !important;
-      line-height:1.45 !important;
-      padding:18px 18px 20px !important;
-      position:relative;
-      overflow:auto;
-      text-shadow:none;
+      padding:18px !important;
     }
 
     .chaos-window .win-body::before{
@@ -716,7 +733,6 @@
     .chaos-window .win-body h2{
       color:var(--chaos-yellow) !important;
       font-size:14px !important;
-      line-height:1.7 !important;
       text-shadow:
         0 0 10px rgba(255,242,0,.52),
         2px 0 0 rgba(255,0,255,.18),
@@ -726,7 +742,6 @@
     .chaos-window .win-body h3{
       color:var(--chaos-cyan) !important;
       font-size:10px !important;
-      line-height:1.7 !important;
       text-shadow:
         0 0 8px rgba(0,246,255,.42),
         1px 0 0 rgba(255,0,255,.15);
@@ -752,34 +767,11 @@
         0 0 0 1px rgba(0,0,0,.45);
     }
 
-    .chaos-window .field-card:hover{
-      border-color:rgba(60,255,106,.85) !important;
-    }
-
-    .chaos-window .tag{
-      background:rgba(255,255,255,.02) !important;
-    }
-
-    .chaos-window .tag.yellow{
-      color:var(--chaos-yellow);
-      border-color:rgba(255,242,0,.95);
-      box-shadow:0 0 8px rgba(255,242,0,.12);
-    }
-    .chaos-window .tag.cyan{
-      color:var(--chaos-cyan);
-      border-color:rgba(0,246,255,.95);
-      box-shadow:0 0 8px rgba(0,246,255,.12);
-    }
-    .chaos-window .tag.magenta{
-      color:var(--chaos-magenta);
-      border-color:rgba(255,45,251,.95);
-      box-shadow:0 0 8px rgba(255,45,251,.12);
-    }
-    .chaos-window .tag.green{
-      color:var(--chaos-green);
-      border-color:rgba(60,255,106,.95);
-      box-shadow:0 0 8px rgba(60,255,106,.12);
-    }
+    .chaos-window .tag{ background:rgba(255,255,255,.02) !important; }
+    .chaos-window .tag.yellow{ color:var(--chaos-yellow); border-color:rgba(255,242,0,.95); }
+    .chaos-window .tag.cyan{ color:var(--chaos-cyan); border-color:rgba(0,246,255,.95); }
+    .chaos-window .tag.magenta{ color:var(--chaos-magenta); border-color:rgba(255,45,251,.95); }
+    .chaos-window .tag.green{ color:var(--chaos-green); border-color:rgba(60,255,106,.95); }
 
     .chaos-desktop-bg{
       position:absolute;
@@ -799,20 +791,8 @@
       position:absolute;
       inset:0;
       background:
-        repeating-linear-gradient(
-          0deg,
-          transparent 0,
-          transparent 22px,
-          rgba(60,255,106,.08) 22px,
-          rgba(60,255,106,.08) 24px
-        ),
-        repeating-linear-gradient(
-          90deg,
-          transparent 0,
-          transparent 22px,
-          rgba(0,246,255,.05) 22px,
-          rgba(0,246,255,.05) 24px
-        );
+        repeating-linear-gradient(0deg, transparent 0, transparent 22px, rgba(60,255,106,.08) 22px, rgba(60,255,106,.08) 24px),
+        repeating-linear-gradient(90deg, transparent 0, transparent 22px, rgba(0,246,255,.05) 22px, rgba(0,246,255,.05) 24px);
     }
 
     .chaos-desktop-bg::after{
@@ -820,20 +800,8 @@
       position:absolute;
       inset:0;
       background:
-        repeating-linear-gradient(
-          to bottom,
-          rgba(255,255,255,.015) 0,
-          rgba(255,255,255,.015) 1px,
-          rgba(0,0,0,.28) 2px,
-          rgba(0,0,0,.28) 4px
-        );
+        repeating-linear-gradient(to bottom, rgba(255,255,255,.015) 0, rgba(255,255,255,.015) 1px, rgba(0,0,0,.28) 2px, rgba(0,0,0,.28) 4px);
       mix-blend-mode:multiply;
-    }
-
-    @keyframes desktopHue{
-      0%{filter:hue-rotate(0deg);}
-      50%{filter:hue-rotate(18deg);}
-      100%{filter:hue-rotate(0deg);}
     }
 
     #lab-glitch-layer{
@@ -844,6 +812,24 @@
       overflow:hidden;
     }
 
+    .lab-content,
+    .world-content{
+      position:relative;
+      z-index:2;
+    }
+
+    .glitch{
+      position:relative;
+      animation:glitchText 3s infinite;
+    }
+
+    @keyframes glitchText{
+      0%,88%,100%{text-shadow:none; transform:translate(0,0);}
+      89%{text-shadow:3px 0 var(--chaos-red), -3px 0 var(--chaos-cyan); transform:translate(1px,0);}
+      91%{text-shadow:-3px 0 var(--chaos-magenta), 3px 0 var(--chaos-yellow); transform:translate(-1px,0);}
+      93%{text-shadow:2px 0 var(--chaos-cyan), -2px 0 var(--chaos-red); transform:translate(0,1px);}
+    }
+
     .glitch-bar{
       position:absolute;
       left:0;
@@ -851,12 +837,7 @@
       height:8px;
       opacity:0;
       background:
-        linear-gradient(90deg,
-          rgba(255,0,255,.0) 0%,
-          rgba(255,0,255,.65) 15%,
-          rgba(0,255,255,.75) 45%,
-          rgba(255,255,0,.6) 72%,
-          rgba(255,0,255,0) 100%);
+        linear-gradient(90deg, rgba(255,0,255,.0) 0%, rgba(255,0,255,.65) 15%, rgba(0,255,255,.75) 45%, rgba(255,255,0,.6) 72%, rgba(255,0,255,0) 100%);
       mix-blend-mode:screen;
       transform:translateX(-100%);
       animation:glitchBar 700ms linear forwards;
@@ -873,13 +854,7 @@
       height:40px;
       opacity:0;
       background:
-        repeating-linear-gradient(
-          90deg,
-          rgba(255,255,255,.8) 0 2px,
-          rgba(0,0,0,.8) 2px 4px,
-          rgba(0,255,255,.8) 4px 6px,
-          rgba(255,0,255,.8) 6px 8px
-        );
+        repeating-linear-gradient(90deg, rgba(255,255,255,.8) 0 2px, rgba(0,0,0,.8) 2px 4px, rgba(0,255,255,.8) 4px 6px, rgba(255,0,255,.8) 6px 8px);
       mix-blend-mode:screen;
       animation:noiseBurst .28s steps(4,end) forwards;
     }
@@ -889,21 +864,381 @@
       100%{opacity:0; transform:translateX(30px);}
     }
 
-    .lab-content{
-      position:relative;
-      z-index:2;
+    /* ========= WORLDS / SIMS ========= */
+    .sims-window{
+      background:linear-gradient(to bottom, #dff6ff 0%, #c6ecff 100%) !important;
+      color:#17361f !important;
+      border-color:#ffffff !important;
     }
 
-    .glitch{
-      position:relative;
-      animation:glitchText 3s infinite;
+    .sims-window .win-titlebar{
+      background:linear-gradient(90deg, #2fbe57 0%, #74df74 60%, #1c7d38 100%) !important;
     }
 
-    @keyframes glitchText{
-      0%,88%,100%{text-shadow:none; transform:translate(0,0);}
-      89%{text-shadow:3px 0 var(--chaos-red), -3px 0 var(--chaos-cyan); transform:translate(1px,0);}
-      91%{text-shadow:-3px 0 var(--chaos-magenta), 3px 0 var(--chaos-yellow); transform:translate(-1px,0);}
-      93%{text-shadow:2px 0 var(--chaos-cyan), -2px 0 var(--chaos-red); transform:translate(0,1px);}
+    .sims-window .win-menubar{
+      background:#d7f6dc !important;
+    }
+
+    .sims-window .win-body{
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,.38), rgba(255,255,255,.14)),
+        linear-gradient(135deg, #c9f5c7 0%, #9ee2b7 100%) !important;
+      color:#17361f !important;
+    }
+
+    .sims-window .win-body h1,
+    .sims-window .win-body h2{
+      color:#1c7d38 !important;
+      text-shadow:none !important;
+    }
+
+    .sims-window .win-body h3{
+      color:#245dff !important;
+      text-shadow:none !important;
+    }
+
+    .sims-window .win-body p{
+      color:#17361f !important;
+    }
+
+    .sims-window .label{
+      color:#2b7d49 !important;
+    }
+
+    .sims-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(120px, 1fr));
+      gap:14px;
+      margin-top:14px;
+    }
+
+    .sims-card{
+      padding:14px;
+      background:rgba(255,255,255,.7);
+      border:2px solid #4cbf4a;
+      min-height:110px;
+    }
+
+    .sims-diamond{
+      display:inline-block;
+      margin-bottom:10px;
+      font-size:28px;
+      color:#20d254;
+      text-shadow:0 0 8px rgba(32,210,84,.25);
+    }
+
+    /* ========= CITY / GTA ========= */
+    .city-window{
+      background:linear-gradient(to bottom,#090909 0%, #1a1a1a 100%) !important;
+      color:#fff !important;
+      border-color:#d4d4d4 !important;
+    }
+
+    .city-window .win-titlebar{
+      background:linear-gradient(90deg,#111 0%, #343434 55%, #111 100%) !important;
+    }
+
+    .city-window .win-menubar{
+      background:#202020 !important;
+      color:#e6e6e6 !important;
+      border-bottom-color:#444 !important;
+    }
+
+    .city-window .win-menubar span:hover{
+      background:#ff8c1a !important;
+      color:#000 !important;
+    }
+
+    .city-window .win-body{
+      background:
+        linear-gradient(to bottom, rgba(255,160,40,.05), rgba(0,0,0,.1)),
+        linear-gradient(to bottom, #0c0c0c 0%, #181818 100%) !important;
+      color:#f0f0f0 !important;
+    }
+
+    .city-window .win-body h1,
+    .city-window .win-body h2{
+      color:var(--city-yellow) !important;
+    }
+
+    .city-window .win-body h3{
+      color:var(--city-orange) !important;
+    }
+
+    .city-window .win-body p{
+      color:#d8d8d8 !important;
+    }
+
+    .city-window .label{
+      color:#ffb84f !important;
+    }
+
+    .hud{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .hud-card{
+      padding:12px;
+      border:2px solid #4a4a4a;
+      background:#111;
+      color:#fff;
+      min-height:86px;
+    }
+
+    .hud-value{
+      display:block;
+      margin-top:8px;
+      font-family:'VT323', monospace;
+      font-size:30px;
+      color:var(--city-green);
+    }
+
+    /* ========= PLAY / PACMAN ========= */
+    .arcade-window{
+      background:linear-gradient(to bottom,#050505 0%, #101736 100%) !important;
+      color:#fff !important;
+      border-color:#eee !important;
+    }
+
+    .arcade-window .win-titlebar{
+      background:linear-gradient(90deg,#1a2fff 0%, #7134ff 55%, #ff3ce7 100%) !important;
+    }
+
+    .arcade-window .win-menubar{
+      background:#1a1a30 !important;
+      color:#fff !important;
+      border-bottom-color:#2b2b60 !important;
+    }
+
+    .arcade-window .win-body{
+      background:
+        radial-gradient(circle at center, rgba(82,242,255,.06) 0%, transparent 25%),
+        linear-gradient(to bottom, #050505 0%, #0f1532 100%) !important;
+      color:#fff !important;
+    }
+
+    .arcade-window .win-body h1,
+    .arcade-window .win-body h2{
+      color:var(--arcade-yellow) !important;
+      text-shadow:0 0 8px rgba(255,230,0,.4);
+    }
+
+    .arcade-window .win-body h3{
+      color:var(--arcade-cyan) !important;
+      text-shadow:0 0 8px rgba(82,242,255,.28);
+    }
+
+    .arcade-window .win-body p{
+      color:#e6e6ff !important;
+    }
+
+    .arcade-window .label{
+      color:var(--arcade-pink) !important;
+    }
+
+    .arcade-board{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns:repeat(10, 1fr);
+      gap:6px;
+      background:#0a0f25;
+      border:2px solid var(--arcade-blue);
+      padding:10px;
+    }
+
+    .dot-cell{
+      height:18px;
+      background:
+        radial-gradient(circle at center, #ffe600 0 24%, transparent 26%);
+      opacity:.8;
+    }
+
+    .dot-cell.wall{
+      background:#2130d5;
+    }
+
+    .dot-cell.pac{
+      background:
+        radial-gradient(circle at center, #ffe600 0 44%, transparent 46%);
+    }
+
+    .dot-cell.ghost{
+      background:
+        radial-gradient(circle at center, #ff4df5 0 42%, transparent 44%);
+    }
+
+    /* ========= SIGNALS / SPACE INVADERS ========= */
+    .signal-window{
+      background:linear-gradient(to bottom,#071008 0%, #0d1b0f 100%) !important;
+      color:#dfffe3 !important;
+      border-color:#dfffe3 !important;
+    }
+
+    .signal-window .win-titlebar{
+      background:linear-gradient(90deg,#102715 0%, #2c5f33 60%, #18381d 100%) !important;
+    }
+
+    .signal-window .win-menubar{
+      background:#102715 !important;
+      color:#dfffe3 !important;
+      border-bottom-color:#2d6d39 !important;
+    }
+
+    .signal-window .win-menubar span:hover{
+      background:#57ff7a !important;
+      color:#071008 !important;
+    }
+
+    .signal-window .win-body{
+      background:
+        radial-gradient(circle at center, rgba(87,255,122,.08) 0%, transparent 20%),
+        linear-gradient(to bottom, #071008 0%, #0d1b0f 100%) !important;
+      color:#dfffe3 !important;
+    }
+
+    .signal-window .win-body h1,
+    .signal-window .win-body h2{
+      color:#57ff7a !important;
+    }
+
+    .signal-window .win-body h3{
+      color:#a5ffb8 !important;
+    }
+
+    .signal-window .win-body p{
+      color:#dfffe3 !important;
+    }
+
+    .signal-window .label{
+      color:#8efaa4 !important;
+    }
+
+    .radar{
+      margin-top:16px;
+      border:2px solid #57ff7a;
+      background:
+        radial-gradient(circle at center, rgba(87,255,122,.06) 0%, transparent 60%),
+        #071008;
+      min-height:260px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .radar::before,
+    .radar::after{
+      content:'';
+      position:absolute;
+      background:#2c5f33;
+      opacity:.7;
+    }
+
+    .radar::before{
+      left:50%;
+      top:0;
+      width:2px;
+      height:100%;
+      transform:translateX(-50%);
+    }
+
+    .radar::after{
+      top:50%;
+      left:0;
+      width:100%;
+      height:2px;
+      transform:translateY(-50%);
+    }
+
+    .radar-ring{
+      position:absolute;
+      border:2px solid rgba(87,255,122,.4);
+      border-radius:50%;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+    }
+
+    .radar-ring.r1{ width:90px; height:90px; }
+    .radar-ring.r2{ width:170px; height:170px; }
+    .radar-ring.r3{ width:250px; height:250px; }
+
+    .blip{
+      position:absolute;
+      width:12px;
+      height:12px;
+      background:#57ff7a;
+      box-shadow:0 0 10px rgba(87,255,122,.55);
+    }
+
+    /* ========= GROWTH / TAMAGOTCHI ========= */
+    .growth-window{
+      background:linear-gradient(to bottom,#cfe1ad 0%, #adc584 100%) !important;
+      color:#1e2d16 !important;
+      border-color:#f2f7e8 !important;
+    }
+
+    .growth-window .win-titlebar{
+      background:linear-gradient(90deg,#728e54 0%, #95b16f 60%, #5f7746 100%) !important;
+      color:#f7fff0 !important;
+      text-shadow:none !important;
+    }
+
+    .growth-window .win-menubar{
+      background:#b8cf90 !important;
+      color:#1e2d16 !important;
+      border-bottom-color:#718956 !important;
+    }
+
+    .growth-window .win-body{
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,.2), rgba(255,255,255,.06)),
+        linear-gradient(to bottom, var(--lcd-bg) 0%, #c6dca0 100%) !important;
+      color:#1e2d16 !important;
+    }
+
+    .growth-window .win-body h1,
+    .growth-window .win-body h2,
+    .growth-window .win-body h3,
+    .growth-window .win-body p,
+    .growth-window .label{
+      color:var(--lcd-ink) !important;
+      text-shadow:none !important;
+    }
+
+    .lcd-screen{
+      margin-top:16px;
+      background:#dcebb8;
+      border:4px solid #6f8655;
+      box-shadow:inset 0 0 0 3px #b4cb8b;
+      padding:18px;
+      min-height:250px;
+      color:#1e2d16;
+    }
+
+    .lcd-pet{
+      font-family:'VT323', monospace;
+      font-size:44px;
+      line-height:1.2;
+      text-align:center;
+      margin:20px 0;
+    }
+
+    .lcd-stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .lcd-stat{
+      border:2px solid #6f8655;
+      padding:10px;
+      background:rgba(255,255,255,.16);
+      font-family:'VT323', monospace;
+      font-size:24px;
+      text-align:center;
     }
 
     .file-grid{
@@ -929,11 +1264,7 @@
     }
 
     .file-card:hover{
-      border-color:var(--chaos-cyan);
-      background:
-        linear-gradient(to bottom, rgba(0,246,255,.08), rgba(255,255,255,.02)),
-        rgba(0,0,0,.22);
-      box-shadow:0 0 12px rgba(0,246,255,.08);
+      filter:brightness(1.08);
     }
 
     .file-icon{
@@ -945,12 +1276,10 @@
     .file-name{
       font-size:7px;
       line-height:1.7;
-      color:var(--chaos-yellow);
     }
 
     .file-meta{
       font-size:18px;
-      color:#7bffb0;
       font-family:'VT323', monospace;
     }
 
@@ -968,6 +1297,16 @@
       #hero-win{
         left:32px;
         width:min(640px, calc(100vw - 56px));
+      }
+    }
+
+    @media (max-width:700px){
+      .desktop-icon{
+        width:84px;
+      }
+
+      .desktop-icon .icon-img{
+        font-size:36px;
       }
     }
 
@@ -1013,21 +1352,27 @@
         font-size:20px;
       }
 
-      .chaos-window .win-body{
-        font-size:20px !important;
+      .win-body{
+        font-size:18px;
       }
 
-      .chaos-window .win-body p{
-        font-size:19px !important;
+      .win-body p{
+        font-size:18px;
       }
 
-      .chaos-window .win-body h1,
-      .chaos-window .win-body h2{
-        font-size:11px !important;
+      .win-body h1,
+      .win-body h2{
+        font-size:10px;
       }
 
-      .chaos-window .win-body h3{
-        font-size:8px !important;
+      .win-body h3{
+        font-size:8px;
+      }
+
+      .sims-grid,
+      .hud,
+      .lcd-stats{
+        grid-template-columns:1fr;
       }
     }
 
@@ -1054,31 +1399,58 @@
 
   <div id="desktop"></div>
 
-  <button class="desktop-icon" style="top:56px;left:16px" id="icon-archive" data-win="win-archive" type="button">
+  <!-- DESKTOP ICONS -->
+  <button class="desktop-icon" style="top:56px;left:16px" data-win="win-archive" type="button">
     <div class="icon-img">📁</div>
     <div class="icon-label">ARCHIVE</div>
   </button>
 
-  <button class="desktop-icon" style="top:160px;left:18px" id="icon-studio" data-win="win-studio" type="button">
+  <button class="desktop-icon" style="top:156px;left:18px" data-win="win-studio" type="button">
     <div class="icon-img">🎨</div>
     <div class="icon-label">STUDIO</div>
   </button>
 
-  <button class="desktop-icon" style="top:264px;left:16px" id="icon-lab" data-win="win-lab" type="button">
+  <button class="desktop-icon" style="top:256px;left:16px" data-win="win-lab" type="button">
     <div class="icon-img">🔬</div>
     <div class="icon-label">LAB.EXE</div>
   </button>
 
-  <button class="desktop-icon" style="top:368px;left:18px" id="icon-contact" data-win="win-contact" type="button">
+  <button class="desktop-icon" style="top:356px;left:18px" data-win="win-worlds" type="button">
+    <div class="icon-img">🏡</div>
+    <div class="icon-label">WORLDS</div>
+  </button>
+
+  <button class="desktop-icon" style="top:456px;left:16px" data-win="win-city" type="button">
+    <div class="icon-img">🌃</div>
+    <div class="icon-label">CITY</div>
+  </button>
+
+  <button class="desktop-icon" style="top:556px;left:18px" data-win="win-play" type="button">
+    <div class="icon-img">👾</div>
+    <div class="icon-label">PLAY</div>
+  </button>
+
+  <button class="desktop-icon" style="top:56px;right:18px" data-win="win-signals" type="button">
+    <div class="icon-img">📡</div>
+    <div class="icon-label">SIGNALS</div>
+  </button>
+
+  <button class="desktop-icon" style="top:156px;right:16px" data-win="win-growth" type="button">
+    <div class="icon-img">🥚</div>
+    <div class="icon-label">GROWTH</div>
+  </button>
+
+  <button class="desktop-icon" style="top:256px;right:18px" data-win="win-contact" type="button">
     <div class="icon-img">📧</div>
     <div class="icon-label">CONTACT</div>
   </button>
 
-  <button class="desktop-icon" style="top:472px;left:16px" id="icon-manifesto" data-win="win-manifesto" type="button">
+  <button class="desktop-icon" style="top:356px;right:16px" data-win="win-manifesto" type="button">
     <div class="icon-img">📜</div>
     <div class="icon-label">MANIFEST</div>
   </button>
 
+  <!-- HOME -->
   <section class="win" id="hero-win" aria-label="Homepage">
     <div class="win-titlebar" data-drag="hero-win">
       <span class="win-icon">🖥</span>
@@ -1099,29 +1471,30 @@
     <div class="win-body" style="min-height:260px;">
       <span class="label">HOME / XP MODE / BOLOGNA</span>
       <h1>BLUCINELAB</h1>
-      <p>Home principale in estetica Windows XP. Pulita, leggibile, familiare.</p>
-      <p>Da qui si entra nei diversi ambienti. Il LAB non cambia pagina: apre una finestra totale che copre tutto, ma lascia visibili la barra sopra e la taskbar sotto.</p>
+      <p>Questa è la base: desktop XP, leggibile, credibile, familiare.</p>
+      <p>Da qui si aprono mondi diversi. Il tuo collega ritrova il sistema. Tu puoi stratificare estetiche molto diverse senza perdere orientamento.</p>
 
       <div style="margin-top:10px;display:flex;flex-wrap:wrap;">
-        <span class="tag yellow">WEB DESIGN</span>
-        <span class="tag cyan">VISUAL IDENTITY</span>
-        <span class="tag magenta">EXHIBITION</span>
-        <span class="tag green">IMAGE DIRECTION</span>
+        <span class="tag yellow">XP HOME</span>
+        <span class="tag cyan">WORLD WINDOWS</span>
+        <span class="tag magenta">NO PAGE SWITCH</span>
+        <span class="tag green">LIVE SYSTEM</span>
       </div>
 
       <div style="margin-top:18px;" class="field-card">
         <span class="label">STATUS</span>
-        <h3>DEFAULT HOME ATTIVA</h3>
-        <p>Il LAB conserva la vecchia anima chaos, ma adesso vive come una vera finestra fullscreen dentro lo stesso sito.</p>
+        <h3>STRUTTURA ATTIVA</h3>
+        <p>LAB conserva il vecchio chaos. Gli altri mondi distribuiscono le reference una per sezione.</p>
       </div>
 
       <div style="margin-top:14px; font-size:20px; color:#111;">
         <span class="spinner">◐</span>
-        &nbsp;DESKTOP CARICATO — CLICCA LE ICONE
+        &nbsp;DESKTOP CARICATO — APRI LE ICONE
       </div>
     </div>
   </section>
 
+  <!-- CLASSIC WINDOWS -->
   <section class="win" id="win-archive" aria-label="Archive" style="top:94px;left:180px;width:520px;display:none;">
     <div class="win-titlebar" data-drag="win-archive">
       <span class="win-icon">📁</span>
@@ -1219,7 +1592,7 @@
     <div class="win-body" style="min-height:240px;">
       <span class="label">MANIFESTO / XP MODE</span>
       <h2>UN LABORATORIO CONTEMPORANEO DELL'IMMAGINE</h2>
-      <p>La home resta qui. Il caos è conservato nel LAB. Due registri diversi, nello stesso sistema.</p>
+      <p>La home resta chiara. Ogni finestra apre un mondo distinto, ma sempre dentro lo stesso sistema.</p>
     </div>
   </section>
 
@@ -1248,7 +1621,7 @@
         <span class="label">LAB / ACTIVE RESEARCH / CHAOS MODE</span>
         <h1>MATERIALI IN FORMAZIONE, FUTURI POSSIBILI</h1>
         <p>Questa è la vecchia anima del sito: più sporca, più sintetica, più game, più notturna, più instabile.</p>
-        <p>Non cambia pagina. È una finestra totale che copre la home XP, ma lascia leggibili barra in alto e taskbar in basso.</p>
+        <p>È la stanza in cui il tuo collega ritrova subito ciò che c’era prima.</p>
 
         <div style="margin-top:10px;display:flex;flex-wrap:wrap;">
           <span class="tag yellow">PACMAN</span>
@@ -1260,13 +1633,7 @@
         <div style="margin-top:18px;" class="field-card">
           <span class="label">FUTURE LAYER</span>
           <h3>RICERCA, AI, ARCHIVI INTELLIGENTI</h3>
-          <p>Qui possono vivere viewer, segnali, file, mondi secondari, test visivi e sistemi più radicali.</p>
-        </div>
-
-        <div class="field-card">
-          <span class="label">SYSTEM STATUS</span>
-          <h3>LA HOME NON È SCOMPARSA</h3>
-          <p>È sotto questa finestra. Chiudi e torni subito alla XP home.</p>
+          <p>Qui vivono test, viewer, segnali, frammenti, anomalie e sistemi in formazione.</p>
         </div>
 
         <div class="file-grid">
@@ -1282,22 +1649,183 @@
             <span class="file-meta">noise burst</span>
           </button>
 
-          <button class="file-card" type="button" onclick="labWarning()">
-            <span class="file-icon">⚠️</span>
-            <span class="file-name">WARNING.MSG</span>
-            <span class="file-meta">popup</span>
-          </button>
-
           <button class="file-card" type="button" onclick="labModeMessage()">
             <span class="file-icon">🧠</span>
             <span class="file-name">MEMORY.LOG</span>
             <span class="file-meta">system text</span>
           </button>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <div style="margin-top:18px;font-size:20px;color:#b6ffb4;">
-          <span class="spinner">◐</span>
-          &nbsp;CHAOS MODE ATTIVO — QUALCOSA STA SUCCEDENDO
+  <!-- WORLDS / THE SIMS -->
+  <section class="win sims-window fullscreen-window" id="win-worlds" aria-label="Worlds" style="display:none;">
+    <div class="win-titlebar">
+      <span class="win-icon">🏡</span>
+      <span class="win-title">WORLDS — BUILD / SPACE / SET</span>
+      <div class="win-controls">
+        <button class="win-btn close" data-close="win-worlds" type="button">X</button>
+      </div>
+    </div>
+    <div class="win-menubar">
+      <span>Build</span>
+      <span>Rooms</span>
+      <span>Objects</span>
+      <span>Set</span>
+    </div>
+    <div class="win-body">
+      <div class="world-content">
+        <span class="label">WORLDS / SIMS MODE</span>
+        <h1>COSTRUIRE MONDI, STANZE, ATMOSFERE</h1>
+        <p>Questa sezione parla di set design, spatial thinking, costruzione dell’ambiente e organizzazione percettiva.</p>
+
+        <div class="sims-grid">
+          <div class="sims-card">
+            <div class="sims-diamond">◆</div>
+            <h3>ROOM LOGIC</h3>
+            <p>Spazio come sistema.</p>
+          </div>
+          <div class="sims-card">
+            <div class="sims-diamond">◆</div>
+            <h3>OBJECTS</h3>
+            <p>Props, arredo, segnali.</p>
+          </div>
+          <div class="sims-card">
+            <div class="sims-diamond">◆</div>
+            <h3>SET DESIGN</h3>
+            <p>Ambienti che raccontano.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CITY / GTA -->
+  <section class="win city-window fullscreen-window" id="win-city" aria-label="City" style="display:none;">
+    <div class="win-titlebar">
+      <span class="win-icon">🌃</span>
+      <span class="win-title">CITY — NIGHT / MAP / LOCATION</span>
+      <div class="win-controls">
+        <button class="win-btn close" data-close="win-city" type="button">X</button>
+      </div>
+    </div>
+    <div class="win-menubar">
+      <span>Map</span>
+      <span>Drive</span>
+      <span>Signals</span>
+      <span>Location</span>
+    </div>
+    <div class="win-body">
+      <div class="world-content">
+        <span class="label">CITY / GTA MODE</span>
+        <h1>URBANITÀ, PRODUZIONE, IMMAGINARIO NOTTURNO</h1>
+        <p>Sezione per location, città, notte, produzione e immaginario metropolitano.</p>
+
+        <div class="hud">
+          <div class="hud-card">ZONE<span class="hud-value">05</span></div>
+          <div class="hud-card">LIGHT<span class="hud-value">87</span></div>
+          <div class="hud-card">RISK<span class="hud-value">14</span></div>
+          <div class="hud-card">FLOW<span class="hud-value">99</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAY / PACMAN -->
+  <section class="win arcade-window fullscreen-window" id="win-play" aria-label="Play" style="display:none;">
+    <div class="win-titlebar">
+      <span class="win-icon">👾</span>
+      <span class="win-title">PLAY — ARCADE / PAC MODE</span>
+      <div class="win-controls">
+        <button class="win-btn close" data-close="win-play" type="button">X</button>
+      </div>
+    </div>
+    <div class="win-menubar">
+      <span>Arcade</span>
+      <span>Bonus</span>
+      <span>Loop</span>
+      <span>Play</span>
+    </div>
+    <div class="win-body">
+      <div class="world-content">
+        <span class="label">PLAY / PACMAN MODE</span>
+        <h1>GIOCO, RITMO, INTERAZIONE</h1>
+        <p>Questa sezione può raccogliere micro-giochi, easter egg e comportamenti ludici del sito.</p>
+
+        <div class="arcade-board">
+          <div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div>
+          <div class="dot-cell wall"></div><div class="dot-cell pac"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell ghost"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell wall"></div>
+          <div class="dot-cell wall"></div><div class="dot-cell"></div><div class="dot-cell wall"></div><div class="dot-cell"></div><div class="dot-cell wall"></div><div class="dot-cell"></div><div class="dot-cell wall"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell wall"></div>
+          <div class="dot-cell wall"></div><div class="dot-cell"></div><div class="dot-cell wall"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell wall"></div><div class="dot-cell"></div><div class="dot-cell ghost"></div><div class="dot-cell wall"></div>
+          <div class="dot-cell wall"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell wall"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell wall"></div>
+          <div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIGNALS / SPACE INVADERS -->
+  <section class="win signal-window fullscreen-window" id="win-signals" aria-label="Signals" style="display:none;">
+    <div class="win-titlebar">
+      <span class="win-icon">📡</span>
+      <span class="win-title">SIGNALS — RADAR / DEFENSE / SCAN</span>
+      <div class="win-controls">
+        <button class="win-btn close" data-close="win-signals" type="button">X</button>
+      </div>
+    </div>
+    <div class="win-menubar">
+      <span>Scan</span>
+      <span>Defense</span>
+      <span>Wave</span>
+      <span>Signal</span>
+    </div>
+    <div class="win-body">
+      <div class="world-content">
+        <span class="label">SIGNALS / INVADERS MODE</span>
+        <h1>SEGNALI, ALLERTA, RILEVAMENTO</h1>
+        <p>Qui vivono monitoraggio, rilevazione, immagini come impulsi e sistemi di allarme percettivo.</p>
+
+        <div class="radar">
+          <div class="radar-ring r1"></div>
+          <div class="radar-ring r2"></div>
+          <div class="radar-ring r3"></div>
+          <div class="blip" style="left:60%; top:28%;"></div>
+          <div class="blip" style="left:36%; top:58%;"></div>
+          <div class="blip" style="left:68%; top:66%;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GROWTH / TAMAGOTCHI -->
+  <section class="win growth-window fullscreen-window" id="win-growth" aria-label="Growth" style="display:none;">
+    <div class="win-titlebar">
+      <span class="win-icon">🥚</span>
+      <span class="win-title">GROWTH — CARE / PROCESS / EVOLUTION</span>
+      <div class="win-controls">
+        <button class="win-btn close" data-close="win-growth" type="button">X</button>
+      </div>
+    </div>
+    <div class="win-menubar">
+      <span>Care</span>
+      <span>Feed</span>
+      <span>Status</span>
+      <span>Grow</span>
+    </div>
+    <div class="win-body">
+      <div class="world-content">
+        <span class="label">GROWTH / TAMAGOTCHI MODE</span>
+        <h1>PROGETTI COME ORGANISMI VIVI</h1>
+        <p>Sezione perfetta per parlare di processi, incubazione, crescita, cura e maturazione dei lavori.</p>
+
+        <div class="lcd-screen">
+          <div class="lcd-pet">(•‿•)</div>
+          <div class="lcd-stats">
+            <div class="lcd-stat">IDEA 92</div>
+            <div class="lcd-stat">FORM 78</div>
+            <div class="lcd-stat">CARE 99</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1315,6 +1843,11 @@
       <button class="start-item" data-open="win-archive" type="button"><span class="start-item-icon">📁</span> Archive</button>
       <button class="start-item" data-open="win-studio" type="button"><span class="start-item-icon">🎨</span> Studio</button>
       <button class="start-item" data-open="win-lab" type="button"><span class="start-item-icon">🔬</span> Lab</button>
+      <button class="start-item" data-open="win-worlds" type="button"><span class="start-item-icon">🏡</span> Worlds</button>
+      <button class="start-item" data-open="win-city" type="button"><span class="start-item-icon">🌃</span> City</button>
+      <button class="start-item" data-open="win-play" type="button"><span class="start-item-icon">👾</span> Play</button>
+      <button class="start-item" data-open="win-signals" type="button"><span class="start-item-icon">📡</span> Signals</button>
+      <button class="start-item" data-open="win-growth" type="button"><span class="start-item-icon">🥚</span> Growth</button>
       <button class="start-item" data-open="win-contact" type="button"><span class="start-item-icon">📧</span> Contact</button>
       <button class="start-item" data-open="win-manifesto" type="button"><span class="start-item-icon">📜</span> Manifesto</button>
       <button class="start-item" id="sm-shutdown" type="button"><span class="start-item-icon">🔴</span> Shut Down</button>
@@ -1382,7 +1915,7 @@
         'BLUCINELAB OS — AVVIO SISTEMA',
         'Caricamento desktop XP... OK',
         'Montaggio finestre... OK',
-        'Preparazione layer LAB... OK',
+        'Preparazione mondi... OK',
         'SISTEMA PRONTO.'
       ];
 
@@ -1423,6 +1956,18 @@
       if (menubar) menubar.style.display = '';
     }
 
+    function setModeLabel(id){
+      const map = {
+        'win-lab':'MODE: LAB',
+        'win-worlds':'MODE: WORLDS',
+        'win-city':'MODE: CITY',
+        'win-play':'MODE: PLAY',
+        'win-signals':'MODE: SIGNALS',
+        'win-growth':'MODE: GROWTH'
+      };
+      $('#lives-disp').textContent = map[id] || 'MODE: XP HOME';
+    }
+
     function openWindow(id){
       const win = document.getElementById(id);
       if (!win) return;
@@ -1436,9 +1981,9 @@
       }
 
       bringToFront(win);
+      setModeLabel(id);
 
       if (id === 'win-lab') {
-        document.getElementById('lives-disp').textContent = 'MODE: LAB';
         startLabChaos();
       }
 
@@ -1456,9 +2001,14 @@
 
       win.style.display = 'none';
 
-      if (id === 'win-lab') {
-        document.getElementById('lives-disp').textContent = 'MODE: XP HOME';
-      }
+      const anyWorldOpen = [
+        'win-lab','win-worlds','win-city','win-play','win-signals','win-growth'
+      ].some(worldId => {
+        const w = document.getElementById(worldId);
+        return w && getComputedStyle(w).display !== 'none';
+      });
+
+      $('#lives-disp').textContent = anyWorldOpen ? $('#lives-disp').textContent : 'MODE: XP HOME';
 
       updateTaskbar();
     }
@@ -1484,7 +2034,7 @@
 
     function maximizeWindow(id){
       const win = document.getElementById(id);
-      if (!win || id === 'win-lab') return;
+      if (!win || win.classList.contains('fullscreen-window')) return;
 
       if (win.dataset.maximized === '1') {
         win.style.top = win.dataset.prevTop || '';
@@ -1541,7 +2091,7 @@
     function makeWindowDraggable(titlebar){
       const winId = titlebar.dataset.drag;
       const win = document.getElementById(winId);
-      if (!win || winId === 'win-lab') return;
+      if (!win || win.classList.contains('fullscreen-window')) return;
 
       let dragging = false;
       let ox = 0;
@@ -1559,7 +2109,6 @@
 
       document.addEventListener('mousemove', e => {
         if (!dragging) return;
-
         const maxLeft = window.innerWidth - 120;
         const maxTop = window.innerHeight - 60;
 
@@ -1594,6 +2143,7 @@
       });
     });
 
+    // START MENU
     const startMenu = $('#start-menu');
     const startButton = $('#taskbar-start');
 
@@ -1664,24 +2214,18 @@
 
     function labPulse(){
       labGlitchNow();
-      document.getElementById('score-num').textContent =
-        String(Number(document.getElementById('score-num').textContent) + 25);
+      $('#score-num').textContent = String(Number($('#score-num').textContent) + 25);
     }
 
     function labBurst(){
       for (let i = 0; i < 4; i++) {
         setTimeout(() => labGlitchNow(), i * 120);
       }
-      document.getElementById('score-num').textContent =
-        String(Number(document.getElementById('score-num').textContent) + 50);
-    }
-
-    function labWarning(){
-      alert('WARNING: segnale visivo instabile.');
+      $('#score-num').textContent = String(Number($('#score-num').textContent) + 50);
     }
 
     function labModeMessage(){
-      alert('La home XP è sotto. Questa finestra la copre quasi totalmente.');
+      alert('La home XP è sotto. Il LAB la copre, ma non la distrugge.');
     }
 
     updateTaskbar();
