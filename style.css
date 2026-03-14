@@ -66,7 +66,7 @@ to{width:100%}
 
 
 /* =====================
-DESKTOP XP LUNA
+DESKTOP XP
 ===================== */
 
 #desktop{
@@ -78,7 +78,12 @@ height:100%;
 background:
 linear-gradient(#6aa9ff 0%, #4a87e2 40%, #3c8d2f 41%, #4fc441 100%);
 
-padding:20px;
+display:flex;
+flex-wrap:wrap;
+
+align-content:flex-start;
+
+padding:10px;
 
 }
 
@@ -90,26 +95,46 @@ ICON XP
 
 .icon{
 
-color:white;
-
 width:80px;
+height:80px;
 
 margin:10px;
 
-text-align:center;
+display:flex;
+flex-direction:column;
+
+align-items:center;
+
+justify-content:flex-start;
 
 cursor:pointer;
 
-font-size:13px;
+color:white;
 
 text-shadow:1px 1px 2px black;
+
+}
+
+.iconImg{
+
+font-size:40px;
+
+}
+
+.iconText{
+
+font-size:12px;
+
+margin-top:4px;
+
+text-align:center;
 
 }
 
 
 
 /* =====================
-TASKBAR XP
+TASKBAR
 ===================== */
 
 #taskbar{
@@ -135,7 +160,7 @@ border-top:2px solid #1c3f91;
 
 
 
-/* START BUTTON */
+/* START */
 
 #startBtn{
 
@@ -168,7 +193,7 @@ margin-right:10px;
 
 
 /* =====================
-START MENU XP
+START MENU
 ===================== */
 
 #startMenu{
