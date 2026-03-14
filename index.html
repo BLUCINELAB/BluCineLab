@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BLUCINELAB OS v1.0 — Visual Studio</title>
+  <title>BLUCINELAB OS v1.3 — CHAOS MODE</title>
   <meta
     name="description"
     content="BLUCINELAB — studio visivo indipendente tra immagine, spazio, direzione, ricerca e costruzione percettiva."
@@ -11,77 +11,116 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link
-    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&family=Oswald:wght@300;400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap"
     rel="stylesheet"
   />
 
   <style>
     :root{
-      --c-bg:#0a0a1a;
-      --c-bg2:#070712;
-      --c-win:#0d1117;
-      --c-bar:#1a1aff;
-      --c-bar2:#000080;
-      --c-yellow:#ffff00;
-      --c-cyan:#00ffff;
-      --c-magenta:#ff00ff;
-      --c-green:#00ff66;
-      --c-red:#ff3355;
+      --c-bg:#000010;
+      --c-bg-2:#020013;
+      --c-bg-3:#14002a;
+      --c-win:#001008;
+      --c-win-2:#02160d;
+      --c-bar:#001eff;
+      --c-bar2:#00006b;
+      --c-yellow:#fff200;
+      --c-cyan:#00f6ff;
+      --c-magenta:#ff2dfb;
+      --c-green:#3cff6a;
+      --c-red:#ff2b4f;
       --c-white:#ffffff;
-      --c-gray:#c0c0c0;
-      --c-darkgray:#808080;
+      --c-gray:#cfcfcf;
+      --c-darkgray:#7d7d7d;
+      --c-midgray:#ababab;
+      --c-orange:#ff9a1f;
       --c-black:#000000;
-      --win-border:2px solid #c0c0c0;
-      --win-shadow:4px 4px 0 #000;
-      --taskbar-h:34px;
-      --scorebar-h:28px;
-      --font-ui:'Press Start 2P', monospace;
-      --font-body:'VT323', monospace;
+
+      --win-border:3px solid #f4f4f4;
+      --win-shadow:
+        6px 6px 0 rgba(0,0,0,.98),
+        0 0 0 1px rgba(255,255,255,.08),
+        0 0 18px rgba(0,255,255,.08);
+      --ui-inset:inset 1px 1px 0 rgba(255,255,255,.35), inset -1px -1px 0 rgba(0,0,0,.72);
+
+      --scorebar-h:36px;
+      --taskbar-h:52px;
+      --desktop-icon-w:110px;
+      --window-min-w:340px;
     }
 
-    *{margin:0;padding:0;box-sizing:border-box;}
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
 
     html,body{
       width:100%;
       min-height:100%;
-      background:var(--c-bg);
+    }
+
+    html{
+      scroll-behavior:auto;
     }
 
     body{
-      font-family:var(--font-ui);
+      background:var(--c-bg);
+      font-family:'Press Start 2P', monospace;
       color:var(--c-white);
       min-height:100vh;
       overflow:hidden;
+      image-rendering:pixelated;
+      text-rendering:geometricPrecision;
+      -webkit-font-smoothing:none;
+      -moz-osx-font-smoothing:auto;
       position:relative;
+      letter-spacing:.02em;
     }
 
-    a{
-      color:var(--c-cyan);
-      text-decoration:none;
-    }
-
-    a:hover{
-      color:var(--c-yellow);
-    }
-
-    button{
-      border:none;
-      background:none;
-      font:inherit;
-    }
-
-    /* cursor */
     body.has-custom-cursor{
       cursor:none;
     }
 
+    body.screen-flash{
+      animation:screenFlash .14s steps(2,end);
+    }
+
+    body.hue-freak{
+      animation:hueFreak .8s linear;
+    }
+
+    @keyframes screenFlash{
+      0%{filter:brightness(1);}
+      20%{filter:brightness(1.6) contrast(1.3);}
+      100%{filter:brightness(1);}
+    }
+
+    @keyframes hueFreak{
+      0%{filter:hue-rotate(0deg);}
+      50%{filter:hue-rotate(60deg);}
+      100%{filter:hue-rotate(0deg);}
+    }
+
+    a{
+      color:inherit;
+    }
+
+    button,
+    input,
+    textarea,
+    select{
+      font:inherit;
+    }
+
     .cursor-outer{
       position:fixed;
-      width:20px;
-      height:20px;
+      width:26px;
+      height:26px;
       pointer-events:none;
       z-index:99999;
       transform:translate(-50%,-50%);
+      mix-blend-mode:screen;
       display:none;
     }
 
@@ -91,114 +130,911 @@
 
     .cursor-outer::before{
       content:'';
-      display:block;
+      position:absolute;
+      inset:0;
       width:0;
       height:0;
-      border-top:10px solid transparent;
-      border-bottom:10px solid transparent;
-      border-left:14px solid var(--c-yellow);
-      filter:drop-shadow(0 0 4px var(--c-yellow));
+      border-top:0;
+      border-right:0;
+      border-bottom:13px solid transparent;
+      border-left:13px solid var(--c-yellow);
+      filter:
+        drop-shadow(0 0 4px rgba(255,242,0,.95))
+        drop-shadow(2px 2px 0 #000);
     }
 
-    /* desktop */
+    /* DESKTOP */
     #desktop{
       position:fixed;
       inset:0;
-      background:
-        repeating-linear-gradient(0deg,transparent,transparent 31px,rgba(0,255,0,.03) 31px,rgba(0,255,0,.03) 32px),
-        repeating-linear-gradient(90deg,transparent,transparent 31px,rgba(0,255,0,.03) 31px,rgba(0,255,0,.03) 32px),
-        radial-gradient(ellipse at 30% 60%,#0d0038 0%,transparent 60%),
-        radial-gradient(ellipse at 70% 20%,#00003a 0%,transparent 50%),
-        linear-gradient(to bottom,var(--c-bg),var(--c-bg2));
       overflow:hidden;
       z-index:0;
+      background:
+        radial-gradient(circle at 18% 16%, rgba(0,120,255,.28) 0%, transparent 24%),
+        radial-gradient(circle at 82% 10%, rgba(255,0,255,.18) 0%, transparent 22%),
+        radial-gradient(circle at 52% 80%, rgba(0,255,170,.12) 0%, transparent 24%),
+        linear-gradient(to bottom, #040812 0%, #03030b 54%, #000000 100%);
+      animation:desktopHue 24s linear infinite;
+    }
+
+    #desktop::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent 0,
+          transparent 22px,
+          rgba(60,255,106,.08) 22px,
+          rgba(60,255,106,.08) 24px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent 0,
+          transparent 22px,
+          rgba(0,246,255,.05) 22px,
+          rgba(0,246,255,.05) 24px
+        );
+      opacity:1;
+      pointer-events:none;
     }
 
     #desktop::after{
       content:'';
       position:absolute;
       inset:0;
-      background:repeating-linear-gradient(
-        to bottom,
-        transparent 0,
-        transparent 2px,
-        rgba(0,0,0,.12) 2px,
-        rgba(0,0,0,.12) 4px
-      );
       pointer-events:none;
       z-index:10;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,.015) 0,
+          rgba(255,255,255,.015) 1px,
+          rgba(0,0,0,.28) 2px,
+          rgba(0,0,0,.28) 4px
+        );
+      mix-blend-mode:multiply;
     }
 
-    /* score bar */
+    body::before{
+      content:'';
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:11;
+      opacity:.12;
+      background-image:
+        radial-gradient(circle at 20% 30%, #fff 0.8px, transparent 1px),
+        radial-gradient(circle at 80% 50%, #fff 0.8px, transparent 1px),
+        radial-gradient(circle at 35% 80%, #fff 0.7px, transparent 1px),
+        radial-gradient(circle at 60% 20%, #fff 0.7px, transparent 1px);
+      background-size: 8px 8px, 10px 10px, 12px 12px, 14px 14px;
+      mix-blend-mode:screen;
+    }
+
+    body::after{
+      content:'';
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:12;
+      background:radial-gradient(circle at center, transparent 52%, rgba(0,0,0,.18) 100%);
+      mix-blend-mode:multiply;
+    }
+
+    @keyframes desktopHue{
+      0%{filter:hue-rotate(0deg);}
+      50%{filter:hue-rotate(18deg);}
+      100%{filter:hue-rotate(0deg);}
+    }
+
+    #glitch-layer{
+      position:fixed;
+      inset:0;
+      z-index:7000;
+      pointer-events:none;
+      overflow:hidden;
+    }
+
+    .glitch-bar{
+      position:absolute;
+      left:0;
+      right:0;
+      height:8px;
+      opacity:0;
+      background:
+        linear-gradient(90deg,
+          rgba(255,0,255,.0) 0%,
+          rgba(255,0,255,.65) 15%,
+          rgba(0,255,255,.75) 45%,
+          rgba(255,255,0,.6) 72%,
+          rgba(255,0,255,0) 100%);
+      mix-blend-mode:screen;
+      transform:translateX(-100%);
+      animation:glitchBar 700ms linear forwards;
+    }
+
+    @keyframes glitchBar{
+      0%{opacity:.95; transform:translateX(-100%);}
+      100%{opacity:0; transform:translateX(100%);}
+    }
+
+    .noise-burst{
+      position:absolute;
+      inset:auto 0 auto 0;
+      height:40px;
+      opacity:0;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(255,255,255,.8) 0 2px,
+          rgba(0,0,0,.8) 2px 4px,
+          rgba(0,255,255,.8) 4px 6px,
+          rgba(255,0,255,.8) 6px 8px
+        );
+      mix-blend-mode:screen;
+      animation:noiseBurst .28s steps(4,end) forwards;
+    }
+
+    @keyframes noiseBurst{
+      0%{opacity:.8; transform:translateX(0);}
+      100%{opacity:0; transform:translateX(30px);}
+    }
+
+    /* SCORE BAR */
     #score-bar{
       position:fixed;
       top:0;
       left:0;
       right:0;
       height:var(--scorebar-h);
-      background:linear-gradient(90deg,#000 60%,transparent);
       z-index:8000;
       display:flex;
       align-items:center;
-      gap:18px;
-      padding:0 10px;
-      border-bottom:1px solid rgba(0,255,102,.2);
-      font-size:8px;
+      gap:24px;
+      padding:0 14px;
+      font-size:10px;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.96) 0%, rgba(0,0,0,.84) 58%, rgba(0,0,0,.28) 100%);
+      border-bottom:2px solid rgba(60,255,106,.28);
       user-select:none;
-    }
-
-    #score-bar .nm{
-      color:var(--c-green);
-      font-family:var(--font-body);
-      font-size:16px;
-      letter-spacing:1px;
     }
 
     #score-bar .sc{
       color:var(--c-yellow);
-      text-shadow:0 0 6px var(--c-yellow);
+      text-shadow:
+        0 0 6px rgba(255,242,0,.6),
+        0 0 12px rgba(255,242,0,.28);
+    }
+
+    #score-bar .nm{
+      color:var(--c-green);
+      font-family:'VT323', monospace;
+      font-size:22px;
+      letter-spacing:1px;
+      text-shadow:
+        0 0 8px rgba(60,255,106,.45),
+        2px 0 0 rgba(255,0,255,.24),
+        -2px 0 0 rgba(0,246,255,.24);
     }
 
     #lives-disp{
       color:var(--c-red);
+      text-shadow:0 0 10px rgba(255,43,79,.45);
     }
 
+    /* INSERT COIN */
     #egg-btn{
       position:fixed;
-      top:4px;
-      right:10px;
+      top:5px;
+      right:12px;
       z-index:8001;
-      padding:3px 8px;
-      border:1px solid rgba(255,0,255,.3);
+      padding:5px 10px 4px;
+      font-family:'Press Start 2P', monospace;
+      font-size:8px;
       color:var(--c-magenta);
-      font-family:var(--font-ui);
-      font-size:7px;
-      animation:eggBlink 3s step-end infinite;
+      background:rgba(8,10,18,.88);
+      border:2px solid rgba(255,45,251,.42);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.04),
+        0 0 10px rgba(255,45,251,.08);
+      animation:eggBlink 2s step-end infinite;
+    }
+
+    body.has-custom-cursor #egg-btn{ cursor:none; }
+
+    #egg-btn:hover{
+      color:#fff;
+      border-color:rgba(255,45,251,.9);
+      box-shadow:
+        0 0 14px rgba(255,45,251,.22),
+        0 0 0 1px rgba(255,255,255,.06);
     }
 
     @keyframes eggBlink{
       0%,100%{opacity:1;}
-      50%{opacity:.25;}
+      50%{opacity:.35;}
     }
 
-    /* pacman layer */
+    /* TASKBAR */
+    #taskbar{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      height:var(--taskbar-h);
+      z-index:9000;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      padding:0 8px;
+      color:#000;
+      background:
+        linear-gradient(to bottom, #e2e2e2 0%, #bebebe 42%, #7d7d7d 100%);
+      border-top:3px solid #fff;
+      box-shadow:
+        0 -1px 0 rgba(0,0,0,.85),
+        inset 0 1px 0 rgba(255,255,255,.22);
+      font-size:9px;
+      user-select:none;
+    }
+
+    #taskbar-start{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+      padding:6px 12px;
+      font-family:'Press Start 2P', monospace;
+      font-size:8px;
+      color:#fff;
+      text-shadow:1px 1px 0 #000;
+      background:linear-gradient(135deg, #0a9831 0%, #06581f 100%);
+      border:3px solid #fff;
+      border-right-color:#000;
+      border-bottom-color:#000;
+      box-shadow:inset 1px 1px 0 rgba(255,255,255,.35), inset -1px -1px 0 rgba(0,0,0,.72);
+    }
+
+    body.has-custom-cursor #taskbar-start{ cursor:none; }
+
+    #taskbar-start::before{
+      content:'⊞';
+      font-size:12px;
+    }
+
+    #taskbar-start:hover{
+      background:linear-gradient(135deg, #13bc42 0%, #08752a 100%);
+    }
+
+    #taskbar-start:active{
+      border-color:#000 #fff #fff #000;
+    }
+
+    #taskbar-tasks{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      min-width:0;
+      flex:1;
+      overflow:hidden;
+    }
+
+    .taskbar-btn{
+      max-width:180px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      padding:6px 10px;
+      font-family:'Press Start 2P', monospace;
+      font-size:7px;
+      color:#000;
+      background:linear-gradient(to bottom, #ddd9d2 0%, #9f968e 100%);
+      border:2px solid #fff;
+      border-right-color:#707070;
+      border-bottom-color:#707070;
+    }
+
+    body.has-custom-cursor .taskbar-btn{ cursor:none; }
+
+    .taskbar-btn:hover{
+      filter:brightness(1.06);
+    }
+
+    .taskbar-btn:active,
+    .taskbar-btn.active{
+      border-color:#707070 #fff #fff #707070;
+      background:linear-gradient(to bottom, #b8b2ac 0%, #ddd9d2 100%);
+    }
+
+    #clock{
+      margin-left:auto;
+      min-width:92px;
+      text-align:center;
+      padding:4px 8px;
+      font-family:'VT323', monospace;
+      font-size:24px;
+      color:#000;
+      background:#ddd9d2;
+      border:2px inset #808080;
+      box-shadow:inset 1px 1px 0 rgba(255,255,255,.45);
+    }
+
+    /* START MENU */
+    #start-menu{
+      position:fixed;
+      left:0;
+      bottom:var(--taskbar-h);
+      width:280px;
+      z-index:9999;
+      display:none;
+      flex-direction:column;
+      background:linear-gradient(to right, #8b8b8b 0%, #d6d6d6 100%);
+      border:3px solid #fff;
+      border-bottom:none;
+      box-shadow:6px 6px 0 rgba(0,0,0,.92);
+    }
+
+    #start-menu.open{
+      display:flex;
+    }
+
+    .start-banner{
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:38px;
+      padding:10px 7px;
+      background:linear-gradient(to bottom, #07198d 0%, #2042ff 100%);
+      color:#fff;
+      font-family:'Press Start 2P', monospace;
+      font-size:9px;
+      writing-mode:vertical-rl;
+      transform:rotate(180deg);
+      letter-spacing:2px;
+      text-shadow:1px 1px 0 #000;
+    }
+
+    .start-items{
+      margin-left:38px;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .start-item{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      font-family:'VT323', monospace;
+      font-size:24px;
+      color:#000;
+      border-bottom:1px solid #9a9a9a;
+      background:transparent;
+      text-align:left;
+    }
+
+    body.has-custom-cursor .start-item{ cursor:none; }
+
+    .start-item:hover{
+      background:#000080;
+      color:#fff;
+    }
+
+    .start-item-icon{
+      font-size:18px;
+    }
+
+    /* WINDOWS */
+    .win{
+      position:fixed;
+      z-index:100;
+      display:flex;
+      flex-direction:column;
+      min-width:340px;
+      overflow:hidden;
+      resize:both;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,.04), rgba(255,255,255,0)),
+        linear-gradient(to bottom, #001008 0%, #03150d 100%);
+      border:3px solid #f4f4f4;
+      box-shadow:
+        6px 6px 0 rgba(0,0,0,.98),
+        0 0 0 1px rgba(255,255,255,.08),
+        0 0 18px rgba(0,255,255,.08);
+      animation:winPop .16s cubic-bezier(.17,.67,.24,1.44);
+    }
+
+    .win.shake{
+      animation:winShake .18s steps(2,end) 1;
+    }
+
+    @keyframes winPop{
+      from{
+        transform:scale(.5);
+        opacity:0;
+      }
+      to{
+        transform:scale(1);
+        opacity:1;
+      }
+    }
+
+    @keyframes winShake{
+      0%{transform:translate(0,0);}
+      25%{transform:translate(3px,0);}
+      50%{transform:translate(-3px,1px);}
+      75%{transform:translate(2px,-1px);}
+      100%{transform:translate(0,0);}
+    }
+
+    .win-titlebar{
+      flex-shrink:0;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      cursor:move;
+      user-select:none;
+      white-space:nowrap;
+      color:#fff;
+      font-family:'Press Start 2P', monospace;
+      font-size:9px;
+      background:
+        linear-gradient(90deg, #001eff 0%, #2d4cff 48%, #000080 100%);
+      text-shadow:
+        1px 1px 0 rgba(0,0,0,.95),
+        0 0 6px rgba(255,255,255,.08);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.2);
+    }
+
+    .win-icon{
+      font-size:13px;
+      filter:drop-shadow(1px 1px 0 #000);
+    }
+
+    .win-title{
+      flex:1;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .win-controls{
+      display:flex;
+      gap:4px;
+      flex-shrink:0;
+    }
+
+    .win-btn{
+      width:18px;
+      height:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+      color:#000;
+      font-family:'Press Start 2P', monospace;
+      font-size:7px;
+      background:linear-gradient(to bottom, #d8d8d8 0%, #bcbcbc 100%);
+      border:2px solid #fff;
+      border-right-color:#000;
+      border-bottom-color:#000;
+    }
+
+    body.has-custom-cursor .win-btn{ cursor:none; }
+
+    .win-btn:hover{
+      background:#fff;
+    }
+
+    .win-btn:active{
+      border-color:#000 #fff #fff #000;
+    }
+
+    .win-btn.close:hover{
+      color:#fff;
+      background:var(--c-red);
+    }
+
+    .win-menubar{
+      flex-shrink:0;
+      display:flex;
+      gap:16px;
+      padding:4px 8px;
+      font-family:'VT323', monospace;
+      font-size:20px;
+      color:#000;
+      background:#cfcfcf;
+      border-bottom:2px solid #707070;
+    }
+
+    .win-menubar span{
+      padding:0 5px;
+    }
+
+    body.has-custom-cursor .win-menubar span{ cursor:none; }
+
+    .win-menubar span:hover{
+      background:#000080;
+      color:#fff;
+    }
+
+    .win-body{
+      position:relative;
+      flex:1;
+      overflow-y:auto;
+      overflow-x:hidden;
+      padding:18px 18px 20px;
+      font-family:'VT323', monospace;
+      font-size:26px;
+      line-height:1.45;
+      color:#3cff6a;
+      scrollbar-width:thin;
+      scrollbar-color:#3cff6a #000;
+      background:
+        linear-gradient(to bottom, rgba(0,255,255,.025), rgba(255,255,255,0)),
+        linear-gradient(to bottom, rgba(0,0,0,.1), rgba(0,0,0,0));
+    }
+
+    .win-body::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,.015) 0px,
+          rgba(255,255,255,.015) 1px,
+          rgba(0,0,0,.08) 2px,
+          rgba(0,0,0,.08) 4px
+        );
+      mix-blend-mode:screen;
+      opacity:.35;
+    }
+
+    .win-body::-webkit-scrollbar{
+      width:12px;
+    }
+
+    .win-body::-webkit-scrollbar-track{
+      background:#000;
+    }
+
+    .win-body::-webkit-scrollbar-thumb{
+      background:#3cff6a;
+      border:1px solid #000;
+    }
+
+    .win-body h1,
+    .win-body h2{
+      margin:12px 0 10px;
+      font-family:'Press Start 2P', monospace;
+      font-size:14px;
+      line-height:1.7;
+      color:var(--c-yellow);
+      text-shadow:
+        0 0 10px rgba(255,242,0,.52),
+        2px 0 0 rgba(255,0,255,.18),
+        -2px 0 0 rgba(0,246,255,.18);
+    }
+
+    .win-body h3{
+      margin:10px 0 6px;
+      font-family:'Press Start 2P', monospace;
+      font-size:10px;
+      line-height:1.7;
+      color:var(--c-cyan);
+      text-shadow:
+        0 0 8px rgba(0,246,255,.42),
+        1px 0 0 rgba(255,0,255,.15);
+    }
+
+    .win-body p{
+      margin-bottom:10px;
+      font-size:23px;
+      color:#90ffa1;
+    }
+
+    .win-body a{
+      color:var(--c-cyan);
+      text-decoration:none;
+      text-shadow:0 0 6px rgba(0,246,255,.55);
+    }
+
+    .win-body a:hover{
+      color:var(--c-yellow);
+    }
+
+    .win-body .label{
+      display:block;
+      margin-bottom:6px;
+      font-family:'Press Start 2P', monospace;
+      font-size:8px;
+      line-height:1.8;
+      color:var(--c-magenta);
+      text-shadow:0 0 6px rgba(255,45,251,.52);
+      letter-spacing:.3px;
+    }
+
+    .win-body .field-card{
+      margin-bottom:12px;
+      padding:12px 12px 10px;
+      background:
+        linear-gradient(to bottom, rgba(60,255,106,.08), rgba(60,255,106,.03)),
+        rgba(255,255,255,.018);
+      border:2px solid rgba(60,255,106,.35);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.04),
+        0 0 0 1px rgba(0,0,0,.45);
+    }
+
+    .win-body .field-card:hover{
+      background:
+        linear-gradient(to bottom, rgba(60,255,106,.12), rgba(60,255,106,.045)),
+        rgba(255,255,255,.024);
+      border-color:rgba(60,255,106,.85);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.05),
+        0 0 14px rgba(60,255,106,.08);
+    }
+
+    .tag{
+      display:inline-block;
+      margin:3px;
+      padding:4px 8px;
+      font-family:'Press Start 2P', monospace;
+      font-size:7px;
+      letter-spacing:.1px;
+      border:2px solid;
+      background:rgba(255,255,255,.02);
+    }
+
+    .tag.yellow{
+      color:var(--c-yellow);
+      border-color:rgba(255,242,0,.95);
+      box-shadow:0 0 8px rgba(255,242,0,.12);
+    }
+    .tag.cyan{
+      color:var(--c-cyan);
+      border-color:rgba(0,246,255,.95);
+      box-shadow:0 0 8px rgba(0,246,255,.12);
+    }
+    .tag.magenta{
+      color:var(--c-magenta);
+      border-color:rgba(255,45,251,.95);
+      box-shadow:0 0 8px rgba(255,45,251,.12);
+    }
+    .tag.green{
+      color:var(--c-green);
+      border-color:rgba(60,255,106,.95);
+      box-shadow:0 0 8px rgba(60,255,106,.12);
+    }
+
+    /* FILE GRID */
+    .file-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+      gap:12px;
+      margin-top:10px;
+    }
+
+    .file-card{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:8px;
+      min-height:96px;
+      padding:10px;
+      color:#fff;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,.03), rgba(255,255,255,.01)),
+        rgba(0,0,0,.2);
+      border:2px solid rgba(0,246,255,.28);
+      text-align:left;
+    }
+
+    .file-card:hover{
+      border-color:var(--c-cyan);
+      background:
+        linear-gradient(to bottom, rgba(0,246,255,.08), rgba(255,255,255,.02)),
+        rgba(0,0,0,.22);
+      box-shadow:0 0 12px rgba(0,246,255,.08);
+    }
+
+    .file-icon{
+      font-size:28px;
+      line-height:1;
+      filter:drop-shadow(2px 2px 0 #000);
+    }
+
+    .file-name{
+      font-family:'Press Start 2P', monospace;
+      font-size:7px;
+      line-height:1.7;
+      color:var(--c-yellow);
+    }
+
+    .file-meta{
+      font-size:18px;
+      color:#7bffb0;
+      font-family:'VT323', monospace;
+    }
+
+    .viewer-image{
+      width:100%;
+      display:block;
+      border:2px solid rgba(255,255,255,.16);
+      background:#000;
+      box-shadow:0 0 0 1px rgba(0,0,0,.8);
+      image-rendering:pixelated;
+    }
+
+    /* DESKTOP ICONS */
+    .desktop-icon{
+      position:fixed;
+      z-index:50;
+      width:110px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+      padding:4px;
+      background:transparent;
+      border:none;
+      animation:iconNoise 2.8s steps(2,end) infinite;
+    }
+
+    body.has-custom-cursor .desktop-icon{ cursor:none; }
+
+    .desktop-icon .icon-img{
+      font-size:48px;
+      line-height:1;
+      filter:
+        drop-shadow(3px 3px 0 rgba(0,0,0,.98))
+        drop-shadow(0 0 8px rgba(255,255,255,.08));
+      transition:transform .08s steps(2,end), filter .08s steps(2,end);
+    }
+
+    .desktop-icon .icon-label{
+      padding:4px 6px;
+      text-align:center;
+      line-height:1.55;
+      font-family:'Press Start 2P', monospace;
+      font-size:8px;
+      color:#fff;
+      text-shadow:1px 1px 0 #000;
+      background:transparent;
+      transition:background .08s steps(2,end), color .08s steps(2,end);
+    }
+
+    .desktop-icon:hover .icon-img,
+    .desktop-icon.is-selected .icon-img{
+      transform:translateY(-1px) scale(1.04);
+      filter:
+        drop-shadow(3px 3px 0 rgba(0,0,0,.98))
+        drop-shadow(0 0 14px rgba(255,255,255,.18));
+    }
+
+    .desktop-icon:hover .icon-label,
+    .desktop-icon.is-selected .icon-label{
+      background:#000080;
+      color:#fff;
+    }
+
+    @keyframes iconNoise{
+      0%,100%{transform:translate(0,0);}
+      22%{transform:translate(1px,0);}
+      24%{transform:translate(-1px,1px);}
+      52%{transform:translate(1px,-1px);}
+      76%{transform:translate(0,1px);}
+    }
+
+    /* HERO */
+    #hero-win{
+      top:46px;
+      left:calc(50% - 360px);
+      width:720px;
+      min-height:360px;
+    }
+
+    /* BOOT */
+    #boot{
+      position:fixed;
+      inset:0;
+      z-index:99998;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:16px;
+      background:
+        radial-gradient(circle at center, rgba(0,255,0,.08) 0%, transparent 28%),
+        #000;
+    }
+
+    #boot-logo{
+      font-family:'Press Start 2P', monospace;
+      font-size:clamp(18px, 4vw, 40px);
+      letter-spacing:4px;
+      color:#00ff00;
+      text-shadow:
+        0 0 20px rgba(0,255,0,.8),
+        0 0 42px rgba(0,255,0,.34);
+      animation:logoGlow 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes logoGlow{
+      from{
+        text-shadow:0 0 10px rgba(0,255,0,.72);
+      }
+      to{
+        text-shadow:
+          0 0 30px rgba(0,255,0,.82),
+          0 0 60px rgba(0,255,0,.34);
+      }
+    }
+
+    #boot-sub{
+      font-family:'VT323', monospace;
+      font-size:28px;
+      letter-spacing:2px;
+      color:#9d9d9d;
+      text-align:center;
+    }
+
+    #boot-bar-wrap{
+      position:relative;
+      overflow:hidden;
+      width:360px;
+      height:24px;
+      border:3px solid #00ff00;
+      background:rgba(0,0,0,.75);
+      box-shadow:0 0 14px rgba(0,255,0,.1);
+    }
+
+    #boot-bar{
+      width:0%;
+      height:100%;
+      background:linear-gradient(90deg, #00ff00 0%, #00b53f 100%);
+      box-shadow:0 0 12px rgba(0,255,0,.65);
+      transition:width .1s linear;
+    }
+
+    #boot-text{
+      width:380px;
+      height:96px;
+      overflow:hidden;
+      text-align:left;
+      font-family:'VT323', monospace;
+      font-size:22px;
+      color:#00ff00;
+      white-space:pre-line;
+    }
+
+    /* PAC-MAN */
     #pacman-layer{
       position:fixed;
       inset:0;
+      z-index:200;
       pointer-events:none;
-      z-index:220;
     }
 
     .pac{
       position:absolute;
-      width:28px;
-      height:28px;
+      width:34px;
+      height:34px;
       border-radius:50%;
       background:var(--c-yellow);
-      clip-path:polygon(100% 50%,0% 5%,0% 95%);
-      animation:chomp .2s steps(2) infinite;
-      filter:drop-shadow(0 0 6px var(--c-yellow));
-      transition:left .04s linear,top .04s linear;
+      clip-path:polygon(100% 50%,0% 0%,0% 100%);
+      filter:
+        drop-shadow(0 0 8px rgba(255,242,0,.72))
+        drop-shadow(2px 2px 0 #000);
+      animation:chomp .18s steps(2) infinite;
+      transition:left .04s linear, top .04s linear;
+      will-change:transform,left,top;
       display:none;
     }
 
@@ -210,665 +1046,254 @@
 
     .dot{
       position:absolute;
-      width:6px;
-      height:6px;
+      width:8px;
+      height:8px;
       border-radius:50%;
       background:#fff;
-      box-shadow:0 0 4px #fff;
-      transition:opacity .16s ease;
+      box-shadow:0 0 6px rgba(255,255,255,.9);
+      transition:opacity .1s;
       display:none;
     }
 
     .power-dot{
-      width:14px;
-      height:14px;
+      width:16px;
+      height:16px;
       background:var(--c-cyan);
-      box-shadow:0 0 8px var(--c-cyan),0 0 16px var(--c-cyan);
+      box-shadow:
+        0 0 10px rgba(0,246,255,.95),
+        0 0 18px rgba(0,246,255,.38);
       animation:powerPulse .5s ease-in-out infinite alternate;
     }
 
     @keyframes powerPulse{
       from{transform:scale(1);}
-      to{transform:scale(1.25);}
+      to{transform:scale(1.28);}
     }
 
     .ghost{
       position:absolute;
-      font-size:22px;
-      transition:left .06s linear,top .06s linear;
-      filter:drop-shadow(0 0 6px currentColor);
+      font-size:28px;
+      filter:drop-shadow(0 0 8px currentColor);
+      transition:left .06s linear, top .06s linear;
+      will-change:left,top;
       display:none;
     }
 
-    /* taskbar */
-    #taskbar{
-      position:fixed;
-      left:0;
-      right:0;
-      bottom:0;
-      height:var(--taskbar-h);
-      background:linear-gradient(to bottom,#c0c0c0 0%,#808080 100%);
-      border-top:3px solid #fff;
-      display:flex;
-      align-items:center;
-      gap:6px;
-      padding:0 6px;
-      z-index:9000;
-      color:#000;
-      user-select:none;
-    }
-
-    #taskbar-start{
-      background:linear-gradient(135deg,#008000,#005000);
-      color:#fff;
-      border:2px solid #fff;
-      border-right-color:#000;
-      border-bottom-color:#000;
-      padding:4px 10px;
-      font-family:var(--font-ui);
-      font-size:7px;
-      white-space:nowrap;
-      display:flex;
-      align-items:center;
-      gap:6px;
-      text-shadow:1px 1px 0 #000;
-    }
-
-    #taskbar-start::before{
-      content:'⊞';
-      font-size:10px;
-    }
-
-    #taskbar-start:hover{
-      background:linear-gradient(135deg,#00a000,#006000);
-    }
-
-    #taskbar-tasks{
-      display:flex;
-      gap:6px;
-      min-width:0;
-      flex:1;
-      overflow:hidden;
-    }
-
-    .taskbar-btn{
-      background:linear-gradient(to bottom,#d4d0c8,#a09890);
-      border:2px solid #fff;
-      border-right-color:#808080;
-      border-bottom-color:#808080;
-      color:#000;
-      padding:3px 8px;
-      font-family:var(--font-ui);
-      font-size:6px;
-      max-width:160px;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-      flex-shrink:0;
-    }
-
-    .taskbar-btn.active{
-      border-color:#808080 #fff #fff #808080;
-    }
-
-    #clock{
-      margin-left:auto;
-      min-width:70px;
-      padding:2px 8px;
-      background:#d4d0c8;
-      border:1px inset #808080;
-      color:#000;
-      font-family:var(--font-body);
-      font-size:16px;
-      text-align:center;
-    }
-
-    /* start menu */
-    #start-menu{
-      position:fixed;
-      left:0;
-      bottom:var(--taskbar-h);
-      width:220px;
-      background:linear-gradient(to right,#808080 0%,#c0c0c0 100%);
-      border:3px solid #fff;
-      border-bottom:none;
-      z-index:9999;
-      display:none;
-    }
-
-    #start-menu.open{
-      display:flex;
-    }
-
-    .start-banner{
-      background:linear-gradient(to bottom,#000080,#1a1aff);
-      color:#fff;
-      font-family:var(--font-ui);
-      font-size:8px;
-      writing-mode:vertical-rl;
-      transform:rotate(180deg);
-      padding:8px 6px;
-      letter-spacing:2px;
-      text-shadow:1px 1px 0 #000;
-      width:30px;
-      flex-shrink:0;
-    }
-
-    .start-items{
-      display:flex;
-      flex-direction:column;
-      width:100%;
-    }
-
-    .start-item{
-      padding:8px 12px;
-      font-family:var(--font-body);
-      font-size:17px;
-      color:#000;
-      display:flex;
-      align-items:center;
-      gap:8px;
-      border-bottom:1px solid #a0a0a0;
-    }
-
-    .start-item:hover{
-      background:#000080;
-      color:#fff;
-    }
-
-    .start-item-icon{
-      font-size:14px;
-    }
-
-    /* desktop icons */
-    .desktop-icon{
-      position:fixed;
-      width:72px;
-      padding:4px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:4px;
-      z-index:60;
-      user-select:none;
-    }
-
-    .desktop-icon .icon-img{
-      font-size:32px;
-      line-height:1;
-      filter:drop-shadow(2px 2px 0 #000);
-    }
-
-    .desktop-icon .icon-label{
-      padding:2px 4px;
-      text-align:center;
-      line-height:1.4;
-      color:#fff;
-      text-shadow:1px 1px 0 #000;
-      font-family:var(--font-ui);
-      font-size:6px;
-    }
-
-    .desktop-icon:hover .icon-label,
-    .desktop-icon.is-selected .icon-label{
-      background:#000080;
-      color:#fff;
-    }
-
-    /* windows */
-    .win{
-      position:fixed;
-      background:var(--c-win);
-      border:var(--win-border);
-      box-shadow:var(--win-shadow);
-      min-width:280px;
-      display:flex;
-      flex-direction:column;
-      overflow:hidden;
-      z-index:100;
-      resize:both;
-      animation:winPop .2s cubic-bezier(.17,.67,.24,1.44);
-    }
-
-    @keyframes winPop{
-      from{transform:scale(.5);opacity:0;}
-      to{transform:scale(1);opacity:1;}
-    }
-
-    .win-titlebar{
-      background:linear-gradient(90deg,var(--c-bar),var(--c-bar2));
-      color:#fff;
-      padding:5px 8px;
-      display:flex;
-      align-items:center;
-      gap:6px;
-      cursor:move;
-      user-select:none;
-      white-space:nowrap;
-      flex-shrink:0;
-      font-family:var(--font-ui);
-      font-size:7px;
-    }
-
-    .win-icon{
-      font-size:10px;
-    }
-
-    .win-title{
-      flex:1;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
-    .win-controls{
-      display:flex;
-      gap:3px;
-      flex-shrink:0;
-    }
-
-    .win-btn{
-      width:14px;
-      height:14px;
-      border:1px solid #fff;
-      background:var(--c-gray);
-      color:#000;
-      font-family:var(--font-ui);
-      font-size:6px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex-shrink:0;
-    }
-
-    .win-btn:hover{
-      background:#fff;
-    }
-
-    .win-btn.close:hover{
-      background:var(--c-red);
-      color:#fff;
-    }
-
-    .win-menubar{
-      background:var(--c-gray);
-      color:#000;
-      padding:2px 6px;
-      display:flex;
-      gap:14px;
-      border-bottom:1px solid #808080;
-      flex-shrink:0;
-      font-family:var(--font-body);
-      font-size:14px;
-    }
-
-    .win-menubar span{
-      padding:0 4px;
-    }
-
-    .win-menubar span:hover{
-      background:#000;
-      color:#fff;
-    }
-
-    .win-body{
-      flex:1;
-      overflow:auto;
-      padding:12px;
-      color:#c8ffc8;
-      line-height:1.5;
-      font-family:var(--font-body);
-      font-size:16px;
-      scrollbar-width:thin;
-      scrollbar-color:#00ff66 #000;
-    }
-
-    .win-body::-webkit-scrollbar{
-      width:10px;
-    }
-
-    .win-body::-webkit-scrollbar-track{
-      background:#000;
-    }
-
-    .win-body::-webkit-scrollbar-thumb{
-      background:#00ff66;
-    }
-
-    .win-body h1,
-    .win-body h2{
-      margin:10px 0 6px;
-      color:var(--c-yellow);
-      text-shadow:0 0 8px var(--c-yellow);
-      font-family:var(--font-ui);
-      font-size:9px;
-      line-height:1.6;
-    }
-
-    .win-body h3{
-      margin:8px 0 4px;
-      color:var(--c-cyan);
-      text-shadow:0 0 6px var(--c-cyan);
-      font-family:var(--font-ui);
-      font-size:7px;
-      line-height:1.6;
-    }
-
-    .win-body p{
-      margin-bottom:6px;
-      font-size:15px;
-      color:#a0ffa0;
-    }
-
-    .label{
-      display:block;
-      margin-bottom:4px;
-      color:var(--c-magenta);
-      text-shadow:0 0 4px var(--c-magenta);
-      font-family:var(--font-ui);
-      font-size:6px;
-      line-height:1.6;
-    }
-
-    .field-card{
-      margin-bottom:8px;
-      padding:8px;
-      border:1px solid rgba(0,255,102,.28);
-      background:rgba(0,255,102,.05);
-    }
-
-    .field-card:hover{
-      border-color:#00ff66;
-      background:rgba(0,255,102,.1);
-    }
-
-    .tag{
-      display:inline-block;
-      margin:2px;
-      padding:2px 6px;
-      border:1px solid currentColor;
-      font-family:var(--font-ui);
-      font-size:5px;
-      line-height:1.5;
-    }
-
-    .tag.yellow{color:var(--c-yellow);}
-    .tag.cyan{color:var(--c-cyan);}
-    .tag.magenta{color:var(--c-magenta);}
-    .tag.green{color:var(--c-green);}
-
-    .spinner{
-      display:inline-block;
-      animation:spin .6s steps(8) infinite;
-      font-size:20px;
-    }
-
-    @keyframes spin{
-      to{transform:rotate(360deg);}
-    }
-
+    /* GLITCH */
     .glitch{
       position:relative;
-      animation:glitchText 4s infinite;
+      animation:glitchText 3s infinite;
     }
 
     @keyframes glitchText{
-      0%,90%,100%{text-shadow:none;}
-      91%{text-shadow:3px 0 var(--c-red),-3px 0 var(--c-cyan);}
-      93%{text-shadow:-3px 0 var(--c-magenta),3px 0 var(--c-yellow);}
-      95%{text-shadow:2px 0 var(--c-cyan),-2px 0 var(--c-red);}
+      0%,88%,100%{text-shadow:none; transform:translate(0,0);}
+      89%{text-shadow:3px 0 var(--c-red), -3px 0 var(--c-cyan); transform:translate(1px,0);}
+      91%{text-shadow:-3px 0 var(--c-magenta), 3px 0 var(--c-yellow); transform:translate(-1px,0);}
+      93%{text-shadow:2px 0 var(--c-cyan), -2px 0 var(--c-red); transform:translate(0,1px);}
     }
 
-    /* alerts */
+    /* ALERTS */
     .win-alert{
-      min-width:260px;
-      max-width:360px;
-      resize:none;
+      min-width:320px;
+      max-width:420px;
     }
 
     .win-alert .win-body{
-      padding:16px;
       display:flex;
       flex-direction:column;
-      gap:10px;
       align-items:flex-start;
-      font-size:13px;
+      gap:12px;
+      padding:18px;
+      font-size:18px;
     }
 
-    .alert-row{
+    .win-alert .alert-row{
       display:flex;
       align-items:flex-start;
-      gap:10px;
+      gap:12px;
     }
 
-    .alert-icon{
-      font-size:24px;
+    .win-alert .alert-icon{
       flex-shrink:0;
+      font-size:30px;
     }
 
-    .alert-msg{
+    .win-alert .alert-msg{
+      font-size:22px;
+      line-height:1.35;
       color:#c8ffc8;
-      font-size:14px;
-      line-height:1.4;
     }
 
-    .alert-btns{
+    .win-alert .alert-btns{
       display:flex;
-      gap:8px;
+      gap:10px;
       margin-top:6px;
     }
 
     .alert-ok{
-      padding:6px 16px;
-      background:var(--c-gray);
+      padding:8px 18px;
+      font-family:'Press Start 2P', monospace;
+      font-size:8px;
+      color:#000;
+      background:#c8c8c8;
       border:2px solid #fff;
       border-right-color:#000;
       border-bottom-color:#000;
-      color:#000;
-      font-family:var(--font-ui);
-      font-size:7px;
+    }
+
+    body.has-custom-cursor .alert-ok{ cursor:none; }
+
+    .alert-ok:hover{
+      background:#fff;
     }
 
     .alert-ok:active{
       border-color:#000 #fff #fff #000;
     }
 
-    /* boot */
-    #boot{
-      position:fixed;
-      inset:0;
-      background:#000;
-      z-index:99998;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:14px;
+    .spinner{
+      display:inline-block;
+      font-size:24px;
+      animation:spin .6s steps(8) infinite;
     }
 
-    #boot-logo{
-      font-family:var(--font-ui);
-      font-size:clamp(14px,3vw,28px);
-      color:#00ff66;
-      text-shadow:0 0 20px #00ff66,0 0 40px #00ff66;
-      letter-spacing:4px;
-      animation:logoGlow 1s ease-in-out infinite alternate;
-    }
-
-    @keyframes logoGlow{
-      from{text-shadow:0 0 10px #00ff66;}
-      to{text-shadow:0 0 30px #00ff66,0 0 60px #00ff66;}
-    }
-
-    #boot-sub{
-      font-family:var(--font-body);
-      font-size:20px;
-      color:#808080;
-      letter-spacing:2px;
-      text-align:center;
-    }
-
-    #boot-bar-wrap{
-      width:280px;
-      height:18px;
-      border:2px solid #00ff66;
-      position:relative;
-      overflow:hidden;
-    }
-
-    #boot-bar{
-      width:0%;
-      height:100%;
-      background:linear-gradient(90deg,#00ff66,#00aa55);
-      box-shadow:0 0 10px #00ff66;
-      transition:width .1s linear;
-    }
-
-    #boot-text{
-      width:320px;
-      height:80px;
-      overflow:hidden;
-      color:#00ff66;
-      text-align:left;
-      font-family:var(--font-body);
-      font-size:15px;
-      white-space:pre-line;
-    }
-
-    /* utility */
-    .status-line{
-      margin-top:12px;
-      color:#808080;
-      font-family:var(--font-ui);
-      font-size:6px;
-      line-height:1.8;
-    }
-
-    .status-small{
-      margin-top:10px;
-      font-size:13px;
-      color:var(--c-magenta);
+    @keyframes spin{
+      to{transform:rotate(360deg);}
     }
 
     .muted{
-      color:#606060 !important;
-      font-size:13px !important;
+      color:#6f6f6f !important;
+      font-size:19px !important;
     }
 
-    /* layout positions */
-    #hero-win{
-      top:44px;
-      left:90px;
-      width:580px;
-      min-height:300px;
-    }
-
-    #win-archive{
-      top:80px;
-      left:160px;
-      width:420px;
-      display:none;
-    }
-
-    #win-studio{
-      top:100px;
-      left:200px;
-      width:440px;
-      display:none;
-    }
-
-    #win-lab{
-      top:120px;
-      left:240px;
-      width:400px;
-      display:none;
-    }
-
-    #win-contact{
-      top:140px;
-      left:180px;
-      width:380px;
-      display:none;
-    }
-
-    #win-manifesto{
-      top:160px;
-      left:130px;
-      width:460px;
-      display:none;
-    }
-
-    /* shutdown screen generated inline */
-    /* responsive */
-    @media (max-width: 900px){
+    /* RESPONSIVE */
+    @media (max-width:900px){
       #hero-win{
-        width:min(92vw,580px);
-        left:4vw;
+        left:32px;
+        width:min(680px, calc(100vw - 56px));
+      }
+
+      .win{
+        min-width:260px;
       }
     }
 
-    @media (max-width: 600px){
-      body{
-        overflow:hidden;
+    @media (max-width:700px){
+      #score-bar{
+        gap:14px;
+        padding:0 8px;
+      }
+
+      #score-bar .nm{
+        font-size:18px;
+      }
+
+      #egg-btn{
+        right:8px;
+        padding:4px 7px;
+        font-size:6px;
+      }
+
+      .desktop-icon{
+        width:84px;
+      }
+
+      .desktop-icon .icon-img{
+        font-size:38px;
+      }
+
+      .desktop-icon .icon-label{
+        font-size:7px;
+      }
+    }
+
+    @media (max-width:600px){
+      #hero-win{
+        top:50px;
+        left:4px;
+        right:4px;
+        width:calc(100% - 8px);
+      }
+
+      .win{
+        min-width:220px;
+        max-width:calc(100vw - 8px);
+        resize:none;
+      }
+
+      .win-body{
+        font-size:20px;
+        padding:14px;
+      }
+
+      .win-body p{
+        font-size:19px;
+      }
+
+      .win-body h1,
+      .win-body h2{
+        font-size:11px;
+      }
+
+      .win-body h3{
+        font-size:8px;
+      }
+
+      #taskbar{
+        gap:4px;
+        padding:0 4px;
+      }
+
+      #taskbar-start{
+        padding:5px 8px;
+        font-size:6px;
+      }
+
+      .taskbar-btn{
+        max-width:110px;
+      }
+
+      #clock{
+        min-width:70px;
+        font-size:18px;
+        padding:3px 6px;
+      }
+
+      #start-menu{
+        width:220px;
+      }
+
+      .start-item{
+        font-size:20px;
+      }
+    }
+
+    @media (pointer:coarse){
+      body,
+      body.has-custom-cursor{
+        cursor:auto;
       }
 
       .cursor-outer{
         display:none !important;
       }
-
-      .win{
-        min-width:220px;
-        resize:none;
-      }
-
-      #hero-win,
-      #win-archive,
-      #win-studio,
-      #win-lab,
-      #win-contact,
-      #win-manifesto{
-        left:4px !important;
-        width:calc(100vw - 8px) !important;
-      }
-
-      #hero-win{
-        top:50px !important;
-      }
-
-      .desktop-icon{
-        width:64px;
-      }
-
-      .desktop-icon .icon-img{
-        font-size:28px;
-      }
-
-      .desktop-icon .icon-label{
-        font-size:5px;
-      }
-
-      #taskbar-tasks{
-        display:none;
-      }
-
-      #clock{
-        min-width:60px;
-        font-size:14px;
-      }
-
-      #start-menu{
-        width:200px;
-      }
     }
 
-    @media (pointer: coarse){
-      body{
-        cursor:auto !important;
+    @media (prefers-reduced-motion:reduce){
+      *,
+      *::before,
+      *::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
+        scroll-behavior:auto !important;
       }
     }
   </style>
 </head>
 <body>
   <div class="cursor-outer" id="cur"></div>
+  <div id="glitch-layer"></div>
 
   <div id="score-bar">
     <span class="nm">BLUCINELAB OS</span>
@@ -884,35 +1309,40 @@
 
   <div id="desktop"></div>
 
-  <button class="desktop-icon" style="top:50px;left:14px" id="icon-archive" data-win="win-archive" type="button">
+  <button class="desktop-icon" style="top:56px;left:16px" id="icon-archive" data-win="win-archive" type="button">
     <div class="icon-img">📁</div>
     <div class="icon-label">ARCHIVE</div>
   </button>
 
-  <button class="desktop-icon" style="top:130px;left:14px" id="icon-studio" data-win="win-studio" type="button">
+  <button class="desktop-icon" style="top:160px;left:18px" id="icon-studio" data-win="win-studio" type="button">
     <div class="icon-img">🎨</div>
     <div class="icon-label">STUDIO</div>
   </button>
 
-  <button class="desktop-icon" style="top:210px;left:14px" id="icon-lab" data-win="win-lab" type="button">
+  <button class="desktop-icon" style="top:264px;left:16px" id="icon-lab" data-win="win-lab" type="button">
     <div class="icon-img">🔬</div>
     <div class="icon-label">LAB.EXE</div>
   </button>
 
-  <button class="desktop-icon" style="top:290px;left:14px" id="icon-contact" data-win="win-contact" type="button">
+  <button class="desktop-icon" style="top:368px;left:18px" id="icon-contact" data-win="win-contact" type="button">
     <div class="icon-img">📧</div>
     <div class="icon-label">CONTACT</div>
   </button>
 
-  <button class="desktop-icon" style="top:370px;left:14px" id="icon-manifesto" data-win="win-manifesto" type="button">
+  <button class="desktop-icon" style="top:472px;left:16px" id="icon-manifesto" data-win="win-manifesto" type="button">
     <div class="icon-img">📜</div>
     <div class="icon-label">MANIFEST</div>
+  </button>
+
+  <button class="desktop-icon" style="top:576px;left:18px" id="icon-gallery" data-win="win-gallery" type="button">
+    <div class="icon-img">🖼️</div>
+    <div class="icon-label">GALLERY</div>
   </button>
 
   <section class="win" id="hero-win" aria-label="Homepage">
     <div class="win-titlebar" data-drag="hero-win">
       <span class="win-icon">🖥</span>
-      <span class="win-title glitch">BLUCINELAB OS v1.0 — VISUAL STUDIO</span>
+      <span class="win-title glitch">BLUCINELAB OS v1.3 — CHAOS VISUAL STUDIO</span>
       <div class="win-controls">
         <button class="win-btn" data-minimize="hero-win" type="button" aria-label="Minimizza">_</button>
         <button class="win-btn" data-maximize="hero-win" type="button" aria-label="Massimizza">□</button>
@@ -926,8 +1356,8 @@
       <span>Help</span>
     </div>
 
-    <div class="win-body" style="min-height:220px;">
-      <span class="label">HOME / BOLOGNA</span>
+    <div class="win-body" style="min-height:260px;">
+      <span class="label">HOME / BOLOGNA / ACTIVE SYSTEM</span>
       <h1>COSTRUIRE IMMAGINI CHE PENSANO</h1>
       <p>BLUCINELAB è uno studio visivo indipendente che lavora tra immagine, spazio, direzione e ricerca.</p>
       <p>Cinema, identità, ambienti digitali, installazioni, archivi, processi: non come servizi separati, ma come un unico campo di costruzione percettiva, culturale e narrativa.</p>
@@ -939,14 +1369,20 @@
         <span class="tag green">IMAGE DIRECTION</span>
       </div>
 
-      <div class="status-line">
+      <div style="margin-top:18px;" class="field-card">
+        <span class="label">SYSTEM STATUS</span>
+        <h3>DESKTOP VIVO / GLITCH IN CORSO</h3>
+        <p>Apri le finestre. Trascinale. Attiva Pac-Man. Entra in Gallery. I file dentro Archive aprono nuovi layer.</p>
+      </div>
+
+      <div style="margin-top:14px; font-size:20px; color:#b6ffb4;">
         <span class="spinner">◐</span>
-        &nbsp;SISTEMA CARICATO — APRI LE ICONE O IL MENU START PER NAVIGARE
+        &nbsp;SISTEMA CARICATO — QUALCOSA STA GIÀ SUCCEDENDO
       </div>
     </div>
   </section>
 
-  <section class="win" id="win-archive" aria-label="Archive">
+  <section class="win" id="win-archive" aria-label="Archive" style="top:94px;left:180px;width:520px;display:none;">
     <div class="win-titlebar" data-drag="win-archive">
       <span class="win-icon">📁</span>
       <span class="win-title">ARCHIVE — Lavori e processi</span>
@@ -960,29 +1396,50 @@
       <span>File</span>
       <span>Sort</span>
       <span>View</span>
+      <span>Open</span>
     </div>
 
-    <div class="win-body" style="min-height:180px;">
-      <span class="label">ARCHIVE / PUBLIC WORKS</span>
+    <div class="win-body" style="min-height:300px;">
+      <span class="label">ARCHIVE / PUBLIC WORKS / OPEN FILES</span>
       <h2>LAVORI, PROCESSI, STATI DI VISIBILITÀ</h2>
 
       <div class="field-card">
         <span class="label">PUBLIC WORKS</span>
         <h3>ENTRA NELL'ARCHIVIO</h3>
-        <p>Case study, superfici protette e pagine di processo organizzate per funzione, stato e profondità di accesso.</p>
+        <p>Case study, superfici protette, immagini, test e pagine di processo organizzate per stato e profondità.</p>
       </div>
 
-      <div class="field-card">
-        <span class="label">CURRENT LOGIC</span>
-        <h3>CASE STUDY · CONFIDENTIAL · PROCESS</h3>
-        <p>Tre modi diversi di mostrare il lavoro senza forzarlo dentro una grammatica da portfolio standard.</p>
+      <div class="file-grid">
+        <button class="file-card" type="button" data-open="win-img-1">
+          <span class="file-icon">🖼️</span>
+          <span class="file-name">CITY_01.BMP</span>
+          <span class="file-meta">Apri immagine</span>
+        </button>
+
+        <button class="file-card" type="button" data-open="win-img-2">
+          <span class="file-icon">🖼️</span>
+          <span class="file-name">SIGNAL_02.PCX</span>
+          <span class="file-meta">Apri immagine</span>
+        </button>
+
+        <button class="file-card" type="button" data-open="win-img-3">
+          <span class="file-icon">🖼️</span>
+          <span class="file-name">ARCHIVE_03.GIF</span>
+          <span class="file-meta">Apri immagine</span>
+        </button>
+
+        <button class="file-card" type="button" data-open="win-gallery">
+          <span class="file-icon">📂</span>
+          <span class="file-name">OPEN_GALLERY</span>
+          <span class="file-meta">Cartella immagini</span>
+        </button>
       </div>
 
-      <p class="muted">► Doppio click sull'icona per riaprire.</p>
+      <p class="muted" style="margin-top:14px;">► Doppio click sulle icone del desktop. Click sui file dentro Archive.</p>
     </div>
   </section>
 
-  <section class="win" id="win-studio" aria-label="Studio">
+  <section class="win" id="win-studio" aria-label="Studio" style="top:120px;left:220px;width:500px;display:none;">
     <div class="win-titlebar" data-drag="win-studio">
       <span class="win-icon">🎨</span>
       <span class="win-title">STUDIO — Metodo e coerenza</span>
@@ -998,7 +1455,7 @@
       <span>Values</span>
     </div>
 
-    <div class="win-body" style="min-height:220px;">
+    <div class="win-body" style="min-height:260px;">
       <span class="label">STUDIO / METODO</span>
       <h2>METODO, RIDUZIONE, COERENZA</h2>
 
@@ -1020,8 +1477,6 @@
         <p>Il progetto deve restare riconoscibile tra pagina, ambiente, racconto e direzione.</p>
       </div>
 
-      <h2 style="margin-top:14px;">VALORI</h2>
-
       <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">
         <span class="tag cyan">CARE</span>
         <span class="tag yellow">PRECISION</span>
@@ -1031,7 +1486,7 @@
     </div>
   </section>
 
-  <section class="win" id="win-lab" aria-label="Lab">
+  <section class="win" id="win-lab" aria-label="Lab" style="top:140px;left:250px;width:480px;display:none;">
     <div class="win-titlebar" data-drag="win-lab">
       <span class="win-icon">🔬</span>
       <span class="win-title">LAB.EXE — Ricerca attiva</span>
@@ -1047,7 +1502,7 @@
       <span>Future</span>
     </div>
 
-    <div class="win-body" style="min-height:200px;">
+    <div class="win-body" style="min-height:240px;">
       <span class="label">LAB / ACTIVE RESEARCH</span>
       <h2>MATERIALI IN FORMAZIONE, FUTURI POSSIBILI</h2>
       <p>Il laboratorio raccoglie note, test, frammenti e superfici di ricerca. È il luogo dove il lavoro resta aperto, osservabile, interrogabile.</p>
@@ -1058,14 +1513,14 @@
         <p>Un ecosistema capace di crescere tra cultura, tecnologia, educazione, installazione e costruzione di nuovi dispositivi di esperienza.</p>
       </div>
 
-      <div class="status-small">
+      <div style="margin-top:10px;font-size:20px;color:var(--c-magenta);">
         <span class="spinner">◑</span>
         &nbsp;CARICAMENTO FUTURI IN CORSO...
       </div>
     </div>
   </section>
 
-  <section class="win" id="win-contact" aria-label="Contact">
+  <section class="win" id="win-contact" aria-label="Contact" style="top:160px;left:210px;width:460px;display:none;">
     <div class="win-titlebar" data-drag="win-contact">
       <span class="win-icon">📧</span>
       <span class="win-title">CONTACT — Apri una conversazione</span>
@@ -1080,7 +1535,7 @@
       <span>Send</span>
     </div>
 
-    <div class="win-body" style="min-height:180px;">
+    <div class="win-body" style="min-height:220px;">
       <span class="label">CONTACT / EMAIL</span>
       <h2>POCHI PROGETTI, FATTI BENE</h2>
       <p>BLUCINELAB lavora meglio quando il contesto è chiaro, il progetto ha peso e la collaborazione richiede visione, rigore e qualità della relazione.</p>
@@ -1098,7 +1553,7 @@
     </div>
   </section>
 
-  <section class="win" id="win-manifesto" aria-label="Manifesto">
+  <section class="win" id="win-manifesto" aria-label="Manifesto" style="top:180px;left:150px;width:560px;display:none;">
     <div class="win-titlebar" data-drag="win-manifesto">
       <span class="win-icon">📜</span>
       <span class="win-title">MANIFESTO — Un laboratorio contemporaneo</span>
@@ -1114,7 +1569,7 @@
       <span>Share</span>
     </div>
 
-    <div class="win-body" style="min-height:200px;">
+    <div class="win-body" style="min-height:240px;">
       <span class="label">MANIFESTO</span>
       <h2>UN LABORATORIO CONTEMPORANEO DELL'IMMAGINE</h2>
       <p>BLUCINELAB nasce dall'idea che l'immagine non sia una superficie da riempire, ma una forma di lettura del mondo. Per questo lavoriamo tra rigore e immaginazione, metodo e sensibilità, costruzione tecnica e profondità emotiva.</p>
@@ -1122,8 +1577,149 @@
 
       <div style="margin-top:14px;">
         <h2>POSIZIONE</h2>
-        <p>Il sito tiene insieme studio, archivio e ricerca. Non presenta una somma di prestazioni, ma una postura. Un modo di pensare e costruire immagini, spazi e sistemi visivi con coerenza, precisione e apertura.</p>
+        <p>Il sito tiene insieme studio, archivio e ricerca. Non presenta una somma di prestazioni, ma una postura.</p>
       </div>
+    </div>
+  </section>
+
+  <section class="win" id="win-gallery" aria-label="Gallery" style="top:110px;left:330px;width:540px;display:none;">
+    <div class="win-titlebar" data-drag="win-gallery">
+      <span class="win-icon">🖼️</span>
+      <span class="win-title">GALLERY — Segnali e superfici</span>
+      <div class="win-controls">
+        <button class="win-btn" data-minimize="win-gallery" type="button" aria-label="Minimizza">_</button>
+        <button class="win-btn close" data-close="win-gallery" type="button" aria-label="Chiudi">✕</button>
+      </div>
+    </div>
+
+    <div class="win-menubar">
+      <span>File</span>
+      <span>Image</span>
+      <span>View</span>
+    </div>
+
+    <div class="win-body" style="min-height:300px;">
+      <span class="label">GALLERY / SIGNALS / BMP / GIF</span>
+      <h2>APRIRE IMMAGINI COME FINESTRE</h2>
+      <p>Questa cartella dimostra la logica: archivio → file → immagine → nuova finestra.</p>
+
+      <div class="file-grid">
+        <button class="file-card" type="button" data-open="win-img-1">
+          <span class="file-icon">📸</span>
+          <span class="file-name">NEON_CITY.BMP</span>
+          <span class="file-meta">open viewer</span>
+        </button>
+        <button class="file-card" type="button" data-open="win-img-2">
+          <span class="file-icon">📸</span>
+          <span class="file-name">RADAR_SIGNAL.PCX</span>
+          <span class="file-meta">open viewer</span>
+        </button>
+        <button class="file-card" type="button" data-open="win-img-3">
+          <span class="file-icon">📸</span>
+          <span class="file-name">ARCHIVE_MEMORY.GIF</span>
+          <span class="file-meta">open viewer</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="win" id="win-img-1" aria-label="Image 1" style="top:120px;left:380px;width:480px;display:none;">
+    <div class="win-titlebar" data-drag="win-img-1">
+      <span class="win-icon">🖼️</span>
+      <span class="win-title">VIEWER — NEON_CITY.BMP</span>
+      <div class="win-controls">
+        <button class="win-btn" data-minimize="win-img-1" type="button">_</button>
+        <button class="win-btn close" data-close="win-img-1" type="button">✕</button>
+      </div>
+    </div>
+    <div class="win-menubar"><span>File</span><span>Zoom</span><span>Close</span></div>
+    <div class="win-body" style="min-height:260px;">
+      <span class="label">VIEWER / BITMAP</span>
+      <img class="viewer-image" alt="Neon city"
+        src="data:image/svg+xml;utf8,
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
+          <rect width='800' height='520' fill='%23000b1f'/>
+          <rect y='370' width='800' height='150' fill='%23000814'/>
+          <circle cx='620' cy='120' r='64' fill='%23ff2dfb'/>
+          <rect x='80' y='210' width='80' height='160' fill='%23001352'/>
+          <rect x='180' y='180' width='110' height='190' fill='%23001980'/>
+          <rect x='320' y='150' width='90' height='220' fill='%23001d9e'/>
+          <rect x='438' y='120' width='130' height='250' fill='%230023c7'/>
+          <rect x='590' y='190' width='80' height='180' fill='%2300177f'/>
+          <rect x='690' y='160' width='60' height='210' fill='%230021aa'/>
+          <g fill='%23fff200'>
+            <rect x='98' y='236' width='12' height='18'/><rect x='118' y='236' width='12' height='18'/>
+            <rect x='98' y='264' width='12' height='18'/><rect x='118' y='264' width='12' height='18'/>
+            <rect x='206' y='210' width='14' height='20'/><rect x='230' y='210' width='14' height='20'/><rect x='254' y='210' width='14' height='20'/>
+            <rect x='206' y='240' width='14' height='20'/><rect x='254' y='240' width='14' height='20'/>
+            <rect x='348' y='180' width='14' height='20'/><rect x='372' y='180' width='14' height='20'/>
+            <rect x='348' y='210' width='14' height='20'/><rect x='372' y='210' width='14' height='20'/>
+            <rect x='472' y='150' width='16' height='22'/><rect x='500' y='150' width='16' height='22'/><rect x='528' y='150' width='16' height='22'/>
+            <rect x='472' y='184' width='16' height='22'/><rect x='528' y='184' width='16' height='22'/>
+          </g>
+          <rect y='390' width='800' height='8' fill='%2300f6ff'/>
+          <rect y='408' width='800' height='4' fill='%23ff2dfb'/>
+        </svg>"/>
+    </div>
+  </section>
+
+  <section class="win" id="win-img-2" aria-label="Image 2" style="top:150px;left:410px;width:460px;display:none;">
+    <div class="win-titlebar" data-drag="win-img-2">
+      <span class="win-icon">🖼️</span>
+      <span class="win-title">VIEWER — RADAR_SIGNAL.PCX</span>
+      <div class="win-controls">
+        <button class="win-btn" data-minimize="win-img-2" type="button">_</button>
+        <button class="win-btn close" data-close="win-img-2" type="button">✕</button>
+      </div>
+    </div>
+    <div class="win-menubar"><span>File</span><span>Signal</span><span>Close</span></div>
+    <div class="win-body" style="min-height:260px;">
+      <span class="label">VIEWER / SIGNAL</span>
+      <img class="viewer-image" alt="Radar"
+        src="data:image/svg+xml;utf8,
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
+          <rect width='800' height='520' fill='%2300040a'/>
+          <circle cx='400' cy='260' r='170' fill='none' stroke='%2300ff66' stroke-width='4'/>
+          <circle cx='400' cy='260' r='120' fill='none' stroke='%2300ff66' stroke-width='4'/>
+          <circle cx='400' cy='260' r='70' fill='none' stroke='%2300ff66' stroke-width='4'/>
+          <line x1='400' y1='90' x2='400' y2='430' stroke='%2300ff66' stroke-width='4'/>
+          <line x1='230' y1='260' x2='570' y2='260' stroke='%2300ff66' stroke-width='4'/>
+          <path d='M400 260 L550 120 A170 170 0 0 1 570 260 Z' fill='%2300ff66' opacity='.18'/>
+          <circle cx='515' cy='188' r='10' fill='%23fff200'/>
+          <circle cx='335' cy='320' r='8' fill='%23ff2dfb'/>
+          <circle cx='455' cy='332' r='6' fill='%2300f6ff'/>
+          <rect x='20' y='20' width='180' height='40' fill='%23001210'/>
+          <text x='34' y='47' font-family='monospace' font-size='24' fill='%2300ff66'>RADAR_SCAN_02</text>
+        </svg>"/>
+    </div>
+  </section>
+
+  <section class="win" id="win-img-3" aria-label="Image 3" style="top:180px;left:440px;width:500px;display:none;">
+    <div class="win-titlebar" data-drag="win-img-3">
+      <span class="win-icon">🖼️</span>
+      <span class="win-title">VIEWER — ARCHIVE_MEMORY.GIF</span>
+      <div class="win-controls">
+        <button class="win-btn" data-minimize="win-img-3" type="button">_</button>
+        <button class="win-btn close" data-close="win-img-3" type="button">✕</button>
+      </div>
+    </div>
+    <div class="win-menubar"><span>File</span><span>Memory</span><span>Close</span></div>
+    <div class="win-body" style="min-height:260px;">
+      <span class="label">VIEWER / MEMORY</span>
+      <img class="viewer-image" alt="Memory archive"
+        src="data:image/svg+xml;utf8,
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
+          <rect width='800' height='520' fill='%230a0018'/>
+          <rect x='60' y='80' width='680' height='360' fill='%2300122a' stroke='%2300f6ff' stroke-width='4'/>
+          <rect x='90' y='110' width='160' height='120' fill='%23ff2dfb' opacity='.8'/>
+          <rect x='270' y='110' width='200' height='70' fill='%2300f6ff' opacity='.8'/>
+          <rect x='270' y='194' width='110' height='36' fill='%23fff200' opacity='.85'/>
+          <rect x='500' y='110' width='190' height='120' fill='%2300ff66' opacity='.8'/>
+          <rect x='90' y='260' width='600' height='30' fill='%23fff200'/>
+          <rect x='90' y='310' width='320' height='90' fill='%2300ff66' opacity='.7'/>
+          <rect x='430' y='310' width='260' height='90' fill='%23ff2dfb' opacity='.7'/>
+          <text x='108' y='278' font-family='monospace' font-size='24' fill='%23000000'>ARCHIVE / MEMORY / SIGNAL / TRACE</text>
+        </svg>"/>
     </div>
   </section>
 
@@ -1141,6 +1737,7 @@
       <button class="start-item" data-open="win-lab" type="button"><span class="start-item-icon">🔬</span> Lab</button>
       <button class="start-item" data-open="win-contact" type="button"><span class="start-item-icon">📧</span> Contact</button>
       <button class="start-item" data-open="win-manifesto" type="button"><span class="start-item-icon">📜</span> Manifesto</button>
+      <button class="start-item" data-open="win-gallery" type="button"><span class="start-item-icon">🖼️</span> Gallery</button>
       <button class="start-item" id="sm-pacman" type="button"><span class="start-item-icon">👾</span> Pac-Man</button>
       <button class="start-item" id="sm-shutdown" type="button"><span class="start-item-icon">🔴</span> Shut Down</button>
     </div>
@@ -1165,6 +1762,7 @@
       bootDone: false,
       selectedIcon: null,
       konamiSeq: [],
+      randomPopupLock: false,
       pac: {
         active: false,
         x: 200,
@@ -1233,9 +1831,11 @@
       }
 
       const bootLines = [
-        'BLUCINELAB OS v1.0 — AVVIO SISTEMA',
+        'BLUCINELAB OS v1.3 — AVVIO SISTEMA',
         'Caricamento driver visivi... OK',
+        'Attivazione modulo glitch... OK',
         'Inizializzazione archivio immagini... OK',
+        'Montaggio layer interattivi... OK',
         'Avvio interfaccia utente... OK',
         'SISTEMA PRONTO.'
       ];
@@ -1244,13 +1844,13 @@
 
       function bootStep(){
         if (lineIdx < bootLines.length) {
-          bootText.textContent += bootLines[lineIdx] + '\n';
+          bootText.textContent += bootLines[lineIdx] + '\\n';
           lineIdx++;
 
           const progress = Math.round((lineIdx / bootLines.length) * 100);
           bootBar.style.width = progress + '%';
 
-          setTimeout(bootStep, 180);
+          setTimeout(bootStep, 170);
         } else {
           sessionStorage.setItem('blucinelab_booted', '1');
           setTimeout(() => {
@@ -1261,6 +1861,7 @@
               boot.remove();
               state.bootDone = true;
               showWelcomePopupOnce();
+              startChaosLoops();
             }, 450);
           }, 350);
         }
@@ -1286,6 +1887,14 @@
       if (menubar) menubar.style.display = '';
     }
 
+    function shakeWindow(win){
+      if (!win) return;
+      win.classList.remove('shake');
+      void win.offsetWidth;
+      win.classList.add('shake');
+      setTimeout(() => win.classList.remove('shake'), 220);
+    }
+
     function openWindow(id){
       const win = document.getElementById(id);
       if (!win) return;
@@ -1299,6 +1908,7 @@
       }
 
       bringToFront(win);
+      shakeWindow(win);
       updateTaskbar();
     }
 
@@ -1351,14 +1961,15 @@
         win.dataset.prevW = win.style.width;
         win.dataset.prevH = win.style.height;
 
-        win.style.top = '36px';
+        win.style.top = '42px';
         win.style.left = '80px';
-        win.style.width = (window.innerWidth - 90) + 'px';
-        win.style.height = (window.innerHeight - 78) + 'px';
+        win.style.width = (window.innerWidth - 92) + 'px';
+        win.style.height = (window.innerHeight - 104) + 'px';
         win.dataset.maximized = '1';
       }
 
       bringToFront(win);
+      shakeWindow(win);
     }
 
     function updateTaskbar(){
@@ -1385,6 +1996,7 @@
             minimizeWindow(win.id);
           }
           bringToFront(win);
+          shakeWindow(win);
         });
 
         container.appendChild(btn);
@@ -1423,9 +2035,7 @@
         win.style.top = Math.max(28, Math.min(maxTop, e.clientY - oy)) + 'px';
       });
 
-      document.addEventListener('mouseup', () => {
-        dragging = false;
-      });
+      document.addEventListener('mouseup', () => dragging = false);
 
       titlebar.addEventListener('touchstart', e => {
         if (e.target.closest('.win-btn')) return;
@@ -1449,9 +2059,7 @@
         win.style.top = Math.max(28, Math.min(maxTop, t.clientY - oy)) + 'px';
       }, { passive:true });
 
-      document.addEventListener('touchend', () => {
-        dragging = false;
-      });
+      document.addEventListener('touchend', () => dragging = false);
     }
 
     $$('[data-drag]').forEach(makeWindowDraggable);
@@ -1495,6 +2103,14 @@
       });
     });
 
+    // generic open buttons
+    $$('[data-open]').forEach(item => {
+      item.addEventListener('click', () => {
+        openWindow(item.dataset.open);
+        $('#start-menu')?.classList.remove('open');
+      });
+    });
+
     // start menu
     const startMenu = $('#start-menu');
     const startButton = $('#taskbar-start');
@@ -1512,18 +2128,11 @@
       });
     }
 
-    $$('[data-open]').forEach(item => {
-      item.addEventListener('click', () => {
-        openWindow(item.dataset.open);
-        startMenu?.classList.remove('open');
-      });
-    });
-
     $('#sm-shutdown')?.addEventListener('click', () => {
       document.body.innerHTML = `
         <div style="background:#000;color:#00ff66;font-family:'Press Start 2P',monospace;font-size:14px;display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:20px;">
           <div>È SICURO SPEGNERE IL COMPUTER</div>
-          <div style="font-size:9px;color:#808080;">BLUCINELAB OS v1.0</div>
+          <div style="font-size:9px;color:#808080;">BLUCINELAB OS v1.3</div>
           <button onclick="location.reload()" style="font-family:'Press Start 2P',monospace;font-size:8px;padding:10px 20px;background:#000;color:#00ff66;border:2px solid #00ff66;cursor:pointer;margin-top:20px;">
             ↺ RIAVVIA
           </button>
@@ -1533,7 +2142,10 @@
 
     // focus
     $$('.win').forEach(win => {
-      win.addEventListener('mousedown', () => bringToFront(win));
+      win.addEventListener('mousedown', () => {
+        bringToFront(win);
+        shakeWindow(win);
+      });
     });
 
     // alerts
@@ -1543,7 +2155,7 @@
       const w = document.createElement('div');
       w.className = 'win win-alert';
       w.style.top = (110 + Math.random() * 80) + 'px';
-      w.style.left = (Math.max(20, window.innerWidth / 2 - 170 + Math.random() * 40)) + 'px';
+      w.style.left = (Math.max(20, window.innerWidth / 2 - 170 + Math.random() * 80)) + 'px';
       w.style.zIndex = ++alertZ;
 
       w.innerHTML = `
@@ -1557,7 +2169,7 @@
         <div class="win-body">
           <div class="alert-row">
             <span class="alert-icon">🔔</span>
-            <span class="alert-msg">${msg.replace(/\n/g, '<br>')}</span>
+            <span class="alert-msg">${msg.replace(/\\n/g, '<br>')}</span>
           </div>
           <div class="alert-btns">
             <button class="alert-ok" type="button">OK</button>
@@ -1567,6 +2179,7 @@
 
       document.body.appendChild(w);
       bringToFront(w);
+      shakeWindow(w);
 
       const closeBtn = $('.close', w);
       const okBtn = $('.alert-ok', w);
@@ -1591,9 +2204,7 @@
         w.style.top = Math.max(20, e.clientY - oy) + 'px';
       });
 
-      document.addEventListener('mouseup', () => {
-        dragging = false;
-      });
+      document.addEventListener('mouseup', () => dragging = false);
 
       const destroy = () => {
         w.remove();
@@ -1602,6 +2213,8 @@
 
       closeBtn?.addEventListener('click', () => w.remove());
       okBtn?.addEventListener('click', destroy);
+
+      return w;
     }
 
     function showWelcomePopupOnce(){
@@ -1611,7 +2224,7 @@
       setTimeout(() => {
         showAlert(
           'BENVENUTO',
-          'Esplora il desktop.\nApri Archive, Studio, Lab, Contact e Manifesto.'
+          'Esplora il desktop.\\nApri Archive, Studio, Lab, Contact, Gallery e Manifesto.'
         );
       }, 900);
     }
@@ -1620,8 +2233,9 @@
     $('#egg-btn')?.addEventListener('click', () => {
       showAlert(
         '??? INSERT COIN ???',
-        'Hai trovato il segreto.\nLa modalità arcade è opzionale.\nApri Start > Pac-Man oppure usa il codice classico.'
+        'Hai trovato il segreto.\\nLa modalità arcade è opzionale.\\nApri Start > Pac-Man oppure usa il codice classico.'
       );
+      glitchNow();
     });
 
     const KONAMI = [
@@ -1866,7 +2480,7 @@
             if (p.lives === 0) {
               p.active = false;
               resetPacDisplay();
-              showAlert('GAME OVER', 'Hai perso tutte le vite.\nPunteggio: ' + p.score, () => {
+              showAlert('GAME OVER', 'Hai perso tutte le vite.\\nPunteggio: ' + p.score, () => {
                 resetPacGame();
               });
               return;
@@ -1896,6 +2510,7 @@
     $('#sm-pacman')?.addEventListener('click', () => {
       togglePacman();
       startMenu?.classList.remove('open');
+      glitchNow();
     });
 
     document.addEventListener('keydown', e => {
@@ -1963,26 +2578,33 @@
           const bx = i / 2 * bw;
           const bh = buildingData[i + 1] * H * 0.55;
 
-          ctx.fillRect(bx, H - bh - 30, bw - 2, bh);
+          ctx.fillStyle = i % 4 === 0 ? '#0d0030' : '#00104f';
+          ctx.fillRect(bx, H - bh - 34, bw - 2, bh);
 
-          for (let wy = H - bh - 20; wy < H - 40; wy += 12) {
-            for (let wx = bx + 4; wx < bx + bw - 8; wx += 10) {
-              const on = Math.sin(t * 0.01 + wx + wy) > 0.55;
+          for (let wy = H - bh - 24; wy < H - 44; wy += 14) {
+            for (let wx = bx + 4; wx < bx + bw - 8; wx += 12) {
+              const on = Math.sin(t * 0.01 + wx + wy) > 0.52;
               ctx.fillStyle = on
-                ? `rgba(255,220,80,${0.18 + 0.16 * Math.sin(t * 0.04 + wx)})`
-                : 'rgba(0,20,60,.36)';
-              ctx.fillRect(wx, wy, 6, 8);
+                ? `rgba(255,220,80,${0.22 + 0.18 * Math.sin(t * 0.04 + wx)})`
+                : 'rgba(0,20,60,.34)';
+              ctx.fillRect(wx, wy, 8, 10);
             }
           }
         }
 
-        for (let i = 0; i < 90; i++) {
+        for (let i = 0; i < 110; i++) {
           const sx = (i * 137.5) % W;
           const sy = (i * 79.3) % (H * 0.58);
           const alpha = 0.18 + 0.25 * Math.sin(t * 0.03 + i);
           ctx.fillStyle = `rgba(255,255,255,${alpha})`;
           ctx.fillRect(sx, sy, i % 3 === 0 ? 2 : 1, i % 3 === 0 ? 2 : 1);
         }
+
+        // retro horizon bars
+        ctx.fillStyle = 'rgba(0,246,255,.7)';
+        ctx.fillRect(0, H - 110, W, 3);
+        ctx.fillStyle = 'rgba(255,45,251,.55)';
+        ctx.fillRect(0, H - 90, W, 2);
 
         requestAnimationFrame(drawBg);
       }
@@ -1991,6 +2613,84 @@
       window.addEventListener('resize', resizeBg);
       drawBg();
     })();
+
+    // chaos interactions
+    function glitchNow(){
+      const layer = $('#glitch-layer');
+      if (!layer) return;
+
+      const bar = document.createElement('div');
+      bar.className = 'glitch-bar';
+      bar.style.top = Math.floor(Math.random() * (window.innerHeight - 20)) + 'px';
+      bar.style.height = (6 + Math.random() * 18) + 'px';
+      layer.appendChild(bar);
+      setTimeout(() => bar.remove(), 800);
+
+      if (Math.random() > 0.5) {
+        const burst = document.createElement('div');
+        burst.className = 'noise-burst';
+        burst.style.top = Math.floor(Math.random() * (window.innerHeight - 40)) + 'px';
+        layer.appendChild(burst);
+        setTimeout(() => burst.remove(), 300);
+      }
+
+      document.body.classList.remove('screen-flash');
+      void document.body.offsetWidth;
+      document.body.classList.add('screen-flash');
+      setTimeout(() => document.body.classList.remove('screen-flash'), 160);
+
+      if (Math.random() > 0.7) {
+        document.body.classList.add('hue-freak');
+        setTimeout(() => document.body.classList.remove('hue-freak'), 800);
+      }
+    }
+
+    function randomWindowChaos(){
+      const visibleWins = $$('.win').filter(w => getComputedStyle(w).display !== 'none');
+      if (!visibleWins.length) return;
+      const target = visibleWins[Math.floor(Math.random() * visibleWins.length)];
+      shakeWindow(target);
+
+      if (Math.random() > 0.78) {
+        target.style.left = Math.max(0, target.offsetLeft + (Math.random() > 0.5 ? 6 : -6)) + 'px';
+      }
+    }
+
+    function randomPopup(){
+      if (state.randomPopupLock) return;
+      state.randomPopupLock = true;
+
+      const messages = [
+        ['SYSTEM NOTICE', 'Segnale visivo instabile.\\nArchivio ancora aperto.'],
+        ['WARNING', 'Glitch registrato nel layer desktop.'],
+        ['MEMORY TRACE', 'Un file immagine richiede attenzione.'],
+        ['LOW LEVEL SIGNAL', 'Il sistema sta generando nuovi pattern.'],
+        ['DESKTOP EVENT', 'Qualcosa si è mosso dietro le finestre.']
+      ];
+
+      const item = messages[Math.floor(Math.random() * messages.length)];
+      showAlert(item[0], item[1], () => {
+        state.randomPopupLock = false;
+      });
+
+      setTimeout(() => {
+        state.randomPopupLock = false;
+      }, 12000);
+    }
+
+    function startChaosLoops(){
+      setInterval(() => {
+        if (Math.random() > 0.35) glitchNow();
+      }, 2600);
+
+      setInterval(() => {
+        if (Math.random() > 0.48) randomWindowChaos();
+      }, 4200);
+
+      setInterval(() => {
+        if (Math.random() > 0.72) randomPopup();
+      }, 9000);
+    }
 
     // resize safety
     window.addEventListener('resize', () => {
