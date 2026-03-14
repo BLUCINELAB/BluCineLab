@@ -1,188 +1,592 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>BLUCINE OS</title>
-
-<link rel="stylesheet" href="style.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BLUCINELAB OS</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-
-
-
-<div id="desktop">
-
-
-<div class="icon" onclick="openWindow('archive')">
-
-<div class="iconImg">📁</div>
-<div class="iconText">Archive</div>
-
-</div>
-
-
-<div class="icon" onclick="openWindow('lab')">
-
-<div class="iconImg">💻</div>
-<div class="iconText">Lab</div>
-
-</div>
-
-
-<div class="icon" onclick="openWindow('playroom')">
-
-<div class="iconImg">🎮</div>
-<div class="iconText">Playroom</div>
-
-</div>
-
-
-<div class="icon" onclick="openWindow('studio')">
-
-<div class="iconImg">🖼</div>
-<div class="iconText">Studio</div>
-
-</div>
-
-
-<div class="icon" onclick="openWindow('manifesto')">
-
-<div class="iconImg">📄</div>
-<div class="iconText">Manifesto</div>
-
-</div>
-
-
-<div class="icon">
-
-<div class="iconImg">🗑</div>
-<div class="iconText">Trash</div>
-
-</div>
-
-
-</div>
-
-
-
-<div id="taskbar">
-
-<div id="startBtn" onclick="toggleStart()">START</div>
-
-<div id="clock">12:00</div>
-
-</div>
-
-
-
-<div id="startMenu">
-
-<div onclick="openWindow('archive')">Archive</div>
-<div onclick="openWindow('lab')">Lab</div>
-<div onclick="openWindow('playroom')">Playroom</div>
-<div onclick="openWindow('studio')">Studio</div>
-
-</div>
-
-
-
-<!-- ARCHIVE -->
-
-<div class="window" id="archive">
-
-<div class="titlebar">
-
-Archive
-
-<div class="closeBtn" onclick="closeWindow('archive')">X</div>
-
-</div>
-
-<div class="sideBar">
-
-<button onclick="closeWindow('archive')">X</button>
-
-</div>
-
-<div class="content archive">
-
-<h1>ARCHIVE</h1>
-
-<div class="nano">👾</div>
-
-</div>
-
-</div>
-
-
-
-<!-- LAB -->
-
-<div class="window" id="lab">
-
-<div class="titlebar">
-
-Lab
-
-<div class="closeBtn" onclick="closeWindow('lab')">X</div>
-
-</div>
-
-<div class="sideBar">
-
-<button onclick="closeWindow('lab')">X</button>
-
-</div>
-
-<div class="content lab">
-
-<h1>LAB</h1>
-
-<div class="nano">🤖</div>
-
-</div>
-
-</div>
-
-
-
-<!-- PLAYROOM -->
-
-<div class="window" id="playroom">
-
-<div class="titlebar">
-
-Playroom
-
-<div class="closeBtn" onclick="closeWindow('playroom')">X</div>
-
-</div>
-
-<div class="sideBar">
-
-<button onclick="closeWindow('playroom')">X</button>
-
-</div>
-
-<div class="content playroom">
-
-<h1>PLAYROOM</h1>
-
-<div class="nano">🎮</div>
-
-</div>
-
-</div>
-
-
-
-<script src="script.js"></script>
-
+  <!-- BOOT -->
+  <div id="boot-screen" aria-hidden="true">
+    <div class="boot-logo">BLUCINELAB OS</div>
+    <div class="boot-sub">Starting system...</div>
+    <div class="boot-bar">
+      <div class="boot-bar-fill"></div>
+    </div>
+  </div>
+
+  <!-- DESKTOP -->
+  <main id="desktop" aria-label="Desktop Windows XP">
+    <div id="desktop-overlay"></div>
+
+    <button class="desktop-icon" data-open="win-archive" style="top: 26px; left: 18px;">
+      <span class="desktop-icon-art folder"></span>
+      <span class="desktop-icon-label">Archive</span>
+    </button>
+
+    <button class="desktop-icon" data-open="win-lab" style="top: 124px; left: 18px;">
+      <span class="desktop-icon-art monitor"></span>
+      <span class="desktop-icon-label">Lab</span>
+    </button>
+
+    <button class="desktop-icon" data-open="win-playroom" style="top: 222px; left: 18px;">
+      <span class="desktop-icon-art gamepad"></span>
+      <span class="desktop-icon-label">Playroom</span>
+    </button>
+
+    <button class="desktop-icon" data-open="win-studio" style="top: 320px; left: 18px;">
+      <span class="desktop-icon-art image"></span>
+      <span class="desktop-icon-label">Studio</span>
+    </button>
+
+    <button class="desktop-icon" data-open="win-manifesto" style="top: 418px; left: 18px;">
+      <span class="desktop-icon-art doc"></span>
+      <span class="desktop-icon-label">Manifesto</span>
+    </button>
+
+    <button class="desktop-icon" data-open="win-contact" style="top: 516px; left: 18px;">
+      <span class="desktop-icon-art mail"></span>
+      <span class="desktop-icon-label">Contact</span>
+    </button>
+
+    <button class="desktop-icon" style="top: 614px; left: 18px;">
+      <span class="desktop-icon-art trash"></span>
+      <span class="desktop-icon-label">Recycle Bin</span>
+    </button>
+  </main>
+
+  <!-- TASKBAR -->
+  <footer id="taskbar" aria-label="Taskbar">
+    <button id="start-button" type="button">
+      <span class="start-orb"></span>
+      <span class="start-text">start</span>
+    </button>
+
+    <div id="taskbar-windows" aria-label="Finestre aperte"></div>
+
+    <div id="system-tray">
+      <span class="tray-dot"></span>
+      <span id="taskbar-clock">00:00</span>
+    </div>
+  </footer>
+
+  <!-- START MENU -->
+  <nav id="start-menu" aria-label="Start menu">
+    <div class="start-menu-top">
+      <div class="start-user-pic"></div>
+      <div class="start-user-name">BLUCINELAB</div>
+    </div>
+
+    <div class="start-menu-body">
+      <div class="start-left">
+        <button class="start-link" data-open="win-archive">
+          <span class="start-link-icon folder"></span>
+          <span>Archive</span>
+        </button>
+        <button class="start-link" data-open="win-lab">
+          <span class="start-link-icon monitor"></span>
+          <span>Lab</span>
+        </button>
+        <button class="start-link" data-open="win-playroom">
+          <span class="start-link-icon gamepad"></span>
+          <span>Playroom</span>
+        </button>
+        <button class="start-link" data-open="win-studio">
+          <span class="start-link-icon image"></span>
+          <span>Studio</span>
+        </button>
+        <button class="start-link" data-open="win-manifesto">
+          <span class="start-link-icon doc"></span>
+          <span>Manifesto</span>
+        </button>
+        <button class="start-link" data-open="win-contact">
+          <span class="start-link-icon mail"></span>
+          <span>Contact</span>
+        </button>
+      </div>
+
+      <div class="start-right">
+        <div class="start-right-item">My Documents</div>
+        <div class="start-right-item">My Pictures</div>
+        <div class="start-right-item">Control Panel</div>
+        <div class="start-right-item">Help and Support</div>
+      </div>
+    </div>
+
+    <div class="start-menu-bottom">
+      <button id="shutdown-button" type="button">Turn Off Computer</button>
+    </div>
+  </nav>
+
+  <!-- HOME / SHELL WINDOW -->
+  <section class="xp-window shell-window" id="win-shell" data-window-title="BLUCINELAB OS" style="top: 78px; left: 170px; width: 700px; height: 470px; display: flex;">
+    <header class="xp-titlebar" data-drag-handle>
+      <div class="xp-title-left">
+        <span class="xp-title-icon orb"></span>
+        <span class="xp-title-text">BLUCINELAB OS</span>
+      </div>
+      <div class="xp-title-controls">
+        <button class="xp-control min" type="button" data-minimize="win-shell">—</button>
+        <button class="xp-control max" type="button" data-maximize="win-shell">□</button>
+      </div>
+    </header>
+
+    <div class="xp-menubar">
+      <span>File</span>
+      <span>Edit</span>
+      <span>View</span>
+      <span>Favorites</span>
+      <span>Tools</span>
+      <span>Help</span>
+    </div>
+
+    <div class="xp-toolbar">
+      <button>Back</button>
+      <button>Search</button>
+      <button>Folders</button>
+    </div>
+
+    <div class="xp-window-body shell-body">
+      <aside class="shell-side">
+        <div class="shell-side-block">
+          <div class="shell-side-title">System</div>
+          <button data-open="win-archive">Archive</button>
+          <button data-open="win-lab">Lab</button>
+          <button data-open="win-playroom">Playroom</button>
+          <button data-open="win-studio">Studio</button>
+          <button data-open="win-manifesto">Manifesto</button>
+        </div>
+      </aside>
+
+      <div class="shell-main">
+        <div class="shell-header">
+          <div>
+            <div class="shell-kicker">desktop / xp shell / active</div>
+            <h1>BLUCINELAB OS</h1>
+            <p>
+              Una falsa interfaccia Windows XP che apre mondi diversi: archivio,
+              laboratorio, console, editor, gioco, simulazione.
+            </p>
+          </div>
+          <div class="shell-guide shell-guide-xp">
+            <div class="guide-bubble">apri le icone</div>
+            <div class="guide-character xp-guide">
+              <span class="head"></span>
+              <span class="body"></span>
+              <span class="arm left"></span>
+              <span class="arm right"></span>
+              <span class="leg left"></span>
+              <span class="leg right"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="shell-grid">
+          <button class="shell-card" data-open="win-archive">
+            <span class="shell-card-icon folder"></span>
+            <span class="shell-card-title">Archive</span>
+            <span class="shell-card-text">Mondo urbano / GTA / dossier / segnali.</span>
+          </button>
+
+          <button class="shell-card" data-open="win-lab">
+            <span class="shell-card-icon monitor"></span>
+            <span class="shell-card-title">Lab</span>
+            <span class="shell-card-text">BIOS / terminale / tracce / scanline.</span>
+          </button>
+
+          <button class="shell-card" data-open="win-playroom">
+            <span class="shell-card-icon gamepad"></span>
+            <span class="shell-card-title">Playroom</span>
+            <span class="shell-card-text">Hub Wii / giochi / tempo / console.</span>
+          </button>
+
+          <button class="shell-card" data-open="win-studio">
+            <span class="shell-card-icon image"></span>
+            <span class="shell-card-title">Studio</span>
+            <span class="shell-card-text">Simulazione 2000 / stanze / processi.</span>
+          </button>
+
+          <button class="shell-card" data-open="win-manifesto">
+            <span class="shell-card-icon doc"></span>
+            <span class="shell-card-title">Manifesto</span>
+            <span class="shell-card-text">Editor vecchio / testo / postura / intenti.</span>
+          </button>
+
+          <button class="shell-card" data-open="win-contact">
+            <span class="shell-card-icon mail"></span>
+            <span class="shell-card-title">Contact</span>
+            <span class="shell-card-text">Finestra pulita / uscita / contatto.</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHIVE -->
+  <section class="xp-window world-window archive-world" id="win-archive" data-window-title="Archive" style="top: 110px; left: 260px; width: 760px; height: 500px; display: none;">
+    <header class="xp-titlebar" data-drag-handle>
+      <div class="xp-title-left">
+        <span class="xp-title-icon folder"></span>
+        <span class="xp-title-text">Archive</span>
+      </div>
+      <div class="xp-title-controls">
+        <button class="xp-control min" type="button" data-minimize="win-archive">—</button>
+        <button class="xp-control max" type="button" data-maximize="win-archive">□</button>
+        <button class="xp-control close" type="button" data-close="win-archive">×</button>
+      </div>
+    </header>
+
+    <div class="world-frame">
+      <aside class="world-rail">
+        <button class="rail-btn" type="button" data-close="win-archive">×</button>
+        <button class="rail-btn" type="button" data-focus-shell>⌂</button>
+        <div class="rail-label">archive</div>
+        <div class="rail-help">chiudi / torna / muovi</div>
+      </aside>
+
+      <div class="world-main">
+        <div class="world-guide gta-guide">
+          <div class="guide-bubble">cartelle / file / tracce</div>
+          <div class="guide-character gta-character"></div>
+        </div>
+
+        <div class="archive-hero">
+          <div class="world-kicker">urban archive / gta interface / file system</div>
+          <h2>ARCHIVE</h2>
+          <p>
+            Dossier, case study, segnali, cose protette, lavori pubblici,
+            frammenti. Questo mondo deve sembrare un menu urbano da videogioco.
+          </p>
+        </div>
+
+        <div class="archive-grid">
+          <article class="archive-card">
+            <span class="archive-label">Case Study</span>
+            <h3>Palazzo / Mostra / Allestimento</h3>
+            <p>Una scheda aperta sul rapporto tra spazio, immagine e presenza.</p>
+          </article>
+
+          <article class="archive-card">
+            <span class="archive-label">Confidential</span>
+            <h3>Brand / Direction / Protected</h3>
+            <p>Materiali non completamente accessibili, mostrati come tracce.</p>
+          </article>
+
+          <article class="archive-card">
+            <span class="archive-label">Visual File</span>
+            <h3>Locandine / Identità / Segni</h3>
+            <p>Elementi di archivio organizzati per tono e intensità.</p>
+          </article>
+
+          <article class="archive-card">
+            <span class="archive-label">Process</span>
+            <h3>Appunti / Layer / Materiale</h3>
+            <p>La parte sporca del lavoro, lasciata visibile come prova.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section class="xp-window world-window lab-world" id="win-lab" data-window-title="Lab" style="top: 120px; left: 300px; width: 760px; height: 520px; display: none;">
+    <header class="xp-titlebar" data-drag-handle>
+      <div class="xp-title-left">
+        <span class="xp-title-icon monitor"></span>
+        <span class="xp-title-text">Lab</span>
+      </div>
+      <div class="xp-title-controls">
+        <button class="xp-control min" type="button" data-minimize="win-lab">—</button>
+        <button class="xp-control max" type="button" data-maximize="win-lab">□</button>
+        <button class="xp-control close" type="button" data-close="win-lab">×</button>
+      </div>
+    </header>
+
+    <div class="world-frame">
+      <aside class="world-rail">
+        <button class="rail-btn" type="button" data-close="win-lab">×</button>
+        <button class="rail-btn" type="button" data-focus-shell>⌂</button>
+        <div class="rail-label">lab</div>
+        <div class="rail-help">bios / scan / signal</div>
+      </aside>
+
+      <div class="world-main">
+        <div class="world-guide lab-guide">
+          <div class="guide-bubble">signal ready</div>
+          <div class="guide-character lab-character"></div>
+        </div>
+
+        <div class="lab-topline">
+          <span>MR BIOS (TM) BLUCINELAB INTERNAL SYSTEM</span>
+          <span>VER 1.03 / PORT 03 / STATUS ACTIVE</span>
+        </div>
+
+        <div class="lab-grid">
+          <pre class="lab-panel">
+AWARD MODULAR BIOS V6.00PG
+COPYRIGHT (C) BLUCINELAB 2026
+
+[00] SYSTEM CHECK
+[01] VISUAL MEMORY BANK
+[02] ARCHIVE TRACE
+[03] SIGNAL TEST
+[04] AI SLOT
+[05] EXIT
+
+STATUS:
+PING ............. OK
+TRACE ............ READY
+NOISE ............ 41
+SIGNAL ........... 82
+          </pre>
+
+          <pre class="lab-panel">
+THERE WAS ONCE A STUDIO
+THAT DID NOT WANT TO LOOK
+LIKE A STUDIO.
+
+IT WANTED TO BECOME
+A MACHINE OF MEMORY.
+
+THE LAB DOES NOT HIDE.
+THE LAB EXPOSES.
+          </pre>
+
+          <pre class="lab-panel lab-ascii">
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@%%%%##**++==--::..@@@@@
+@@@@@%%##**++==--::..    @@@@@
+@@@%%##**+==--::.   SIGNAL@@@@
+@@%%#**+==--::. READY    @@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+          </pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAYROOM -->
+  <section class="xp-window world-window playroom-world" id="win-playroom" data-window-title="Playroom" style="top: 90px; left: 220px; width: 860px; height: 560px; display: none;">
+    <header class="xp-titlebar" data-drag-handle>
+      <div class="xp-title-left">
+        <span class="xp-title-icon gamepad"></span>
+        <span class="xp-title-text">Playroom</span>
+      </div>
+      <div class="xp-title-controls">
+        <button class="xp-control min" type="button" data-minimize="win-playroom">—</button>
+        <button class="xp-control max" type="button" data-maximize="win-playroom">□</button>
+        <button class="xp-control close" type="button" data-close="win-playroom">×</button>
+      </div>
+    </header>
+
+    <div class="world-frame">
+      <aside class="world-rail">
+        <button class="rail-btn" type="button" data-close="win-playroom">×</button>
+        <button class="rail-btn" type="button" data-focus-shell>⌂</button>
+        <div class="rail-label">play</div>
+        <div class="rail-help">scegli / apri / gioca</div>
+      </aside>
+
+      <div class="world-main">
+        <div class="world-guide wii-guide">
+          <div class="guide-bubble">scegli un canale</div>
+          <div class="guide-character wii-character"></div>
+        </div>
+
+        <div class="playroom-top">
+          <div class="playroom-title">PLAYROOM</div>
+          <div class="playroom-sub">temporal game hub / wii inspired</div>
+        </div>
+
+        <div class="playroom-grid">
+          <button class="play-tile mario-tile" type="button" data-game="mario">
+            <span class="tile-label">Mario</span>
+            <span class="tile-sub">pixel / run / jump</span>
+          </button>
+
+          <button class="play-tile cooking-tile" type="button" data-game="cooking">
+            <span class="tile-label">Cooking Mama</span>
+            <span class="tile-sub">cute / click / rhythm</span>
+          </button>
+
+          <button class="play-tile pacman-tile" type="button">
+            <span class="tile-label">Pac-Man</span>
+            <span class="tile-sub">arcade / maze</span>
+          </button>
+
+          <button class="play-tile sims-tile" type="button">
+            <span class="tile-label">The Sims</span>
+            <span class="tile-sub">life / room / sim</span>
+          </button>
+
+          <button class="play-tile gta-tile" type="button">
+            <span class="tile-label">GTA</span>
+            <span class="tile-sub">urban / menu / dossier</span>
+          </button>
+
+          <button class="play-tile retro-tile" type="button">
+            <span class="tile-label">Invaders</span>
+            <span class="tile-sub">retro / signal / grid</span>
+          </button>
+        </div>
+
+        <div class="playroom-preview">
+          <div class="preview-card">
+            <div class="preview-kicker">next step</div>
+            <h3>Qui entrano i giochi veri</h3>
+            <p>
+              Mario e Cooking Mama verranno attivati nel secondo passaggio,
+              senza distruggere l’interfaccia Wii già pronta.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDIO -->
+  <section class="xp-window world-window studio-world" id="win-studio" data-window-title="Studio" style="top: 130px; left: 260px; width: 740px; height: 500px; display: none;">
+    <header class="xp-titlebar" data-drag-handle>
+      <div class="xp-title-left">
+        <span class="xp-title-icon image"></span>
+        <span class="xp-title-text">Studio</span>
+      </div>
+      <div class="xp-title-controls">
+        <button class="xp-control min" type="button" data-minimize="win-studio">—</button>
+        <button class="xp-control max" type="button" data-maximize="win-studio">□</button>
+        <button class="xp-control close" type="button" data-close="win-studio">×</button>
+      </div>
+    </header>
+
+    <div class="world-frame">
+      <aside class="world-rail">
+        <button class="rail-btn" type="button" data-close="win-studio">×</button>
+        <button class="rail-btn" type="button" data-focus-shell>⌂</button>
+        <div class="rail-label">studio</div>
+        <div class="rail-help">room / build / simulate</div>
+      </aside>
+
+      <div class="world-main">
+        <div class="world-guide sims-guide">
+          <div class="guide-bubble">sim room</div>
+          <div class="guide-character sims-character"></div>
+        </div>
+
+        <div class="studio-shell">
+          <div class="studio-panel large">
+            <div class="studio-panel-title">Visual Room</div>
+            <p>
+              Uno spazio che ragiona come una stanza da simulazione:
+              layout, oggetti, intenzioni, tono, equilibrio.
+            </p>
+          </div>
+
+          <div class="studio-panel">
+            <div class="studio-panel-title">Atmosphere</div>
+            <p>Luce, ritmo, spazio, ordine.</p>
+          </div>
+
+          <div class="studio-panel">
+            <div class="studio-panel-title">Method</div>
+            <p>Togliere, allineare, far leggere meglio.</p>
+          </div>
+
+          <div class="studio-panel">
+            <div class="studio-panel-title">Surface</div>
+            <p>Ogni elemento è parte della stanza.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section class="xp-window world-window manifesto-world" id="win-manifesto" data-window-title="Manifesto" style="top: 140px; left: 340px; width: 700px; height: 500px; display: none;">
+    <header class="xp-titlebar" data-drag-handle>
+      <div class="xp-title-left">
+        <span class="xp-title-icon doc"></span>
+        <span class="xp-title-text">Manifesto</span>
+      </div>
+      <div class="xp-title-controls">
+        <button class="xp-control min" type="button" data-minimize="win-manifesto">—</button>
+        <button class="xp-control max" type="button" data-maximize="win-manifesto">□</button>
+        <button class="xp-control close" type="button" data-close="win-manifesto">×</button>
+      </div>
+    </header>
+
+    <div class="world-frame">
+      <aside class="world-rail">
+        <button class="rail-btn" type="button" data-close="win-manifesto">×</button>
+        <button class="rail-btn" type="button" data-focus-shell>⌂</button>
+        <div class="rail-label">text</div>
+        <div class="rail-help">leggi / scorri / chiudi</div>
+      </aside>
+
+      <div class="world-main">
+        <div class="world-guide editor-guide">
+          <div class="guide-bubble">readme.txt</div>
+          <div class="guide-character editor-character"></div>
+        </div>
+
+        <div class="manifesto-paper">
+          <div class="manifesto-kicker">editor / note / old text mode</div>
+          <h2>MANIFESTO</h2>
+          <p>
+            BLUCINELAB non usa la forma come decorazione.
+            La usa come orientamento, come montaggio, come tensione leggibile.
+          </p>
+          <p>
+            Ogni progetto è una stanza mentale, un dispositivo di immagine,
+            una superficie che organizza attenzione.
+          </p>
+          <p>
+            Il sito non deve sembrare un portfolio standard.
+            Deve sembrare un sistema che apre stati diversi del lavoro.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="xp-window world-window contact-world" id="win-contact" data-window-title="Contact" style="top: 180px; left: 420px; width: 620px; height: 380px; display: none;">
+    <header class="xp-titlebar" data-drag-handle>
+      <div class="xp-title-left">
+        <span class="xp-title-icon mail"></span>
+        <span class="xp-title-text">Contact</span>
+      </div>
+      <div class="xp-title-controls">
+        <button class="xp-control min" type="button" data-minimize="win-contact">—</button>
+        <button class="xp-control max" type="button" data-maximize="win-contact">□</button>
+        <button class="xp-control close" type="button" data-close="win-contact">×</button>
+      </div>
+    </header>
+
+    <div class="world-frame">
+      <aside class="world-rail">
+        <button class="rail-btn" type="button" data-close="win-contact">×</button>
+        <button class="rail-btn" type="button" data-focus-shell>⌂</button>
+        <div class="rail-label">mail</div>
+        <div class="rail-help">contact / exit / return</div>
+      </aside>
+
+      <div class="world-main">
+        <div class="world-guide contact-guide">
+          <div class="guide-bubble">scrivi qui</div>
+          <div class="guide-character contact-character"></div>
+        </div>
+
+        <div class="contact-panel">
+          <div class="contact-kicker">contact / email / direct</div>
+          <h2>CONTACT</h2>
+          <p>Per progetti, collaborazioni, sistemi visivi, allestimenti, identità.</p>
+          <a class="contact-mail" href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
 </body>
 </html>
