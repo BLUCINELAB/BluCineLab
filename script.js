@@ -1,37 +1,14 @@
-document.addEventListener("DOMContentLoaded", () => {
+function toggleStart(){
 
+let m=document.getElementById("startMenu")
 
+if(m.style.display=="block"){
 
-/* ======================
-BOOT
-====================== */
-
-const boot = document.getElementById("bootScreen")
-
-setTimeout(() => {
-
-boot.style.display = "none"
-
-}, 3000)
-
-
-
-
-/* ======================
-START MENU
-====================== */
-
-const startMenu = document.getElementById("startMenu")
-
-window.toggleStart = function(){
-
-if(startMenu.style.display === "block"){
-
-startMenu.style.display = "none"
+m.style.display="none"
 
 }else{
 
-startMenu.style.display = "block"
+m.style.display="block"
 
 }
 
@@ -39,104 +16,60 @@ startMenu.style.display = "block"
 
 
 
-/* ======================
-WINDOW CONTROL
-====================== */
+function openWindow(id){
 
-window.openWindow = function(id){
+let w=document.getElementById(id)
 
-const w = document.getElementById(id)
-
-w.style.display = "block"
-
-w.style.zIndex = Date.now()
-
-startMenu.style.display = "none"
-
-}
-
-window.closeWindow = function(id){
-
-document.getElementById(id).style.display = "none"
+w.style.display="block"
 
 }
 
 
 
+function closeWindow(id){
 
-/* ======================
-CLOCK
-====================== */
+let w=document.getElementById(id)
 
-const clock = document.getElementById("clock")
-
-function updateClock(){
-
-const now = new Date()
-
-let h = now.getHours()
-let m = now.getMinutes()
-
-if(m < 10) m = "0" + m
-
-clock.innerText = h + ":" + m
+w.style.display="none"
 
 }
 
-setInterval(updateClock,1000)
-
-updateClock()
 
 
+/* DRAG WINDOWS */
 
+document.querySelectorAll(".window").forEach(win=>{
 
-/* ======================
-DRAG WINDOWS
-====================== */
+let bar=win.querySelector(".titlebar")
 
-let currentWindow = null
-let offsetX = 0
-let offsetY = 0
+let offsetX
+let offsetY
+let dragging=false
 
-document.querySelectorAll(".window").forEach(win => {
+bar.addEventListener("mousedown",e=>{
 
-win.addEventListener("mousedown", e => {
+dragging=true
 
-currentWindow = win
-
-offsetX = e.clientX - win.offsetLeft
-offsetY = e.clientY - win.offsetTop
-
-win.style.zIndex = Date.now()
+offsetX=e.clientX-win.offsetLeft
+offsetY=e.clientY-win.offsetTop
 
 })
 
-})
+document.addEventListener("mousemove",e=>{
 
+if(dragging){
 
-
-document.addEventListener("mousemove", e => {
-
-if(currentWindow){
-
-currentWindow.style.left =
-e.clientX - offsetX + "px"
-
-currentWindow.style.top =
-e.clientY - offsetY + "px"
+win.style.left=e.clientX-offsetX+"px"
+win.style.top=e.clientY-offsetY+"px"
 
 }
 
 })
 
+document.addEventListener("mouseup",()=>{
 
-
-document.addEventListener("mouseup", () => {
-
-currentWindow = null
+dragging=false
 
 })
-
-
 
 })
