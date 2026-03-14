@@ -1,61 +1,12 @@
 body{
-
 margin:0;
-font-family:Arial;
+font-family:Tahoma;
 overflow:hidden;
-
 }
-
-/* =====================
-BOOT
-===================== */
-
-#bootScreen{
-
-position:fixed;
-width:100%;
-height:100%;
-background:black;
-color:#00ff00;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-
-z-index:9999;
-
-}
-
-.bar{
-
-width:300px;
-height:20px;
-border:2px solid #00ff00;
-margin-top:20px;
-
-}
-
-#bootBar{
-
-width:0%;
-height:100%;
-background:#00ff00;
-
-animation:boot 4s linear forwards;
-
-}
-
-@keyframes boot{
-
-from{width:0%}
-to{width:100%}
-
-}
-
 
 
 /* =====================
-DESKTOP XP
+DESKTOP
 ===================== */
 
 #desktop{
@@ -64,19 +15,28 @@ position:fixed;
 width:100%;
 height:100%;
 
-background:url("xp.jpg");
-background-size:cover;
+background:linear-gradient(
+#87b4ff 0%,
+#5c93e8 40%,
+#4f8a2e 41%,
+#67b63b 100%
+);
 
 padding:20px;
 
 }
+
+
+/* =====================
+ICONE
+===================== */
 
 .icon{
 
 color:white;
 margin:10px;
 cursor:pointer;
-width:100px;
+width:120px;
 
 }
 
@@ -89,24 +49,28 @@ TASKBAR
 
 position:fixed;
 bottom:0;
+left:0;
 width:100%;
 height:40px;
 
 background:#0044aa;
-color:white;
 
 display:flex;
 align-items:center;
 
 }
 
+
 #startBtn{
 
+margin-left:5px;
 padding:5px 10px;
 background:#00aa00;
+color:white;
 cursor:pointer;
 
 }
+
 
 #startMenu{
 
@@ -118,8 +82,9 @@ background:#ddd;
 
 display:none;
 
-}
+padding:10px;
 
+}
 
 
 /* =====================
@@ -131,6 +96,7 @@ WINDOW
 position:fixed;
 top:0;
 left:0;
+
 width:100%;
 height:100%;
 
@@ -140,7 +106,7 @@ display:none;
 
 
 /* =====================
-BAR LATERALE
+SIDEBAR
 ===================== */
 
 .sideBar{
@@ -148,6 +114,7 @@ BAR LATERALE
 position:absolute;
 left:0;
 top:0;
+
 width:60px;
 height:100%;
 
@@ -159,6 +126,7 @@ flex-direction:column;
 
 }
 
+
 .sideBar button{
 
 margin:10px;
@@ -166,14 +134,15 @@ margin:10px;
 }
 
 
-
 /* =====================
-CONTENUTO
+CONTENT
 ===================== */
 
 .content{
 
 margin-left:60px;
+height:100%;
+overflow:auto;
 padding:20px;
 
 }
@@ -195,14 +164,25 @@ animation:walk 3s infinite;
 
 }
 
+
 @keyframes walk{
 
 0%{transform:translateX(0)}
-50%{transform:translateX(-30px)}
+50%{transform:translateX(-20px)}
 100%{transform:translateX(0)}
 
 }
 
+
+/* =====================
+PLAYROOM
+===================== */
+
+.playroom{
+
+background:#ffffff;
+
+}
 
 
 /* =====================
@@ -218,29 +198,87 @@ font-family:monospace;
 }
 
 
-
 /* =====================
 ARCHIVE
 ===================== */
 
 .archive{
 
-background:#221100;
+background:#220000;
 color:orange;
 
 }
 
 
-
 /* =====================
-PLAYROOM
+GAME
 ===================== */
 
-.playroom{
+.game{
 
-background:black;
-color:yellow;
+display:none;
+position:relative;
 
-font-family:monospace;
+height:100%;
+
+}
+
+
+/* =====================
+MARIO
+===================== */
+
+#mario{
+
+background:#6bd3ff;
+
+}
+
+
+#player{
+
+position:absolute;
+bottom:100px;
+left:100px;
+font-size:40px;
+
+}
+
+
+.ground{
+
+position:absolute;
+bottom:0;
+height:100px;
+width:100%;
+background:#5ab43c;
+
+}
+
+
+/* =====================
+COOKING
+===================== */
+
+#cooking{
+
+background:pink;
+text-align:center;
+
+}
+
+
+#food{
+
+font-size:50px;
+cursor:pointer;
+margin-top:100px;
+
+}
+
+
+#score{
+
+font-size:20px;
 
 }
