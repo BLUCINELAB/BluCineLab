@@ -24,22 +24,170 @@
 
     .hidden { display: none !important; }
 
-    /* DESKTOP */
+    /* =========================
+       BOOT SCREEN
+       ========================= */
+    #boot-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 30000;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(40,70,255,.08), transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(255,40,120,.06), transparent 30%),
+        #040507;
+      color: #d8ecff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Courier New", monospace;
+      overflow: hidden;
+    }
+
+    #boot-screen::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          180deg,
+          rgba(255,255,255,.03) 0px,
+          rgba(255,255,255,.03) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+      mix-blend-mode: screen;
+      pointer-events: none;
+      opacity: .35;
+    }
+
+    .boot-noise {
+      position: absolute;
+      inset: 0;
+      opacity: .08;
+      background:
+        radial-gradient(circle at 12% 18%, #fff 0 1px, transparent 2px),
+        radial-gradient(circle at 74% 23%, #fff 0 1px, transparent 2px),
+        radial-gradient(circle at 31% 81%, #fff 0 1px, transparent 2px),
+        radial-gradient(circle at 85% 67%, #fff 0 1px, transparent 2px),
+        radial-gradient(circle at 52% 51%, #fff 0 1px, transparent 2px);
+      pointer-events: none;
+    }
+
+    .boot-wrap {
+      width: min(760px, 90vw);
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    .boot-brand {
+      font-family: "Courier New", monospace;
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: .92;
+      color: #eef6ff;
+      text-shadow:
+        0 0 2px rgba(255,255,255,.5),
+        0 0 14px rgba(65,130,255,.18);
+      letter-spacing: 1px;
+      white-space: pre;
+    }
+
+    .boot-sub {
+      color: rgba(210,230,255,.72);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .boot-bar-shell {
+      width: 100%;
+      height: 24px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.04),
+        0 0 24px rgba(0,0,0,.35);
+      padding: 4px;
+      overflow: hidden;
+    }
+
+    .boot-bar {
+      height: 100%;
+      width: 0%;
+      background:
+        linear-gradient(90deg,
+          #48ffb1 0%,
+          #7dfc79 16%,
+          #fff36a 34%,
+          #ffbf48 52%,
+          #ff7f59 72%,
+          #ff58ae 88%,
+          #70a3ff 100%
+        );
+      box-shadow:
+        0 0 12px rgba(130,255,190,.3),
+        inset 0 0 8px rgba(255,255,255,.24);
+      image-rendering: pixelated;
+    }
+
+    .boot-log {
+      width: 100%;
+      min-height: 180px;
+      max-height: 240px;
+      overflow: hidden;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.08);
+      padding: 14px;
+      color: #9dd8ff;
+      font-size: 12px;
+      line-height: 1.4;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+    }
+
+    .boot-line {
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateY(4px);
+      animation: bootLineIn .12s linear forwards;
+    }
+
+    .boot-line.warn { color: #ffd67a; }
+    .boot-line.err  { color: #ff8181; }
+    .boot-line.ok   { color: #8effa0; }
+
+    @keyframes bootLineIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .boot-fade-out {
+      animation: bootFade .28s ease forwards;
+    }
+
+    @keyframes bootFade {
+      to { opacity: 0; visibility: hidden; }
+    }
+
+    /* =========================
+       DESKTOP
+       ========================= */
     #desktop {
       position: fixed;
       inset: 0;
       overflow: hidden;
       background:
         linear-gradient(rgba(255,255,255,.05), rgba(255,255,255,0)),
-        url("bliss.jpg") center center / cover no-repeat;
+        url("https://upload.wikimedia.org/wikipedia/en/6/67/Bliss_%28Windows_XP%29.png") center center / cover no-repeat;
     }
 
     .desktop-overlay {
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 50% 15%, rgba(255,255,255,.18), transparent 24%),
-        linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.04));
+        radial-gradient(circle at 50% 15%, rgba(255,255,255,.16), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.04));
       pointer-events: none;
     }
 
@@ -79,7 +227,6 @@
       outline: 1px dotted rgba(255,255,255,.75);
     }
 
-    /* Folder */
     .desktop-icon.folder .icon-art::before,
     .desktop-icon.folder .icon-art::after{
       content:"";
@@ -106,7 +253,6 @@
       background: linear-gradient(180deg,#f8da6d 0%, #e2b517 100%);
     }
 
-    /* Computer */
     .desktop-icon.computer .icon-art::before{
       content:"";
       position:absolute;
@@ -131,7 +277,6 @@
       border-radius: 2px;
     }
 
-    /* Trash */
     .desktop-icon.trash .icon-art::before{
       content:"";
       position:absolute;
@@ -156,7 +301,6 @@
       border-radius: 2px;
     }
 
-    /* Game */
     .desktop-icon.game .icon-art::before{
       content:"";
       position:absolute;
@@ -181,7 +325,6 @@
         radial-gradient(circle at 16px 3px, #444 0 2px, transparent 2.2px);
     }
 
-    /* positions */
     #icon-archive   { top: 26px; left: 24px; }
     #icon-terminal  { top: 122px; left: 24px; }
     #icon-projects  { top: 218px; left: 24px; }
@@ -193,7 +336,9 @@
     #icon-bin       { top: 218px; left: 132px; }
     #icon-gta       { top: 314px; left: 132px; }
 
-    /* TASKBAR */
+    /* =========================
+       TASKBAR
+       ========================= */
     #taskbar {
       position: fixed;
       left: 0;
@@ -263,7 +408,9 @@
       border-left: 1px solid rgba(255,255,255,.35);
     }
 
-    /* START MENU */
+    /* =========================
+       START MENU
+       ========================= */
     #start-menu {
       position: fixed;
       left: 0;
@@ -345,7 +492,9 @@
       margin: 8px 12px;
     }
 
-    /* WINDOWS */
+    /* =========================
+       WINDOWS
+       ========================= */
     .window {
       position: fixed;
       background: #ece9d8;
@@ -439,7 +588,6 @@
       color: #223;
     }
 
-    /* individual windows */
     #win-shell    { top: 92px;  left: 200px; width: 500px; height: 310px; z-index: 10; }
     #win-about    { top: 120px; left: 250px; width: 460px; height: 280px; z-index: 11; }
     #win-projects { top: 80px;  left: 300px; width: 520px; height: 380px; z-index: 12; }
@@ -458,7 +606,9 @@
       line-height: 1.55;
     }
 
-    /* ARCHIVE WINDOW = GTA */
+    /* =========================
+       ARCHIVE WINDOW = GTA
+       ========================= */
     #win-archive {
       top: 52px;
       left: 120px;
@@ -723,17 +873,37 @@
     @media (max-width: 640px) {
       .desktop-icon { transform: scale(.92); transform-origin: top left; }
       #start-menu { width: 94vw; height: 72vh; }
-
       .archive-grid { grid-template-columns: repeat(2, 1fr); }
       .archive-card { font-size: 20px; }
       .archive-folder-title { font-size: 28px; }
       .archive-link { font-size: 14px; }
       .vice-item { font-size: 22px; }
       .vice-panel { width: 84vw; height: 34vh; }
+      .boot-log { min-height: 160px; }
     }
   </style>
 </head>
 <body>
+  <!-- BOOT SCREEN -->
+  <div id="boot-screen">
+    <div class="boot-noise"></div>
+    <div class="boot-wrap">
+      <div class="boot-brand" id="boot-brand">
+██████╗ ██╗     ██╗   ██╗ ██████╗██╗███╗   ██╗███████╗
+██╔══██╗██║     ██║   ██║██╔════╝██║████╗  ██║██╔════╝
+██████╔╝██║     ██║   ██║██║     ██║██╔██╗ ██║█████╗
+██╔══██╗██║     ██║   ██║██║     ██║██║╚██╗██║██╔══╝
+██████╔╝███████╗╚██████╔╝╚██████╗██║██║ ╚████║███████╗
+╚═════╝ ╚══════╝ ╚═════╝  ╚═════╝╚═╝╚═╝  ╚═══╝╚══════╝
+      </div>
+      <div class="boot-sub">booting unstable visual system</div>
+      <div class="boot-bar-shell">
+        <div class="boot-bar" id="boot-bar"></div>
+      </div>
+      <div class="boot-log" id="boot-log"></div>
+    </div>
+  </div>
+
   <div id="desktop">
     <div class="desktop-overlay"></div>
 
@@ -870,12 +1040,12 @@
     <div class="window-body">
       <div class="xp-title">Projects</div>
       <div class="xp-list">
-        <button>Palazzo Vassé</button>
-        <button>BluCineLab Identity</button>
-        <button>Orsetto d’Abruzzo</button>
-        <button>Vista Mare</button>
-        <button>Stand-Up Comedy Bologna</button>
-        <button>Editorial / Catalogue</button>
+        <button>visual study 01</button>
+        <button>untitled folder</button>
+        <button>night archive</button>
+        <button>draft sequence</button>
+        <button>image system beta</button>
+        <button>unreleased material</button>
       </div>
     </div>
   </section>
@@ -892,12 +1062,12 @@
     <div class="window-body">
       <div class="xp-title">Services</div>
       <div class="xp-list">
-        <button>Creative Direction</button>
-        <button>Production Design</button>
-        <button>Set Design</button>
-        <button>Web Design</button>
-        <button>Visual Identity</button>
-        <button>Art Research</button>
+        <button>visual development</button>
+        <button>digital composition</button>
+        <button>interface styling</button>
+        <button>archive systems</button>
+        <button>image research</button>
+        <button>spatial concepts</button>
       </div>
     </div>
   </section>
@@ -1010,44 +1180,48 @@
       const folderButtons = $$(".archive-card");
       const folderView = $("#archive-folder-view");
 
+      const bootScreen = $("#boot-screen");
+      const bootBar = $("#boot-bar");
+      const bootLog = $("#boot-log");
+
       const archiveData = {
         projects: [
-          "palazzo vassé",
-          "blucinelab identity",
-          "orsetto d’abruzzo",
-          "vista mare",
-          "stand-up comedy bologna",
-          "editorial / catalogue"
+          "visual study 01",
+          "untitled folder",
+          "night archive",
+          "draft sequence",
+          "image system beta",
+          "unreleased material"
         ],
         services: [
-          "creative direction",
-          "production design",
-          "set design",
-          "visual identity",
-          "web design",
-          "art research"
+          "visual development",
+          "digital composition",
+          "interface styling",
+          "archive systems",
+          "image research",
+          "spatial concepts"
         ],
         research: [
           "image studies",
           "cinematic atmospheres",
           "materials / textures",
           "spatial narration",
-          "editorial references",
+          "editorial fragments",
           "visual archive"
         ],
         worlds: [
           "night systems",
           "blue environments",
           "ritual spaces",
-          "coastal imagery",
+          "synthetic coast",
           "urban melancholy",
           "fiction interfaces"
         ],
         contacts: [
-          "blucinelab@gmail.com",
-          "instagram / blucinelab",
-          "bologna / italy",
-          "client deck on request"
+          "private access",
+          "request dossier",
+          "internal line",
+          "restricted channel"
         ],
         extras: [
           "downloads",
@@ -1056,6 +1230,28 @@
           "unreleased material"
         ]
       };
+
+      const bootLines = [
+        "[INIT] loading kernel fragment 0xA4F1::visual shell",
+        "[SYNC] handshaking external render driver...",
+        "[WARN] font atlas mismatch / fallback chain damaged",
+        "[SCAN] indexing orphan nodes in /archive/.cache",
+        "[ERR ] ui registry pointer lost > remapping window matrix",
+        "[INIT] rebuilding icon memory table",
+        "[WARN] start menu state checksum unstable",
+        "[SCAN] reading ghost sector 19 / 44 / 91",
+        "[ERR ] unexpected packet from local display bus",
+        "[SYNC] compensating with deprecated xp wrapper",
+        "[INIT] boot flag BLUCINE_SAFE_MODE = false",
+        "[WARN] non-critical shell jitter detected",
+        "[SCAN] parsing synthetic folders...",
+        "[ERR ] unresolved asset alias: vice_panel_internal",
+        "[SYNC] rerouting menu hooks through legacy system",
+        "[INIT] taskbar instance mounted",
+        "[WARN] archive surface may appear corrupted",
+        "[OK  ] desktop image stream restored",
+        "[OK  ] unstable visual system online"
+      ];
 
       function updateClock() {
         const now = new Date();
@@ -1121,6 +1317,64 @@
             ${items.map(item => `<a href="#" class="archive-link">${item}</a>`).join("")}
           </div>
         `;
+      }
+
+      function addBootLine(text, type = "") {
+        const line = document.createElement("div");
+        line.className = `boot-line ${type}`.trim();
+        line.textContent = text;
+        bootLog.appendChild(line);
+        bootLog.scrollTop = bootLog.scrollHeight;
+      }
+
+      function runBootSequence() {
+        const totalDuration = 3000;
+        const steps = [
+          { p: 4,   t: 80  },
+          { p: 11,  t: 250 },
+          { p: 19,  t: 420 },
+          { p: 18,  t: 520 },
+          { p: 31,  t: 760 },
+          { p: 29,  t: 900 },
+          { p: 46,  t: 1220 },
+          { p: 44,  t: 1320 },
+          { p: 58,  t: 1650 },
+          { p: 57,  t: 1740 },
+          { p: 74,  t: 2110 },
+          { p: 72,  t: 2200 },
+          { p: 87,  t: 2530 },
+          { p: 92,  t: 2720 },
+          { p: 100, t: 2920 }
+        ];
+
+        steps.forEach(step => {
+          setTimeout(() => {
+            bootBar.style.width = step.p + "%";
+          }, step.t);
+        });
+
+        bootLines.forEach((line, i) => {
+          const t = 120 + i * 135 + (i % 3 === 0 ? 20 : 0);
+          setTimeout(() => {
+            let type = "";
+            if (line.includes("[WARN]")) type = "warn";
+            if (line.includes("[ERR ]")) type = "err";
+            if (line.includes("[OK")) type = "ok";
+            addBootLine(line, type);
+          }, t);
+        });
+
+        setTimeout(() => {
+          addBootLine("[KERNEL] :: residual fault ignored / continuing boot", "warn");
+        }, 2460);
+
+        setTimeout(() => {
+          bootScreen.classList.add("boot-fade-out");
+        }, totalDuration);
+
+        setTimeout(() => {
+          bootScreen.remove();
+        }, totalDuration + 320);
       }
 
       startButton.addEventListener("click", (e) => {
@@ -1227,6 +1481,7 @@
       renderFolder("projects");
       updateClock();
       setInterval(updateClock, 1000);
+      runBootSequence();
     });
   </script>
 </body>
