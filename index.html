@@ -5,13 +5,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BLUCINELAB OS PRO</title>
+<title>BLUCINELAB OS</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <style>
 
-/* ---------- BASE ---------- */
+/* BASE */
 
 body{
 margin:0;
@@ -25,7 +25,7 @@ inset:0;
 background:linear-gradient(#87b4ff,#5c93e8 40%,#4f8a2e 41%,#67b63b);
 }
 
-/* ---------- WINDOW ---------- */
+/* WINDOW */
 
 .win{
 position:fixed;
@@ -39,17 +39,14 @@ flex-direction:column;
 background:#245edb;
 color:white;
 padding:4px;
-display:flex;
-justify-content:space-between;
 }
 
 .win-body{
 flex:1;
 overflow:auto;
-padding:10px;
 }
 
-/* ---------- FULL ---------- */
+/* WORLD */
 
 .world{
 position:fixed;
@@ -59,117 +56,84 @@ width:100vw;
 height:100vh;
 }
 
-/* ---------- RAIL ---------- */
+/* RAIL */
 
 .rail{
-
 position:absolute;
-
 left:0;
 top:0;
 bottom:0;
-
 width:70px;
-
 background:black;
 color:white;
-
 display:flex;
 flex-direction:column;
 align-items:center;
-
 }
 
-/* ---------- NANO ---------- */
+/* NANO */
 
 .nano{
-
 position:absolute;
 bottom:10px;
 left:10px;
-
 font-size:40px;
-
 animation:walk 1s infinite;
-
 }
 
 @keyframes walk{
-
 0%{transform:translateX(0)}
 50%{transform:translateX(5px)}
 100%{transform:translateX(0)}
-
 }
 
-
-/* ---------- ARCHIVE GTA ---------- */
-
-.archive{
-
-background:#111;
-color:#ff66cc;
-
-}
-
-
-/* ---------- LAB BIOS ---------- */
-
-.lab{
-
-background:black;
-color:#00ff66;
-font-family:monospace;
-
-}
-
-
-/* ---------- STUDIO SIMS ---------- */
-
-.studio{
-
-background:#d0ffe0;
-
-}
-
-
-/* ---------- PLAYROOM WII ---------- */
+/* PLAYROOM WII */
 
 .playroom{
 
-background:white;
-color:#222;
+background:linear-gradient(#ffffff,#ddeeff);
+
 font-family:sans-serif;
 
 }
 
+.wii-menu{
 
-/* ---------- GALLERY GLITCH ---------- */
+display:grid;
 
-.gallery{
+grid-template-columns:repeat(3,1fr);
 
-background:black;
-color:cyan;
-font-family:monospace;
+gap:20px;
 
-}
-
-
-/* ---------- CONTACT ---------- */
-
-.contact{
-
-background:#f0f0f0;
+padding:100px;
 
 }
 
+.wii-btn{
 
-/* ---------- MANIFEST ---------- */
+background:white;
 
-.manifest{
+border-radius:20px;
 
-background:#ffffcc;
-font-family:monospace;
+height:120px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:20px;
+
+box-shadow:0 4px 10px rgba(0,0,0,0.3);
+
+cursor:pointer;
+
+}
+
+.wii-btn:hover{
+
+transform:scale(1.05);
 
 }
 
@@ -177,7 +141,6 @@ font-family:monospace;
 
 </head>
 <body>
-
 
 <div id="desktop"></div>
 
@@ -204,53 +167,57 @@ XP HOME
 
 
 
-<!-- ARCHIVE -->
+<!-- PLAYROOM WII -->
 
-<div class="world archive">
-
-<div class="rail">
-
-<button onclick="hide('archive')">X</button>
-
-</div>
-
-ARCHIVE GTA
-
-<div class="nano">😎</div>
-
-</div>
-
-
-
-<!-- LAB -->
-
-<div class="world lab">
+<div class="world playroom" id="playroom">
 
 <div class="rail">
 
-<button onclick="hide('lab')">X</button>
-
-</div>
-
-LAB BIOS
-
-<div class="nano">🤖</div>
+<button onclick="closePlay()">X</button>
 
 </div>
 
 
+<div class="wii-menu">
 
-<!-- STUDIO -->
+<div class="wii-btn" onclick="openGame('mario')">
 
-<div class="world studio">
-
-<div class="rail">
-
-<button onclick="hide('studio')">X</button>
+MARIO
 
 </div>
 
-STUDIO SIMS
+<div class="wii-btn" onclick="openGame('cooking')">
+
+COOKING
+
+</div>
+
+<div class="wii-btn" onclick="openGame('invaders')">
+
+INVADERS
+
+</div>
+
+<div class="wii-btn" onclick="openGame('tama')">
+
+TAMAGOTCHI
+
+</div>
+
+<div class="wii-btn">
+
+COMING
+
+</div>
+
+<div class="wii-btn">
+
+COMING
+
+</div>
+
+</div>
+
 
 <div class="nano">🧑</div>
 
@@ -258,83 +225,17 @@ STUDIO SIMS
 
 
 
-<!-- PLAYROOM -->
-
-<div class="world playroom" id="playroom">
-
-<div class="rail">
-
-<button onclick="hide('playroom')">X</button>
-
-</div>
-
-PLAYROOM WII HUB
-
-<div class="nano">🎮</div>
-
-</div>
-
-
-
-<!-- GALLERY -->
-
-<div class="world gallery">
-
-<div class="rail">
-
-<button onclick="hide('gallery')">X</button>
-
-</div>
-
-GLITCH
-
-<div class="nano">👾</div>
-
-</div>
-
-
-
-<!-- CONTACT -->
-
-<div class="world contact">
-
-<div class="rail">
-
-<button onclick="hide('contact')">X</button>
-
-</div>
-
-CONTACT
-
-<div class="nano">📧</div>
-
-</div>
-
-
-
-<!-- MANIFEST -->
-
-<div class="world manifest">
-
-<div class="rail">
-
-<button onclick="hide('manifest')">X</button>
-
-</div>
-
-MANIFEST
-
-<div class="nano">📜</div>
-
-</div>
-
-
-
 <script>
 
-function hide(id){
+function closePlay(){
 
-document.getElementById(id).style.display="none"
+document.getElementById("playroom").style.display="none"
+
+}
+
+function openGame(name){
+
+alert("open "+name)
 
 }
 
