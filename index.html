@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BLUCINELAB OS — XP Worlds</title>
+  <title>BLUCINELAB OS — XP Worlds / LAB CORE</title>
   <meta
     name="description"
     content="BLUCINELAB — studio visivo indipendente tra immagine, spazio, direzione, ricerca e costruzione percettiva."
@@ -229,7 +229,7 @@
       position:absolute;
       inset:0;
       pointer-events:none;
-      opacity:.06;
+      opacity:.05;
       background:
         repeating-linear-gradient(
           to bottom,
@@ -709,24 +709,8 @@
         linear-gradient(to bottom, rgba(0,0,0,.1), rgba(0,0,0,0)) !important;
       color:var(--chaos-green) !important;
       font-size:26px !important;
-      padding:18px !important;
-    }
-
-    .chaos-window .win-body::before{
-      content:'';
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      background:
-        repeating-linear-gradient(
-          to bottom,
-          rgba(255,255,255,.015) 0px,
-          rgba(255,255,255,.015) 1px,
-          rgba(0,0,0,.08) 2px,
-          rgba(0,0,0,.08) 4px
-        );
-      mix-blend-mode:screen;
-      opacity:.35;
+      padding:0 !important;
+      overflow:hidden !important;
     }
 
     .chaos-window .win-body h1,
@@ -793,6 +777,7 @@
       background:
         repeating-linear-gradient(0deg, transparent 0, transparent 22px, rgba(60,255,106,.08) 22px, rgba(60,255,106,.08) 24px),
         repeating-linear-gradient(90deg, transparent 0, transparent 22px, rgba(0,246,255,.05) 22px, rgba(0,246,255,.05) 24px);
+      opacity:1;
     }
 
     .chaos-desktop-bg::after{
@@ -804,6 +789,12 @@
       mix-blend-mode:multiply;
     }
 
+    @keyframes desktopHue{
+      0%{filter:hue-rotate(0deg);}
+      50%{filter:hue-rotate(18deg);}
+      100%{filter:hue-rotate(0deg);}
+    }
+
     #lab-glitch-layer{
       position:absolute;
       inset:0;
@@ -812,10 +803,130 @@
       overflow:hidden;
     }
 
-    .lab-content,
-    .world-content{
+    .lab-shell{
       position:relative;
       z-index:2;
+      display:grid;
+      grid-template-columns: 280px minmax(0, 1fr) 320px;
+      height:100%;
+    }
+
+    .lab-panel{
+      min-height:0;
+      overflow:auto;
+      padding:16px;
+      border-right:1px solid rgba(255,255,255,.06);
+    }
+
+    .lab-panel:last-child{
+      border-right:none;
+      border-left:1px solid rgba(255,255,255,.06);
+    }
+
+    .lab-left{
+      background:rgba(0,0,0,.22);
+    }
+
+    .lab-center{
+      background:rgba(255,255,255,.01);
+      overflow:auto;
+      padding:18px;
+    }
+
+    .lab-right{
+      background:rgba(0,0,0,.16);
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .lab-block{
+      margin-bottom:14px;
+      padding:12px;
+      border:2px solid rgba(60,255,106,.28);
+      background:
+        linear-gradient(to bottom, rgba(60,255,106,.05), rgba(60,255,106,.015)),
+        rgba(255,255,255,.015);
+    }
+
+    .lab-list{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:10px;
+    }
+
+    .lab-list button{
+      text-align:left;
+      padding:10px;
+      border:2px solid rgba(0,246,255,.26);
+      color:var(--chaos-yellow);
+      background:rgba(0,0,0,.22);
+      font-family:'Press Start 2P', monospace;
+      font-size:7px;
+      line-height:1.8;
+    }
+
+    .lab-list button:hover{
+      border-color:var(--chaos-cyan);
+      background:rgba(0,246,255,.06);
+    }
+
+    .lab-viewer{
+      min-height:220px;
+      border:2px solid rgba(255,255,255,.14);
+      background:#000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+
+    .lab-viewer img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      image-rendering:pixelated;
+    }
+
+    .lab-log{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      font-family:'VT323', monospace;
+      font-size:20px;
+      color:#9dffb0;
+      background:rgba(0,0,0,.25);
+      border:2px solid rgba(255,45,251,.18);
+      padding:12px;
+      min-height:180px;
+    }
+
+    .lab-log-line{
+      border-bottom:1px dashed rgba(255,255,255,.08);
+      padding-bottom:6px;
+    }
+
+    .lab-mini-hud{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+    }
+
+    .lab-hud-card{
+      padding:10px;
+      border:2px solid rgba(255,242,0,.22);
+      background:rgba(0,0,0,.22);
+      color:var(--chaos-yellow);
+    }
+
+    .lab-hud-card strong{
+      display:block;
+      margin-top:8px;
+      font-family:'VT323', monospace;
+      font-size:28px;
+      color:var(--chaos-cyan);
     }
 
     .glitch{
@@ -1241,48 +1352,6 @@
       text-align:center;
     }
 
-    .file-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-      gap:12px;
-      margin-top:10px;
-    }
-
-    .file-card{
-      display:flex;
-      flex-direction:column;
-      align-items:flex-start;
-      gap:8px;
-      min-height:96px;
-      padding:10px;
-      color:#fff;
-      background:
-        linear-gradient(to bottom, rgba(255,255,255,.03), rgba(255,255,255,.01)),
-        rgba(0,0,0,.2);
-      border:2px solid rgba(0,246,255,.28);
-      text-align:left;
-    }
-
-    .file-card:hover{
-      filter:brightness(1.08);
-    }
-
-    .file-icon{
-      font-size:28px;
-      line-height:1;
-      filter:drop-shadow(2px 2px 0 #000);
-    }
-
-    .file-name{
-      font-size:7px;
-      line-height:1.7;
-    }
-
-    .file-meta{
-      font-size:18px;
-      font-family:'VT323', monospace;
-    }
-
     .spinner{
       display:inline-block;
       font-size:24px;
@@ -1293,10 +1362,35 @@
       to{transform:rotate(360deg);}
     }
 
+    @media (max-width: 1100px){
+      .lab-shell{
+        grid-template-columns: 250px minmax(0,1fr) 280px;
+      }
+    }
+
     @media (max-width:900px){
       #hero-win{
         left:32px;
         width:min(640px, calc(100vw - 56px));
+      }
+
+      .sims-grid,
+      .hud,
+      .lcd-stats{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .lab-shell{
+        grid-template-columns: 1fr;
+      }
+
+      .lab-left,
+      .lab-right{
+        border:none;
+      }
+
+      .lab-right{
+        border-top:1px solid rgba(255,255,255,.06);
       }
     }
 
@@ -1471,8 +1565,8 @@
     <div class="win-body" style="min-height:260px;">
       <span class="label">HOME / XP MODE / BOLOGNA</span>
       <h1>BLUCINELAB</h1>
-      <p>Questa è la base: desktop XP, leggibile, credibile, familiare.</p>
-      <p>Da qui si aprono mondi diversi. Il tuo collega ritrova il sistema. Tu puoi stratificare estetiche molto diverse senza perdere orientamento.</p>
+      <p>Questa è la base stabile del sistema.</p>
+      <p>La home resta familiare e leggibile. I mondi si aprono come finestre totalizzanti, senza cambiare pagina.</p>
 
       <div style="margin-top:10px;display:flex;flex-wrap:wrap;">
         <span class="tag yellow">XP HOME</span>
@@ -1484,7 +1578,7 @@
       <div style="margin-top:18px;" class="field-card">
         <span class="label">STATUS</span>
         <h3>STRUTTURA ATTIVA</h3>
-        <p>LAB conserva il vecchio chaos. Gli altri mondi distribuiscono le reference una per sezione.</p>
+        <p>LAB conserva il vecchio BLUCINELAB. Gli altri mondi distribuiscono le reference per sezione.</p>
       </div>
 
       <div style="margin-top:14px; font-size:20px; color:#111;">
@@ -1603,7 +1697,7 @@
 
     <div class="win-titlebar">
       <span class="win-icon">🔬</span>
-      <span class="win-title glitch">LAB.EXE — CHAOS VISUAL MODE</span>
+      <span class="win-title glitch">LAB.EXE — CHAOS VISUAL CORE</span>
       <div class="win-controls">
         <button class="win-btn close" data-close="win-lab" type="button">X</button>
       </div>
@@ -1612,49 +1706,109 @@
     <div class="win-menubar">
       <span>File</span>
       <span>Research</span>
-      <span>Future</span>
+      <span>Archive</span>
       <span>Signal</span>
+      <span>Future</span>
     </div>
 
     <div class="win-body">
-      <div class="lab-content">
-        <span class="label">LAB / ACTIVE RESEARCH / CHAOS MODE</span>
-        <h1>MATERIALI IN FORMAZIONE, FUTURI POSSIBILI</h1>
-        <p>Questa è la vecchia anima del sito: più sporca, più sintetica, più game, più notturna, più instabile.</p>
-        <p>È la stanza in cui il tuo collega ritrova subito ciò che c’era prima.</p>
+      <div class="lab-shell">
+        <aside class="lab-panel lab-left">
+          <span class="label">MODULES / DIRECT ACCESS</span>
+          <h2>ACCESSI</h2>
 
-        <div style="margin-top:10px;display:flex;flex-wrap:wrap;">
-          <span class="tag yellow">PACMAN</span>
-          <span class="tag cyan">ARCADE</span>
-          <span class="tag magenta">GLITCH</span>
-          <span class="tag green">ARCHIVE</span>
-        </div>
+          <div class="lab-list">
+            <button type="button" onclick="labSetView('neon')">NEON_CITY.BMP</button>
+            <button type="button" onclick="labSetView('radar')">RADAR_SIGNAL.PCX</button>
+            <button type="button" onclick="labSetView('memory')">ARCHIVE_MEMORY.GIF</button>
+            <button type="button" onclick="labSetView('system')">SYSTEM_MAP.SYS</button>
+            <button type="button" onclick="labPulse()">SIGNAL.BIN</button>
+            <button type="button" onclick="labBurst()">BURST.EXE</button>
+            <button type="button" onclick="labModeMessage()">MEMORY.LOG</button>
+          </div>
 
-        <div style="margin-top:18px;" class="field-card">
-          <span class="label">FUTURE LAYER</span>
-          <h3>RICERCA, AI, ARCHIVI INTELLIGENTI</h3>
-          <p>Qui vivono test, viewer, segnali, frammenti, anomalie e sistemi in formazione.</p>
-        </div>
+          <div class="lab-block" style="margin-top:14px;">
+            <span class="label">CORE</span>
+            <h3>VECCHIO SITO</h3>
+            <p>Qui ritrovi la materia più vicina al BLUCINELAB precedente: notte, signali, viewer, files, instabilità controllata.</p>
+          </div>
+        </aside>
 
-        <div class="file-grid">
-          <button class="file-card" type="button" onclick="labPulse()">
-            <span class="file-icon">📡</span>
-            <span class="file-name">SIGNAL.BIN</span>
-            <span class="file-meta">trigger glitch</span>
-          </button>
+        <main class="lab-center">
+          <div class="lab-block">
+            <span class="label">LAB / ACTIVE RESEARCH / CHAOS MODE</span>
+            <h1>MATERIALI IN FORMAZIONE, FUTURI POSSIBILI</h1>
+            <p>Questa è la stanza che conserva davvero il vecchio linguaggio del sito.</p>
+            <p>Più scura, più sintetica, più arcade, più densa. Non è sparita. È stata concentrata qui.</p>
 
-          <button class="file-card" type="button" onclick="labBurst()">
-            <span class="file-icon">⚡</span>
-            <span class="file-name">BURST.EXE</span>
-            <span class="file-meta">noise burst</span>
-          </button>
+            <div style="margin-top:10px;display:flex;flex-wrap:wrap;">
+              <span class="tag yellow">PACMAN</span>
+              <span class="tag cyan">ARCADE</span>
+              <span class="tag magenta">GLITCH</span>
+              <span class="tag green">ARCHIVE</span>
+            </div>
+          </div>
 
-          <button class="file-card" type="button" onclick="labModeMessage()">
-            <span class="file-icon">🧠</span>
-            <span class="file-name">MEMORY.LOG</span>
-            <span class="file-meta">system text</span>
-          </button>
-        </div>
+          <div class="lab-block">
+            <span class="label">VIEWER</span>
+            <h3 id="lab-view-title">NEON_CITY.BMP</h3>
+            <div class="lab-viewer" id="lab-viewer">
+              <img id="lab-view-image" alt="Lab view"
+                src="data:image/svg+xml;utf8,
+                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
+                  <rect width='800' height='520' fill='%23000b1f'/>
+                  <rect y='370' width='800' height='150' fill='%23000814'/>
+                  <circle cx='620' cy='120' r='64' fill='%23ff2dfb'/>
+                  <rect x='80' y='210' width='80' height='160' fill='%23001352'/>
+                  <rect x='180' y='180' width='110' height='190' fill='%23001980'/>
+                  <rect x='320' y='150' width='90' height='220' fill='%23001d9e'/>
+                  <rect x='438' y='120' width='130' height='250' fill='%230023c7'/>
+                  <rect x='590' y='190' width='80' height='180' fill='%2300177f'/>
+                  <rect x='690' y='160' width='60' height='210' fill='%230021aa'/>
+                  <g fill='%23fff200'>
+                    <rect x='98' y='236' width='12' height='18'/><rect x='118' y='236' width='12' height='18'/>
+                    <rect x='98' y='264' width='12' height='18'/><rect x='118' y='264' width='12' height='18'/>
+                    <rect x='206' y='210' width='14' height='20'/><rect x='230' y='210' width='14' height='20'/><rect x='254' y='210' width='14' height='20'/>
+                    <rect x='206' y='240' width='14' height='20'/><rect x='254' y='240' width='14' height='20'/>
+                    <rect x='348' y='180' width='14' height='20'/><rect x='372' y='180' width='14' height='20'/>
+                    <rect x='348' y='210' width='14' height='20'/><rect x='372' y='210' width='14' height='20'/>
+                    <rect x='472' y='150' width='16' height='22'/><rect x='500' y='150' width='16' height='22'/><rect x='528' y='150' width='16' height='22'/>
+                    <rect x='472' y='184' width='16' height='22'/><rect x='528' y='184' width='16' height='22'/>
+                  </g>
+                  <rect y='390' width='800' height='8' fill='%2300f6ff'/>
+                  <rect y='408' width='800' height='4' fill='%23ff2dfb'/>
+                </svg>" />
+            </div>
+          </div>
+
+          <div class="lab-block">
+            <span class="label">CURRENT POSITION</span>
+            <h3>NON UNA PAGINA, MA UN NODO</h3>
+            <p>Il LAB non raccoglie tutte le reference. Tiene solo la parte originaria: ricerca, viewer, segnali, instabilità, memoria del sistema.</p>
+          </div>
+        </main>
+
+        <aside class="lab-panel lab-right">
+          <div class="lab-mini-hud">
+            <div class="lab-hud-card">SIGNAL<strong id="lab-signal-num">07</strong></div>
+            <div class="lab-hud-card">NOISE<strong id="lab-noise-num">21</strong></div>
+            <div class="lab-hud-card">FILES<strong id="lab-files-num">12</strong></div>
+            <div class="lab-hud-card">TRACE<strong id="lab-trace-num">84</strong></div>
+          </div>
+
+          <div class="lab-log" id="lab-log">
+            <div class="lab-log-line">[OK] chaos layer mounted</div>
+            <div class="lab-log-line">[OK] viewer ready</div>
+            <div class="lab-log-line">[OK] signal memory online</div>
+            <div class="lab-log-line">[WAIT] anomaly detection</div>
+          </div>
+
+          <div class="lab-block">
+            <span class="label">ANOMALIES</span>
+            <h3>EVENTI</h3>
+            <p>Apri file, cambia viewer, genera burst e lascia che il layer si comporti come un sistema vivo ma controllato.</p>
+          </div>
+        </aside>
       </div>
     </div>
   </section>
@@ -1871,7 +2025,13 @@
       topZ: 200,
       bootDone: false,
       selectedIcon: null,
-      labChaosStarted: false
+      labChaosStarted: false,
+      labCounters: {
+        signal: 7,
+        noise: 21,
+        files: 12,
+        trace: 84
+      }
     };
 
     // cursor
@@ -1916,6 +2076,7 @@
         'Caricamento desktop XP... OK',
         'Montaggio finestre... OK',
         'Preparazione mondi... OK',
+        'Ripristino LAB core... OK',
         'SISTEMA PRONTO.'
       ];
 
@@ -2180,6 +2341,27 @@
     });
 
     // LAB CHAOS
+    function labLog(message){
+      const log = $('#lab-log');
+      if (!log) return;
+      const row = document.createElement('div');
+      row.className = 'lab-log-line';
+      row.textContent = message;
+      log.prepend(row);
+
+      const rows = $$('.lab-log-line', log);
+      if (rows.length > 8) {
+        rows[rows.length - 1].remove();
+      }
+    }
+
+    function updateLabHud(){
+      $('#lab-signal-num').textContent = String(state.labCounters.signal).padStart(2,'0');
+      $('#lab-noise-num').textContent = String(state.labCounters.noise).padStart(2,'0');
+      $('#lab-files-num').textContent = String(state.labCounters.files).padStart(2,'0');
+      $('#lab-trace-num').textContent = String(state.labCounters.trace).padStart(2,'0');
+    }
+
     function labGlitchNow(){
       const layer = $('#lab-glitch-layer');
       const lab = $('#win-lab');
@@ -2207,27 +2389,149 @@
 
       setInterval(() => {
         if ($('#win-lab') && getComputedStyle($('#win-lab')).display !== 'none') {
-          if (Math.random() > 0.38) labGlitchNow();
+          if (Math.random() > 0.42) {
+            labGlitchNow();
+            state.labCounters.noise += 1;
+            state.labCounters.trace += 1;
+            updateLabHud();
+          }
         }
       }, 2600);
+
+      setInterval(() => {
+        if ($('#win-lab') && getComputedStyle($('#win-lab')).display !== 'none') {
+          if (Math.random() > 0.66) {
+            labLog('[SCAN] signal fluctuation detected');
+          }
+        }
+      }, 4800);
+    }
+
+    function labSetView(mode){
+      const title = $('#lab-view-title');
+      const img = $('#lab-view-image');
+      if (!title || !img) return;
+
+      const sources = {
+        neon: {
+          title: 'NEON_CITY.BMP',
+          src: `data:image/svg+xml;utf8,
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
+            <rect width='800' height='520' fill='%23000b1f'/>
+            <rect y='370' width='800' height='150' fill='%23000814'/>
+            <circle cx='620' cy='120' r='64' fill='%23ff2dfb'/>
+            <rect x='80' y='210' width='80' height='160' fill='%23001352'/>
+            <rect x='180' y='180' width='110' height='190' fill='%23001980'/>
+            <rect x='320' y='150' width='90' height='220' fill='%23001d9e'/>
+            <rect x='438' y='120' width='130' height='250' fill='%230023c7'/>
+            <rect x='590' y='190' width='80' height='180' fill='%2300177f'/>
+            <rect x='690' y='160' width='60' height='210' fill='%230021aa'/>
+            <g fill='%23fff200'>
+              <rect x='98' y='236' width='12' height='18'/><rect x='118' y='236' width='12' height='18'/>
+              <rect x='98' y='264' width='12' height='18'/><rect x='118' y='264' width='12' height='18'/>
+              <rect x='206' y='210' width='14' height='20'/><rect x='230' y='210' width='14' height='20'/><rect x='254' y='210' width='14' height='20'/>
+              <rect x='206' y='240' width='14' height='20'/><rect x='254' y='240' width='14' height='20'/>
+            </g>
+            <rect y='390' width='800' height='8' fill='%2300f6ff'/>
+            <rect y='408' width='800' height='4' fill='%23ff2dfb'/>
+          </svg>`
+        },
+        radar: {
+          title: 'RADAR_SIGNAL.PCX',
+          src: `data:image/svg+xml;utf8,
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
+            <rect width='800' height='520' fill='%2300040a'/>
+            <circle cx='400' cy='260' r='170' fill='none' stroke='%2300ff66' stroke-width='4'/>
+            <circle cx='400' cy='260' r='120' fill='none' stroke='%2300ff66' stroke-width='4'/>
+            <circle cx='400' cy='260' r='70' fill='none' stroke='%2300ff66' stroke-width='4'/>
+            <line x1='400' y1='90' x2='400' y2='430' stroke='%2300ff66' stroke-width='4'/>
+            <line x1='230' y1='260' x2='570' y2='260' stroke='%2300ff66' stroke-width='4'/>
+            <path d='M400 260 L550 120 A170 170 0 0 1 570 260 Z' fill='%2300ff66' opacity='.18'/>
+            <circle cx='515' cy='188' r='10' fill='%23fff200'/>
+            <circle cx='335' cy='320' r='8' fill='%23ff2dfb'/>
+            <circle cx='455' cy='332' r='6' fill='%2300f6ff'/>
+          </svg>`
+        },
+        memory: {
+          title: 'ARCHIVE_MEMORY.GIF',
+          src: `data:image/svg+xml;utf8,
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
+            <rect width='800' height='520' fill='%230a0018'/>
+            <rect x='60' y='80' width='680' height='360' fill='%2300122a' stroke='%2300f6ff' stroke-width='4'/>
+            <rect x='90' y='110' width='160' height='120' fill='%23ff2dfb' opacity='.8'/>
+            <rect x='270' y='110' width='200' height='70' fill='%2300f6ff' opacity='.8'/>
+            <rect x='270' y='194' width='110' height='36' fill='%23fff200' opacity='.85'/>
+            <rect x='500' y='110' width='190' height='120' fill='%2300ff66' opacity='.8'/>
+            <rect x='90' y='260' width='600' height='30' fill='%23fff200'/>
+            <rect x='90' y='310' width='320' height='90' fill='%2300ff66' opacity='.7'/>
+            <rect x='430' y='310' width='260' height='90' fill='%23ff2dfb' opacity='.7'/>
+          </svg>`
+        },
+        system: {
+          title: 'SYSTEM_MAP.SYS',
+          src: `data:image/svg+xml;utf8,
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
+            <rect width='800' height='520' fill='%23000a10'/>
+            <rect x='40' y='40' width='720' height='440' fill='%23001318' stroke='%233cff6a' stroke-width='4'/>
+            <rect x='90' y='110' width='140' height='80' fill='%2300f6ff' opacity='.85'/>
+            <rect x='290' y='80' width='220' height='120' fill='%23ff2dfb' opacity='.75'/>
+            <rect x='560' y='120' width='150' height='90' fill='%23fff200' opacity='.82'/>
+            <rect x='130' y='270' width='220' height='110' fill='%233cff6a' opacity='.75'/>
+            <rect x='420' y='250' width='220' height='130' fill='%2300f6ff' opacity='.45'/>
+            <line x1='230' y1='150' x2='290' y2='140' stroke='%23fff200' stroke-width='4'/>
+            <line x1='510' y1='140' x2='560' y2='165' stroke='%233cff6a' stroke-width='4'/>
+            <line x1='350' y1='325' x2='420' y2='315' stroke='%23ff2dfb' stroke-width='4'/>
+          </svg>`
+        }
+      };
+
+      const item = sources[mode];
+      if (!item) return;
+
+      title.textContent = item.title;
+      img.src = item.src;
+
+      state.labCounters.files += 1;
+      state.labCounters.signal += 1;
+      state.labCounters.trace += 2;
+      updateLabHud();
+
+      labLog('[OPEN] ' + item.title);
+      $('#score-num').textContent = String(Number($('#score-num').textContent) + 15);
+
+      labGlitchNow();
     }
 
     function labPulse(){
-      labGlitchNow();
+      state.labCounters.signal += 3;
+      state.labCounters.noise += 2;
+      state.labCounters.trace += 1;
+      updateLabHud();
+      labLog('[EXEC] SIGNAL.BIN pulse injected');
       $('#score-num').textContent = String(Number($('#score-num').textContent) + 25);
+      labGlitchNow();
     }
 
     function labBurst(){
+      state.labCounters.signal += 5;
+      state.labCounters.noise += 6;
+      state.labCounters.trace += 3;
+      updateLabHud();
+      labLog('[EXEC] BURST.EXE noise event');
+      $('#score-num').textContent = String(Number($('#score-num').textContent) + 50);
       for (let i = 0; i < 4; i++) {
         setTimeout(() => labGlitchNow(), i * 120);
       }
-      $('#score-num').textContent = String(Number($('#score-num').textContent) + 50);
     }
 
     function labModeMessage(){
-      alert('La home XP è sotto. Il LAB la copre, ma non la distrugge.');
+      state.labCounters.trace += 4;
+      updateLabHud();
+      labLog('[READ] MEMORY.LOG accessed');
+      alert('Il vecchio BLUCINELAB è stato concentrato nel LAB. La home XP lo protegge, il LAB lo espone.');
     }
 
+    updateLabHud();
     updateTaskbar();
   </script>
 </body>
