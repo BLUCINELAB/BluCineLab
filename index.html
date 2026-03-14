@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BLUCINELAB OS v1.4 — XP HOME / BIOS LAB</title>
+  <title>BLUCINELAB OS v1.5 — XP HOME / WORLDS</title>
   <meta
     name="description"
     content="BLUCINELAB — studio visivo indipendente tra immagine, spazio, direzione, ricerca e costruzione percettiva."
@@ -23,37 +23,23 @@
       --xp-task:#245edb;
       --xp-task-dark:#1941a5;
       --xp-task-light:#3f7cf3;
-      --xp-green:#39b54a;
-      --xp-green-dark:#248137;
       --xp-window:#ece9d8;
       --xp-border:#0a246a;
-      --xp-text:#000;
-      --xp-shadow: 3px 3px 0 rgba(0,0,0,.35);
+      --xp-shadow:3px 3px 0 rgba(0,0,0,.35);
 
       --c-yellow:#fff200;
       --c-cyan:#00f6ff;
       --c-magenta:#ff2dfb;
       --c-green:#3cff6a;
       --c-red:#ff2b4f;
-      --c-white:#ffffff;
-      --c-black:#000000;
 
       --scorebar-h:30px;
       --taskbar-h:42px;
       --desktop-icon-w:84px;
     }
 
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
-
-    html,body{
-      width:100%;
-      min-height:100%;
-    }
-
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html,body{width:100%;min-height:100%;}
     body{
       min-height:100vh;
       overflow:hidden;
@@ -63,82 +49,49 @@
       background:#5c93e8;
     }
 
-    body.has-custom-cursor{
-      cursor:none;
-    }
-
-    button,
-    input,
-    textarea,
-    select{
-      font:inherit;
-    }
-
-    a{
-      color:inherit;
-      text-decoration:none;
-    }
+    body.has-custom-cursor{cursor:none;}
+    button,input,textarea,select{font:inherit;}
+    a{color:inherit;text-decoration:none;}
 
     .cursor-outer{
       position:fixed;
-      width:20px;
-      height:20px;
+      width:20px;height:20px;
       pointer-events:none;
       z-index:99999;
       transform:translate(-50%,-50%);
       display:none;
     }
-
-    body.has-custom-cursor .cursor-outer{
-      display:block;
-    }
-
+    body.has-custom-cursor .cursor-outer{display:block;}
     .cursor-outer::before{
       content:'';
-      position:absolute;
-      inset:0;
-      width:0;
-      height:0;
-      border-top:0;
-      border-right:0;
+      position:absolute;inset:0;
+      width:0;height:0;
       border-bottom:12px solid transparent;
       border-left:12px solid #fff;
-      filter:
-        drop-shadow(1px 1px 0 #000)
-        drop-shadow(0 0 1px #000);
+      filter:drop-shadow(1px 1px 0 #000) drop-shadow(0 0 1px #000);
     }
 
     /* DESKTOP XP */
     #desktop{
-      position:fixed;
-      inset:0;
-      overflow:hidden;
-      z-index:0;
+      position:fixed;inset:0;overflow:hidden;z-index:0;
       background:
         linear-gradient(to bottom, rgba(255,255,255,.08), rgba(255,255,255,0)),
         linear-gradient(to bottom, #87b4ff 0%, #5c93e8 38%, #4f8a2e 39%, #67b63b 55%, #74c746 100%);
     }
-
-    /* colline XP */
     #desktop::before{
       content:'';
       position:absolute;
-      left:-10%;
-      bottom:11%;
-      width:120%;
-      height:42%;
+      left:-10%;bottom:11%;
+      width:120%;height:42%;
       background:
         radial-gradient(ellipse at 30% 100%, #74c746 0%, #67b63b 55%, transparent 56%),
         radial-gradient(ellipse at 70% 100%, #5aa92f 0%, #4f9728 48%, transparent 49%);
       opacity:.95;
       pointer-events:none;
     }
-
-    /* nuvole */
     #desktop::after{
       content:'';
-      position:absolute;
-      inset:0;
+      position:absolute;inset:0;
       pointer-events:none;
       background:
         radial-gradient(circle at 18% 16%, rgba(255,255,255,.95) 0 34px, transparent 35px),
@@ -150,15 +103,10 @@
 
     /* TOP BAR */
     #score-bar{
-      position:fixed;
-      top:0;
-      left:0;
-      right:0;
+      position:fixed;top:0;left:0;right:0;
       height:var(--scorebar-h);
       z-index:8000;
-      display:flex;
-      align-items:center;
-      gap:20px;
+      display:flex;align-items:center;gap:20px;
       padding:0 12px;
       background:linear-gradient(90deg, rgba(0,0,0,.78), rgba(0,0,0,.35));
       color:#fff;
@@ -166,20 +114,17 @@
       font-size:18px;
       border-bottom:1px solid rgba(255,255,255,.18);
     }
-
     #score-bar .sc{
       color:var(--c-yellow);
       font-family:'Press Start 2P', monospace;
       font-size:8px;
     }
-
     #score-bar .nm{
       color:#dff4ff;
       letter-spacing:.5px;
       font-size:20px;
       text-shadow:0 0 6px rgba(255,255,255,.25);
     }
-
     #lives-disp{
       color:#ffd1db;
       font-family:'Press Start 2P', monospace;
@@ -187,9 +132,7 @@
     }
 
     #egg-btn{
-      position:fixed;
-      top:4px;
-      right:10px;
+      position:fixed;top:4px;right:10px;
       z-index:8001;
       padding:3px 8px;
       font-family:'Press Start 2P', monospace;
@@ -198,26 +141,16 @@
       background:rgba(0,0,0,.45);
       border:1px solid rgba(255,255,255,.4);
     }
+    body.has-custom-cursor #egg-btn{cursor:none;}
+    #egg-btn:hover{background:rgba(0,0,0,.65);}
 
-    body.has-custom-cursor #egg-btn{ cursor:none; }
-
-    #egg-btn:hover{
-      background:rgba(0,0,0,.65);
-    }
-
-    /* PACMAN LAYER */
+    /* PACMAN */
     #pacman-layer{
-      position:fixed;
-      inset:0;
-      z-index:200;
-      pointer-events:none;
+      position:fixed;inset:0;z-index:200;pointer-events:none;
     }
-
     .pac{
       position:absolute;
-      width:28px;
-      height:28px;
-      border-radius:50%;
+      width:28px;height:28px;border-radius:50%;
       background:var(--c-yellow);
       clip-path:polygon(100% 50%,0% 0%,0% 100%);
       filter:drop-shadow(0 0 6px rgba(255,242,0,.7)) drop-shadow(1px 1px 0 #000);
@@ -225,36 +158,28 @@
       transition:left .04s linear, top .04s linear;
       display:none;
     }
-
     @keyframes chomp{
       0%{clip-path:polygon(100% 50%,0% 5%,0% 95%);}
       50%{clip-path:polygon(100% 50%,0% 50%,0% 50%);}
       100%{clip-path:polygon(100% 50%,0% 5%,0% 95%);}
     }
-
     .dot{
       position:absolute;
-      width:8px;
-      height:8px;
-      border-radius:50%;
+      width:8px;height:8px;border-radius:50%;
       background:#fff;
       box-shadow:0 0 6px rgba(255,255,255,.9);
       display:none;
     }
-
     .power-dot{
-      width:16px;
-      height:16px;
+      width:16px;height:16px;
       background:var(--c-cyan);
       box-shadow:0 0 10px rgba(0,246,255,.95), 0 0 18px rgba(0,246,255,.38);
       animation:powerPulse .5s ease-in-out infinite alternate;
     }
-
     @keyframes powerPulse{
       from{transform:scale(1);}
       to{transform:scale(1.25);}
     }
-
     .ghost{
       position:absolute;
       font-size:24px;
@@ -265,37 +190,24 @@
 
     /* DESKTOP ICONS */
     .desktop-icon{
-      position:fixed;
-      z-index:50;
+      position:fixed;z-index:50;
       width:var(--desktop-icon-w);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:4px;
+      display:flex;flex-direction:column;align-items:center;gap:4px;
       padding:4px;
-      border:none;
-      background:transparent;
+      border:none;background:transparent;
     }
-
-    body.has-custom-cursor .desktop-icon{ cursor:none; }
-
+    body.has-custom-cursor .desktop-icon{cursor:none;}
     .desktop-icon .icon-img{
-      font-size:36px;
-      line-height:1;
+      font-size:36px;line-height:1;
       filter:drop-shadow(1px 1px 0 rgba(0,0,0,.9));
     }
-
     .desktop-icon .icon-label{
-      padding:2px 4px;
-      text-align:center;
-      line-height:1.4;
+      padding:2px 4px;text-align:center;line-height:1.4;
       font-family:Tahoma, Arial, sans-serif;
-      font-size:12px;
-      color:#fff;
+      font-size:12px;color:#fff;
       text-shadow:1px 1px 1px rgba(0,0,0,.9);
       border:1px solid transparent;
     }
-
     .desktop-icon:hover .icon-label,
     .desktop-icon.is-selected .icon-label{
       background:rgba(49,106,197,.55);
@@ -304,225 +216,124 @@
 
     /* GENERIC WINDOWS */
     .win{
-      position:fixed;
-      z-index:100;
-      display:flex;
-      flex-direction:column;
+      position:fixed;z-index:100;
+      display:flex;flex-direction:column;
       overflow:hidden;
       border:1px solid var(--xp-border);
       background:var(--xp-window);
       box-shadow:var(--xp-shadow);
       animation:winPop .16s ease-out;
     }
-
     @keyframes winPop{
-      from{transform:scale(.96); opacity:0;}
-      to{transform:scale(1); opacity:1;}
+      from{transform:scale(.96);opacity:0;}
+      to{transform:scale(1);opacity:1;}
     }
-
     .win-titlebar{
       flex-shrink:0;
-      display:flex;
-      align-items:center;
-      gap:8px;
+      display:flex;align-items:center;gap:8px;
       min-height:30px;
       padding:5px 8px;
       color:#fff;
       background:linear-gradient(90deg, var(--xp-blue-1), var(--xp-blue-3));
       font-family:Tahoma, Arial, sans-serif;
-      font-size:13px;
-      font-weight:700;
-      cursor:move;
-      user-select:none;
+      font-size:13px;font-weight:700;
+      cursor:move;user-select:none;
     }
-
-    .win-icon{
-      font-size:15px;
-    }
-
+    .win-icon{font-size:15px;}
     .win-title{
-      flex:1;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
+      flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
     }
-
     .win-controls{
-      display:flex;
-      gap:4px;
-      flex-shrink:0;
+      display:flex;gap:4px;flex-shrink:0;
     }
-
     .win-btn{
-      width:22px;
-      height:22px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      width:22px;height:22px;
+      display:flex;align-items:center;justify-content:center;
       background:linear-gradient(to bottom, #fff, #dcdcdc);
       border:1px solid #245;
       color:#000;
       font-family:Tahoma, Arial, sans-serif;
-      font-size:12px;
-      font-weight:700;
+      font-size:12px;font-weight:700;
     }
-
-    body.has-custom-cursor .win-btn{ cursor:none; }
-
-    .win-btn:hover{
-      filter:brightness(1.06);
-    }
-
+    body.has-custom-cursor .win-btn{cursor:none;}
+    .win-btn:hover{filter:brightness(1.06);}
     .win-btn.close{
       background:linear-gradient(to bottom, #ff8f8f, #d64444);
-      color:#fff;
-      border-color:#7f1f1f;
+      color:#fff;border-color:#7f1f1f;
     }
-
     .win-menubar{
       flex-shrink:0;
-      display:flex;
-      gap:18px;
+      display:flex;gap:18px;
       padding:4px 8px;
       background:#ece9d8;
       border-bottom:1px solid #b9b39c;
       font-family:Tahoma, Arial, sans-serif;
-      font-size:12px;
-      color:#000;
+      font-size:12px;color:#000;
     }
-
-    .win-menubar span{
-      padding:0 2px;
-    }
-
     .win-body{
-      position:relative;
-      flex:1;
-      overflow:auto;
+      position:relative;flex:1;overflow:auto;
       padding:16px;
-      background:#fff;
-      color:#111;
+      background:#fff;color:#111;
       font-family:Tahoma, Arial, sans-serif;
-      font-size:14px;
-      line-height:1.45;
+      font-size:14px;line-height:1.45;
     }
-
-    .win-body h1,
-    .win-body h2{
+    .win-body h1,.win-body h2{
       margin:0 0 12px;
-      font-size:19px;
-      line-height:1.2;
-      color:#163d82;
-      font-family:Tahoma, Arial, sans-serif;
+      font-size:19px;line-height:1.2;color:#163d82;
     }
-
     .win-body h3{
-      margin:0 0 8px;
-      font-size:14px;
-      color:#1a4ca3;
-      font-family:Tahoma, Arial, sans-serif;
+      margin:0 0 8px;font-size:14px;color:#1a4ca3;
     }
-
-    .win-body p{
-      margin-bottom:10px;
-      font-size:14px;
-      color:#111;
-    }
-
+    .win-body p{margin-bottom:10px;font-size:14px;color:#111;}
     .label{
-      display:block;
-      margin-bottom:8px;
+      display:block;margin-bottom:8px;
       font-family:'Press Start 2P', monospace;
-      font-size:7px;
-      color:#4c6fb6;
-      line-height:1.6;
+      font-size:7px;color:#4c6fb6;line-height:1.6;
     }
-
     .field-card{
-      margin-bottom:12px;
-      padding:12px;
-      background:#f5f6fa;
-      border:1px solid #c6d2ea;
+      margin-bottom:12px;padding:12px;
+      background:#f5f6fa;border:1px solid #c6d2ea;
     }
-
     .tag{
-      display:inline-block;
-      margin:2px;
-      padding:3px 7px;
+      display:inline-block;margin:2px;padding:3px 7px;
       font-family:'Press Start 2P', monospace;
-      font-size:6px;
-      border:1px solid currentColor;
-      background:#fff;
+      font-size:6px;border:1px solid currentColor;background:#fff;
     }
-
     .tag.yellow{color:#9f7f00;}
     .tag.cyan{color:#006f8d;}
     .tag.magenta{color:#8e2c92;}
     .tag.green{color:#287b39;}
-
     .spinner{
       display:inline-block;
       animation:spin .6s steps(8) infinite;
     }
-
-    @keyframes spin{
-      to{transform:rotate(360deg);}
-    }
-
-    .muted{
-      color:#666 !important;
-      font-size:12px !important;
-    }
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .muted{color:#666 !important;font-size:12px !important;}
 
     /* FILE GRID */
     .file-grid{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-      gap:12px;
-      margin-top:10px;
+      gap:12px;margin-top:10px;
     }
-
     .file-card{
-      display:flex;
-      flex-direction:column;
-      align-items:flex-start;
-      gap:8px;
-      min-height:96px;
-      padding:10px;
-      color:#111;
-      background:#fff;
-      border:1px solid #c6d2ea;
+      display:flex;flex-direction:column;align-items:flex-start;gap:8px;
+      min-height:96px;padding:10px;
+      color:#111;background:#fff;border:1px solid #c6d2ea;
       text-align:left;
     }
-
-    .file-card:hover{
-      background:#eef4ff;
-      border-color:#7ca0df;
-    }
-
-    .file-icon{
-      font-size:28px;
-      line-height:1;
-    }
-
+    .file-card:hover{background:#eef4ff;border-color:#7ca0df;}
+    .file-icon{font-size:28px;line-height:1;}
     .file-name{
       font-family:'Press Start 2P', monospace;
-      font-size:7px;
-      line-height:1.6;
-      color:#244c98;
+      font-size:7px;line-height:1.6;color:#244c98;
     }
-
     .file-meta{
-      font-size:12px;
-      color:#446;
-      font-family:Tahoma, Arial, sans-serif;
+      font-size:12px;color:#446;font-family:Tahoma, Arial, sans-serif;
     }
-
     .viewer-image{
-      width:100%;
-      display:block;
-      border:1px solid #7a89a8;
-      background:#000;
+      width:100%;display:block;
+      border:1px solid #7a89a8;background:#000;
       image-rendering:pixelated;
     }
 
@@ -536,23 +347,46 @@
       box-shadow:none;
       z-index:5000;
     }
-
     .world-fullscreen .win-titlebar{
       min-height:34px;
       padding:7px 10px;
       border-bottom:1px solid rgba(255,255,255,.15);
+      cursor:default;
     }
 
-    /* LAB BIOS WINDOW */
-    #win-lab{
-      display:none;
+    /* DWARF GUIDE */
+    .guide-box{
+      position:absolute;
+      right:18px;top:16px;
+      display:flex;align-items:flex-start;gap:10px;
+      max-width:320px;
+      z-index:3;
+    }
+    .guide-dwarf{
+      flex:0 0 auto;
+      width:58px;height:58px;
+      display:flex;align-items:center;justify-content:center;
+      border-radius:8px;
+      font-size:30px;
+      box-shadow:2px 2px 0 rgba(0,0,0,.25);
+      image-rendering:pixelated;
+    }
+    .guide-text{
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(0,0,0,.18);
+      padding:10px 12px;
+      font-size:12px;line-height:1.4;
+      color:#111;
+      box-shadow:2px 2px 0 rgba(0,0,0,.14);
+    }
+    .guide-text b{
+      display:block;
+      margin-bottom:4px;
     }
 
-    #win-lab.world-fullscreen{
-      background:#000;
-      color:#7fffe0;
-    }
-
+    /* LAB BIOS */
+    #win-lab{display:none;}
+    #win-lab.world-fullscreen{background:#000;color:#7fffe0;}
     #win-lab .win-titlebar{
       background:linear-gradient(90deg, #001414, #003535);
       color:#8dffef;
@@ -561,337 +395,528 @@
       letter-spacing:.5px;
       border-bottom:2px solid #53fdd8;
     }
-
     #win-lab .win-btn{
-      background:#021d1d;
-      color:#8dffef;
+      background:#021d1d;color:#8dffef;
       border:1px solid #53fdd8;
-      width:24px;
-      height:24px;
+      width:24px;height:24px;
       font-family:"Courier New", monospace;
     }
-
     #win-lab .win-btn.close{
-      background:#320909;
-      color:#fff;
-      border:1px solid #ff8c8c;
+      background:#320909;color:#fff;border:1px solid #ff8c8c;
     }
-
     #win-lab .win-menubar{
-      background:#001111;
-      color:#77f5de;
+      background:#001111;color:#77f5de;
       border-bottom:1px solid rgba(127,255,224,.25);
-      font-family:"Courier New", monospace;
-      font-size:13px;
+      font-family:"Courier New", monospace;font-size:13px;
     }
-
     #win-lab .win-body{
-      background:#000;
-      color:#86ffe4;
+      background:#000;color:#86ffe4;
       font-family:"Courier New", monospace;
-      font-size:14px;
-      line-height:1.45;
-      padding:0;
-      overflow:hidden;
+      font-size:14px;line-height:1.45;
+      padding:0;overflow:hidden;
       image-rendering:pixelated;
       text-rendering:geometricPrecision;
       -webkit-font-smoothing:none;
       position:relative;
     }
-
     #win-lab .win-body::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      background:
-        repeating-linear-gradient(
-          to bottom,
-          rgba(127,255,224,.06) 0px,
-          rgba(127,255,224,.06) 1px,
-          transparent 1px,
-          transparent 3px
-        );
-      opacity:.9;
-      mix-blend-mode:screen;
-      z-index:2;
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background:repeating-linear-gradient(
+        to bottom,
+        rgba(127,255,224,.06) 0px,
+        rgba(127,255,224,.06) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      opacity:.9;mix-blend-mode:screen;z-index:2;
     }
-
     #win-lab .win-body::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      background:
-        radial-gradient(circle at center, transparent 54%, rgba(0,0,0,.22) 100%);
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(circle at center, transparent 54%, rgba(0,0,0,.22) 100%);
       z-index:2;
     }
-
     .lab-shell{
-      position:relative;
-      z-index:1;
+      position:relative;z-index:1;
       display:grid;
-      grid-template-columns: 1.1fr 1fr;
+      grid-template-columns:1.1fr 1fr;
       grid-template-rows:auto 1fr auto;
-      gap:0;
-      width:100%;
-      height:100%;
+      width:100%;height:100%;
       min-height:calc(100vh - var(--scorebar-h) - var(--taskbar-h) - 66px);
-      background:#000;
-      color:#88ffe7;
+      background:#000;color:#88ffe7;
     }
-
     .lab-topline{
       grid-column:1 / -1;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:10px 14px;
-      border-bottom:1px solid #1bcfb5;
-      font-size:13px;
-      background:#000;
+      display:flex;justify-content:space-between;align-items:center;
+      padding:10px 14px;border-bottom:1px solid #1bcfb5;
+      font-size:13px;background:#000;
       font-family:"Courier New", monospace;
-      text-transform:uppercase;
-      letter-spacing:.8px;
+      text-transform:uppercase;letter-spacing:.8px;
     }
-
-    .lab-left,
+    .lab-left,.lab-right{
+      min-height:0;overflow:auto;padding:14px;
+    }
+    .lab-left{border-right:1px solid #1bcfb5;}
     .lab-right{
-      min-height:0;
-      overflow:auto;
-      padding:14px;
+      display:flex;align-items:center;justify-content:center;position:relative;
     }
-
-    .lab-left{
-      border-right:1px solid #1bcfb5;
-    }
-
-    .lab-right{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border-left:1px solid rgba(0,0,0,0);
-      position:relative;
-    }
-
     .lab-right::before{
-      content:"";
-      position:absolute;
-      inset:14px;
-      border:1px solid #1bcfb5;
+      content:"";position:absolute;inset:14px;border:1px solid #1bcfb5;
       pointer-events:none;
     }
-
     .lab-bottom{
       grid-column:1 / -1;
-      display:grid;
-      grid-template-columns:1fr 1fr 1fr;
-      gap:0;
-      border-top:1px solid #1bcfb5;
-      min-height:120px;
+      display:grid;grid-template-columns:1fr 1fr 1fr;
+      border-top:1px solid #1bcfb5;min-height:120px;
     }
-
     .lab-block{
       border-right:1px solid #1bcfb5;
-      padding:12px 14px;
-      font-size:13px;
-      line-height:1.45;
-      font-family:"Courier New", monospace;
-      overflow:auto;
+      padding:12px 14px;font-size:13px;line-height:1.45;
+      font-family:"Courier New", monospace;overflow:auto;
     }
-
-    .lab-block:last-child{
-      border-right:0;
-    }
-
+    .lab-block:last-child{border-right:0;}
     .lab-pre{
       font-family:"Courier New", monospace;
-      font-size:13px;
-      line-height:1.38;
-      white-space:pre-wrap;
-      color:#8effe6;
+      font-size:13px;line-height:1.38;
+      white-space:pre-wrap;color:#8effe6;
     }
-
     .lab-ascii{
       font-family:"Courier New", monospace;
+      font-size:10px;line-height:1;
+      color:#affff1;white-space:pre;text-align:center;opacity:.95;
+    }
+    .lab-guide .guide-dwarf{
+      background:#012626;color:#90fff0;border:1px solid #53fdd8;
+    }
+    .lab-guide .guide-text{
+      background:rgba(0,20,20,.9);
+      color:#8dffef;border:1px solid #53fdd8;
+    }
+
+    /* PLAYROOM HUB */
+    #win-playroom{display:none;}
+    #win-playroom .win-titlebar{
+      background:linear-gradient(90deg,#ff6dcf,#8a5cff);
+      color:#fff;
+      font-family:'Press Start 2P', monospace;
       font-size:10px;
-      line-height:1;
-      color:#affff1;
-      white-space:pre;
+    }
+    #win-playroom .win-menubar{
+      background:#ffe9f8;
+      border-bottom:1px solid #f0b7de;
+      color:#6d2d5d;
+    }
+    #win-playroom .win-body{
+      padding:0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.7), transparent 18%),
+        radial-gradient(circle at 80% 18%, rgba(255,255,255,.55), transparent 16%),
+        linear-gradient(180deg,#ffd6f1 0%, #ffdff7 28%, #e7f0ff 100%);
+      overflow:hidden;
+      position:relative;
+    }
+    .playroom-shell{
+      position:relative;
+      height:100%;
+      min-height:calc(100vh - var(--scorebar-h) - var(--taskbar-h) - 66px);
+      padding:24px;
+    }
+    .playroom-guide .guide-dwarf{
+      background:#ff92d8;color:#fff;border:2px solid #fff;
+    }
+    .playroom-guide .guide-text{
+      background:#fff8fd;border:2px solid #ffbde7;color:#7a2b5f;
+    }
+    .playroom-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(180px,1fr));
+      gap:18px;
+      margin-top:92px;
+    }
+    .game-launcher{
+      background:#fff;
+      border:3px solid #f7a5d7;
+      border-radius:18px;
+      box-shadow:0 10px 0 #f3c4e4;
+      padding:16px;
+      min-height:150px;
+      text-align:left;
+      transition:transform .12s ease, box-shadow .12s ease;
+    }
+    .game-launcher:hover{
+      transform:translateY(-4px);
+      box-shadow:0 14px 0 #f3c4e4;
+    }
+    .game-launcher .gicon{
+      font-size:34px;
+      margin-bottom:12px;
+      display:block;
+    }
+    .game-launcher .gtitle{
+      font-family:'Press Start 2P', monospace;
+      font-size:10px;
+      line-height:1.6;
+      color:#7c2f6c;
+      margin-bottom:8px;
+    }
+    .game-launcher .gdesc{
+      font-size:13px;
+      line-height:1.35;
+      color:#5c4c6b;
+    }
+
+    /* WII WORLD */
+    #win-wii{display:none;background:#f7fbff;}
+    #win-wii .win-titlebar{
+      background:linear-gradient(90deg,#dbeef9,#b6d8ea);
+      color:#3b5663;
+      font-weight:700;
+      border-bottom:1px solid rgba(0,0,0,.08);
+    }
+    #win-wii .win-btn{
+      background:linear-gradient(to bottom,#fff,#dbe9f1);
+      border:1px solid #8fb1c1;color:#4f6e7d;
+      border-radius:999px;
+    }
+    #win-wii .win-btn.close{
+      background:linear-gradient(to bottom,#ffc2c2,#ff8d8d);
+      color:#7b2020;border-color:#c26d6d;
+    }
+    #win-wii .win-menubar{
+      background:#eef7fc;color:#68889a;border-bottom:1px solid #d0e3ef;
+    }
+    #win-wii .win-body{
+      padding:0;
+      background:linear-gradient(180deg,#f7fbff 0%, #eaf4fa 100%);
+      overflow:hidden;
+    }
+    .wii-shell{
+      position:relative;
+      min-height:calc(100vh - var(--scorebar-h) - var(--taskbar-h) - 66px);
+      padding:22px 24px;
+      overflow:auto;
+    }
+    .wii-guide .guide-dwarf{
+      background:#d9eef8;color:#4b7385;border:2px solid #fff;border-radius:50%;
+    }
+    .wii-guide .guide-text{
+      background:#ffffff;border:1px solid #d0e2ec;color:#476b7a;border-radius:16px;
+    }
+    .wii-header{
+      margin-top:88px;
+      margin-bottom:24px;
+      color:#6f8e9e;
+    }
+    .wii-header h2{
+      font-size:30px;
+      color:#7ea2b4;
+      margin-bottom:6px;
+      font-weight:700;
+    }
+    .wii-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(200px,1fr));
+      gap:20px;
+    }
+    .wii-tile{
+      min-height:180px;
+      border-radius:28px;
+      background:linear-gradient(180deg,#ffffff,#eef7fb);
+      border:1px solid #d6e6ef;
+      box-shadow:0 10px 20px rgba(135,170,191,.16);
+      padding:18px;
+      color:#5d7a88;
+      text-align:left;
+    }
+    .wii-tile .tile-icon{
+      font-size:42px;
+      margin-bottom:16px;
+      display:block;
+      opacity:.85;
+    }
+    .wii-tile .tile-title{
+      font-size:20px;
+      font-weight:700;
+      margin-bottom:8px;
+      color:#6b93a5;
+    }
+    .wii-tile .tile-desc{
+      font-size:14px;
+      line-height:1.35;
+      color:#6d8591;
+    }
+
+    /* MARIO WORLD */
+    #win-mario{display:none;background:#5bc0ff;}
+    #win-mario .win-titlebar{
+      background:linear-gradient(90deg,#ff2d2d,#c10d0d);
+      color:#fff;
+      font-family:'Press Start 2P', monospace;
+      font-size:10px;
+      text-shadow:2px 2px 0 #7a0000;
+    }
+    #win-mario .win-menubar{
+      background:#ffd34d;
+      color:#703f00;
+      border-bottom:3px solid #b57b00;
+      font-family:'Press Start 2P', monospace;
+      font-size:9px;
+    }
+    #win-mario .win-body{
+      padding:0;
+      overflow:hidden;
+      background:
+        linear-gradient(to bottom,#6fd0ff 0%, #6fd0ff 68%, #b3702d 68%, #b3702d 100%);
+      image-rendering:pixelated;
+      position:relative;
+    }
+    .mario-shell{
+      position:relative;
+      min-height:calc(100vh - var(--scorebar-h) - var(--taskbar-h) - 66px);
+      overflow:hidden;
+    }
+    .mario-cloud{
+      position:absolute;
+      background:#fff;
+      border:4px solid #d6f2ff;
+      image-rendering:pixelated;
+    }
+    .mario-cloud.c1{width:140px;height:48px;left:7%;top:70px;}
+    .mario-cloud.c2{width:110px;height:40px;left:68%;top:110px;}
+    .mario-cloud.c3{width:150px;height:50px;left:42%;top:56px;}
+    .mario-guide .guide-dwarf{
+      background:#ffdf76;color:#b01212;border:3px solid #000;border-radius:0;
+      box-shadow:4px 4px 0 #000;
+    }
+    .mario-guide .guide-text{
+      background:#fff;border:3px solid #000;color:#111;border-radius:0;
+      box-shadow:4px 4px 0 #000;
+      font-family:'Press Start 2P', monospace;
+      font-size:10px;line-height:1.7;
+    }
+    .mario-guide{top:18px;right:18px;}
+    .mario-ui{
+      position:absolute;
+      left:28px;top:120px;
+      width:min(760px,58vw);
+      z-index:2;
+      color:#fff;
+      text-shadow:3px 3px 0 #000;
+    }
+    .mario-ui h2{
+      font-family:'Press Start 2P', monospace;
+      font-size:28px;
+      line-height:1.6;
+      margin-bottom:14px;
+      color:#fff;
+    }
+    .mario-ui p{
+      width:min(620px,100%);
+      font-family:'Press Start 2P', monospace;
+      font-size:12px;
+      line-height:2;
+      color:#fff;
+      margin-bottom:18px;
+    }
+    .mario-coins{
+      display:flex;gap:10px;flex-wrap:wrap;
+    }
+    .coin-tag{
+      background:#ffe04a;
+      color:#6e3f00;
+      border:3px solid #000;
+      padding:8px 12px;
+      font-family:'Press Start 2P', monospace;
+      font-size:9px;
+      box-shadow:4px 4px 0 #000;
+    }
+    .brick-row{
+      position:absolute;left:0;right:0;bottom:152px;
+      display:flex;gap:0;
+      height:58px;
+    }
+    .brick{
+      flex:1;
+      background:
+        linear-gradient(90deg, transparent 46%, rgba(0,0,0,.2) 46%, rgba(0,0,0,.2) 54%, transparent 54%),
+        linear-gradient(0deg, transparent 46%, rgba(0,0,0,.2) 46%, rgba(0,0,0,.2) 54%, transparent 54%),
+        #c7792d;
+      border-top:4px solid #8c4b16;
+      border-right:4px solid #8c4b16;
+      border-bottom:4px solid #7a3d10;
+    }
+    .question-block{
+      position:absolute;
+      width:74px;height:74px;
+      right:20%;top:46%;
+      background:
+        linear-gradient(0deg, rgba(0,0,0,.12), rgba(255,255,255,.06)),
+        #f5b10f;
+      border:4px solid #000;
+      box-shadow:6px 6px 0 #000;
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Press Start 2P', monospace;
+      font-size:30px;color:#fff;
+      text-shadow:3px 3px 0 #b77700;
+      animation:blockFloat 1s steps(2,end) infinite;
+    }
+    @keyframes blockFloat{
+      0%,100%{transform:translateY(0);}
+      50%{transform:translateY(-6px);}
+    }
+    .ground-strip{
+      position:absolute;left:0;right:0;bottom:0;height:152px;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.15) 50%, transparent 50%),
+        linear-gradient(0deg, rgba(0,0,0,.15) 50%, transparent 50%),
+        #b3702d;
+      background-size:32px 32px,32px 32px,auto;
+      border-top:4px solid #7b451a;
+    }
+
+    /* COOKING MAMA WORLD */
+    #win-cooking{display:none;}
+    #win-cooking .win-titlebar{
+      background:linear-gradient(90deg,#ff86b8,#ffb347);
+      color:#fff;
+      font-family:'Press Start 2P', monospace;
+      font-size:10px;
+    }
+    #win-cooking .win-menubar{
+      background:#fff0c9;
+      border-bottom:2px solid #ffc76d;
+      color:#925f22;
+      font-family:'Press Start 2P', monospace;
+      font-size:8px;
+    }
+    #win-cooking .win-body{
+      padding:0;
+      background:
+        radial-gradient(circle at 18% 15%, rgba(255,255,255,.65), transparent 16%),
+        linear-gradient(180deg,#fff6d8 0%, #ffe5f2 48%, #e6f7ff 100%);
+      overflow:hidden;
+    }
+    .cooking-shell{
+      position:relative;
+      min-height:calc(100vh - var(--scorebar-h) - var(--taskbar-h) - 66px);
+      padding:28px;
+      overflow:auto;
+    }
+    .cooking-guide .guide-dwarf{
+      background:#fff;color:#ff7cb4;border:3px solid #ffb86a;border-radius:50%;
+    }
+    .cooking-guide .guide-text{
+      background:#fffef8;border:2px solid #ffc97c;color:#8a5c2b;border-radius:16px;
+      font-family:'Press Start 2P', monospace;font-size:9px;line-height:1.8;
+    }
+    .cooking-board{
+      margin-top:100px;
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:24px;
+    }
+    .recipe-card,
+    .kitchen-card{
+      background:#fff;
+      border:3px solid #ffca73;
+      border-radius:24px;
+      box-shadow:0 10px 0 #ffdca6;
+      padding:20px;
+    }
+    .recipe-title{
+      font-family:'Press Start 2P', monospace;
+      font-size:14px;
+      line-height:1.8;
+      color:#d95b8e;
+      margin-bottom:12px;
+    }
+    .recipe-step{
+      display:flex;gap:10px;align-items:flex-start;
+      margin-bottom:10px;
+      font-size:14px;line-height:1.4;color:#80582d;
+    }
+    .bubble-num{
+      width:28px;height:28px;flex:0 0 auto;
+      border-radius:50%;
+      background:#ff8ec0;color:#fff;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:700;
+      border:2px solid #fff;
+      box-shadow:2px 2px 0 rgba(0,0,0,.12);
+    }
+    .kitchen-items{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(120px,1fr));
+      gap:12px;
+      margin-top:12px;
+    }
+    .kitchen-tile{
+      background:#fff7dc;
+      border:2px dashed #ffb86a;
+      border-radius:16px;
+      padding:16px;
       text-align:center;
-      opacity:.95;
-    }
-
-    .lab-nav{
-      display:flex;
-      gap:14px;
-      padding:10px 14px;
-      border-bottom:1px solid #1bcfb5;
-      font-family:"Courier New", monospace;
-      font-size:13px;
-      text-transform:uppercase;
-    }
-
-    .lab-nav span{
-      color:#88ffe7;
-    }
-
-    .lab-hud{
-      display:flex;
-      gap:22px;
-      padding:8px 14px;
-      border-top:1px solid rgba(127,255,224,.2);
-      font-family:"Courier New", monospace;
+      color:#8e6332;
       font-size:13px;
     }
-
-    .lab-hud b{
-      color:#c7fff7;
+    .kitchen-tile .kicon{
+      display:block;font-size:32px;margin-bottom:8px;
     }
 
-    /* OTHER WINDOWS POSITIONS */
-    #hero-win{
-      top:54px;
-      left:120px;
-      width:720px;
-      min-height:330px;
-    }
-
-    #win-archive{
-      top:98px;
-      left:170px;
-      width:540px;
-      display:none;
-    }
-
-    #win-studio{
-      top:122px;
-      left:240px;
-      width:540px;
-      display:none;
-    }
-
-    #win-contact{
-      top:160px;
-      left:210px;
-      width:470px;
-      display:none;
-    }
-
-    #win-manifesto{
-      top:182px;
-      left:180px;
-      width:560px;
-      display:none;
-    }
-
-    #win-gallery{
-      top:110px;
-      left:330px;
-      width:560px;
-      display:none;
-    }
-
-    #win-img-1{
-      top:120px;
-      left:380px;
-      width:480px;
-      display:none;
-    }
-
-    #win-img-2{
-      top:150px;
-      left:410px;
-      width:460px;
-      display:none;
-    }
-
-    #win-img-3{
-      top:180px;
-      left:440px;
-      width:500px;
-      display:none;
-    }
+    /* POSITIONED CLASSIC WINDOWS */
+    #hero-win{top:54px;left:120px;width:720px;min-height:330px;}
+    #win-archive{top:98px;left:170px;width:540px;display:none;}
+    #win-studio{top:122px;left:240px;width:540px;display:none;}
+    #win-contact{top:160px;left:210px;width:470px;display:none;}
+    #win-manifesto{top:182px;left:180px;width:560px;display:none;}
+    #win-gallery{top:110px;left:330px;width:560px;display:none;}
+    #win-img-1{top:120px;left:380px;width:480px;display:none;}
+    #win-img-2{top:150px;left:410px;width:460px;display:none;}
+    #win-img-3{top:180px;left:440px;width:500px;display:none;}
 
     /* TASKBAR XP */
     #taskbar{
-      position:fixed;
-      left:0;
-      right:0;
-      bottom:0;
-      height:var(--taskbar-h);
-      z-index:9000;
-      display:flex;
-      align-items:center;
-      gap:6px;
-      padding:0 6px;
-      color:#fff;
+      position:fixed;left:0;right:0;bottom:0;
+      height:var(--taskbar-h);z-index:9000;
+      display:flex;align-items:center;gap:6px;
+      padding:0 6px;color:#fff;
       background:linear-gradient(to bottom, var(--xp-task-light), var(--xp-task-dark));
       border-top:1px solid rgba(255,255,255,.35);
       box-shadow:inset 0 1px 0 rgba(255,255,255,.22);
       user-select:none;
     }
-
     #taskbar-start{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      white-space:nowrap;
+      display:flex;align-items:center;gap:8px;white-space:nowrap;
       padding:6px 14px;
       font-family:Tahoma, Arial, sans-serif;
-      font-size:16px;
-      font-style:italic;
-      font-weight:700;
+      font-size:16px;font-style:italic;font-weight:700;
       color:#fff;
       background:linear-gradient(135deg, #4bc15c 0%, #2c8e3d 100%);
       border:1px solid rgba(255,255,255,.4);
       border-radius:6px;
       box-shadow:inset 1px 1px 0 rgba(255,255,255,.28);
     }
-
     #taskbar-start::before{
-      content:'⊞';
-      font-size:15px;
-      font-style:normal;
+      content:'⊞';font-size:15px;font-style:normal;
     }
-
-    body.has-custom-cursor #taskbar-start{ cursor:none; }
-
+    body.has-custom-cursor #taskbar-start{cursor:none;}
     #taskbar-tasks{
-      display:flex;
-      align-items:center;
-      gap:4px;
-      min-width:0;
-      flex:1;
-      overflow:hidden;
+      display:flex;align-items:center;gap:4px;min-width:0;flex:1;overflow:hidden;
     }
-
     .taskbar-btn{
-      max-width:180px;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
+      max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
       padding:6px 10px;
       font-family:Tahoma, Arial, sans-serif;
-      font-size:12px;
-      color:#fff;
+      font-size:12px;color:#fff;
       background:rgba(255,255,255,.15);
       border:1px solid rgba(255,255,255,.18);
       border-radius:3px;
     }
-
-    .taskbar-btn.active{
-      background:rgba(255,255,255,.28);
-    }
-
+    .taskbar-btn.active{background:rgba(255,255,255,.28);}
     #clock{
-      margin-left:auto;
-      min-width:84px;
-      text-align:center;
+      margin-left:auto;min-width:84px;text-align:center;
       padding:4px 8px;
       font-family:Tahoma, Arial, sans-serif;
-      font-size:12px;
-      color:#fff;
+      font-size:12px;color:#fff;
       background:rgba(255,255,255,.12);
       border:1px solid rgba(255,255,255,.18);
       border-radius:2px;
@@ -899,188 +924,134 @@
 
     /* START MENU XP */
     #start-menu{
-      position:fixed;
-      left:0;
-      bottom:var(--taskbar-h);
-      width:280px;
-      z-index:9999;
-      display:none;
-      flex-direction:column;
-      background:#fff;
-      border:1px solid #245;
+      position:fixed;left:0;bottom:var(--taskbar-h);
+      width:280px;z-index:9999;
+      display:none;flex-direction:column;
+      background:#fff;border:1px solid #245;
       box-shadow:4px 4px 10px rgba(0,0,0,.35);
       overflow:hidden;
     }
-
-    #start-menu.open{
-      display:flex;
-    }
-
+    #start-menu.open{display:flex;}
     .start-banner{
       background:linear-gradient(to bottom, #0e4bbb, #1c73f5);
       color:#fff;
       font-family:Tahoma, Arial, sans-serif;
-      font-size:26px;
-      font-weight:700;
+      font-size:26px;font-weight:700;
       padding:16px 14px;
     }
-
     .start-items{
-      display:flex;
-      flex-direction:column;
-      background:#f6f7fb;
+      display:flex;flex-direction:column;background:#f6f7fb;
     }
-
     .start-item{
-      display:flex;
-      align-items:center;
-      gap:10px;
+      display:flex;align-items:center;gap:10px;
       padding:10px 14px;
       font-family:Tahoma, Arial, sans-serif;
-      font-size:16px;
-      color:#111;
+      font-size:16px;color:#111;
       border-top:1px solid #edf0f7;
-      background:transparent;
-      text-align:left;
+      background:transparent;text-align:left;
     }
-
-    .start-item:hover{
-      background:#2b66ce;
-      color:#fff;
-    }
-
-    .start-item-icon{
-      font-size:18px;
-    }
+    .start-item:hover{background:#2b66ce;color:#fff;}
+    .start-item-icon{font-size:18px;}
 
     /* ALERTS */
     .win-alert{
-      min-width:320px;
-      max-width:420px;
-      resize:none;
+      min-width:320px;max-width:420px;resize:none;
     }
-
     .win-alert .win-body{
-      display:flex;
-      flex-direction:column;
-      align-items:flex-start;
-      gap:12px;
-      padding:18px;
-      font-size:14px;
+      display:flex;flex-direction:column;align-items:flex-start;gap:12px;
+      padding:18px;font-size:14px;
     }
-
     .win-alert .alert-row{
-      display:flex;
-      align-items:flex-start;
-      gap:12px;
+      display:flex;align-items:flex-start;gap:12px;
     }
-
     .win-alert .alert-icon{
-      flex-shrink:0;
-      font-size:26px;
+      flex-shrink:0;font-size:26px;
     }
-
     .win-alert .alert-msg{
-      font-size:14px;
-      line-height:1.4;
-      color:#111;
+      font-size:14px;line-height:1.4;color:#111;
     }
-
     .win-alert .alert-btns{
-      display:flex;
-      gap:10px;
-      margin-top:6px;
+      display:flex;gap:10px;margin-top:6px;
     }
-
     .alert-ok{
       padding:6px 16px;
       background:linear-gradient(to bottom, #fff, #dcdcdc);
-      border:1px solid #245;
-      color:#000;
+      border:1px solid #245;color:#000;
       font-family:Tahoma, Arial, sans-serif;
       font-size:12px;
     }
 
-    @media (max-width:900px){
-      #hero-win{
-        left:30px;
-        width:min(92vw,720px);
-      }
-
-      .win{
-        min-width:260px;
+    @media (max-width:1100px){
+      .playroom-grid,
+      .wii-grid,
+      .cooking-board{
+        grid-template-columns:1fr 1fr;
       }
     }
 
+    @media (max-width:900px){
+      #hero-win{left:30px;width:min(92vw,720px);}
+      .win{min-width:260px;}
+      .mario-ui{width:min(90vw,620px);}
+    }
+
+    @media (max-width:700px){
+      .playroom-grid,
+      .wii-grid,
+      .cooking-board{
+        grid-template-columns:1fr;
+      }
+      .guide-box{
+        position:relative;
+        top:auto;right:auto;left:auto;
+        margin-bottom:18px;
+        max-width:none;
+      }
+      .playroom-grid{margin-top:18px;}
+      .wii-header{margin-top:20px;}
+      .cooking-board{margin-top:18px;}
+      .mario-guide{
+        position:absolute;
+        right:12px;top:12px;
+        max-width:220px;
+      }
+      .mario-ui{
+        left:18px;top:150px;width:calc(100vw - 36px);
+      }
+      .mario-ui h2{font-size:20px;}
+      .mario-ui p{font-size:10px;}
+      .question-block{right:8%;top:52%;}
+    }
+
     @media (max-width:600px){
-      .cursor-outer{
-        display:none !important;
+      .cursor-outer{display:none !important;}
+      #hero-win{top:48px;left:4px;width:calc(100vw - 8px);}
+      .win{resize:none;max-width:calc(100vw - 8px);}
+      #win-archive,#win-studio,#win-contact,#win-manifesto,#win-gallery,#win-img-1,#win-img-2,#win-img-3{
+        left:4px !important;width:calc(100vw - 8px) !important;
       }
-
-      #hero-win{
-        top:48px;
-        left:4px;
-        width:calc(100vw - 8px);
-      }
-
-      .win{
-        resize:none;
-        max-width:calc(100vw - 8px);
-      }
-
-      #win-archive,
-      #win-studio,
-      #win-contact,
-      #win-manifesto,
-      #win-gallery,
-      #win-img-1,
-      #win-img-2,
-      #win-img-3{
-        left:4px !important;
-        width:calc(100vw - 8px) !important;
-      }
-
-      #taskbar-tasks{
-        display:none;
-      }
-
+      #taskbar-tasks{display:none;}
       .lab-shell{
         grid-template-columns:1fr;
         grid-template-rows:auto auto 1fr auto;
       }
-
       .lab-left{
-        border-right:0;
-        border-bottom:1px solid #1bcfb5;
+        border-right:0;border-bottom:1px solid #1bcfb5;
       }
-
-      .lab-right{
-        min-height:240px;
-      }
-
-      .lab-bottom{
-        grid-template-columns:1fr;
-      }
-
+      .lab-right{min-height:240px;}
+      .lab-bottom{grid-template-columns:1fr;}
       .lab-block{
-        border-right:0;
-        border-bottom:1px solid #1bcfb5;
+        border-right:0;border-bottom:1px solid #1bcfb5;
       }
-
-      .lab-block:last-child{
-        border-bottom:0;
+      .lab-block:last-child{border-bottom:0;}
+      .guide-dwarf{
+        width:50px;height:50px;font-size:24px;
       }
     }
 
     @media (pointer:coarse){
-      body,
-      body.has-custom-cursor{
-        cursor:auto;
-      }
-
-      .cursor-outer{
-        display:none !important;
-      }
+      body,body.has-custom-cursor{cursor:auto;}
+      .cursor-outer{display:none !important;}
     }
   </style>
 </head>
@@ -1131,6 +1102,26 @@
     <div class="icon-label">GALLERY</div>
   </button>
 
+  <button class="desktop-icon" style="top:656px;left:18px" id="icon-playroom" data-win="win-playroom" type="button">
+    <div class="icon-img">🎮</div>
+    <div class="icon-label">PLAYROOM</div>
+  </button>
+
+  <button class="desktop-icon" style="top:756px;left:18px" id="icon-wii" data-win="win-wii" type="button">
+    <div class="icon-img">🧊</div>
+    <div class="icon-label">WII</div>
+  </button>
+
+  <button class="desktop-icon" style="top:56px;left:118px" id="icon-mario" data-win="win-mario" type="button">
+    <div class="icon-img">🍄</div>
+    <div class="icon-label">MARIO</div>
+  </button>
+
+  <button class="desktop-icon" style="top:156px;left:118px" id="icon-cooking" data-win="win-cooking" type="button">
+    <div class="icon-img">🍳</div>
+    <div class="icon-label">COOKING</div>
+  </button>
+
   <!-- HOME -->
   <section class="win" id="hero-win" aria-label="Homepage">
     <div class="win-titlebar" data-drag="hero-win">
@@ -1165,7 +1156,7 @@
       <div style="margin-top:18px;" class="field-card">
         <span class="label">SYSTEM STATUS</span>
         <h3>HOME STABILE / XP MODE</h3>
-        <p>Questa è la superficie stabile del sito. Le altre finestre possono cambiare epoca, risoluzione e mondo visivo.</p>
+        <p>Questa è la superficie stabile del sito. Le altre finestre cambiano mondo, epoca, ritmo e risoluzione.</p>
       </div>
 
       <div style="margin-top:14px; font-size:14px; color:#244c98;">
@@ -1300,6 +1291,14 @@
     </div>
 
     <div class="win-body">
+      <div class="guide-box lab-guide">
+        <div class="guide-dwarf">⌘</div>
+        <div class="guide-text">
+          <b>NANO BIOS</b>
+          Qui vive il vecchio cuore duro del sito. Shell, memoria, tracce, rumore.
+        </div>
+      </div>
+
       <div class="lab-shell">
         <div class="lab-topline">
           <span>MR BIOS (TM) &nbsp; COPYRIGHT BLUCINELAB(C) 2026</span>
@@ -1429,6 +1428,257 @@ READ:
 stato concentrato nel LAB.
 La home XP lo protegge,
 il LAB lo espone."</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAYROOM -->
+  <section class="win world-fullscreen" id="win-playroom" aria-label="Playroom">
+    <div class="win-titlebar">
+      <span class="win-icon">🎮</span>
+      <span class="win-title">PLAYROOM.EXE — GAME HUB / BLUCINELAB</span>
+      <div class="win-controls">
+        <button class="win-btn close" data-close="win-playroom" type="button" aria-label="Chiudi">✕</button>
+      </div>
+    </div>
+
+    <div class="win-menubar">
+      <span>GAMES</span>
+      <span>FUN</span>
+      <span>LEVELS</span>
+      <span>OPEN</span>
+      <span>PARTY</span>
+    </div>
+
+    <div class="win-body">
+      <div class="playroom-shell">
+        <div class="guide-box playroom-guide">
+          <div class="guide-dwarf">🧙</div>
+          <div class="guide-text">
+            <b>NANO PLAYROOM</b>
+            Qui si entra per saltare tra i mondi. Alcuni sono giocabili, altri sono stanze estetiche.
+          </div>
+        </div>
+
+        <div class="playroom-grid">
+          <button class="game-launcher" type="button" data-open="win-mario">
+            <span class="gicon">🍄</span>
+            <span class="gtitle">SUPER MARIO</span>
+            <span class="gdesc">Pixel, mattoni, cielo azzurro, blocchi e monete.</span>
+          </button>
+
+          <button class="game-launcher" type="button" data-open="win-wii">
+            <span class="gicon">🧊</span>
+            <span class="gtitle">WII WORLD</span>
+            <span class="gdesc">Canali chiari, interfaccia morbida, aria da salotto 2006.</span>
+          </button>
+
+          <button class="game-launcher" type="button" data-open="win-cooking">
+            <span class="gicon">🍳</span>
+            <span class="gtitle">COOKING MAMA</span>
+            <span class="gdesc">Cucina dolce, colorata, DS-like, da touch e ricette.</span>
+          </button>
+
+          <button class="game-launcher" type="button" id="launch-pacman">
+            <span class="gicon">👾</span>
+            <span class="gtitle">PAC-MAN</span>
+            <span class="gdesc">Attiva la modalità arcade e guida Pac-Man sulla home.</span>
+          </button>
+
+          <button class="game-launcher" type="button" id="launch-popup-space">
+            <span class="gicon">🚀</span>
+            <span class="gtitle">SPACE MODE</span>
+            <span class="gdesc">Piccolo trigger visivo: segnali, popup, effetto arcade.</span>
+          </button>
+
+          <button class="game-launcher" type="button" data-open="win-lab">
+            <span class="gicon">💾</span>
+            <span class="gtitle">BIOS LAB</span>
+            <span class="gdesc">Il gioco serio: shell, memoria, errori e struttura interna.</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WII WORLD -->
+  <section class="win world-fullscreen" id="win-wii" aria-label="Wii world">
+    <div class="win-titlebar">
+      <span class="win-icon">🧊</span>
+      <span class="win-title">WII CHANNEL — BLUCINELAB SYSTEM</span>
+      <div class="win-controls">
+        <button class="win-btn close" data-close="win-wii" type="button" aria-label="Chiudi">✕</button>
+      </div>
+    </div>
+
+    <div class="win-menubar">
+      <span>Channels</span>
+      <span>Home</span>
+      <span>Memory</span>
+      <span>Connect</span>
+    </div>
+
+    <div class="win-body">
+      <div class="wii-shell">
+        <div class="guide-box wii-guide">
+          <div class="guide-dwarf">🧙</div>
+          <div class="guide-text">
+            <b>NANO WII</b>
+            Mondo pulito, morbido, domestico. Qui tutto deve sembrare facile.
+          </div>
+        </div>
+
+        <div class="wii-header">
+          <h2>Wii Channel Selection</h2>
+          <p>Una traduzione del sito in una grammatica da console familiare: chiara, morbida, bianca, azzurra.</p>
+        </div>
+
+        <div class="wii-grid">
+          <div class="wii-tile">
+            <span class="tile-icon">📷</span>
+            <div class="tile-title">Archive Channel</div>
+            <div class="tile-desc">Case study e immagini come stanze da aprire con calma.</div>
+          </div>
+          <div class="wii-tile">
+            <span class="tile-icon">🎨</span>
+            <div class="tile-title">Studio Channel</div>
+            <div class="tile-desc">Metodo, direzione visiva, selezione e coerenza.</div>
+          </div>
+          <div class="wii-tile">
+            <span class="tile-icon">💌</span>
+            <div class="tile-title">Contact Channel</div>
+            <div class="tile-desc">Accesso diretto alla conversazione e alle collaborazioni.</div>
+          </div>
+          <div class="wii-tile">
+            <span class="tile-icon">🖼️</span>
+            <div class="tile-title">Gallery Channel</div>
+            <div class="tile-desc">Immagini come viewers, finestre, archivi e segnali.</div>
+          </div>
+          <div class="wii-tile">
+            <span class="tile-icon">🧠</span>
+            <div class="tile-title">Research Channel</div>
+            <div class="tile-desc">La parte sensibile, nascosta, viva, che resta in formazione.</div>
+          </div>
+          <div class="wii-tile">
+            <span class="tile-icon">🎮</span>
+            <div class="tile-title">Playroom Channel</div>
+            <div class="tile-desc">I mondi laterali del sito: gioco, estetica, memoria pop.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARIO WORLD -->
+  <section class="win world-fullscreen" id="win-mario" aria-label="Mario world">
+    <div class="win-titlebar">
+      <span class="win-icon">🍄</span>
+      <span class="win-title">WORLD 1-1 — BLUCINELAB MARIO MODE</span>
+      <div class="win-controls">
+        <button class="win-btn close" data-close="win-mario" type="button" aria-label="Chiudi">✕</button>
+      </div>
+    </div>
+
+    <div class="win-menubar">
+      <span>WORLD</span>
+      <span>COINS</span>
+      <span>LEVEL</span>
+      <span>START</span>
+    </div>
+
+    <div class="win-body">
+      <div class="mario-shell">
+        <div class="mario-cloud c1"></div>
+        <div class="mario-cloud c2"></div>
+        <div class="mario-cloud c3"></div>
+
+        <div class="guide-box mario-guide">
+          <div class="guide-dwarf">🧙</div>
+          <div class="guide-text">
+            <b>NANO MARIO</b>
+            Qui il sito diventa gioco a scorrimento: blocchi, livelli, raccolta, energia.
+          </div>
+        </div>
+
+        <div class="mario-ui">
+          <h2>BLUCINELAB<br>WORLD 1-1</h2>
+          <p>
+            UNA VERSIONE ULTRA-PIXEL DELLO STUDIO.<br>
+            QUI CONTANO RITMO, IMPATTO, GRAFICA DURA,<br>
+            CHIAREZZA DIRETTA E MEMORIA DA VIDEOGIOCO.
+          </p>
+
+          <div class="mario-coins">
+            <span class="coin-tag">ARCHIVE</span>
+            <span class="coin-tag">STUDIO</span>
+            <span class="coin-tag">IMAGE</span>
+            <span class="coin-tag">SPACE</span>
+            <span class="coin-tag">RESEARCH</span>
+          </div>
+        </div>
+
+        <div class="question-block">?</div>
+        <div class="brick-row">
+          <div class="brick"></div><div class="brick"></div><div class="brick"></div><div class="brick"></div>
+          <div class="brick"></div><div class="brick"></div><div class="brick"></div><div class="brick"></div>
+          <div class="brick"></div><div class="brick"></div><div class="brick"></div><div class="brick"></div>
+        </div>
+        <div class="ground-strip"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COOKING MAMA WORLD -->
+  <section class="win world-fullscreen" id="win-cooking" aria-label="Cooking world">
+    <div class="win-titlebar">
+      <span class="win-icon">🍳</span>
+      <span class="win-title">COOKING MAMA MODE — BLUCINELAB KITCHEN</span>
+      <div class="win-controls">
+        <button class="win-btn close" data-close="win-cooking" type="button" aria-label="Chiudi">✕</button>
+      </div>
+    </div>
+
+    <div class="win-menubar">
+      <span>Cook</span>
+      <span>Recipe</span>
+      <span>Kitchen</span>
+      <span>Taste</span>
+    </div>
+
+    <div class="win-body">
+      <div class="cooking-shell">
+        <div class="guide-box cooking-guide">
+          <div class="guide-dwarf">🧙</div>
+          <div class="guide-text">
+            <b>NANO MAMA</b>
+            Qui il tono è leggero, domestico, morbido. Grafica da Nintendo DS e cucina giocosa.
+          </div>
+        </div>
+
+        <div class="cooking-board">
+          <div class="recipe-card">
+            <div class="recipe-title">RECIPE / BUILD A PROJECT</div>
+
+            <div class="recipe-step"><span class="bubble-num">1</span><span>Raccogli materiali, immagini, riferimenti, errori utili.</span></div>
+            <div class="recipe-step"><span class="bubble-num">2</span><span>Mescola spazio, testo, colore, oggetti e ritmo.</span></div>
+            <div class="recipe-step"><span class="bubble-num">3</span><span>Taglia il superfluo. Lascia solo ciò che tiene la forma.</span></div>
+            <div class="recipe-step"><span class="bubble-num">4</span><span>Impiatta il progetto: chiaro, leggibile, memorabile.</span></div>
+            <div class="recipe-step"><span class="bubble-num">5</span><span>Servi l’esperienza finale come un mondo coerente.</span></div>
+          </div>
+
+          <div class="kitchen-card">
+            <div class="recipe-title">KITCHEN TOOLS</div>
+
+            <div class="kitchen-items">
+              <div class="kitchen-tile"><span class="kicon">🔪</span>Editing</div>
+              <div class="kitchen-tile"><span class="kicon">🥣</span>Mix visivo</div>
+              <div class="kitchen-tile"><span class="kicon">🎨</span>Colori</div>
+              <div class="kitchen-tile"><span class="kicon">📐</span>Struttura</div>
+              <div class="kitchen-tile"><span class="kicon">🧂</span>Dettaglio</div>
+              <div class="kitchen-tile"><span class="kicon">✨</span>Presentazione</div>
+            </div>
           </div>
         </div>
       </div>
@@ -1656,6 +1906,10 @@ il LAB lo espone."</pre>
       <button class="start-item" data-open="win-archive" type="button"><span class="start-item-icon">📁</span> Archive</button>
       <button class="start-item" data-open="win-studio" type="button"><span class="start-item-icon">🎨</span> Studio</button>
       <button class="start-item" data-open="win-lab" type="button"><span class="start-item-icon">🔬</span> Lab</button>
+      <button class="start-item" data-open="win-playroom" type="button"><span class="start-item-icon">🎮</span> Playroom</button>
+      <button class="start-item" data-open="win-wii" type="button"><span class="start-item-icon">🧊</span> Wii</button>
+      <button class="start-item" data-open="win-mario" type="button"><span class="start-item-icon">🍄</span> Mario</button>
+      <button class="start-item" data-open="win-cooking" type="button"><span class="start-item-icon">🍳</span> Cooking</button>
       <button class="start-item" data-open="win-contact" type="button"><span class="start-item-icon">📧</span> Contact</button>
       <button class="start-item" data-open="win-manifesto" type="button"><span class="start-item-icon">📜</span> Manifesto</button>
       <button class="start-item" data-open="win-gallery" type="button"><span class="start-item-icon">🖼️</span> Gallery</button>
@@ -1725,7 +1979,6 @@ il LAB lo espone."</pre>
         String(now.getMinutes()).padStart(2,'0') + ':' +
         String(now.getSeconds()).padStart(2,'0');
     }
-
     setInterval(updateClock, 1000);
     updateClock();
 
@@ -1750,12 +2003,15 @@ il LAB lo espone."</pre>
       }
 
       const bootLines = [
-        'BLUCINELAB OS v1.4 — AVVIO SISTEMA',
+        'BLUCINELAB OS v1.5 — AVVIO SISTEMA',
         'Caricamento shell XP... OK',
         'Inizializzazione ARCHIVE... OK',
         'Inizializzazione STUDIO... OK',
-        'Montaggio modulo BIOS/LAB... OK',
-        'Avvio interfaccia utente... OK',
+        'Montaggio BIOS LAB... OK',
+        'Montaggio PLAYROOM... OK',
+        'Montaggio WII WORLD... OK',
+        'Montaggio MARIO WORLD... OK',
+        'Montaggio COOKING WORLD... OK',
         'SISTEMA PRONTO.'
       ];
 
@@ -1855,7 +2111,7 @@ il LAB lo espone."</pre>
       const win = document.getElementById(id);
       if (!win) return;
 
-      if (id === 'win-lab') {
+      if (win.classList.contains('world-fullscreen')) {
         openWindow(id);
         return;
       }
@@ -1967,7 +2223,6 @@ il LAB lo espone."</pre>
 
       document.addEventListener('touchend', () => dragging = false);
     }
-
     $$('[data-drag]').forEach(makeWindowDraggable);
 
     /* BUTTONS */
@@ -1983,7 +2238,7 @@ il LAB lo espone."</pre>
       btn.addEventListener('click', () => maximizeWindow(btn.dataset.maximize));
     });
 
-    /* DESKTOP ICONS - UN CLICK */
+    /* DESKTOP ICONS */
     $$('.desktop-icon[data-win]').forEach(icon => {
       icon.addEventListener('click', () => {
         $$('.desktop-icon').forEach(i => i.classList.remove('is-selected'));
@@ -1999,6 +2254,16 @@ il LAB lo espone."</pre>
         openWindow(item.dataset.open);
         $('#start-menu')?.classList.remove('open');
       });
+    });
+
+    /* SPECIAL PLAYROOM TRIGGERS */
+    $('#launch-pacman')?.addEventListener('click', () => {
+      togglePacman();
+      closeWindow('win-playroom');
+    });
+
+    $('#launch-popup-space')?.addEventListener('click', () => {
+      showAlert('SPACE MODE', 'Trigger arcade attivato.\nOra il desktop è pronto per altri mondi.');
     });
 
     /* START MENU */
@@ -2022,7 +2287,7 @@ il LAB lo espone."</pre>
       document.body.innerHTML = `
         <div style="background:#000;color:#00ff66;font-family:'Press Start 2P',monospace;font-size:14px;display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:20px;">
           <div>È SICURO SPEGNERE IL COMPUTER</div>
-          <div style="font-size:9px;color:#808080;">BLUCINELAB OS v1.4</div>
+          <div style="font-size:9px;color:#808080;">BLUCINELAB OS v1.5</div>
           <button onclick="location.reload()" style="font-family:'Press Start 2P',monospace;font-size:8px;padding:10px 20px;background:#000;color:#00ff66;border:2px solid #00ff66;cursor:pointer;margin-top:20px;">
             ↺ RIAVVIA
           </button>
@@ -2088,7 +2353,7 @@ il LAB lo espone."</pre>
       setTimeout(() => {
         showAlert(
           'BENVENUTO',
-          'Home XP stabile.\nApri ARCHIVE, STUDIO, LAB, CONTACT, GALLERY e MANIFEST.'
+          'Home XP stabile.\nApri ARCHIVE, STUDIO, LAB, PLAYROOM, WII, MARIO, COOKING.'
         );
       }, 900);
     }
@@ -2097,7 +2362,7 @@ il LAB lo espone."</pre>
     $('#egg-btn')?.addEventListener('click', () => {
       showAlert(
         '??? INSERT COIN ???',
-        'Hai trovato il segreto.\nPac-Man è attivabile dal menu Start.'
+        'Hai trovato il segreto.\nPac-Man è attivabile dal menu Start o da Playroom.'
       );
     });
 
