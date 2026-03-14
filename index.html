@@ -7,7 +7,7 @@
 
 <title>BLUCINELAB OS</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <style>
 
@@ -35,21 +35,18 @@ flex-direction:column;
 background:#245edb;
 color:white;
 padding:4px;
-display:flex;
-justify-content:space-between;
 }
 
 .win-body{
 flex:1;
-overflow:auto;
-padding:10px;
+overflow:hidden;
 }
 
 .world-fullscreen{
-top:30px;
+top:0;
 left:0;
 width:100vw;
-height:calc(100vh - 60px);
+height:100vh;
 border:0;
 }
 
@@ -61,27 +58,7 @@ bottom:0;
 width:70px;
 background:black;
 color:white;
-display:flex;
-flex-direction:column;
-align-items:center;
 }
-
-.nano{
-position:absolute;
-bottom:10px;
-left:10px;
-font-size:40px;
-animation:walk 1s infinite;
-}
-
-@keyframes walk{
-0%{transform:translateX(0)}
-50%{transform:translateX(5px)}
-100%{transform:translateX(0)}
-}
-
-
-/* PLAYROOM */
 
 .playroom-body{
 background:#001133;
@@ -89,16 +66,14 @@ color:white;
 font-family:"Press Start 2P";
 }
 
+/* menu */
 
 .game-menu button{
-
 display:block;
 margin:10px;
 padding:10px;
 font-family:"Press Start 2P";
-
 }
-
 
 .game-screen{
 display:none;
@@ -110,12 +85,13 @@ display:block;
 }
 
 
-/* mario */
+/* MARIO */
 
 #mario{
 
 background:#6bd3ff;
 position:relative;
+overflow:hidden;
 
 }
 
@@ -133,7 +109,8 @@ background:#5ab43c;
 
 position:absolute;
 bottom:100px;
-left:40px;
+left:100px;
+
 font-size:40px;
 
 }
@@ -142,29 +119,21 @@ font-size:40px;
 /* cooking */
 
 #cooking{
-
 background:pink;
-
 }
-
 
 /* invaders */
 
 #invaders{
-
 background:black;
 color:lime;
-
 }
-
 
 /* tama */
 
 #tama{
-
-background:#fff;
+background:white;
 color:black;
-
 }
 
 </style>
@@ -175,13 +144,12 @@ color:black;
 <div id="desktop"></div>
 
 
-<!-- PLAYROOM -->
 
 <div class="win world-fullscreen" id="playroom">
 
 <div class="world-rail">
 
-<button onclick="closeWin('playroom')">X</button>
+<button onclick="closeWin()">X</button>
 
 </div>
 
@@ -191,19 +159,17 @@ PLAYROOM
 
 </div>
 
+
 <div class="win-body playroom-body">
+
 
 <div class="game-menu">
 
 <button onclick="openGame('menu')">MENU</button>
-
-<button onclick="openGame('mario')">SUPER MARIO</button>
-
+<button onclick="openGame('mario')">MARIO</button>
 <button onclick="openGame('cooking')">COOKING</button>
-
 <button onclick="openGame('invaders')">INVADERS</button>
-
-<button onclick="openGame('tama')">TAMAGOTCHI</button>
+<button onclick="openGame('tama')">TAMA</button>
 
 </div>
 
@@ -216,9 +182,10 @@ SELECT GAME
 </div>
 
 
+
 <div id="mario" class="game-screen">
 
-<div class="mario-player">🙂</div>
+<div id="player" class="mario-player">🙂</div>
 
 <div class="mario-ground"></div>
 
@@ -250,8 +217,6 @@ TAMAGOTCHI
 
 
 
-<div class="nano">🎮</div>
-
 </div>
 
 </div>
@@ -260,11 +225,12 @@ TAMAGOTCHI
 
 <script>
 
-function closeWin(id){
+function closeWin(){
 
-document.getElementById(id).style.display="none"
+document.getElementById("playroom").style.display="none"
 
 }
+
 
 function openGame(id){
 
@@ -273,6 +239,63 @@ document.querySelectorAll(".game-screen").forEach(g=>g.classList.remove("active"
 document.getElementById(id).classList.add("active")
 
 }
+
+
+
+/* MARIO MOVEMENT */
+
+let player=document.getElementById("player")
+
+let x=100
+let y=0
+let vy=0
+
+let jumping=false
+
+document.addEventListener("keydown",e=>{
+
+if(document.getElementById("mario").classList.contains("active")){
+
+if(e.key=="ArrowRight") x+=10
+if(e.key=="ArrowLeft") x-=10
+
+if(e.key==" " && !jumping){
+
+vy=15
+jumping=true
+
+}
+
+player.style.left=x+"px"
+
+}
+
+})
+
+
+function loop(){
+
+if(jumping){
+
+y+=vy
+vy-=1
+
+if(y<=0){
+
+y=0
+jumping=false
+
+}
+
+player.style.bottom=100+y+"px"
+
+}
+
+requestAnimationFrame(loop)
+
+}
+
+loop()
 
 </script>
 
