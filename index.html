@@ -1,215 +1,3002 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<title>BLUCINE OS</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BLUCINELAB OS v1.5 — XP HOME / BIOS LAB / PLAYROOM</title>
+  <meta
+    name="description"
+    content="BLUCINELAB — studio visivo indipendente tra immagine, spazio, direzione, ricerca e costruzione percettiva."
+  />
 
-<link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap"
+    rel="stylesheet"
+  />
 
+  <style>
+    :root{
+      --xp-blue-1:#245edb;
+      --xp-blue-2:#0c3caa;
+      --xp-blue-3:#3a6ff0;
+      --xp-task:#245edb;
+      --xp-task-dark:#1941a5;
+      --xp-task-light:#3f7cf3;
+      --xp-green:#39b54a;
+      --xp-green-dark:#248137;
+      --xp-window:#ece9d8;
+      --xp-border:#0a246a;
+      --xp-text:#000;
+      --xp-shadow: 3px 3px 0 rgba(0,0,0,.35);
+
+      --c-yellow:#fff200;
+      --c-cyan:#00f6ff;
+      --c-magenta:#ff2dfb;
+      --c-green:#3cff6a;
+      --c-red:#ff2b4f;
+      --c-white:#ffffff;
+      --c-black:#000000;
+
+      --scorebar-h:30px;
+      --taskbar-h:42px;
+      --desktop-icon-w:84px;
+      --world-rail-w:74px;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html,body{
+      width:100%;
+      min-height:100%;
+    }
+
+    body{
+      min-height:100vh;
+      overflow:hidden;
+      position:relative;
+      font-family:Tahoma, Arial, sans-serif;
+      color:#000;
+      background:#5c93e8;
+    }
+
+    body.has-custom-cursor{
+      cursor:none;
+    }
+
+    button,
+    input,
+    textarea,
+    select{
+      font:inherit;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    .cursor-outer{
+      position:fixed;
+      width:20px;
+      height:20px;
+      pointer-events:none;
+      z-index:99999;
+      transform:translate(-50%,-50%);
+      display:none;
+    }
+
+    body.has-custom-cursor .cursor-outer{
+      display:block;
+    }
+
+    .cursor-outer::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      width:0;
+      height:0;
+      border-top:0;
+      border-right:0;
+      border-bottom:12px solid transparent;
+      border-left:12px solid #fff;
+      filter:
+        drop-shadow(1px 1px 0 #000)
+        drop-shadow(0 0 1px #000);
+    }
+
+    /* DESKTOP XP */
+    #desktop{
+      position:fixed;
+      inset:0;
+      overflow:hidden;
+      z-index:0;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,.08), rgba(255,255,255,0)),
+        linear-gradient(to bottom, #87b4ff 0%, #5c93e8 38%, #4f8a2e 39%, #67b63b 55%, #74c746 100%);
+    }
+
+    #desktop::before{
+      content:'';
+      position:absolute;
+      left:-10%;
+      bottom:11%;
+      width:120%;
+      height:42%;
+      background:
+        radial-gradient(ellipse at 30% 100%, #74c746 0%, #67b63b 55%, transparent 56%),
+        radial-gradient(ellipse at 70% 100%, #5aa92f 0%, #4f9728 48%, transparent 49%);
+      opacity:.95;
+      pointer-events:none;
+    }
+
+    #desktop::after{
+      content:'';
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 18% 16%, rgba(255,255,255,.95) 0 34px, transparent 35px),
+        radial-gradient(circle at 23% 15%, rgba(255,255,255,.95) 0 24px, transparent 25px),
+        radial-gradient(circle at 74% 19%, rgba(255,255,255,.9) 0 28px, transparent 29px),
+        radial-gradient(circle at 79% 18%, rgba(255,255,255,.92) 0 20px, transparent 21px);
+      opacity:.75;
+    }
+
+    /* TOP BAR */
+    #score-bar{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      height:var(--scorebar-h);
+      z-index:8000;
+      display:flex;
+      align-items:center;
+      gap:20px;
+      padding:0 12px;
+      background:linear-gradient(90deg, rgba(0,0,0,.78), rgba(0,0,0,.35));
+      color:#fff;
+      font-family:'VT323', monospace;
+      font-size:18px;
+      border-bottom:1px solid rgba(255,255,255,.18);
+    }
+
+    #score-bar .sc{
+      color:var(--c-yellow);
+      font-family:'Press Start 2P', monospace;
+      font-size:8px;
+    }
+
+    #score-bar .nm{
+      color:#dff4ff;
+      letter-spacing:.5px;
+      font-size:20px;
+      text-shadow:0 0 6px rgba(255,255,255,.25);
+    }
+
+    #lives-disp{
+      color:#ffd1db;
+      font-family:'Press Start 2P', monospace;
+      font-size:8px;
+    }
+
+    #egg-btn{
+      position:fixed;
+      top:4px;
+      right:10px;
+      z-index:8001;
+      padding:3px 8px;
+      font-family:'Press Start 2P', monospace;
+      font-size:7px;
+      color:#fff;
+      background:rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.4);
+    }
+
+    body.has-custom-cursor #egg-btn{ cursor:none; }
+
+    #egg-btn:hover{
+      background:rgba(0,0,0,.65);
+    }
+
+    /* PACMAN */
+    #pacman-layer{
+      position:fixed;
+      inset:0;
+      z-index:200;
+      pointer-events:none;
+    }
+
+    .pac{
+      position:absolute;
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      background:var(--c-yellow);
+      clip-path:polygon(100% 50%,0% 0%,0% 100%);
+      filter:drop-shadow(0 0 6px rgba(255,242,0,.7)) drop-shadow(1px 1px 0 #000);
+      animation:chomp .18s steps(2) infinite;
+      transition:left .04s linear, top .04s linear;
+      display:none;
+    }
+
+    @keyframes chomp{
+      0%{clip-path:polygon(100% 50%,0% 5%,0% 95%);}
+      50%{clip-path:polygon(100% 50%,0% 50%,0% 50%);}
+      100%{clip-path:polygon(100% 50%,0% 5%,0% 95%);}
+    }
+
+    .dot{
+      position:absolute;
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:#fff;
+      box-shadow:0 0 6px rgba(255,255,255,.9);
+      display:none;
+    }
+
+    .power-dot{
+      width:16px;
+      height:16px;
+      background:var(--c-cyan);
+      box-shadow:0 0 10px rgba(0,246,255,.95), 0 0 18px rgba(0,246,255,.38);
+      animation:powerPulse .5s ease-in-out infinite alternate;
+    }
+
+    @keyframes powerPulse{
+      from{transform:scale(1);}
+      to{transform:scale(1.25);}
+    }
+
+    .ghost{
+      position:absolute;
+      font-size:24px;
+      filter:drop-shadow(0 0 8px currentColor);
+      transition:left .06s linear, top .06s linear;
+      display:none;
+    }
+
+    /* DESKTOP ICONS */
+    .desktop-icon{
+      position:fixed;
+      z-index:50;
+      width:var(--desktop-icon-w);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:4px;
+      padding:4px;
+      border:none;
+      background:transparent;
+    }
+
+    body.has-custom-cursor .desktop-icon{ cursor:none; }
+
+    .desktop-icon .icon-img{
+      font-size:36px;
+      line-height:1;
+      filter:drop-shadow(1px 1px 0 rgba(0,0,0,.9));
+    }
+
+    .desktop-icon .icon-label{
+      padding:2px 4px;
+      text-align:center;
+      line-height:1.4;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:12px;
+      color:#fff;
+      text-shadow:1px 1px 1px rgba(0,0,0,.9);
+      border:1px solid transparent;
+    }
+
+    .desktop-icon:hover .icon-label,
+    .desktop-icon.is-selected .icon-label{
+      background:rgba(49,106,197,.55);
+      border:1px dotted #fff;
+    }
+
+    /* WINDOWS */
+    .win{
+      position:fixed;
+      z-index:100;
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+      border:1px solid var(--xp-border);
+      background:var(--xp-window);
+      box-shadow:var(--xp-shadow);
+      animation:winPop .16s ease-out;
+    }
+
+    @keyframes winPop{
+      from{transform:scale(.96); opacity:0;}
+      to{transform:scale(1); opacity:1;}
+    }
+
+    .win-titlebar{
+      flex-shrink:0;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      min-height:30px;
+      padding:5px 8px;
+      color:#fff;
+      background:linear-gradient(90deg, var(--xp-blue-1), var(--xp-blue-3));
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:13px;
+      font-weight:700;
+      cursor:move;
+      user-select:none;
+    }
+
+    .win-icon{
+      font-size:15px;
+    }
+
+    .win-title{
+      flex:1;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
+    .win-controls{
+      display:flex;
+      gap:4px;
+      flex-shrink:0;
+    }
+
+    .win-btn{
+      width:22px;
+      height:22px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(to bottom, #fff, #dcdcdc);
+      border:1px solid #245;
+      color:#000;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:12px;
+      font-weight:700;
+    }
+
+    body.has-custom-cursor .win-btn{ cursor:none; }
+
+    .win-btn:hover{
+      filter:brightness(1.06);
+    }
+
+    .win-btn.close{
+      background:linear-gradient(to bottom, #ff8f8f, #d64444);
+      color:#fff;
+      border-color:#7f1f1f;
+    }
+
+    .win-menubar{
+      flex-shrink:0;
+      display:flex;
+      gap:18px;
+      padding:4px 8px;
+      background:#ece9d8;
+      border-bottom:1px solid #b9b39c;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:12px;
+      color:#000;
+    }
+
+    .win-menubar span{
+      padding:0 2px;
+    }
+
+    .win-body{
+      position:relative;
+      flex:1;
+      overflow:auto;
+      padding:16px;
+      background:#fff;
+      color:#111;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:14px;
+      line-height:1.45;
+    }
+
+    .win-body h1,
+    .win-body h2{
+      margin:0 0 12px;
+      font-size:19px;
+      line-height:1.2;
+      color:#163d82;
+      font-family:Tahoma, Arial, sans-serif;
+    }
+
+    .win-body h3{
+      margin:0 0 8px;
+      font-size:14px;
+      color:#1a4ca3;
+      font-family:Tahoma, Arial, sans-serif;
+    }
+
+    .win-body p{
+      margin-bottom:10px;
+      font-size:14px;
+      color:#111;
+    }
+
+    .label{
+      display:block;
+      margin-bottom:8px;
+      font-family:'Press Start 2P', monospace;
+      font-size:7px;
+      color:#4c6fb6;
+      line-height:1.6;
+    }
+
+    .field-card{
+      margin-bottom:12px;
+      padding:12px;
+      background:#f5f6fa;
+      border:1px solid #c6d2ea;
+    }
+
+    .tag{
+      display:inline-block;
+      margin:2px;
+      padding:3px 7px;
+      font-family:'Press Start 2P', monospace;
+      font-size:6px;
+      border:1px solid currentColor;
+      background:#fff;
+    }
+
+    .tag.yellow{color:#9f7f00;}
+    .tag.cyan{color:#006f8d;}
+    .tag.magenta{color:#8e2c92;}
+    .tag.green{color:#287b39;}
+
+    .spinner{
+      display:inline-block;
+      animation:spin .6s steps(8) infinite;
+    }
+
+    @keyframes spin{
+      to{transform:rotate(360deg);}
+    }
+
+    .muted{
+      color:#666 !important;
+      font-size:12px !important;
+    }
+
+    /* GUIDE / NANO */
+    .window-guide{
+      position:absolute;
+      right:12px;
+      bottom:10px;
+      width:70px;
+      height:88px;
+      z-index:5;
+      pointer-events:none;
+      opacity:.96;
+    }
+
+    .guide-note{
+      position:absolute;
+      right:0;
+      bottom:72px;
+      background:rgba(255,255,255,.95);
+      border:1px solid #8aa2d8;
+      color:#17387c;
+      font-size:10px;
+      line-height:1.2;
+      padding:4px 6px;
+      border-radius:6px;
+      box-shadow:1px 1px 0 rgba(0,0,0,.15);
+      white-space:nowrap;
+    }
+
+    .guide-figure{
+      position:absolute;
+      bottom:0;
+      left:18px;
+      width:34px;
+      height:70px;
+      animation:guideWalk 2.2s ease-in-out infinite;
+    }
+
+    .guide-head{
+      position:absolute;
+      top:0;
+      left:8px;
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      background:#f4cfb2;
+      border:1px solid rgba(0,0,0,.2);
+    }
+
+    .guide-body{
+      position:absolute;
+      top:18px;
+      left:10px;
+      width:14px;
+      height:24px;
+      border-radius:7px;
+      background:#5aa2ff;
+    }
+
+    .guide-arm{
+      position:absolute;
+      top:22px;
+      width:4px;
+      height:18px;
+      background:#f4cfb2;
+      transform-origin:top center;
+    }
+
+    .guide-arm.left{ left:5px; animation:armSwingL 1s ease-in-out infinite; }
+    .guide-arm.right{ right:5px; animation:armSwingR 1s ease-in-out infinite; }
+
+    .guide-leg{
+      position:absolute;
+      top:39px;
+      width:5px;
+      height:22px;
+      background:#324a8e;
+      transform-origin:top center;
+    }
+
+    .guide-leg.left{ left:11px; animation:legSwingL 1s ease-in-out infinite; }
+    .guide-leg.right{ right:11px; animation:legSwingR 1s ease-in-out infinite; }
+
+    @keyframes guideWalk{
+      0%,100%{ transform:translateX(0); }
+      50%{ transform:translateX(-4px); }
+    }
+    @keyframes armSwingL{
+      0%,100%{ transform:rotate(18deg); }
+      50%{ transform:rotate(-16deg); }
+    }
+    @keyframes armSwingR{
+      0%,100%{ transform:rotate(-18deg); }
+      50%{ transform:rotate(16deg); }
+    }
+    @keyframes legSwingL{
+      0%,100%{ transform:rotate(14deg); }
+      50%{ transform:rotate(-12deg); }
+    }
+    @keyframes legSwingR{
+      0%,100%{ transform:rotate(-14deg); }
+      50%{ transform:rotate(12deg); }
+    }
+
+    /* full world */
+    .world-fullscreen{
+      top:var(--scorebar-h);
+      left:0;
+      width:100vw;
+      height:calc(100vh - var(--scorebar-h) - var(--taskbar-h));
+      border:0;
+      box-shadow:none;
+      z-index:5000;
+    }
+
+    .world-fullscreen .win-titlebar{
+      min-height:34px;
+      padding:7px 10px;
+      border-bottom:1px solid rgba(255,255,255,.15);
+    }
+
+    .world-rail{
+      position:absolute;
+      top:0;
+      left:0;
+      bottom:0;
+      width:var(--world-rail-w);
+      z-index:8;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+      gap:10px;
+      padding:12px 8px;
+      border-right:1px solid rgba(255,255,255,.14);
+    }
+
+    .world-rail .rail-logo{
+      writing-mode:vertical-rl;
+      transform:rotate(180deg);
+      font-size:11px;
+      letter-spacing:2px;
+      opacity:.9;
+    }
+
+    .rail-close{
+      width:42px;
+      height:42px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
+      font-weight:700;
+      border:1px solid currentColor;
+      background:rgba(255,255,255,.06);
+    }
+
+    .rail-tip{
+      font-size:11px;
+      line-height:1.3;
+      text-align:center;
+      opacity:.9;
+    }
+
+    /* FILE GRID */
+    .file-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+      gap:12px;
+      margin-top:10px;
+    }
+
+    .file-card{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:8px;
+      min-height:96px;
+      padding:10px;
+      color:#111;
+      background:#fff;
+      border:1px solid #c6d2ea;
+      text-align:left;
+    }
+
+    .file-card:hover{
+      background:#eef4ff;
+      border-color:#7ca0df;
+    }
+
+    .file-icon{
+      font-size:28px;
+      line-height:1;
+    }
+
+    .file-name{
+      font-family:'Press Start 2P', monospace;
+      font-size:7px;
+      line-height:1.6;
+      color:#244c98;
+    }
+
+    .file-meta{
+      font-size:12px;
+      color:#446;
+      font-family:Tahoma, Arial, sans-serif;
+    }
+
+    .viewer-image{
+      width:100%;
+      display:block;
+      border:1px solid #7a89a8;
+      background:#000;
+      image-rendering:pixelated;
+    }
+
+    /* LAB BIOS */
+    #win-lab{
+      display:none;
+    }
+
+    #win-lab.world-fullscreen{
+      background:#000;
+      color:#7fffe0;
+    }
+
+    #win-lab .world-rail{
+      background:#001010;
+      color:#7efce3;
+      border-right:1px solid #1bcfb5;
+    }
+
+    #win-lab .rail-close{
+      color:#9effee;
+      border-color:#53fdd8;
+      background:#021d1d;
+    }
+
+    #win-lab .win-titlebar{
+      background:linear-gradient(90deg, #001414, #003535);
+      color:#8dffef;
+      font-family:"Courier New", monospace;
+      font-size:14px;
+      letter-spacing:.5px;
+      border-bottom:2px solid #53fdd8;
+      padding-left:calc(var(--world-rail-w) + 8px);
+    }
+
+    #win-lab .win-btn{
+      background:#021d1d;
+      color:#8dffef;
+      border:1px solid #53fdd8;
+      width:24px;
+      height:24px;
+      font-family:"Courier New", monospace;
+    }
+
+    #win-lab .win-btn.close{
+      background:#320909;
+      color:#fff;
+      border:1px solid #ff8c8c;
+    }
+
+    #win-lab .win-menubar{
+      background:#001111;
+      color:#77f5de;
+      border-bottom:1px solid rgba(127,255,224,.25);
+      font-family:"Courier New", monospace;
+      font-size:13px;
+      padding-left:calc(var(--world-rail-w) + 8px);
+    }
+
+    #win-lab .win-body{
+      background:#000;
+      color:#86ffe4;
+      font-family:"Courier New", monospace;
+      font-size:14px;
+      line-height:1.45;
+      padding:0 0 0 var(--world-rail-w);
+      overflow:hidden;
+      image-rendering:pixelated;
+      text-rendering:geometricPrecision;
+      -webkit-font-smoothing:none;
+      position:relative;
+    }
+
+    #win-lab .win-body::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(127,255,224,.06) 0px,
+          rgba(127,255,224,.06) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+      opacity:.9;
+      mix-blend-mode:screen;
+      z-index:2;
+    }
+
+    #win-lab .win-body::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at center, transparent 54%, rgba(0,0,0,.22) 100%);
+      z-index:2;
+    }
+
+    .lab-shell{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns: 1.1fr 1fr;
+      grid-template-rows:auto 1fr auto;
+      gap:0;
+      width:100%;
+      height:100%;
+      min-height:calc(100vh - var(--scorebar-h) - var(--taskbar-h) - 66px);
+      background:#000;
+      color:#88ffe7;
+    }
+
+    .lab-topline{
+      grid-column:1 / -1;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:10px 14px;
+      border-bottom:1px solid #1bcfb5;
+      font-size:13px;
+      background:#000;
+      font-family:"Courier New", monospace;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+    }
+
+    .lab-left,
+    .lab-right{
+      min-height:0;
+      overflow:auto;
+      padding:14px;
+    }
+
+    .lab-left{
+      border-right:1px solid #1bcfb5;
+    }
+
+    .lab-right{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-left:1px solid rgba(0,0,0,0);
+      position:relative;
+    }
+
+    .lab-right::before{
+      content:"";
+      position:absolute;
+      inset:14px;
+      border:1px solid #1bcfb5;
+      pointer-events:none;
+    }
+
+    .lab-bottom{
+      grid-column:1 / -1;
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:0;
+      border-top:1px solid #1bcfb5;
+      min-height:120px;
+    }
+
+    .lab-block{
+      border-right:1px solid #1bcfb5;
+      padding:12px 14px;
+      font-size:13px;
+      line-height:1.45;
+      font-family:"Courier New", monospace;
+      overflow:auto;
+    }
+
+    .lab-block:last-child{
+      border-right:0;
+    }
+
+    .lab-pre{
+      font-family:"Courier New", monospace;
+      font-size:13px;
+      line-height:1.38;
+      white-space:pre-wrap;
+      color:#8effe6;
+    }
+
+    .lab-ascii{
+      font-family:"Courier New", monospace;
+      font-size:10px;
+      line-height:1;
+      color:#affff1;
+      white-space:pre;
+      text-align:center;
+      opacity:.95;
+    }
+
+    .lab-nano{
+      position:absolute;
+      left:10px;
+      bottom:12px;
+      width:44px;
+      height:70px;
+      z-index:4;
+      animation:labNanoFloat 1.8s ease-in-out infinite;
+    }
+
+    .lab-nano::before{
+      content:'>';
+      position:absolute;
+      top:0;
+      left:12px;
+      color:#97ffe8;
+      font-size:20px;
+      font-family:"Courier New", monospace;
+    }
+
+    .lab-nano::after{
+      content:'[]';
+      position:absolute;
+      top:24px;
+      left:6px;
+      color:#97ffe8;
+      font-size:22px;
+      font-family:"Courier New", monospace;
+      letter-spacing:2px;
+    }
+
+    @keyframes labNanoFloat{
+      0%,100%{ transform:translateY(0); }
+      50%{ transform:translateY(-4px); }
+    }
+
+    /* PLAYROOM */
+    #win-playroom{
+      display:none;
+      background:#0a1332;
+      color:#fff;
+    }
+
+    #win-playroom .world-rail{
+      background:linear-gradient(to bottom,#0f1a44,#0a1028);
+      color:#fff09c;
+      border-right:1px solid rgba(255,255,255,.12);
+    }
+
+    #win-playroom .rail-close{
+      color:#fff;
+      border-color:#ffd95d;
+      background:rgba(255,255,255,.08);
+    }
+
+    #win-playroom .win-titlebar{
+      background:linear-gradient(90deg,#4d2cf5,#ff4fcf);
+      color:#fff;
+      padding-left:calc(var(--world-rail-w) + 8px);
+    }
+
+    #win-playroom .win-menubar{
+      background:#131d48;
+      color:#fff;
+      border-bottom:1px solid rgba(255,255,255,.1);
+      padding-left:calc(var(--world-rail-w) + 8px);
+    }
+
+    #win-playroom .win-body{
+      padding:18px 18px 18px calc(var(--world-rail-w) + 18px);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.06), transparent 30%),
+        linear-gradient(to bottom,#121a42,#0b1028 60%, #090d1c);
+      color:#fff;
+      overflow:auto;
+      position:relative;
+    }
+
+    .playroom-wrap{
+      min-height:calc(100vh - var(--scorebar-h) - var(--taskbar-h) - 66px);
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      position:relative;
+    }
+
+    .playroom-hero{
+      padding:16px 18px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      box-shadow:0 0 20px rgba(0,0,0,.2);
+    }
+
+    .playroom-hero h2{
+      color:#fff;
+      margin-bottom:8px;
+      font-size:22px;
+    }
+
+    .playroom-hero p{
+      color:#dbe1ff;
+      font-size:15px;
+      margin-bottom:0;
+    }
+
+    .playroom-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:16px;
+    }
+
+    .world-card{
+      position:relative;
+      min-height:180px;
+      padding:16px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.05);
+      overflow:hidden;
+      text-align:left;
+      transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+    }
+
+    .world-card:hover{
+      transform:translateY(-2px);
+      box-shadow:0 6px 18px rgba(0,0,0,.24);
+    }
+
+    .world-card h3{
+      margin-bottom:8px;
+      color:#fff;
+      font-size:16px;
+    }
+
+    .world-card p{
+      font-size:13px;
+      line-height:1.45;
+      color:#e0e6ff;
+      max-width:76%;
+    }
+
+    .world-badge{
+      display:inline-block;
+      margin-bottom:10px;
+      padding:4px 8px;
+      font-family:'Press Start 2P', monospace;
+      font-size:6px;
+      line-height:1.4;
+      background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.22);
+      color:#fff;
+    }
+
+    .card-nano{
+      position:absolute;
+      right:16px;
+      bottom:12px;
+      width:64px;
+      height:96px;
+    }
+
+    .card-nano .sprite{
+      position:absolute;
+      left:12px;
+      bottom:0;
+      animation:cardWalk 1.3s steps(2,end) infinite;
+    }
+
+    @keyframes cardWalk{
+      0%,100%{ transform:translateX(0); }
+      50%{ transform:translateX(-4px); }
+    }
+
+    /* different worlds */
+    .world-card.mario{
+      background:
+        linear-gradient(to bottom,#86d4ff 0 52%, #6fc34d 52% 100%);
+      color:#111;
+      border-color:#2d7f2f;
+    }
+    .world-card.mario h3,
+    .world-card.mario p{ color:#10220f; }
+    .world-card.mario .sprite{
+      font-size:44px;
+      image-rendering:pixelated;
+      filter:contrast(1.1) saturate(1.2);
+    }
+
+    .world-card.pacman{
+      background:#000;
+      border-color:#2247ff;
+      box-shadow:inset 0 0 0 2px rgba(255,255,0,.05);
+    }
+    .world-card.pacman h3{ color:#fff200; }
+    .world-card.pacman p{ color:#b9d5ff; }
+    .world-card.pacman::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:
+        repeating-linear-gradient(90deg, transparent 0 22px, rgba(0,110,255,.18) 22px 24px),
+        repeating-linear-gradient(0deg, transparent 0 22px, rgba(0,110,255,.18) 22px 24px);
+      opacity:.18;
+      pointer-events:none;
+    }
+    .world-card.pacman .sprite{ font-size:40px; }
+
+    .world-card.cooking{
+      background:linear-gradient(to bottom,#ffdff0,#fff7c9);
+      border-color:#ff8bc4;
+    }
+    .world-card.cooking h3{ color:#c04d8e; }
+    .world-card.cooking p{ color:#7a5a47; }
+    .world-card.cooking .sprite{ font-size:42px; }
+
+    .world-card.sims{
+      background:linear-gradient(to bottom,#d7ffe5,#bde9ff);
+      border-color:#4aa67e;
+    }
+    .world-card.sims h3{ color:#157a50; }
+    .world-card.sims p{ color:#26535a; }
+    .world-card.sims .sprite{ font-size:40px; }
+
+    .world-card.gta{
+      background:linear-gradient(135deg,#131313,#3a1330 55%, #141414);
+      border-color:#ff4aa8;
+    }
+    .world-card.gta h3{ color:#ffb3d7; }
+    .world-card.gta p{ color:#e7d6e0; }
+    .world-card.gta .sprite{ font-size:42px; }
+
+    .playroom-guide{
+      position:absolute;
+      right:10px;
+      top:8px;
+      width:92px;
+      height:132px;
+      z-index:3;
+      pointer-events:none;
+    }
+
+    .playroom-guide .guide-bubble{
+      position:absolute;
+      top:0;
+      right:0;
+      padding:6px 8px;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.2);
+      color:#fff;
+      font-size:11px;
+      line-height:1.25;
+    }
+
+    .playroom-guide .guide-mascot{
+      position:absolute;
+      right:18px;
+      bottom:0;
+      font-size:54px;
+      animation:playroomMascot 1.6s ease-in-out infinite;
+      filter:drop-shadow(0 4px 8px rgba(0,0,0,.3));
+    }
+
+    @keyframes playroomMascot{
+      0%,100%{ transform:translateX(0) translateY(0); }
+      50%{ transform:translateX(-6px) translateY(-3px); }
+    }
+
+    /* positions */
+    #hero-win{
+      top:54px;
+      left:120px;
+      width:720px;
+      min-height:330px;
+    }
+
+    #win-archive{
+      top:98px;
+      left:170px;
+      width:540px;
+      display:none;
+    }
+
+    #win-studio{
+      top:122px;
+      left:240px;
+      width:540px;
+      display:none;
+    }
+
+    #win-contact{
+      top:160px;
+      left:210px;
+      width:470px;
+      display:none;
+    }
+
+    #win-manifesto{
+      top:182px;
+      left:180px;
+      width:560px;
+      display:none;
+    }
+
+    #win-gallery{
+      top:110px;
+      left:330px;
+      width:560px;
+      display:none;
+    }
+
+    #win-img-1{
+      top:120px;
+      left:380px;
+      width:480px;
+      display:none;
+    }
+
+    #win-img-2{
+      top:150px;
+      left:410px;
+      width:460px;
+      display:none;
+    }
+
+    #win-img-3{
+      top:180px;
+      left:440px;
+      width:500px;
+      display:none;
+    }
+
+    /* TASKBAR XP */
+    #taskbar{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      height:var(--taskbar-h);
+      z-index:9000;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      padding:0 6px;
+      color:#fff;
+      background:linear-gradient(to bottom, var(--xp-task-light), var(--xp-task-dark));
+      border-top:1px solid rgba(255,255,255,.35);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.22);
+      user-select:none;
+    }
+
+    #taskbar-start{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+      padding:6px 14px;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:16px;
+      font-style:italic;
+      font-weight:700;
+      color:#fff;
+      background:linear-gradient(135deg, #4bc15c 0%, #2c8e3d 100%);
+      border:1px solid rgba(255,255,255,.4);
+      border-radius:6px;
+      box-shadow:inset 1px 1px 0 rgba(255,255,255,.28);
+    }
+
+    #taskbar-start::before{
+      content:'⊞';
+      font-size:15px;
+      font-style:normal;
+    }
+
+    body.has-custom-cursor #taskbar-start{ cursor:none; }
+
+    #taskbar-tasks{
+      display:flex;
+      align-items:center;
+      gap:4px;
+      min-width:0;
+      flex:1;
+      overflow:hidden;
+    }
+
+    .taskbar-btn{
+      max-width:180px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      padding:6px 10px;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:12px;
+      color:#fff;
+      background:rgba(255,255,255,.15);
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:3px;
+    }
+
+    .taskbar-btn.active{
+      background:rgba(255,255,255,.28);
+    }
+
+    #clock{
+      margin-left:auto;
+      min-width:84px;
+      text-align:center;
+      padding:4px 8px;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:12px;
+      color:#fff;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:2px;
+    }
+
+    /* START MENU XP */
+    #start-menu{
+      position:fixed;
+      left:0;
+      bottom:var(--taskbar-h);
+      width:280px;
+      z-index:9999;
+      display:none;
+      flex-direction:column;
+      background:#fff;
+      border:1px solid #245;
+      box-shadow:4px 4px 10px rgba(0,0,0,.35);
+      overflow:hidden;
+    }
+
+    #start-menu.open{
+      display:flex;
+    }
+
+    .start-banner{
+      background:linear-gradient(to bottom, #0e4bbb, #1c73f5);
+      color:#fff;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:26px;
+      font-weight:700;
+      padding:16px 14px;
+    }
+
+    .start-items{
+      display:flex;
+      flex-direction:column;
+      background:#f6f7fb;
+    }
+
+    .start-item{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:16px;
+      color:#111;
+      border-top:1px solid #edf0f7;
+      background:transparent;
+      text-align:left;
+    }
+
+    .start-item:hover{
+      background:#2b66ce;
+      color:#fff;
+    }
+
+    .start-item-icon{
+      font-size:18px;
+    }
+
+    /* ALERTS */
+    .win-alert{
+      min-width:320px;
+      max-width:420px;
+      resize:none;
+    }
+
+    .win-alert .win-body{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:12px;
+      padding:18px;
+      font-size:14px;
+    }
+
+    .win-alert .alert-row{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+    }
+
+    .win-alert .alert-icon{
+      flex-shrink:0;
+      font-size:26px;
+    }
+
+    .win-alert .alert-msg{
+      font-size:14px;
+      line-height:1.4;
+      color:#111;
+    }
+
+    .win-alert .alert-btns{
+      display:flex;
+      gap:10px;
+      margin-top:6px;
+    }
+
+    .alert-ok{
+      padding:6px 16px;
+      background:linear-gradient(to bottom, #fff, #dcdcdc);
+      border:1px solid #245;
+      color:#000;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:12px;
+    }
+
+    @media (max-width:900px){
+      #hero-win{
+        left:30px;
+        width:min(92vw,720px);
+      }
+
+      .win{
+        min-width:260px;
+      }
+    }
+
+    @media (max-width:600px){
+      .cursor-outer{
+        display:none !important;
+      }
+
+      #hero-win{
+        top:48px;
+        left:4px;
+        width:calc(100vw - 8px);
+      }
+
+      .win{
+        resize:none;
+        max-width:calc(100vw - 8px);
+      }
+
+      #win-archive,
+      #win-studio,
+      #win-contact,
+      #win-manifesto,
+      #win-gallery,
+      #win-img-1,
+      #win-img-2,
+      #win-img-3{
+        left:4px !important;
+        width:calc(100vw - 8px) !important;
+      }
+
+      #taskbar-tasks{
+        display:none;
+      }
+
+      .lab-shell{
+        grid-template-columns:1fr;
+        grid-template-rows:auto auto 1fr auto;
+      }
+
+      .lab-left{
+        border-right:0;
+        border-bottom:1px solid #1bcfb5;
+      }
+
+      .lab-right{
+        min-height:240px;
+      }
+
+      .lab-bottom{
+        grid-template-columns:1fr;
+      }
+
+      .lab-block{
+        border-right:0;
+        border-bottom:1px solid #1bcfb5;
+      }
+
+      .lab-block:last-child{
+        border-bottom:0;
+      }
+
+      .world-rail{
+        width:58px;
+      }
+
+      #win-lab .win-titlebar,
+      #win-playroom .win-titlebar{
+        padding-left:66px;
+      }
+
+      #win-lab .win-menubar,
+      #win-playroom .win-menubar{
+        padding-left:66px;
+      }
+
+      #win-lab .win-body,
+      #win-playroom .win-body{
+        padding-left:58px;
+      }
+    }
+
+    @media (pointer:coarse){
+      body,
+      body.has-custom-cursor{
+        cursor:auto;
+      }
+
+      .cursor-outer{
+        display:none !important;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="cursor-outer" id="cur"></div>
 
+  <div id="score-bar">
+    <span class="nm">BLUCINELAB OS</span>
+    <span class="sc">SCORE: <span id="score-num">0</span></span>
+    <span id="lives-disp">LIVES: ♥♥♥</span>
+  </div>
 
-<!-- ======================
-BOOT
-====================== -->
+  <button id="egg-btn" type="button" title="???">INSERT COIN</button>
 
-<div id="bootScreen">
-    <div>BLUCINE SYSTEM</div>
-    <div class="bar">
-        <div id="bootBar"></div>
+  <div id="pacman-layer" aria-hidden="true">
+    <div class="pac" id="pac"></div>
+  </div>
+
+  <div id="desktop"></div>
+
+  <button class="desktop-icon" style="top:56px;left:16px" id="icon-archive" data-win="win-archive" type="button">
+    <div class="icon-img">📁</div>
+    <div class="icon-label">ARCHIVE</div>
+  </button>
+
+  <button class="desktop-icon" style="top:156px;left:18px" id="icon-studio" data-win="win-studio" type="button">
+    <div class="icon-img">🎨</div>
+    <div class="icon-label">STUDIO</div>
+  </button>
+
+  <button class="desktop-icon" style="top:256px;left:16px" id="icon-lab" data-win="win-lab" type="button">
+    <div class="icon-img">🔬</div>
+    <div class="icon-label">LAB</div>
+  </button>
+
+  <button class="desktop-icon" style="top:356px;left:18px" id="icon-contact" data-win="win-contact" type="button">
+    <div class="icon-img">📧</div>
+    <div class="icon-label">CONTACT</div>
+  </button>
+
+  <button class="desktop-icon" style="top:456px;left:16px" id="icon-manifesto" data-win="win-manifesto" type="button">
+    <div class="icon-img">📜</div>
+    <div class="icon-label">MANIFEST</div>
+  </button>
+
+  <button class="desktop-icon" style="top:556px;left:18px" id="icon-gallery" data-win="win-gallery" type="button">
+    <div class="icon-img">🖼️</div>
+    <div class="icon-label">GALLERY</div>
+  </button>
+
+  <button class="desktop-icon" style="top:656px;left:16px" id="icon-playroom" data-win="win-playroom" type="button">
+    <div class="icon-img">🎮</div>
+    <div class="icon-label">PLAYROOM</div>
+  </button>
+
+  <!-- HOME -->
+  <section class="win" id="hero-win" aria-label="Homepage">
+    <div class="win-titlebar" data-drag="hero-win">
+      <span class="win-icon">🖥</span>
+      <span class="win-title">BLUCINELAB — HOME</span>
+      <div class="win-controls">
+        <button class="win-btn" data-minimize="hero-win" type="button" aria-label="Minimizza">_</button>
+        <button class="win-btn" data-maximize="hero-win" type="button" aria-label="Massimizza">□</button>
+      </div>
     </div>
-</div>
 
+    <div class="win-menubar">
+      <span>File</span>
+      <span>Edit</span>
+      <span>View</span>
+      <span>Help</span>
+    </div>
 
+    <div class="win-body" style="min-height:260px;">
+      <span class="label">HOME / XP MODE / BOLOGNA</span>
+      <h1>COSTRUIRE IMMAGINI CHE PENSANO</h1>
+      <p>BLUCINELAB è uno studio visivo indipendente che lavora tra immagine, spazio, direzione e ricerca.</p>
+      <p>Cinema, identità, ambienti digitali, installazioni, archivi, processi: non come servizi separati, ma come un unico campo di costruzione percettiva, culturale e narrativa.</p>
 
-<!-- ======================
-DESKTOP XP
-====================== -->
+      <div style="margin-top:10px;display:flex;flex-wrap:wrap;">
+        <span class="tag yellow">WEB DESIGN</span>
+        <span class="tag cyan">VISUAL IDENTITY</span>
+        <span class="tag magenta">EXHIBITION</span>
+        <span class="tag green">IMAGE DIRECTION</span>
+      </div>
 
-<div id="desktop">
+      <div style="margin-top:18px;" class="field-card">
+        <span class="label">SYSTEM STATUS</span>
+        <h3>HOME STABILE / XP MODE</h3>
+        <p>Questa è la superficie stabile del sito. Le altre finestre possono cambiare epoca, risoluzione e mondo visivo.</p>
+      </div>
 
+      <div style="margin-top:14px; font-size:14px; color:#244c98;">
+        <span class="spinner">◐</span>
+        &nbsp;SISTEMA CARICATO — APRI LE ICONE O IL MENU START
+      </div>
 
-<!-- ICONS -->
+      <div class="window-guide">
+        <div class="guide-note">ciao</div>
+        <div class="guide-figure">
+          <div class="guide-head"></div>
+          <div class="guide-body"></div>
+          <div class="guide-arm left"></div>
+          <div class="guide-arm right"></div>
+          <div class="guide-leg left"></div>
+          <div class="guide-leg right"></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<div class="icon" onclick="openWindow('archive')">
-📁 ARCHIVE
-</div>
+  <!-- ARCHIVE -->
+  <section class="win" id="win-archive" aria-label="Archive">
+    <div class="win-titlebar" data-drag="win-archive">
+      <span class="win-icon">📁</span>
+      <span class="win-title">ARCHIVE — Lavori e processi</span>
+      <div class="win-controls">
+        <button class="win-btn" data-minimize="win-archive" type="button">_</button>
+        <button class="win-btn close" data-close="win-archive" type="button">✕</button>
+      </div>
+    </div>
 
-<div class="icon" onclick="openWindow('lab')">
-🖥 LAB
-</div>
+    <div class="win-menubar">
+      <span>File</span>
+      <span>Sort</span>
+      <span>View</span>
+      <span>Open</span>
+    </div>
 
-<div class="icon" onclick="openWindow('playroom')">
-🎮 PLAYROOM
-</div>
+    <div class="win-body" style="min-height:300px;">
+      <span class="label">ARCHIVE / PUBLIC WORKS / OPEN FILES</span>
+      <h2>LAVORI, PROCESSI, STATI DI VISIBILITÀ</h2>
 
+      <div class="field-card">
+        <span class="label">PUBLIC WORKS</span>
+        <h3>ENTRA NELL'ARCHIVIO</h3>
+        <p>Case study, superfici protette, immagini, test e pagine di processo organizzate per stato e profondità.</p>
+      </div>
 
-</div>
+      <div class="file-grid">
+        <button class="file-card" type="button" data-open="win-img-1">
+          <span class="file-icon">🖼️</span>
+          <span class="file-name">CITY_01.BMP</span>
+          <span class="file-meta">Apri immagine</span>
+        </button>
 
+        <button class="file-card" type="button" data-open="win-img-2">
+          <span class="file-icon">🖼️</span>
+          <span class="file-name">SIGNAL_02.PCX</span>
+          <span class="file-meta">Apri immagine</span>
+        </button>
 
+        <button class="file-card" type="button" data-open="win-img-3">
+          <span class="file-icon">🖼️</span>
+          <span class="file-name">ARCHIVE_03.GIF</span>
+          <span class="file-meta">Apri immagine</span>
+        </button>
 
-<!-- ======================
-START BAR
-====================== -->
+        <button class="file-card" type="button" data-open="win-gallery">
+          <span class="file-icon">📂</span>
+          <span class="file-name">OPEN_GALLERY</span>
+          <span class="file-meta">Cartella immagini</span>
+        </button>
+      </div>
 
-<div id="taskbar">
+      <p class="muted" style="margin-top:14px;">► Click su icone, start menu o file interni.</p>
 
-<div id="startBtn" onclick="toggleStart()">START</div>
+      <div class="window-guide">
+        <div class="guide-note">apri file</div>
+        <div class="guide-figure">
+          <div class="guide-head"></div>
+          <div class="guide-body"></div>
+          <div class="guide-arm left"></div>
+          <div class="guide-arm right"></div>
+          <div class="guide-leg left"></div>
+          <div class="guide-leg right"></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-</div>
+  <!-- STUDIO -->
+  <section class="win" id="win-studio" aria-label="Studio">
+    <div class="win-titlebar" data-drag="win-studio">
+      <span class="win-icon">🎨</span>
+      <span class="win-title">STUDIO — Metodo e coerenza</span>
+      <div class="win-controls">
+        <button class="win-btn" data-minimize="win-studio" type="button">_</button>
+        <button class="win-btn close" data-close="win-studio" type="button">✕</button>
+      </div>
+    </div>
 
+    <div class="win-menubar">
+      <span>File</span>
+      <span>Method</span>
+      <span>Values</span>
+    </div>
 
+    <div class="win-body" style="min-height:260px;">
+      <span class="label">STUDIO / METODO</span>
+      <h2>METODO, RIDUZIONE, COERENZA</h2>
 
-<div id="startMenu">
+      <div class="field-card">
+        <span class="label">SELECTION</span>
+        <h3>TOGLIERE CIÒ CHE INDEBOLISCE</h3>
+        <p>La prima mossa è spesso sottrattiva. Meno dispersione, più struttura, più tensione.</p>
+      </div>
 
-<div onclick="openWindow('archive')">ARCHIVE</div>
-<div onclick="openWindow('lab')">LAB</div>
-<div onclick="openWindow('playroom')">PLAYROOM</div>
+      <div class="field-card">
+        <span class="label">ATMOSPHERE</span>
+        <h3>COSTRUIRE IL CAMPO PERCETTIVO</h3>
+        <p>Luce, tipo, immagine, spazio e ritmo lavorano come un unico sistema continuo.</p>
+      </div>
 
-</div>
+      <div class="field-card">
+        <span class="label">COHERENCE</span>
+        <h3>MANTENERE UN LINGUAGGIO INTERNO</h3>
+        <p>Il progetto deve restare riconoscibile tra pagina, ambiente, racconto e direzione.</p>
+      </div>
 
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">
+        <span class="tag cyan">CARE</span>
+        <span class="tag yellow">PRECISION</span>
+        <span class="tag magenta">RESEARCH</span>
+        <span class="tag green">EXPERIENCE</span>
+      </div>
 
+      <div class="window-guide">
+        <div class="guide-note">studio</div>
+        <div class="guide-figure">
+          <div class="guide-head"></div>
+          <div class="guide-body"></div>
+          <div class="guide-arm left"></div>
+          <div class="guide-arm right"></div>
+          <div class="guide-leg left"></div>
+          <div class="guide-leg right"></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- ======================
-ARCHIVE
-====================== -->
+  <!-- LAB BIOS -->
+  <section class="win world-fullscreen" id="win-lab" aria-label="Lab BIOS">
+    <div class="world-rail">
+      <button class="rail-close" data-close="win-lab" type="button">✕</button>
+      <div class="rail-logo">LAB</div>
+      <div class="rail-tip">chiudi<br>torna<br>indietro</div>
+      <div class="lab-nano"></div>
+    </div>
 
-<div class="window fullscreen" id="archive">
+    <div class="win-titlebar">
+      <span class="win-icon">⌘</span>
+      <span class="win-title">MR BIOS (TM) — BLUCINELAB INTERNAL LAB / VERSION 1.03</span>
+      <div class="win-controls">
+        <button class="win-btn close" data-close="win-lab" type="button" aria-label="Chiudi">✕</button>
+      </div>
+    </div>
 
-<div class="title">
-ARCHIVE
-<span onclick="closeWindow('archive')">X</span>
-</div>
+    <div class="win-menubar">
+      <span>SUMMARY</span>
+      <span>FIXED</span>
+      <span>BOOT</span>
+      <span>SEQ</span>
+      <span>MORE+</span>
+    </div>
 
-<div class="content">
+    <div class="win-body">
+      <div class="lab-shell">
+        <div class="lab-topline">
+          <span>MR BIOS (TM) &nbsp; COPYRIGHT BLUCINELAB(C) 2026</span>
+          <span>RESEARCH &nbsp; VER V1.03 &nbsp; PORT...3</span>
+        </div>
 
-ARCHIVE SYSTEM
+        <div class="lab-left">
+<pre class="lab-pre">ECHO OFF
+MODE CON: COLS=80 LINES=25
+COLOR 0B
 
-</div>
+SIMULATE BIOS SETUP SCREEN WITH INTERACTIVE MENU
+AWARD MODULAR BIOS V6.00PG - SYSTEM CONFIGURATION UTILITY
+COPYRIGHT (C) 1984-1991 AWARD SOFTWARE, INC.
 
-</div>
+========================================================
+                BLUCINELAB // INTERNAL LAB
+========================================================
 
+[00] STANDARD CMOS FEATURES
+[01] ADVANCED BIOS FEATURES
+[02] INTEGRATED PERIPHERALS
+[03] POWER MANAGEMENT SETUP
+[04] INPUT/OUTPUT CONFIG
+[05] ARCHIVE TRACE
+[06] AI / SIGNAL TEST
+[07] VISUAL MEMORY BANK
+[08] EXIT BIOS
 
+> SELECTED: [05] ARCHIVE TRACE
+> STATUS: SIGNAL PRESENT
+> PING: 127.0.0.1 :: OK
 
-<!-- ======================
-LAB
-====================== -->
+--------------------------------------------------------
+LENA'S STORY
+--------------------------------------------------------
+THERE WAS ONCE A STUDIO THAT DID NOT WANT TO
+LOOK LIKE A STUDIO.
 
-<div class="window fullscreen" id="lab">
+IT WANTED TO BECOME A MACHINE OF MEMORY,
+A SCREEN THAT COULD OPEN IMAGE, SPACE,
+DIRECTION, TRACE, FRAGMENT.
 
-<div class="title">
-LAB SYSTEM
-<span onclick="closeWindow('lab')">X</span>
-</div>
+THE LAB IS NOT THE HOME.
+THE HOME PROTECTS.
+THE LAB EXPOSES.
 
-<div class="content">
+EVERY FILE IS A TRACE.
+EVERY TRACE IS A SHADOW.
+EVERY SHADOW IS A METHOD.
 
-<pre>
+BLUCINELAB INTERNAL NOTE:
+THE ARCHIVE DOES NOT STORE PROJECTS.
+IT STORES STATES OF ATTENTION.
 
-MR BIOS 1991
-
-READY
-
+> MEMORY.LOG loaded
+> SIGNAL.BIN ready
+> TRACE.EXE waiting
 </pre>
+        </div>
 
-</div>
+        <div class="lab-right">
+<pre class="lab-ascii">
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@%%%%%###**++==--::..      ..::--==++**
+@@@@@@@@@@@%%%###**++==--::..                 ...::--
+@@@@@@%%%###**++==--::..                           ..
+@@@@%%%##**++==--::..      .:-=++***++=-:.           
+@@@%%##**++==--::.      :=*#%%%%%%%%%%%%#*=:         
+@@%%##**+==--::.      .=#%%%%%%%%%%%%%%%%%%#=.       
+@%%##**+==--::.      .+%%%%%%%##***##%%%%%%%+.       
+@%%#**+==--::.      .*%%%%#*+=-::::-=+*#%%%%*.       
+%%##*++=--::.       =%%%#+-::..    ..::-+#%%%=       
+%%##*+=--::.        +%%%*:.            .:*%%%+       
+%%#*+=--::.         *%%%=:              :=%%%*       
+%%#*+=--::.         *%%%=:              :=%%%*       
+%%##*+=--::.        +%%%*:.            .:*%%%+       
+%%##*++=--::.       =%%%#+-::..    ..::-+#%%%=       
+@%%#**+==--::.      .*%%%%#*+=-::::-=+*#%%%%*.       
+@@%%##**+==--::.      .+%%%%%%%##***##%%%%%%%+.      
+@@@%%##**++==--::.      .=#%%%%%%%%%%%%%%%%%%#=.     
+@@@@%%%###**++==--::.      :=*#%%%%%%%%%%%%#*=:      
+@@@@@@%%%###**++==--::..      .:-=++***++=-:.        
+@@@@@@@@@@%%%###**++==--::..                          
+@@@@@@@@@@@@@@@%%%%%###**++==--::..        SIGNAL    
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+</pre>
+        </div>
 
-</div>
+        <div class="lab-bottom">
+          <div class="lab-block">
+<pre class="lab-pre">BANK 1
+TRACE_01 .............. OK
+TRACE_02 .............. OK
+TRACE_03 .............. OK
+TRACE_04 .............. WARN
 
+COMMANDS:
+[F1] OPEN
+[F2] SCAN
+[F3] READ
+[F4] EXEC</pre>
+          </div>
 
+          <div class="lab-block">
+<pre class="lab-pre">BANK 2
+I HATE THE CLEAN INTERFACE
+I HATE THE EMPTY PORTFOLIO
+I HATE THE DEAD PAGE
+I WANT THE MACHINE TO SHOW ITS TEETH
 
-<!-- ======================
-PLAYROOM
-====================== -->
+STATUS:
+SIGNAL .............. 82
+NOISE ............... 41
+TRACE ............... 19</pre>
+          </div>
 
-<div class="window fullscreen playroom" id="playroom">
+          <div class="lab-block">
+<pre class="lab-pre">SYSTEM
+LOCALHOST :: ACTIVE
+PING :: 3.2 GB
+MEMORY :: 92%
+PORT :: OPEN
 
-<div class="title">
-PLAYROOM
-<span onclick="closeWindow('playroom')">X</span>
-</div>
+READ:
+"Il vecchio BLUCINELAB è
+stato concentrato nel LAB.
+La home XP lo protegge,
+il LAB lo espone."</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- PLAYROOM -->
+  <section class="win world-fullscreen" id="win-playroom" aria-label="Playroom">
+    <div class="world-rail">
+      <button class="rail-close" data-close="win-playroom" type="button">✕</button>
+      <div class="rail-logo">PLAY</div>
+      <div class="rail-tip">chiudi<br>torna<br>home</div>
+    </div>
 
-<div class="nano">
+    <div class="win-titlebar">
+      <span class="win-icon">🎮</span>
+      <span class="win-title">PLAYROOM — TEMPORAL GAME HUB</span>
+      <div class="win-controls">
+        <button class="win-btn close" data-close="win-playroom" type="button" aria-label="Chiudi">✕</button>
+      </div>
+    </div>
 
-👾 HELLO  
-WELCOME TO PLAYROOM
+    <div class="win-menubar">
+      <span>WORLDS</span>
+      <span>TIME</span>
+      <span>STYLE</span>
+      <span>GAMES</span>
+      <span>MORE+</span>
+    </div>
 
-</div>
+    <div class="win-body">
+      <div class="playroom-wrap">
+        <div class="playroom-guide">
+          <div class="guide-bubble">scegli un mondo</div>
+          <div class="guide-mascot">🕹️</div>
+        </div>
 
+        <div class="playroom-hero">
+          <h2>PLAYROOM</h2>
+          <p>Qui entrano i mondi più fortemente differenziati. Questo è l’hub. Da qui poi andremo a costruire Mario, Pacman, Cooking Mama, Sims e GTA come finestre o mondi autonomi.</p>
+        </div>
 
-<div class="games">
+        <div class="playroom-grid">
+          <button class="world-card mario" type="button">
+            <span class="world-badge">1985 / PIXEL</span>
+            <h3>SUPER MARIO</h3>
+            <p>Pixel duri, prato, cielo, blocchi, maschotte super retro.</p>
+            <div class="card-nano"><div class="sprite">🧱</div></div>
+          </button>
 
-<div class="game">PACMAN</div>
+          <button class="world-card pacman" type="button">
+            <span class="world-badge">ARCADE / LABYRINTH</span>
+            <h3>PACMAN</h3>
+            <p>Griglia luminosa, nero pieno, colori saturi, segnale arcade.</p>
+            <div class="card-nano"><div class="sprite">👾</div></div>
+          </button>
 
-<div class="game">SPACE</div>
+          <button class="world-card cooking" type="button">
+            <span class="world-badge">DS / CUTE UI</span>
+            <h3>COOKING MAMA</h3>
+            <p>Pastello, interfacce dolci, energia Nintendo DS, tono leggero.</p>
+            <div class="card-nano"><div class="sprite">🍳</div></div>
+          </button>
 
-<div class="game">MARIO</div>
+          <button class="world-card sims" type="button">
+            <span class="world-badge">2000 / LIFE SIM</span>
+            <h3>THE SIMS</h3>
+            <p>Interfacce verdi e azzurre, ordine, status, vita simulata.</p>
+            <div class="card-nano"><div class="sprite">💎</div></div>
+          </button>
 
-<div class="game">COOKING</div>
+          <button class="world-card gta" type="button">
+            <span class="world-badge">URBAN / GAME UI</span>
+            <h3>GTA</h3>
+            <p>Nero, rosa, contrasti forti, feeling urbano da menu videogioco.</p>
+            <div class="card-nano"><div class="sprite">🚬</div></div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<div class="game">SIMS</div>
+  <!-- CONTACT -->
+  <section class="win" id="win-contact" aria-label="Contact">
+    <div class="win-titlebar" data-drag="win-contact">
+      <span class="win-icon">📧</span>
+      <span class="win-title">CONTACT — Apri una conversazione</span>
+      <div class="win-controls">
+        <button class="win-btn" data-minimize="win-contact" type="button">_</button>
+        <button class="win-btn close" data-close="win-contact" type="button">✕</button>
+      </div>
+    </div>
 
-</div>
+    <div class="win-menubar">
+      <span>File</span>
+      <span>Send</span>
+    </div>
 
+    <div class="win-body" style="min-height:220px;">
+      <span class="label">CONTACT / EMAIL</span>
+      <h2>POCHI PROGETTI, FATTI BENE</h2>
+      <p>BLUCINELAB lavora meglio quando il contesto è chiaro, il progetto ha peso e la collaborazione richiede visione, rigore e qualità della relazione.</p>
 
-</div>
+      <div class="field-card" style="margin-top:10px;">
+        <span class="label">ADDRESS</span>
+        <h3><a href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a></h3>
+        <p>Commissioni, collaborazioni, progetti culturali, direzione visiva, sistemi digitali, installazioni.</p>
+      </div>
 
+      <div class="field-card">
+        <span class="label">TIMING</span>
+        <p>Indica scadenze, materiali già esistenti, vincoli e finestra di lavoro prevista.</p>
+      </div>
 
+      <div class="window-guide">
+        <div class="guide-note">scrivi</div>
+        <div class="guide-figure">
+          <div class="guide-head"></div>
+          <div class="guide-body"></div>
+          <div class="guide-arm left"></div>
+          <div class="guide-arm right"></div>
+          <div class="guide-leg left"></div>
+          <div class="guide-leg right"></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- ======================
-SCRIPT
-====================== -->
+  <!-- MANIFESTO -->
+  <section class="win" id="win-manifesto" aria-label="Manifesto">
+    <div class="win-titlebar" data-drag="win-manifesto">
+      <span class="win-icon">📜</span>
+      <span class="win-title">MANIFESTO — Un laboratorio contemporaneo</span>
+      <div class="win-controls">
+        <button class="win-btn" data-minimize="win-manifesto" type="button">_</button>
+        <button class="win-btn close" data-close="win-manifesto" type="button">✕</button>
+      </div>
+    </div>
 
-<script>
+    <div class="win-menubar">
+      <span>File</span>
+      <span>Print</span>
+      <span>Share</span>
+    </div>
 
+    <div class="win-body" style="min-height:240px;">
+      <span class="label">MANIFESTO</span>
+      <h2>UN LABORATORIO CONTEMPORANEO DELL'IMMAGINE</h2>
+      <p>BLUCINELAB nasce dall'idea che l'immagine non sia una superficie da riempire, ma una forma di lettura del mondo. Per questo lavoriamo tra rigore e immaginazione, metodo e sensibilità, costruzione tecnica e profondità emotiva.</p>
+      <p>Ci interessano progetti capaci di generare presenza, esperienza, memoria, relazione. Progetti culturali, editoriali, installativi, digitali o ibridi, in cui la forma non decora ma orienta, chiarisce e intensifica.</p>
 
-function openWindow(id){
+      <div style="margin-top:14px;">
+        <h2>POSIZIONE</h2>
+        <p>Il sito tiene insieme studio, archivio e ricerca. Non presenta una somma di prestazioni, ma una postura.</p>
+      </div>
 
-document.getElementById(id).style.display="block"
+      <div class="window-guide">
+        <div class="guide-note">leggi</div>
+        <div class="guide-figure">
+          <div class="guide-head"></div>
+          <div class="guide-body"></div>
+          <div class="guide-arm left"></div>
+          <div class="guide-arm right"></div>
+          <div class="guide-leg left"></div>
+          <div class="guide-leg right"></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-}
+  <!-- GALLERY -->
+  <section class="win" id="win-gallery" aria-label="Gallery">
+    <div class="win-titlebar" data-drag="win-gallery">
+      <span class="win-icon">🖼️</span>
+      <span class="win-title">GALLERY — Segnali e superfici</span>
+      <div class="win-controls">
+        <button class="win-btn" data-minimize="win-gallery" type="button">_</button>
+        <button class="win-btn close" data-close="win-gallery" type="button">✕</button>
+      </div>
+    </div>
 
+    <div class="win-menubar">
+      <span>File</span>
+      <span>Image</span>
+      <span>View</span>
+    </div>
 
-function closeWindow(id){
+    <div class="win-body" style="min-height:300px;">
+      <span class="label">GALLERY / SIGNALS / BMP / GIF</span>
+      <h2>APRIRE IMMAGINI COME FINESTRE</h2>
+      <p>Questa cartella dimostra la logica: archivio → file → immagine → nuova finestra.</p>
 
-document.getElementById(id).style.display="none"
+      <div class="file-grid">
+        <button class="file-card" type="button" data-open="win-img-1">
+          <span class="file-icon">📸</span>
+          <span class="file-name">NEON_CITY.BMP</span>
+          <span class="file-meta">open viewer</span>
+        </button>
+        <button class="file-card" type="button" data-open="win-img-2">
+          <span class="file-icon">📸</span>
+          <span class="file-name">RADAR_SIGNAL.PCX</span>
+          <span class="file-meta">open viewer</span>
+        </button>
+        <button class="file-card" type="button" data-open="win-img-3">
+          <span class="file-icon">📸</span>
+          <span class="file-name">ARCHIVE_MEMORY.GIF</span>
+          <span class="file-meta">open viewer</span>
+        </button>
+      </div>
 
-}
+      <div class="window-guide">
+        <div class="guide-note">guarda</div>
+        <div class="guide-figure">
+          <div class="guide-head"></div>
+          <div class="guide-body"></div>
+          <div class="guide-arm left"></div>
+          <div class="guide-arm right"></div>
+          <div class="guide-leg left"></div>
+          <div class="guide-leg right"></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- VIEWERS -->
+  <section class="win" id="win-img-1" aria-label="Image 1">
+    <div class="win-titlebar" data-drag="win-img-1">
+      <span class="win-icon">🖼️</span>
+      <span class="win-title">VIEWER — NEON_CITY.BMP</span>
+      <div class="win-controls">
+        <button class="win-btn" data-minimize="win-img-1" type="button">_</button>
+        <button class="win-btn close" data-close="win-img-1" type="button">✕</button>
+      </div>
+    </div>
+    <div class="win-menubar"><span>File</span><span>Zoom</span><span>Close</span></div>
+    <div class="win-body" style="min-height:260px;">
+      <span class="label">VIEWER / BITMAP</span>
+      <img class="viewer-image" alt="Neon city"
+        src="data:image/svg+xml;utf8,
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
+          <rect width='800' height='520' fill='%23000b1f'/>
+          <rect y='370' width='800' height='150' fill='%23000814'/>
+          <circle cx='620' cy='120' r='64' fill='%23ff2dfb'/>
+          <rect x='80' y='210' width='80' height='160' fill='%23001352'/>
+          <rect x='180' y='180' width='110' height='190' fill='%23001980'/>
+          <rect x='320' y='150' width='90' height='220' fill='%23001d9e'/>
+          <rect x='438' y='120' width='130' height='250' fill='%230023c7'/>
+          <rect x='590' y='190' width='80' height='180' fill='%2300177f'/>
+          <rect x='690' y='160' width='60' height='210' fill='%230021aa'/>
+          <g fill='%23fff200'>
+            <rect x='98' y='236' width='12' height='18'/><rect x='118' y='236' width='12' height='18'/>
+            <rect x='98' y='264' width='12' height='18'/><rect x='118' y='264' width='12' height='18'/>
+            <rect x='206' y='210' width='14' height='20'/><rect x='230' y='210' width='14' height='20'/><rect x='254' y='210' width='14' height='20'/>
+            <rect x='206' y='240' width='14' height='20'/><rect x='254' y='240' width='14' height='20'/>
+            <rect x='348' y='180' width='14' height='20'/><rect x='372' y='180' width='14' height='20'/>
+            <rect x='348' y='210' width='14' height='20'/><rect x='372' y='210' width='14' height='20'/>
+            <rect x='472' y='150' width='16' height='22'/><rect x='500' y='150' width='16' height='22'/><rect x='528' y='150' width='16' height='22'/>
+            <rect x='472' y='184' width='16' height='22'/><rect x='528' y='184' width='16' height='22'/>
+          </g>
+          <rect y='390' width='800' height='8' fill='%2300f6ff'/>
+          <rect y='408' width='800' height='4' fill='%23ff2dfb'/>
+        </svg>"/>
+    </div>
+  </section>
 
-function toggleStart(){
+  <section class="win" id="win-img-2" aria-label="Image 2">
+    <div class="win-titlebar" data-drag="win-img-2">
+      <span class="win-icon">🖼️</span>
+      <span class="win-title">VIEWER — RADAR_SIGNAL.PCX</span>
+      <div class="win-controls">
+        <button class="win-btn" data-minimize="win-img-2" type="button">_</button>
+        <button class="win-btn close" data-close="win-img-2" type="button">✕</button>
+      </div>
+    </div>
+    <div class="win-menubar"><span>File</span><span>Signal</span><span>Close</span></div>
+    <div class="win-body" style="min-height:260px;">
+      <span class="label">VIEWER / SIGNAL</span>
+      <img class="viewer-image" alt="Radar"
+        src="data:image/svg+xml;utf8,
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
+          <rect width='800' height='520' fill='%2300040a'/>
+          <circle cx='400' cy='260' r='170' fill='none' stroke='%2300ff66' stroke-width='4'/>
+          <circle cx='400' cy='260' r='120' fill='none' stroke='%2300ff66' stroke-width='4'/>
+          <circle cx='400' cy='260' r='70' fill='none' stroke='%2300ff66' stroke-width='4'/>
+          <line x1='400' y1='90' x2='400' y2='430' stroke='%2300ff66' stroke-width='4'/>
+          <line x1='230' y1='260' x2='570' y2='260' stroke='%2300ff66' stroke-width='4'/>
+          <path d='M400 260 L550 120 A170 170 0 0 1 570 260 Z' fill='%2300ff66' opacity='.18'/>
+          <circle cx='515' cy='188' r='10' fill='%23fff200'/>
+          <circle cx='335' cy='320' r='8' fill='%23ff2dfb'/>
+          <circle cx='455' cy='332' r='6' fill='%2300f6ff'/>
+          <rect x='20' y='20' width='180' height='40' fill='%23001210'/>
+          <text x='34' y='47' font-family='monospace' font-size='24' fill='%2300ff66'>RADAR_SCAN_02</text>
+        </svg>"/>
+    </div>
+  </section>
 
-let m=document.getElementById("startMenu")
+  <section class="win" id="win-img-3" aria-label="Image 3">
+    <div class="win-titlebar" data-drag="win-img-3">
+      <span class="win-icon">🖼️</span>
+      <span class="win-title">VIEWER — ARCHIVE_MEMORY.GIF</span>
+      <div class="win-controls">
+        <button class="win-btn" data-minimize="win-img-3" type="button">_</button>
+        <button class="win-btn close" data-close="win-img-3" type="button">✕</button>
+      </div>
+    </div>
+    <div class="win-menubar"><span>File</span><span>Memory</span><span>Close</span></div>
+    <div class="win-body" style="min-height:260px;">
+      <span class="label">VIEWER / MEMORY</span>
+      <img class="viewer-image" alt="Memory archive"
+        src="data:image/svg+xml;utf8,
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
+          <rect width='800' height='520' fill='%230a0018'/>
+          <rect x='60' y='80' width='680' height='360' fill='%2300122a' stroke='%2300f6ff' stroke-width='4'/>
+          <rect x='90' y='110' width='160' height='120' fill='%23ff2dfb' opacity='.8'/>
+          <rect x='270' y='110' width='200' height='70' fill='%2300f6ff' opacity='.8'/>
+          <rect x='270' y='194' width='110' height='36' fill='%23fff200' opacity='.85'/>
+          <rect x='500' y='110' width='190' height='120' fill='%2300ff66' opacity='.8'/>
+          <rect x='90' y='260' width='600' height='30' fill='%23fff200'/>
+          <rect x='90' y='310' width='320' height='90' fill='%2300ff66' opacity='.7'/>
+          <rect x='430' y='310' width='260' height='90' fill='%23ff2dfb' opacity='.7'/>
+          <text x='108' y='278' font-family='monospace' font-size='24' fill='%23000000'>ARCHIVE / MEMORY / SIGNAL / TRACE</text>
+        </svg>"/>
+    </div>
+  </section>
 
-if(m.style.display=="block"){
+  <!-- TASKBAR -->
+  <div id="taskbar">
+    <button id="taskbar-start" type="button">start</button>
+    <div id="taskbar-tasks"></div>
+    <div id="clock">00:00:00</div>
+  </div>
 
-m.style.display="none"
+  <!-- START MENU -->
+  <nav id="start-menu" aria-label="Start Menu">
+    <div class="start-banner">BLUCINELAB</div>
+    <div class="start-items">
+      <button class="start-item" data-open="win-archive" type="button"><span class="start-item-icon">📁</span> Archive</button>
+      <button class="start-item" data-open="win-studio" type="button"><span class="start-item-icon">🎨</span> Studio</button>
+      <button class="start-item" data-open="win-lab" type="button"><span class="start-item-icon">🔬</span> Lab</button>
+      <button class="start-item" data-open="win-contact" type="button"><span class="start-item-icon">📧</span> Contact</button>
+      <button class="start-item" data-open="win-manifesto" type="button"><span class="start-item-icon">📜</span> Manifesto</button>
+      <button class="start-item" data-open="win-gallery" type="button"><span class="start-item-icon">🖼️</span> Gallery</button>
+      <button class="start-item" data-open="win-playroom" type="button"><span class="start-item-icon">🎮</span> Playroom</button>
+      <button class="start-item" id="sm-pacman" type="button"><span class="start-item-icon">👾</span> Pac-Man</button>
+      <button class="start-item" id="sm-shutdown" type="button"><span class="start-item-icon">🔴</span> Shut Down</button>
+    </div>
+  </nav>
 
-}else{
+  <!-- BOOT -->
+  <div id="boot" style="position:fixed;inset:0;z-index:99998;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:#000;">
+    <div id="boot-logo" style="font-family:'Press Start 2P', monospace;font-size:clamp(18px,4vw,34px);letter-spacing:4px;color:#00ff00;text-shadow:0 0 20px rgba(0,255,0,.8),0 0 42px rgba(0,255,0,.34);">BLUCINELAB</div>
+    <div id="boot-sub" style="font-family:'VT323', monospace;font-size:28px;letter-spacing:2px;color:#9d9d9d;text-align:center;">VISUAL STUDIO OS — BOLOGNA</div>
+    <div id="boot-bar-wrap" style="position:relative;overflow:hidden;width:360px;height:24px;border:3px solid #00ff00;background:rgba(0,0,0,.75);">
+      <div id="boot-bar" style="width:0%;height:100%;background:linear-gradient(90deg,#00ff00 0%, #00b53f 100%);transition:width .1s linear;"></div>
+    </div>
+    <div id="boot-text" style="width:380px;height:96px;overflow:hidden;text-align:left;font-family:'VT323', monospace;font-size:22px;color:#00ff00;white-space:pre-line;"></div>
+  </div>
 
-m.style.display="block"
+  <script>
+    const $ = (sel, ctx = document) => ctx.querySelector(sel);
+    const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
-}
+    const state = {
+      topZ: 200,
+      popupShown: false,
+      bootDone: false,
+      selectedIcon: null,
+      konamiSeq: [],
+      pac: {
+        active: false,
+        x: 200,
+        y: 200,
+        dirX: 2.4,
+        dirY: 0,
+        score: 0,
+        lives: 3,
+        powerMode: false,
+        powerTimer: 0,
+        dots: [],
+        ghosts: [],
+        animationId: null
+      }
+    };
 
-}
+    /* CURSOR */
+    (function initCursor(){
+      const cur = $('#cur');
+      if (!cur) return;
+      const hasFinePointer = window.matchMedia('(pointer:fine)').matches;
+      if (!hasFinePointer) return;
 
+      document.body.classList.add('has-custom-cursor');
+      document.addEventListener('mousemove', e => {
+        cur.style.left = e.clientX + 'px';
+        cur.style.top = e.clientY + 'px';
+      });
+    })();
 
+    /* CLOCK */
+    function updateClock(){
+      const now = new Date();
+      const clock = $('#clock');
+      if (!clock) return;
 
-window.onload=function(){
+      clock.textContent =
+        String(now.getHours()).padStart(2,'0') + ':' +
+        String(now.getMinutes()).padStart(2,'0') + ':' +
+        String(now.getSeconds()).padStart(2,'0');
+    }
 
-setTimeout(()=>{
+    setInterval(updateClock, 1000);
+    updateClock();
 
-document.getElementById("bootScreen").style.display="none"
+    /* BOOT */
+    (function initBoot(){
+      const boot = $('#boot');
+      const bootBar = $('#boot-bar');
+      const bootText = $('#boot-text');
 
-},4000)
+      if (!boot || !bootBar || !bootText) {
+        state.bootDone = true;
+        return;
+      }
 
-}
+      const alreadyBooted = sessionStorage.getItem('blucinelab_booted');
 
+      if (alreadyBooted) {
+        boot.remove();
+        state.bootDone = true;
+        showWelcomePopupOnce();
+        return;
+      }
 
-</script>
+      const bootLines = [
+        'BLUCINELAB OS v1.5 — AVVIO SISTEMA',
+        'Caricamento shell XP... OK',
+        'Inizializzazione ARCHIVE... OK',
+        'Inizializzazione STUDIO... OK',
+        'Montaggio modulo BIOS/LAB... OK',
+        'Montaggio PLAYROOM... OK',
+        'Avvio interfaccia utente... OK',
+        'SISTEMA PRONTO.'
+      ];
 
+      let lineIdx = 0;
 
+      function bootStep(){
+        if (lineIdx < bootLines.length) {
+          bootText.textContent += bootLines[lineIdx] + '\n';
+          lineIdx++;
+          const progress = Math.round((lineIdx / bootLines.length) * 100);
+          bootBar.style.width = progress + '%';
+          setTimeout(bootStep, 220);
+        } else {
+          sessionStorage.setItem('blucinelab_booted', '1');
+          setTimeout(() => {
+            boot.style.transition = 'opacity .5s ease';
+            boot.style.opacity = '0';
+            setTimeout(() => {
+              boot.remove();
+              state.bootDone = true;
+              showWelcomePopupOnce();
+            }, 500);
+          }, 500);
+        }
+      }
+
+      setTimeout(bootStep, 500);
+    })();
+
+    /* WINDOWS */
+    function bringToFront(win){
+      if (!win) return;
+      win.style.zIndex = ++state.topZ;
+    }
+
+    function isWindowVisible(win){
+      return win && getComputedStyle(win).display !== 'none';
+    }
+
+    function restoreWindowBody(win){
+      const body = $('.win-body', win);
+      const menubar = $('.win-menubar', win);
+      if (body) body.style.display = '';
+      if (menubar) menubar.style.display = '';
+    }
+
+    function openWindow(id){
+      const win = document.getElementById(id);
+      if (!win) return;
+
+      win.style.display = 'flex';
+      win.style.flexDirection = 'column';
+
+      if (win.dataset.minimized === '1') {
+        restoreWindowBody(win);
+        win.dataset.minimized = '0';
+      }
+
+      bringToFront(win);
+      updateTaskbar();
+    }
+
+    function closeWindow(id){
+      const win = document.getElementById(id);
+      if (!win) return;
+
+      if (id === 'hero-win') {
+        openWindow(id);
+        bringToFront(win);
+        return;
+      }
+
+      win.style.display = 'none';
+      updateTaskbar();
+    }
+
+    function minimizeWindow(id){
+      const win = document.getElementById(id);
+      if (!win) return;
+
+      const body = $('.win-body', win);
+      const menubar = $('.win-menubar', win);
+
+      if (win.dataset.minimized === '1') {
+        restoreWindowBody(win);
+        win.dataset.minimized = '0';
+      } else {
+        if (body) body.style.display = 'none';
+        if (menubar) menubar.style.display = 'none';
+        win.dataset.minimized = '1';
+      }
+
+      updateTaskbar();
+    }
+
+    function maximizeWindow(id){
+      const win = document.getElementById(id);
+      if (!win) return;
+
+      if (id === 'win-lab' || id === 'win-playroom') {
+        openWindow(id);
+        return;
+      }
+
+      if (win.dataset.maximized === '1') {
+        win.style.top = win.dataset.prevTop || '';
+        win.style.left = win.dataset.prevLeft || '';
+        win.style.width = win.dataset.prevW || '';
+        win.style.height = win.dataset.prevH || '';
+        win.dataset.maximized = '0';
+      } else {
+        win.dataset.prevTop = win.style.top;
+        win.dataset.prevLeft = win.style.left;
+        win.dataset.prevW = win.style.width;
+        win.dataset.prevH = win.style.height;
+
+        win.style.top = '42px';
+        win.style.left = '20px';
+        win.style.width = (window.innerWidth - 40) + 'px';
+        win.style.height = (window.innerHeight - 90) + 'px';
+        win.dataset.maximized = '1';
+      }
+
+      bringToFront(win);
+    }
+
+    function updateTaskbar(){
+      const container = $('#taskbar-tasks');
+      if (!container) return;
+
+      container.innerHTML = '';
+
+      $$('.win').forEach(win => {
+        if (!isWindowVisible(win)) return;
+
+        const btn = document.createElement('button');
+        btn.className = 'taskbar-btn';
+
+        const title = $('.win-title', win)?.textContent?.trim() || win.id;
+        btn.textContent = title.slice(0, 22);
+
+        if (win.dataset.minimized !== '1') {
+          btn.classList.add('active');
+        }
+
+        btn.addEventListener('click', () => {
+          if (win.dataset.minimized === '1') {
+            minimizeWindow(win.id);
+          }
+          bringToFront(win);
+        });
+
+        container.appendChild(btn);
+      });
+    }
+
+    /* DRAG */
+    function makeWindowDraggable(titlebar){
+      const winId = titlebar.dataset.drag;
+      const win = document.getElementById(winId);
+      if (!win || win.classList.contains('world-fullscreen')) return;
+
+      let dragging = false;
+      let ox = 0;
+      let oy = 0;
+
+      titlebar.addEventListener('mousedown', e => {
+        if (e.target.closest('.win-btn')) return;
+
+        dragging = true;
+        const rect = win.getBoundingClientRect();
+        ox = e.clientX - rect.left;
+        oy = e.clientY - rect.top;
+
+        bringToFront(win);
+        e.preventDefault();
+      });
+
+      document.addEventListener('mousemove', e => {
+        if (!dragging) return;
+
+        const maxLeft = window.innerWidth - 140;
+        const maxTop = window.innerHeight - 80;
+
+        win.style.left = Math.max(0, Math.min(maxLeft, e.clientX - ox)) + 'px';
+        win.style.top = Math.max(32, Math.min(maxTop, e.clientY - oy)) + 'px';
+      });
+
+      document.addEventListener('mouseup', () => dragging = false);
+
+      titlebar.addEventListener('touchstart', e => {
+        if (e.target.closest('.win-btn')) return;
+        dragging = true;
+        const t = e.touches[0];
+        const rect = win.getBoundingClientRect();
+        ox = t.clientX - rect.left;
+        oy = t.clientY - rect.top;
+        bringToFront(win);
+      }, { passive:true });
+
+      document.addEventListener('touchmove', e => {
+        if (!dragging) return;
+        const t = e.touches[0];
+        const maxLeft = window.innerWidth - 140;
+        const maxTop = window.innerHeight - 80;
+        win.style.left = Math.max(0, Math.min(maxLeft, t.clientX - ox)) + 'px';
+        win.style.top = Math.max(32, Math.min(maxTop, t.clientY - oy)) + 'px';
+      }, { passive:true });
+
+      document.addEventListener('touchend', () => dragging = false);
+    }
+
+    $$('[data-drag]').forEach(makeWindowDraggable);
+
+    /* BUTTONS */
+    $$('[data-close]').forEach(btn => {
+      btn.addEventListener('click', () => closeWindow(btn.dataset.close));
+    });
+
+    $$('[data-minimize]').forEach(btn => {
+      btn.addEventListener('click', () => minimizeWindow(btn.dataset.minimize));
+    });
+
+    $$('[data-maximize]').forEach(btn => {
+      btn.addEventListener('click', () => maximizeWindow(btn.dataset.maximize));
+    });
+
+    /* DESKTOP ICONS */
+    $$('.desktop-icon[data-win]').forEach(icon => {
+      icon.addEventListener('click', () => {
+        $$('.desktop-icon').forEach(i => i.classList.remove('is-selected'));
+        icon.classList.add('is-selected');
+        state.selectedIcon = icon;
+        openWindow(icon.dataset.win);
+      });
+    });
+
+    /* GENERIC OPEN BUTTONS */
+    $$('[data-open]').forEach(item => {
+      item.addEventListener('click', () => {
+        openWindow(item.dataset.open);
+        $('#start-menu')?.classList.remove('open');
+      });
+    });
+
+    /* START MENU */
+    const startMenu = $('#start-menu');
+    const startButton = $('#taskbar-start');
+
+    if (startButton && startMenu) {
+      startButton.addEventListener('click', e => {
+        e.stopPropagation();
+        startMenu.classList.toggle('open');
+      });
+
+      document.addEventListener('click', e => {
+        if (!startMenu.contains(e.target) && e.target !== startButton) {
+          startMenu.classList.remove('open');
+        }
+      });
+    }
+
+    $('#sm-shutdown')?.addEventListener('click', () => {
+      document.body.innerHTML = `
+        <div style="background:#000;color:#00ff66;font-family:'Press Start 2P',monospace;font-size:14px;display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:20px;">
+          <div>È SICURO SPEGNERE IL COMPUTER</div>
+          <div style="font-size:9px;color:#808080;">BLUCINELAB OS v1.5</div>
+          <button onclick="location.reload()" style="font-family:'Press Start 2P',monospace;font-size:8px;padding:10px 20px;background:#000;color:#00ff66;border:2px solid #00ff66;cursor:pointer;margin-top:20px;">
+            ↺ RIAVVIA
+          </button>
+        </div>
+      `;
+    });
+
+    /* FOCUS */
+    $$('.win').forEach(win => {
+      win.addEventListener('mousedown', () => bringToFront(win));
+    });
+
+    /* ALERTS */
+    let alertZ = 9000;
+
+    function showAlert(title, msg, onOk = null){
+      const w = document.createElement('div');
+      w.className = 'win win-alert';
+      w.style.top = (110 + Math.random() * 80) + 'px';
+      w.style.left = (Math.max(20, window.innerWidth / 2 - 170 + Math.random() * 80)) + 'px';
+      w.style.zIndex = ++alertZ;
+
+      w.innerHTML = `
+        <div class="win-titlebar" style="background:linear-gradient(90deg,#245edb,#3a6ff0)">
+          <span class="win-icon">⚠</span>
+          <span class="win-title">${title}</span>
+          <div class="win-controls">
+            <button class="win-btn close" type="button">✕</button>
+          </div>
+        </div>
+        <div class="win-body">
+          <div class="alert-row">
+            <span class="alert-icon">🔔</span>
+            <span class="alert-msg">${msg.replace(/\n/g, '<br>')}</span>
+          </div>
+          <div class="alert-btns">
+            <button class="alert-ok" type="button">OK</button>
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(w);
+      bringToFront(w);
+
+      const closeBtn = $('.close', w);
+      const okBtn = $('.alert-ok', w);
+
+      const destroy = () => {
+        w.remove();
+        if (typeof onOk === 'function') onOk();
+      };
+
+      closeBtn?.addEventListener('click', () => w.remove());
+      okBtn?.addEventListener('click', destroy);
+
+      return w;
+    }
+
+    function showWelcomePopupOnce(){
+      if (state.popupShown) return;
+      state.popupShown = true;
+
+      setTimeout(() => {
+        showAlert(
+          'BENVENUTO',
+          'Home XP stabile.\nApri ARCHIVE, STUDIO, LAB, PLAYROOM, CONTACT, GALLERY e MANIFEST.'
+        );
+      }, 900);
+    }
+
+    /* EASTER EGG */
+    $('#egg-btn')?.addEventListener('click', () => {
+      showAlert(
+        '??? INSERT COIN ???',
+        'Hai trovato il segreto.\nPac-Man è attivabile dal menu Start.'
+      );
+    });
+
+    const KONAMI = [
+      'ArrowUp','ArrowUp',
+      'ArrowDown','ArrowDown',
+      'ArrowLeft','ArrowRight',
+      'ArrowLeft','ArrowRight',
+      'b','a'
+    ];
+
+    document.addEventListener('keydown', e => {
+      state.konamiSeq.push(e.key);
+      state.konamiSeq = state.konamiSeq.slice(-10);
+
+      if (JSON.stringify(state.konamiSeq) === JSON.stringify(KONAMI)) {
+        showAlert('🌈 CHEAT CODE!', 'MODALITÀ ARCOBALENO ATTIVATA!');
+        document.body.style.animation = 'rainbowShift 1.2s linear infinite';
+        if (!$('#rainbow-style')) {
+          const style = document.createElement('style');
+          style.id = 'rainbow-style';
+          style.textContent = `
+            @keyframes rainbowShift {
+              0% { filter:hue-rotate(0deg); }
+              100% { filter:hue-rotate(360deg); }
+            }
+          `;
+          document.head.appendChild(style);
+        }
+      }
+    });
+
+    /* PACMAN */
+    const pacLayer = $('#pacman-layer');
+    const pacEl = $('#pac');
+
+    function updatePacHUD(){
+      $('#score-num').textContent = String(state.pac.score);
+      $('#lives-disp').textContent =
+        'LIVES: ' +
+        '♥'.repeat(state.pac.lives) +
+        '♡'.repeat(3 - state.pac.lives);
+    }
+
+    function resetPacDisplay(){
+      pacEl.style.display = state.pac.active ? 'block' : 'none';
+
+      $$('.ghost', pacLayer).forEach(g => {
+        g.style.display = state.pac.active ? 'block' : 'none';
+      });
+
+      $$('.dot', pacLayer).forEach(d => {
+        d.style.display = state.pac.active ? 'block' : 'none';
+      });
+    }
+
+    function spawnDots(){
+      $$('.dot', pacLayer).forEach(d => d.remove());
+      state.pac.dots.length = 0;
+
+      const totalDots = 30;
+
+      for (let i = 0; i < totalDots; i++) {
+        const dot = document.createElement('div');
+        const power = i % 10 === 0;
+
+        dot.className = power ? 'dot power-dot' : 'dot';
+
+        const x = 120 + Math.random() * Math.max(100, window.innerWidth - 200);
+        const y = 60 + Math.random() * Math.max(100, window.innerHeight - 130);
+
+        dot.style.left = x + 'px';
+        dot.style.top = y + 'px';
+        pacLayer.appendChild(dot);
+
+        state.pac.dots.push({
+          el: dot,
+          x,
+          y,
+          eaten: false,
+          power
+        });
+      }
+    }
+
+    function spawnGhosts(){
+      $$('.ghost', pacLayer).forEach(g => g.remove());
+      state.pac.ghosts.length = 0;
+
+      const glyphs = ['👻','👹','👺'];
+      const colors = ['#ff0000','#ffb8ff','#00ffff'];
+
+      for (let i = 0; i < 3; i++) {
+        const ghost = document.createElement('div');
+        ghost.className = 'ghost';
+        ghost.textContent = glyphs[i];
+        ghost.style.color = colors[i];
+        ghost.style.left = (300 + i * 140) + 'px';
+        ghost.style.top = '300px';
+
+        pacLayer.appendChild(ghost);
+
+        state.pac.ghosts.push({
+          el: ghost,
+          x: 300 + i * 140,
+          y: 300,
+          vx: (Math.random() - 0.5) * 2,
+          vy: (Math.random() - 0.5) * 2,
+          scared: false
+        });
+      }
+    }
+
+    function resetPacGame(){
+      state.pac.x = Math.max(160, window.innerWidth / 2);
+      state.pac.y = Math.max(160, window.innerHeight / 2);
+      state.pac.dirX = 2.4;
+      state.pac.dirY = 0;
+      state.pac.score = 0;
+      state.pac.lives = 3;
+      state.pac.powerMode = false;
+      state.pac.powerTimer = 0;
+
+      updatePacHUD();
+      spawnDots();
+      spawnGhosts();
+      resetPacDisplay();
+    }
+
+    function pacLoop(){
+      if (!state.pac.active) return;
+
+      const p = state.pac;
+
+      p.x += p.dirX;
+      p.y += p.dirY;
+
+      if (p.x < 10 || p.x > window.innerWidth - 40) p.dirX *= -1;
+      if (p.y < 40 || p.y > window.innerHeight - 50) p.dirY *= -1;
+
+      pacEl.style.left = p.x + 'px';
+      pacEl.style.top = p.y + 'px';
+
+      const angle = Math.atan2(p.dirY, p.dirX) * 180 / Math.PI;
+      pacEl.style.transform = `rotate(${angle}deg)`;
+
+      if (p.powerMode) {
+        p.powerTimer--;
+        if (p.powerTimer <= 0) {
+          p.powerMode = false;
+          p.ghosts.forEach(g => {
+            g.scared = false;
+            g.el.style.filter = '';
+          });
+        }
+      }
+
+      p.dots.forEach(dot => {
+        if (dot.eaten) return;
+
+        const dx = p.x - dot.x;
+        const dy = p.y - dot.y;
+
+        if (Math.sqrt(dx * dx + dy * dy) < 22) {
+          dot.eaten = true;
+          dot.el.style.opacity = '0';
+          setTimeout(() => dot.el.remove(), 200);
+
+          if (dot.power) {
+            p.score += 50;
+            p.powerMode = true;
+            p.powerTimer = 180;
+
+            p.ghosts.forEach(g => {
+              g.scared = true;
+              g.el.style.filter = 'hue-rotate(180deg) brightness(.7)';
+            });
+          } else {
+            p.score += 10;
+          }
+
+          updatePacHUD();
+
+          if (p.dots.every(d => d.eaten)) {
+            setTimeout(() => {
+              spawnDots();
+              resetPacDisplay();
+            }, 700);
+          }
+        }
+      });
+
+      p.ghosts.forEach(g => {
+        const dx = p.x - g.x;
+        const dy = p.y - g.y;
+
+        if (g.scared) {
+          g.vx = g.vx * 0.9 - dx * 0.0022;
+          g.vy = g.vy * 0.9 - dy * 0.0022;
+        } else {
+          g.vx = g.vx * 0.94 + dx * 0.0012;
+          g.vy = g.vy * 0.94 + dy * 0.0012;
+        }
+
+        g.x += g.vx;
+        g.y += g.vy;
+
+        g.x = Math.max(10, Math.min(window.innerWidth - 40, g.x));
+        g.y = Math.max(40, Math.min(window.innerHeight - 50, g.y));
+
+        g.el.style.left = g.x + 'px';
+        g.el.style.top = g.y + 'px';
+
+        const cdx = p.x - g.x;
+        const cdy = p.y - g.y;
+
+        if (Math.sqrt(cdx * cdx + cdy * cdy) < 26) {
+          if (g.scared) {
+            p.score += 200;
+            updatePacHUD();
+
+            g.x = 260 + Math.random() * 220;
+            g.y = 180 + Math.random() * 180;
+            g.vx = (Math.random() - 0.5) * 2;
+            g.vy = (Math.random() - 0.5) * 2;
+            g.scared = false;
+            g.el.style.filter = '';
+          } else {
+            p.lives = Math.max(0, p.lives - 1);
+            updatePacHUD();
+
+            p.x = window.innerWidth / 2;
+            p.y = window.innerHeight / 2;
+            p.dirX = 2.4;
+            p.dirY = 0;
+
+            if (p.lives === 0) {
+              p.active = false;
+              resetPacDisplay();
+              showAlert('GAME OVER', 'Hai perso tutte le vite.\nPunteggio: ' + p.score, () => {
+                resetPacGame();
+              });
+              return;
+            }
+          }
+        }
+      });
+
+      state.pac.animationId = requestAnimationFrame(pacLoop);
+    }
+
+    function togglePacman(){
+      state.pac.active = !state.pac.active;
+      resetPacDisplay();
+
+      if (state.pac.active) {
+        if (state.pac.dots.length === 0 || state.pac.ghosts.length === 0) {
+          resetPacGame();
+        }
+        cancelAnimationFrame(state.pac.animationId);
+        state.pac.animationId = requestAnimationFrame(pacLoop);
+      } else {
+        cancelAnimationFrame(state.pac.animationId);
+      }
+    }
+
+    $('#sm-pacman')?.addEventListener('click', () => {
+      togglePacman();
+      startMenu?.classList.remove('open');
+    });
+
+    document.addEventListener('keydown', e => {
+      if (!state.pac.active) return;
+
+      const spd = 3.5;
+
+      if (e.key === 'ArrowLeft') {
+        state.pac.dirX = -spd;
+        state.pac.dirY = 0;
+        e.preventDefault();
+      }
+      if (e.key === 'ArrowRight') {
+        state.pac.dirX = spd;
+        state.pac.dirY = 0;
+        e.preventDefault();
+      }
+      if (e.key === 'ArrowUp') {
+        state.pac.dirX = 0;
+        state.pac.dirY = -spd;
+        e.preventDefault();
+      }
+      if (e.key === 'ArrowDown') {
+        state.pac.dirX = 0;
+        state.pac.dirY = spd;
+        e.preventDefault();
+      }
+    });
+
+    resetPacGame();
+    state.pac.active = false;
+    resetPacDisplay();
+    updatePacHUD();
+
+    /* RESIZE */
+    window.addEventListener('resize', () => {
+      $$('.win').forEach(win => {
+        if (win.classList.contains('world-fullscreen')) return;
+
+        const rect = win.getBoundingClientRect();
+
+        if (rect.right > window.innerWidth) {
+          win.style.left = Math.max(0, window.innerWidth - rect.width - 10) + 'px';
+        }
+
+        if (rect.bottom > window.innerHeight - 30) {
+          win.style.top = Math.max(32, window.innerHeight - rect.height - 42) + 'px';
+        }
+      });
+    });
+
+    updateTaskbar();
+  </script>
 </body>
 </html>
