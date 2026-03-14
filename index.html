@@ -11,7 +11,7 @@
 
 <style>
 
-/* BASE */
+/* ---------- BASE ---------- */
 
 body{
 margin:0;
@@ -25,7 +25,7 @@ inset:0;
 background:linear-gradient(#87b4ff,#5c93e8 40%,#4f8a2e 41%,#67b63b);
 }
 
-/* WINDOW */
+/* ---------- WINDOW ---------- */
 
 .win{
 position:fixed;
@@ -44,9 +44,10 @@ padding:4px;
 .win-body{
 flex:1;
 overflow:auto;
+padding:10px;
 }
 
-/* WORLD */
+/* ---------- WORLD ---------- */
 
 .world{
 position:fixed;
@@ -56,7 +57,7 @@ width:100vw;
 height:100vh;
 }
 
-/* RAIL */
+/* ---------- RAIL ---------- */
 
 .rail{
 position:absolute;
@@ -69,9 +70,10 @@ color:white;
 display:flex;
 flex-direction:column;
 align-items:center;
+z-index:10;
 }
 
-/* NANO */
+/* ---------- NANO ---------- */
 
 .nano{
 position:absolute;
@@ -87,24 +89,19 @@ animation:walk 1s infinite;
 100%{transform:translateX(0)}
 }
 
-/* PLAYROOM WII */
+/* ---------- PLAYROOM WII ---------- */
 
 .playroom{
 
 background:linear-gradient(#ffffff,#ddeeff);
-
-font-family:sans-serif;
 
 }
 
 .wii-menu{
 
 display:grid;
-
 grid-template-columns:repeat(3,1fr);
-
 gap:20px;
-
 padding:100px;
 
 }
@@ -112,21 +109,13 @@ padding:100px;
 .wii-btn{
 
 background:white;
-
 border-radius:20px;
-
 height:120px;
-
 display:flex;
-
 align-items:center;
-
 justify-content:center;
-
 font-size:20px;
-
 box-shadow:0 4px 10px rgba(0,0,0,0.3);
-
 cursor:pointer;
 
 }
@@ -137,12 +126,55 @@ transform:scale(1.05);
 
 }
 
+
+/* ---------- GAME SCREEN ---------- */
+
+.game{
+
+position:absolute;
+top:0;
+left:70px;
+right:0;
+bottom:0;
+display:none;
+
+}
+
+/* ---------- MARIO ---------- */
+
+#mario{
+
+background:#6bd3ff;
+
+}
+
+.mario-ground{
+
+position:absolute;
+bottom:0;
+height:100px;
+width:100%;
+background:#5ab43c;
+
+}
+
+.mario-player{
+
+position:absolute;
+bottom:100px;
+left:100px;
+font-size:40px;
+
+}
+
 </style>
 
 </head>
 <body>
 
+
 <div id="desktop"></div>
+
 
 
 <!-- HOME -->
@@ -167,7 +199,7 @@ XP HOME
 
 
 
-<!-- PLAYROOM WII -->
+<!-- PLAYROOM -->
 
 <div class="world playroom" id="playroom">
 
@@ -175,46 +207,41 @@ XP HOME
 
 <button onclick="closePlay()">X</button>
 
+<button onclick="showMenu()">MENU</button>
+
 </div>
 
 
-<div class="wii-menu">
+<!-- MENU -->
 
-<div class="wii-btn" onclick="openGame('mario')">
+<div class="wii-menu" id="menu">
 
+<div class="wii-btn" onclick="startGame('mario')">
 MARIO
-
 </div>
 
-<div class="wii-btn" onclick="openGame('cooking')">
-
+<div class="wii-btn">
 COOKING
-
 </div>
 
-<div class="wii-btn" onclick="openGame('invaders')">
-
+<div class="wii-btn">
 INVADERS
-
-</div>
-
-<div class="wii-btn" onclick="openGame('tama')">
-
-TAMAGOTCHI
-
 </div>
 
 <div class="wii-btn">
-
-COMING
+TAMA
+</div>
 
 </div>
 
-<div class="wii-btn">
 
-COMING
+<!-- MARIO GAME -->
 
-</div>
+<div id="mario" class="game">
+
+<div id="player" class="mario-player">🙂</div>
+
+<div class="mario-ground"></div>
 
 </div>
 
@@ -227,17 +254,94 @@ COMING
 
 <script>
 
+/* ---------- MENU ---------- */
+
 function closePlay(){
 
 document.getElementById("playroom").style.display="none"
 
 }
 
-function openGame(name){
+function showMenu(){
 
-alert("open "+name)
+document.getElementById("menu").style.display="grid"
+
+hideGames()
 
 }
+
+function startGame(id){
+
+document.getElementById("menu").style.display="none"
+
+hideGames()
+
+document.getElementById(id).style.display="block"
+
+}
+
+function hideGames(){
+
+document.querySelectorAll(".game").forEach(g=>g.style.display="none")
+
+}
+
+
+
+/* ---------- MARIO ---------- */
+
+let player=document.getElementById("player")
+
+let x=100
+let y=0
+let vy=0
+
+let jumping=false
+
+document.addEventListener("keydown",e=>{
+
+if(document.getElementById("mario").style.display=="block"){
+
+if(e.key=="ArrowRight") x+=10
+if(e.key=="ArrowLeft") x-=10
+
+if(e.key==" " && !jumping){
+
+vy=15
+jumping=true
+
+}
+
+player.style.left=x+"px"
+
+}
+
+})
+
+
+function loop(){
+
+if(jumping){
+
+y+=vy
+vy-=1
+
+if(y<=0){
+
+y=0
+jumping=false
+
+}
+
+player.style.bottom=100+y+"px"
+
+}
+
+requestAnimationFrame(loop)
+
+}
+
+loop()
 
 </script>
 
