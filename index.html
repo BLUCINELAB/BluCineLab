@@ -5,11 +5,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BLUCINELAB OS</title>
+<title>BLUCINELAB OS PRO</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
 
 <style>
+
+/* ---------- BASE ---------- */
 
 body{
 margin:0;
@@ -23,6 +25,8 @@ inset:0;
 background:linear-gradient(#87b4ff,#5c93e8 40%,#4f8a2e 41%,#67b63b);
 }
 
+/* ---------- WINDOW ---------- */
+
 .win{
 position:fixed;
 background:#ece9d8;
@@ -35,105 +39,138 @@ flex-direction:column;
 background:#245edb;
 color:white;
 padding:4px;
+display:flex;
+justify-content:space-between;
 }
 
 .win-body{
 flex:1;
-overflow:hidden;
+overflow:auto;
+padding:10px;
 }
 
-.world-fullscreen{
+/* ---------- FULL ---------- */
+
+.world{
+position:fixed;
 top:0;
 left:0;
 width:100vw;
 height:100vh;
-border:0;
 }
 
-.world-rail{
+/* ---------- RAIL ---------- */
+
+.rail{
+
 position:absolute;
+
 left:0;
 top:0;
 bottom:0;
+
 width:70px;
+
 background:black;
 color:white;
-}
 
-.playroom-body{
-background:#001133;
-color:white;
-font-family:"Press Start 2P";
-}
-
-/* menu */
-
-.game-menu button{
-display:block;
-margin:10px;
-padding:10px;
-font-family:"Press Start 2P";
-}
-
-.game-screen{
-display:none;
-height:100%;
-}
-
-.active{
-display:block;
-}
-
-
-/* MARIO */
-
-#mario{
-
-background:#6bd3ff;
-position:relative;
-overflow:hidden;
+display:flex;
+flex-direction:column;
+align-items:center;
 
 }
 
-.mario-ground{
+/* ---------- NANO ---------- */
+
+.nano{
 
 position:absolute;
-bottom:0;
-height:100px;
-width:100%;
-background:#5ab43c;
-
-}
-
-.mario-player{
-
-position:absolute;
-bottom:100px;
-left:100px;
+bottom:10px;
+left:10px;
 
 font-size:40px;
 
+animation:walk 1s infinite;
+
+}
+
+@keyframes walk{
+
+0%{transform:translateX(0)}
+50%{transform:translateX(5px)}
+100%{transform:translateX(0)}
+
 }
 
 
-/* cooking */
+/* ---------- ARCHIVE GTA ---------- */
 
-#cooking{
-background:pink;
+.archive{
+
+background:#111;
+color:#ff66cc;
+
 }
 
-/* invaders */
 
-#invaders{
+/* ---------- LAB BIOS ---------- */
+
+.lab{
+
 background:black;
-color:lime;
+color:#00ff66;
+font-family:monospace;
+
 }
 
-/* tama */
 
-#tama{
+/* ---------- STUDIO SIMS ---------- */
+
+.studio{
+
+background:#d0ffe0;
+
+}
+
+
+/* ---------- PLAYROOM WII ---------- */
+
+.playroom{
+
 background:white;
-color:black;
+color:#222;
+font-family:sans-serif;
+
+}
+
+
+/* ---------- GALLERY GLITCH ---------- */
+
+.gallery{
+
+background:black;
+color:cyan;
+font-family:monospace;
+
+}
+
+
+/* ---------- CONTACT ---------- */
+
+.contact{
+
+background:#f0f0f0;
+
+}
+
+
+/* ---------- MANIFEST ---------- */
+
+.manifest{
+
+background:#ffffcc;
+font-family:monospace;
+
 }
 
 </style>
@@ -141,83 +178,153 @@ color:black;
 </head>
 <body>
 
+
 <div id="desktop"></div>
 
 
+<!-- HOME -->
 
-<div class="win world-fullscreen" id="playroom">
-
-<div class="world-rail">
-
-<button onclick="closeWin()">X</button>
-
-</div>
+<div class="win" style="top:60px;left:100px;width:400px">
 
 <div class="win-titlebar">
 
-PLAYROOM
+HOME
 
 </div>
 
+<div class="win-body">
 
-<div class="win-body playroom-body">
+XP HOME
 
+<div class="nano">🙂</div>
 
-<div class="game-menu">
-
-<button onclick="openGame('menu')">MENU</button>
-<button onclick="openGame('mario')">MARIO</button>
-<button onclick="openGame('cooking')">COOKING</button>
-<button onclick="openGame('invaders')">INVADERS</button>
-<button onclick="openGame('tama')">TAMA</button>
+</div>
 
 </div>
 
 
 
-<div id="menu" class="game-screen active">
+<!-- ARCHIVE -->
 
-SELECT GAME
+<div class="world archive">
+
+<div class="rail">
+
+<button onclick="hide('archive')">X</button>
+
+</div>
+
+ARCHIVE GTA
+
+<div class="nano">😎</div>
 
 </div>
 
 
 
-<div id="mario" class="game-screen">
+<!-- LAB -->
 
-<div id="player" class="mario-player">🙂</div>
+<div class="world lab">
 
-<div class="mario-ground"></div>
+<div class="rail">
+
+<button onclick="hide('lab')">X</button>
+
+</div>
+
+LAB BIOS
+
+<div class="nano">🤖</div>
 
 </div>
 
 
 
-<div id="cooking" class="game-screen">
+<!-- STUDIO -->
 
-COOKING GAME
+<div class="world studio">
+
+<div class="rail">
+
+<button onclick="hide('studio')">X</button>
+
+</div>
+
+STUDIO SIMS
+
+<div class="nano">🧑</div>
 
 </div>
 
 
 
-<div id="invaders" class="game-screen">
+<!-- PLAYROOM -->
 
-SPACE INVADERS
+<div class="world playroom" id="playroom">
+
+<div class="rail">
+
+<button onclick="hide('playroom')">X</button>
+
+</div>
+
+PLAYROOM WII HUB
+
+<div class="nano">🎮</div>
 
 </div>
 
 
 
-<div id="tama" class="game-screen">
+<!-- GALLERY -->
 
-TAMAGOTCHI
+<div class="world gallery">
+
+<div class="rail">
+
+<button onclick="hide('gallery')">X</button>
+
+</div>
+
+GLITCH
+
+<div class="nano">👾</div>
 
 </div>
 
 
 
+<!-- CONTACT -->
+
+<div class="world contact">
+
+<div class="rail">
+
+<button onclick="hide('contact')">X</button>
+
 </div>
+
+CONTACT
+
+<div class="nano">📧</div>
+
+</div>
+
+
+
+<!-- MANIFEST -->
+
+<div class="world manifest">
+
+<div class="rail">
+
+<button onclick="hide('manifest')">X</button>
+
+</div>
+
+MANIFEST
+
+<div class="nano">📜</div>
 
 </div>
 
@@ -225,77 +332,11 @@ TAMAGOTCHI
 
 <script>
 
-function closeWin(){
+function hide(id){
 
-document.getElementById("playroom").style.display="none"
-
-}
-
-
-function openGame(id){
-
-document.querySelectorAll(".game-screen").forEach(g=>g.classList.remove("active"))
-
-document.getElementById(id).classList.add("active")
+document.getElementById(id).style.display="none"
 
 }
-
-
-
-/* MARIO MOVEMENT */
-
-let player=document.getElementById("player")
-
-let x=100
-let y=0
-let vy=0
-
-let jumping=false
-
-document.addEventListener("keydown",e=>{
-
-if(document.getElementById("mario").classList.contains("active")){
-
-if(e.key=="ArrowRight") x+=10
-if(e.key=="ArrowLeft") x-=10
-
-if(e.key==" " && !jumping){
-
-vy=15
-jumping=true
-
-}
-
-player.style.left=x+"px"
-
-}
-
-})
-
-
-function loop(){
-
-if(jumping){
-
-y+=vy
-vy-=1
-
-if(y<=0){
-
-y=0
-jumping=false
-
-}
-
-player.style.bottom=100+y+"px"
-
-}
-
-requestAnimationFrame(loop)
-
-}
-
-loop()
 
 </script>
 
