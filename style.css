@@ -25,6 +25,12 @@
     0 12px 28px rgba(0,0,0,.38);
   --ui-inset:inset 1px 1px 0 rgba(255,255,255,.3), inset -1px -1px 0 rgba(0,0,0,.55);
   --noise-opacity:.06;
+
+  --scorebar-h:28px;
+  --taskbar-h:36px;
+  --desktop-icon-w:78px;
+  --window-min-w:280px;
+  --window-radius:0px;
 }
 
 *{
@@ -38,15 +44,36 @@ html,body{
   min-height:100%;
 }
 
+html{
+  scroll-behavior:auto;
+}
+
 body{
   background:var(--c-bg);
   font-family:'Press Start 2P', monospace;
   color:var(--c-white);
   min-height:100vh;
   overflow-x:hidden;
-  cursor:none;
   image-rendering:pixelated;
   text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:none;
+  -moz-osx-font-smoothing:auto;
+  position:relative;
+}
+
+body.has-custom-cursor{
+  cursor:none;
+}
+
+a{
+  color:inherit;
+}
+
+button,
+input,
+textarea,
+select{
+  font:inherit;
 }
 
 /* ─────────────────────────────
@@ -60,6 +87,11 @@ body{
   z-index:99999;
   transform:translate(-50%,-50%);
   mix-blend-mode:screen;
+  display:none;
+}
+
+body.has-custom-cursor .cursor-outer{
+  display:block;
 }
 
 .cursor-outer::before{
@@ -156,7 +188,7 @@ body::before{
   top:0;
   left:0;
   right:0;
-  height:28px;
+  height:var(--scorebar-h);
   z-index:8000;
   display:flex;
   align-items:center;
@@ -167,6 +199,7 @@ body::before{
     linear-gradient(90deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.78) 62%, rgba(0,0,0,.2) 100%);
   border-bottom:1px solid rgba(109,255,114,.22);
   backdrop-filter:blur(2px);
+  user-select:none;
 }
 
 #score-bar .sc{
@@ -202,8 +235,11 @@ body::before{
   background:rgba(12,16,24,.8);
   border:1px solid rgba(255,76,245,.35);
   box-shadow:0 0 0 1px rgba(255,255,255,.04);
-  cursor:none;
   animation:eggBlink 3s step-end infinite;
+}
+
+body.has-custom-cursor #egg-btn{
+  cursor:none;
 }
 
 #egg-btn:hover{
@@ -227,7 +263,7 @@ body::before{
   left:0;
   right:0;
   bottom:0;
-  height:36px;
+  height:var(--taskbar-h);
   z-index:9000;
   display:flex;
   align-items:center;
@@ -239,6 +275,7 @@ body::before{
   border-top:2px solid #fff;
   box-shadow:0 -1px 0 rgba(0,0,0,.7);
   font-size:8px;
+  user-select:none;
 }
 
 #taskbar-start{
@@ -250,13 +287,16 @@ body::before{
   font-family:'Press Start 2P', monospace;
   font-size:7px;
   color:#fff;
-  cursor:none;
   text-shadow:1px 1px 0 #000;
   background:linear-gradient(135deg, #098c2f 0%, #04631f 100%);
   border:2px solid #fff;
   border-right-color:#000;
   border-bottom-color:#000;
   box-shadow:var(--ui-inset);
+}
+
+body.has-custom-cursor #taskbar-start{
+  cursor:none;
 }
 
 #taskbar-start::before{
@@ -294,6 +334,9 @@ body::before{
   border:2px solid #fff;
   border-right-color:#808080;
   border-bottom-color:#808080;
+}
+
+body.has-custom-cursor .taskbar-btn{
   cursor:none;
 }
 
@@ -326,7 +369,7 @@ body::before{
 #start-menu{
   position:fixed;
   left:0;
-  bottom:36px;
+  bottom:var(--taskbar-h);
   width:232px;
   z-index:9999;
   display:none;
@@ -372,8 +415,13 @@ body::before{
   font-family:'VT323', monospace;
   font-size:18px;
   color:#000;
-  cursor:none;
   border-bottom:1px solid #a0a0a0;
+  background:transparent;
+  text-align:left;
+}
+
+body.has-custom-cursor .start-item{
+  cursor:none;
 }
 
 .start-item:hover{
@@ -393,7 +441,7 @@ body::before{
   z-index:100;
   display:flex;
   flex-direction:column;
-  min-width:280px;
+  min-width:var(--window-min-w);
   overflow:hidden;
   resize:both;
   background:
@@ -458,7 +506,6 @@ body::before{
   align-items:center;
   justify-content:center;
   flex-shrink:0;
-  cursor:none;
   color:#000;
   font-family:'Press Start 2P', monospace;
   font-size:6px;
@@ -466,6 +513,10 @@ body::before{
   border:1px solid #fff;
   border-right-color:#000;
   border-bottom-color:#000;
+}
+
+body.has-custom-cursor .win-btn{
+  cursor:none;
 }
 
 .win-btn:hover{
@@ -495,6 +546,9 @@ body::before{
 
 .win-menubar span{
   padding:0 4px;
+}
+
+body.has-custom-cursor .win-menubar span{
   cursor:none;
 }
 
@@ -507,6 +561,7 @@ body::before{
   position:relative;
   flex:1;
   overflow-y:auto;
+  overflow-x:hidden;
   padding:14px 14px 16px;
   font-family:'VT323', monospace;
   font-size:17px;
@@ -638,12 +693,17 @@ body::before{
 .desktop-icon{
   position:fixed;
   z-index:50;
-  width:78px;
+  width:var(--desktop-icon-w);
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:4px;
   padding:4px;
+  background:transparent;
+  border:none;
+}
+
+body.has-custom-cursor .desktop-icon{
   cursor:none;
 }
 
@@ -668,14 +728,16 @@ body::before{
   transition:background .12s ease, color .12s ease;
 }
 
-.desktop-icon:hover .icon-img{
+.desktop-icon:hover .icon-img,
+.desktop-icon.is-selected .icon-img{
   transform:translateY(-1px) scale(1.03);
   filter:
     drop-shadow(2px 2px 0 rgba(0,0,0,.95))
     drop-shadow(0 0 10px rgba(255,255,255,.12));
 }
 
-.desktop-icon:hover .icon-label{
+.desktop-icon:hover .icon-label,
+.desktop-icon.is-selected .icon-label{
   background:#000080;
   color:#fff;
 }
@@ -734,6 +796,7 @@ body::before{
   font-size:21px;
   letter-spacing:2px;
   color:#8d8d8d;
+  text-align:center;
 }
 
 #boot-bar-wrap{
@@ -787,6 +850,7 @@ body::before{
     drop-shadow(1px 1px 0 #000);
   animation:chomp .2s steps(2) infinite;
   transition:left .04s linear, top .04s linear;
+  will-change:transform,left,top;
 }
 
 @keyframes chomp{
@@ -825,6 +889,7 @@ body::before{
   font-size:22px;
   filter:drop-shadow(0 0 6px currentColor);
   transition:left .06s linear, top .06s linear;
+  will-change:left,top;
 }
 
 /* ─────────────────────────────
@@ -887,11 +952,14 @@ body::before{
   font-family:'Press Start 2P', monospace;
   font-size:7px;
   color:#000;
-  cursor:none;
   background:#c8c8c8;
   border:2px solid #fff;
   border-right-color:#000;
   border-bottom-color:#000;
+}
+
+body.has-custom-cursor .alert-ok{
+  cursor:none;
 }
 
 .alert-ok:hover{
@@ -977,6 +1045,7 @@ body::before{
   .win{
     min-width:200px;
     max-width:calc(100vw - 8px);
+    resize:none;
   }
 
   .win-body{
@@ -1014,5 +1083,27 @@ body::before{
     min-width:64px;
     font-size:15px;
     padding:2px 6px;
+  }
+}
+
+@media (pointer:coarse){
+  body,
+  body.has-custom-cursor{
+    cursor:auto;
+  }
+
+  .cursor-outer{
+    display:none !important;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,
+  *::before,
+  *::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
   }
 }
