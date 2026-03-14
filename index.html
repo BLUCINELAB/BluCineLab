@@ -4,2503 +4,297 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BLUCINELAB OS</title>
-  <style>
-    :root{
-      --taskbar-h: 40px;
-      --topbar-h: 28px;
-      --rail-w: 74px;
-
-      --xp-blue-1:#4f8ff7;
-      --xp-blue-2:#2d6bd1;
-      --xp-blue-3:#1c4fb6;
-      --xp-border:#0a246a;
-      --boot-green:#00ff66;
-    }
-
-    *{ box-sizing:border-box; }
-    html,body{
-      width:100%;
-      height:100%;
-      margin:0;
-    }
-
-    body{
-      overflow:hidden;
-      font-family:Tahoma, Arial, sans-serif;
-      background:#000;
-      color:#111;
-      -webkit-font-smoothing:antialiased;
-    }
-
-    button{
-      font:inherit;
-      border:none;
-      background:none;
-      padding:0;
-      margin:0;
-      cursor:pointer;
-    }
-
-    a{
-      color:inherit;
-      text-decoration:none;
-    }
-
-    strong{ font-weight:700; }
-
-    /* =========================
-       BOOT
-    ========================= */
-    #boot{
-      position:fixed;
-      inset:0;
-      z-index:99999;
-      background:#000;
-      color:var(--boot-green);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex-direction:column;
-      gap:18px;
-      font-family:"Courier New", monospace;
-      overflow:hidden;
-    }
-
-    #boot::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        repeating-linear-gradient(
-          to bottom,
-          rgba(255,255,255,.05) 0px,
-          rgba(255,255,255,.05) 1px,
-          transparent 1px,
-          transparent 3px
-        );
-      opacity:.45;
-      pointer-events:none;
-    }
-
-    #boot::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(
-          to bottom,
-          transparent 0%,
-          rgba(0,255,102,.025) 48%,
-          transparent 100%
-        );
-      animation:bootFlicker .16s infinite alternate;
-      pointer-events:none;
-    }
-
-    @keyframes bootFlicker{
-      from{ opacity:.68; }
-      to{ opacity:.96; }
-    }
-
-    .boot-logo{
-      position:relative;
-      font-size:30px;
-      letter-spacing:2px;
-      text-shadow:0 0 10px rgba(0,255,102,.35);
-    }
-
-    .boot-sub{
-      position:relative;
-      font-size:15px;
-      letter-spacing:1px;
-      opacity:.88;
-    }
-
-    .boot-bar{
-      position:relative;
-      width:min(450px,84vw);
-      height:24px;
-      border:2px solid var(--boot-green);
-      background:#00140a;
-      overflow:hidden;
-      box-shadow:0 0 0 1px rgba(0,255,102,.16) inset;
-    }
-
-    .boot-fill{
-      width:0%;
-      height:100%;
-      background:
-        repeating-linear-gradient(
-          90deg,
-          #00ff66 0 10px,
-          #00d453 10px 20px
-        );
-      animation:bootFill 4.25s linear forwards;
-    }
-
-    @keyframes bootFill{
-      from{ width:0%; }
-      to{ width:100%; }
-    }
-
-    .boot-lines{
-      position:relative;
-      width:min(540px,86vw);
-      min-height:120px;
-      white-space:pre-line;
-      font-size:15px;
-      line-height:1.45;
-      opacity:.92;
-      text-align:left;
-    }
-
-    /* =========================
-       TOP STATUS BAR
-    ========================= */
-    #topbar{
-      position:fixed;
-      top:0;
-      left:0;
-      right:0;
-      height:var(--topbar-h);
-      z-index:9000;
-      display:flex;
-      align-items:center;
-      gap:18px;
-      padding:0 12px;
-      color:#fff;
-      background:linear-gradient(90deg, rgba(0,0,0,.78), rgba(0,0,0,.30));
-      border-bottom:1px solid rgba(255,255,255,.14);
-      font-family:"Courier New", monospace;
-      font-size:13px;
-      letter-spacing:.3px;
-    }
-
-    .top-title{ color:#dff2ff; font-weight:700; }
-    .top-small{ color:#fff39b; font-size:12px; }
-
-    /* =========================
-       DESKTOP XP
-    ========================= */
-    #desktop{
-      position:fixed;
-      inset:0;
-      z-index:0;
-      overflow:hidden;
-      background:
-        radial-gradient(circle at 16% 14%, rgba(255,255,255,.96) 0 34px, transparent 35px),
-        radial-gradient(circle at 21% 13%, rgba(255,255,255,.92) 0 24px, transparent 25px),
-        radial-gradient(circle at 74% 13%, rgba(255,255,255,.94) 0 28px, transparent 29px),
-        radial-gradient(circle at 79% 12%, rgba(255,255,255,.9) 0 20px, transparent 21px),
-        linear-gradient(to bottom, #95d5ff 0%, #6ab7ff 30%, #4f9ef0 50%, #4d962f 51%, #67c040 77%, #82d452 100%);
-    }
-
-    #desktop::before{
-      content:"";
-      position:absolute;
-      left:-10%;
-      bottom:10%;
-      width:70%;
-      height:36%;
-      background:
-        radial-gradient(ellipse at 50% 100%, #78d14d 0%, #5db138 50%, #488f28 72%, transparent 73%);
-      pointer-events:none;
-    }
-
-    #desktop::after{
-      content:"";
-      position:absolute;
-      right:-15%;
-      bottom:6%;
-      width:88%;
-      height:30%;
-      background:
-        radial-gradient(ellipse at 50% 100%, #62ba3f 0%, #4fa630 56%, #3f8426 74%, transparent 75%);
-      pointer-events:none;
-    }
-
-    /* =========================
-       ICONS
-    ========================= */
-    .desktop-icon{
-      position:absolute;
-      width:90px;
-      padding:4px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:6px;
-      border:none;
-      background:transparent;
-      z-index:10;
-    }
-
-    .desktop-icon:hover .icon-label,
-    .desktop-icon:focus-visible .icon-label{
-      background:rgba(35,97,189,.68);
-      outline:1px dotted #fff;
-    }
-
-    .icon-art{
-      position:relative;
-      width:44px;
-      height:44px;
-      display:block;
-      filter:drop-shadow(1px 2px 0 rgba(0,0,0,.45));
-    }
-
-    .icon-label{
-      padding:2px 4px;
-      font-size:12px;
-      line-height:1.14;
-      text-align:center;
-      color:#fff;
-      text-shadow:1px 1px 2px rgba(0,0,0,.95);
-    }
-
-    .folder{
-      background:linear-gradient(to bottom,#f8dd75,#d8af37);
-      border:1px solid #9d7418;
-      border-radius:3px;
-    }
-    .folder::before{
-      content:"";
-      position:absolute;
-      left:4px;
-      top:-4px;
-      width:18px;
-      height:10px;
-      background:linear-gradient(to bottom,#fce691,#dbba55);
-      border:1px solid #9d7418;
-      border-bottom:none;
-      border-radius:3px 3px 0 0;
-    }
-
-    .monitor{
-      border-radius:3px;
-      background:linear-gradient(to bottom,#e6f6ff,#84c4ff 44%,#356ab2 100%);
-      border:1px solid #314768;
-    }
-    .monitor::before{
-      content:"";
-      position:absolute;
-      left:10px;
-      right:10px;
-      bottom:-8px;
-      height:5px;
-      background:#c7c7c7;
-      border:1px solid #7a7a7a;
-    }
-    .monitor::after{
-      content:"";
-      position:absolute;
-      left:15px;
-      right:15px;
-      bottom:-13px;
-      height:4px;
-      background:#a4a4a4;
-      border:1px solid #676767;
-    }
-
-    .gamepad{
-      border-radius:18px 18px 12px 12px;
-      background:linear-gradient(to bottom,#f4f4f4,#cfd8ea);
-      border:1px solid #727f9b;
-    }
-    .gamepad::before,
-    .gamepad::after{
-      content:"";
-      position:absolute;
-      top:12px;
-      width:6px;
-      height:6px;
-      border-radius:50%;
-      background:#58a5ff;
-    }
-    .gamepad::before{ left:10px; }
-    .gamepad::after{ right:10px; }
-
-    .image{
-      background:#fff;
-      border:1px solid #7c93b8;
-      border-radius:2px;
-    }
-    .image::before{
-      content:"";
-      position:absolute;
-      left:6px;
-      right:6px;
-      bottom:8px;
-      height:14px;
-      background:linear-gradient(135deg,#5dbf59 0 50%, #7fd0ff 50% 100%);
-    }
-    .image::after{
-      content:"";
-      position:absolute;
-      top:7px;
-      right:7px;
-      width:7px;
-      height:7px;
-      border-radius:50%;
-      background:#ffd056;
-    }
-
-    .doc{
-      background:#fff;
-      border:1px solid #8a8a8a;
-      border-radius:2px;
-    }
-    .doc::before{
-      content:"";
-      position:absolute;
-      right:0;
-      top:0;
-      border-left:10px solid transparent;
-      border-top:10px solid #d7e3ff;
-    }
-    .doc::after{
-      content:"";
-      position:absolute;
-      left:7px;
-      right:7px;
-      top:13px;
-      height:16px;
-      background:repeating-linear-gradient(to bottom,#6e8fcf 0 2px, transparent 2px 5px);
-    }
-
-    .mail{
-      border-radius:3px;
-      background:linear-gradient(to bottom,#fff,#e0e8f7);
-      border:1px solid #7f8ea8;
-    }
-    .mail::before{
-      content:"";
-      position:absolute;
-      left:3px;
-      right:3px;
-      top:8px;
-      border-top:14px solid #b8c8e3;
-      border-left:17px solid transparent;
-      border-right:17px solid transparent;
-    }
-
-    .trash{
-      border-radius:0 0 5px 5px;
-      background:linear-gradient(to bottom,#dff4ff,#92c4ec);
-      border:1px solid #5f8eaf;
-    }
-    .trash::before{
-      content:"";
-      position:absolute;
-      left:8px;
-      right:8px;
-      top:-6px;
-      height:6px;
-      background:#9dc6e0;
-      border:1px solid #5f8eaf;
-      border-bottom:none;
-    }
-
-    /* =========================
-       TASKBAR
-    ========================= */
-    #taskbar{
-      position:fixed;
-      left:0;
-      right:0;
-      bottom:0;
-      height:var(--taskbar-h);
-      z-index:10000;
-      display:flex;
-      align-items:center;
-      gap:6px;
-      padding:0 6px;
-      color:#fff;
-      background:linear-gradient(to bottom,#4c8df0 0%, #2f6bd1 36%, #2458c4 100%);
-      border-top:1px solid rgba(255,255,255,.45);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.25);
-    }
-
-    #start-btn{
-      height:32px;
-      min-width:98px;
-      padding:0 14px 0 10px;
-      border:1px solid #1c631d;
-      border-radius:0 10px 10px 0;
-      color:#fff;
-      background:linear-gradient(to bottom,#5be85d 0%, #37b73d 48%, #288b2f 100%);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.45), 1px 1px 0 rgba(0,0,0,.24);
-      display:flex;
-      align-items:center;
-      gap:8px;
-      font-size:18px;
-      font-weight:700;
-      font-style:italic;
-    }
-
-    #start-btn .orb{
-      width:16px;
-      height:16px;
-      border-radius:50%;
-      background:radial-gradient(circle at 35% 35%, #dff7ff 0%, #83c8ff 42%, #2b66d8 100%);
-      border:1px solid rgba(255,255,255,.34);
-    }
-
-    #task-buttons{
-      flex:1;
-      min-width:0;
-      display:flex;
-      align-items:center;
-      gap:4px;
-    }
-
-    .task-item{
-      max-width:180px;
-      height:28px;
-      padding:0 10px;
-      border:1px solid rgba(255,255,255,.22);
-      background:rgba(255,255,255,.12);
-      color:#fff;
-      font-size:12px;
-      display:flex;
-      align-items:center;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      border-radius:2px;
-    }
-
-    .task-item.active{
-      background:rgba(255,255,255,.24);
-    }
-
-    #tray{
-      min-width:92px;
-      height:28px;
-      padding:0 10px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      border-left:1px solid rgba(255,255,255,.24);
-      background:rgba(255,255,255,.10);
-      border-radius:3px 0 0 0;
-    }
-
-    #tray .dot{
-      width:8px;
-      height:8px;
-      border-radius:50%;
-      background:#9cff5a;
-      box-shadow:0 0 6px rgba(156,255,90,.65);
-    }
-
-    #clock{ font-size:12px; }
-
-    /* =========================
-       START MENU
-    ========================= */
-    #start-menu{
-      position:fixed;
-      left:0;
-      bottom:var(--taskbar-h);
-      width:360px;
-      z-index:11000;
-      display:none;
-      overflow:hidden;
-      border:1px solid #1d4aa7;
-      border-radius:6px 6px 0 0;
-      box-shadow:0 12px 26px rgba(0,0,0,.28);
-    }
-
-    #start-menu.open{ display:block; }
-
-    .start-top{
-      height:62px;
-      padding:0 14px;
-      display:flex;
-      align-items:center;
-      gap:12px;
-      color:#fff;
-      background:linear-gradient(to bottom,#2f77ea 0%, #1d57ca 100%);
-    }
-
-    .start-pic{
-      width:38px;
-      height:38px;
-      border-radius:8px;
-      background:linear-gradient(to bottom,#f8f8f8,#b6d4ff);
-      border:1px solid rgba(255,255,255,.45);
-    }
-
-    .start-name{
-      font-size:22px;
-      font-weight:700;
-    }
-
-    .start-body{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      background:#f3f3f3;
-    }
-
-    .start-left{
-      background:#fff;
-      padding:8px;
-    }
-
-    .start-right{
-      background:#dce6f7;
-      padding:8px;
-      border-left:1px solid #b9c9e6;
-    }
-
-    .start-link{
-      width:100%;
-      border:none;
-      background:transparent;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:8px 10px;
-      text-align:left;
-      color:#111;
-      font-size:14px;
-      border-radius:3px;
-    }
-
-    .start-link:hover{
-      background:#2a63d4;
-      color:#fff;
-    }
-
-    .start-link-art{
-      width:18px;
-      height:18px;
-      position:relative;
-      display:block;
-      flex:0 0 18px;
-      transform:scale(.42);
-      transform-origin:top left;
-    }
-
-    .start-item{
-      padding:8px 10px;
-      font-size:14px;
-      color:#20385c;
-    }
-
-    .start-item:hover{
-      background:rgba(42,99,212,.16);
-    }
-
-    .start-bottom{
-      padding:8px 10px;
-      background:linear-gradient(to bottom,#2f77ea 0%, #1d57ca 100%);
-      display:flex;
-      justify-content:flex-end;
-    }
-
-    #shutdown{
-      border:1px solid rgba(255,255,255,.34);
-      background:linear-gradient(to bottom,#f7ad57,#d77618);
-      color:#fff;
-      font-weight:700;
-      padding:6px 12px;
-      border-radius:14px;
-    }
-
-    /* =========================
-       WINDOWS / WORLD WRAPPER
-    ========================= */
-    .win{
-      position:fixed;
-      inset:0 0 var(--taskbar-h) 0;
-      z-index:200;
-      display:none;
-      flex-direction:column;
-      overflow:hidden;
-      background:#ece9d8;
-    }
-
-    .win.show{ display:flex; }
-
-    .titlebar{
-      height:30px;
-      padding:0 8px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      background:linear-gradient(to bottom,#4f94fb 0%, #2c6adb 52%, #2154bf 100%);
-      color:#fff;
-      border-bottom:1px solid rgba(255,255,255,.20);
-    }
-
-    .title-left{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      min-width:0;
-    }
-
-    .title-text{
-      font-size:13px;
-      font-weight:700;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
-    .title-icon{
-      width:16px;
-      height:16px;
-      position:relative;
-      display:block;
-      flex:0 0 16px;
-    }
-
-    .title-icon.orb{
-      border-radius:50%;
-      background:radial-gradient(circle at 35% 35%, #dff7ff 0%, #83c8ff 42%, #2b66d8 100%);
-      border:1px solid rgba(255,255,255,.34);
-    }
-
-    .title-icon.folder,
-    .title-icon.monitor,
-    .title-icon.gamepad,
-    .title-icon.image,
-    .title-icon.doc,
-    .title-icon.mail{
-      transform:scale(.38);
-      transform-origin:top left;
-    }
-
-    .title-controls{
-      display:flex;
-      gap:3px;
-    }
-
-    .ctrl{
-      width:22px;
-      height:20px;
-      border:1px solid rgba(255,255,255,.42);
-      background:linear-gradient(to bottom,#f6fbff,#b9d8ff);
-      color:#0b2c74;
-      font-size:12px;
-      font-weight:700;
-      line-height:1;
-      border-radius:3px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .ctrl.close{
-      background:linear-gradient(to bottom,#ffb2a8,#d95d46);
-      color:#fff;
-      border-color:#a63927;
-    }
-
-    .world-body{
-      flex:1;
-      min-height:0;
-      display:grid;
-      grid-template-columns:var(--rail-w) 1fr;
-    }
-
-    .rail{
-      padding:12px 8px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:10px;
-    }
-
-    .rail-btn{
-      width:42px;
-      height:34px;
-      font-size:16px;
-      font-weight:700;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .rail-label{
-      margin-top:6px;
-      font-size:11px;
-      text-transform:uppercase;
-      letter-spacing:1px;
-      writing-mode:vertical-rl;
-      transform:rotate(180deg);
-    }
-
-    .rail-help{
-      margin-top:auto;
-      font-size:10px;
-      line-height:1.3;
-      text-align:center;
-    }
-
-    .world-main{
-      position:relative;
-      min-width:0;
-      min-height:0;
-      overflow:auto;
-      padding:20px 22px 24px;
-    }
-
-    .kicker{
-      font-size:11px;
-      text-transform:uppercase;
-      letter-spacing:.7px;
-      margin-bottom:8px;
-      opacity:.84;
-    }
-
-    .guide{
-      position:absolute;
-      right:18px;
-      top:16px;
-      z-index:5;
-      pointer-events:none;
-    }
-
-    .bubble{
-      display:inline-block;
-      margin-bottom:8px;
-      padding:6px 8px;
-      font-size:11px;
-      line-height:1.2;
-      border-radius:10px;
-      box-shadow:0 2px 8px rgba(0,0,0,.12);
-    }
-
-    /* generic mascots */
-    .char{
-      position:relative;
-      width:60px;
-      height:92px;
-    }
-
-    .char-xp .head,
-    .char-xp .body,
-    .char-xp .arm,
-    .char-xp .leg{
-      position:absolute;
-      display:block;
-    }
-
-    .char-xp .head{
-      top:0;
-      left:19px;
-      width:22px;
-      height:22px;
-      border-radius:50%;
-      background:#f4cfb2;
-      border:1px solid rgba(0,0,0,.12);
-    }
-
-    .char-xp .body{
-      top:22px;
-      left:21px;
-      width:18px;
-      height:30px;
-      border-radius:9px;
-      background:#4f8ff7;
-    }
-
-    .char-xp .arm.left{
-      top:26px;
-      left:13px;
-      width:5px;
-      height:22px;
-      background:#f4cfb2;
-      transform-origin:top center;
-      animation:armL 1s ease-in-out infinite;
-    }
-
-    .char-xp .arm.right{
-      top:26px;
-      right:13px;
-      width:5px;
-      height:22px;
-      background:#f4cfb2;
-      transform-origin:top center;
-      animation:armR 1s ease-in-out infinite;
-    }
-
-    .char-xp .leg.left{
-      top:50px;
-      left:23px;
-      width:6px;
-      height:28px;
-      background:#2f56b0;
-      transform-origin:top center;
-      animation:legL 1s ease-in-out infinite;
-    }
-
-    .char-xp .leg.right{
-      top:50px;
-      right:23px;
-      width:6px;
-      height:28px;
-      background:#2f56b0;
-      transform-origin:top center;
-      animation:legR 1s ease-in-out infinite;
-    }
-
-    @keyframes armL{ 0%,100%{transform:rotate(18deg)} 50%{transform:rotate(-16deg)} }
-    @keyframes armR{ 0%,100%{transform:rotate(-18deg)} 50%{transform:rotate(16deg)} }
-    @keyframes legL{ 0%,100%{transform:rotate(14deg)} 50%{transform:rotate(-12deg)} }
-    @keyframes legR{ 0%,100%{transform:rotate(-14deg)} 50%{transform:rotate(12deg)} }
-
-    /* =========================
-       HOME / XP EXPLORER
-    ========================= */
-    .shell-main{
-      background:
-        linear-gradient(to bottom, rgba(255,255,255,.46), rgba(255,255,255,.2)),
-        #eef4ff;
-    }
-
-    .shell-main .rail{
-      background:linear-gradient(to bottom,#eef3ff,#cad9f3);
-      border-right:1px solid #aebfdd;
-    }
-
-    .shell-main .rail-btn{
-      border:1px solid #93a7cb;
-      background:linear-gradient(to bottom,#ffffff,#dfe8f8);
-      color:#12387c;
-      border-radius:4px;
-    }
-
-    .shell-main .rail-label,
-    .shell-main .rail-help{
-      color:#4a648f;
-    }
-
-    .shell-top{
-      display:flex;
-      justify-content:space-between;
-      gap:24px;
-      margin-bottom:24px;
-    }
-
-    .shell-main h1{
-      margin:0 0 10px;
-      font-size:34px;
-      color:#19407f;
-    }
-
-    .shell-main p{
-      margin:0;
-      max-width:720px;
-      font-size:15px;
-      line-height:1.62;
-      color:#2d2d2d;
-    }
-
-    .shell-guide .bubble{
-      background:#fff;
-      color:#567cac;
-      border:1px solid #d8e5f2;
-    }
-
-    .xp-explorer{
-      display:grid;
-      grid-template-columns:240px 1fr;
-      border:1px solid #b6c8e6;
-      background:#fff;
-      box-shadow:0 10px 22px rgba(67,103,155,.10);
-      min-height:420px;
-    }
-
-    .xp-sidebar{
-      background:linear-gradient(to bottom,#f4f8ff,#dce9fb);
-      border-right:1px solid #b6c8e6;
-      padding:14px;
-      display:grid;
-      align-content:start;
-      gap:12px;
-    }
-
-    .xp-block{
-      border:1px solid #bbd1ef;
-      background:#fff;
-      padding:12px;
-    }
-
-    .xp-block h3{
-      margin:0 0 8px;
-      font-size:14px;
-      color:#1a4fa0;
-    }
-
-    .xp-block p{
-      margin:0;
-      font-size:12px;
-      line-height:1.5;
-      color:#3d4a5f;
-    }
-
-    .xp-content{
-      padding:16px;
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:14px;
-      align-content:start;
-      background:#fefefe;
-    }
-
-    .shell-card{
-      min-height:148px;
-      border:1px solid #b7c9e6;
-      background:linear-gradient(to bottom,#ffffff,#e9f2ff);
-      padding:16px;
-      display:flex;
-      flex-direction:column;
-      align-items:flex-start;
-      gap:8px;
-      text-align:left;
-      box-shadow:0 6px 14px rgba(67,103,155,.08);
-    }
-
-    .shell-card-art{
-      width:22px;
-      height:22px;
-      display:block;
-      position:relative;
-      transform:scale(.54);
-      transform-origin:top left;
-    }
-
-    .shell-card-title{
-      font-size:16px;
-      font-weight:700;
-      color:#173f86;
-    }
-
-    .shell-card-text{
-      font-size:13px;
-      line-height:1.45;
-      color:#3b3b3b;
-    }
-
-    /* =========================
-       ARCHIVE / GTA MENU
-    ========================= */
-    .archive-main{
-      background:
-        radial-gradient(circle at top right, rgba(255,70,180,.18), transparent 34%),
-        radial-gradient(circle at left center, rgba(255,255,255,.04), transparent 32%),
-        linear-gradient(135deg,#0e0f14 0%, #171820 36%, #220f23 65%, #0f1015 100%);
-      color:#f7d8ea;
-      font-family:Arial, Helvetica, sans-serif;
-    }
-
-    .archive-main .rail{
-      background:linear-gradient(to bottom,#13141b,#0b0c11);
-      border-right:1px solid rgba(255,255,255,.09);
-    }
-
-    .archive-main .rail-btn{
-      border:1px solid rgba(255,255,255,.16);
-      background:rgba(255,255,255,.06);
-      color:#ff99cb;
-      border-radius:4px;
-    }
-
-    .archive-main .rail-label,
-    .archive-main .rail-help{
-      color:#d89cbc;
-    }
-
-    .archive-guide .bubble{
-      background:#ff9fd0;
-      color:#111;
-    }
-
-    .gta-char{
-      width:54px;
-      height:88px;
-      background:
-        radial-gradient(circle at 50% 18%, #f0c2a8 0 11px, transparent 12px),
-        linear-gradient(#181818 0 0) center 30px / 20px 30px no-repeat,
-        linear-gradient(#ff4fa8 0 0) center 28px / 24px 14px no-repeat,
-        linear-gradient(#111 0 0) 16px 60px / 8px 24px no-repeat,
-        linear-gradient(#111 0 0) 30px 60px / 8px 24px no-repeat;
-      animation:gtaShift 1.8s ease-in-out infinite;
-    }
-
-    @keyframes gtaShift{
-      0%,100%{transform:translateX(0)}
-      50%{transform:translateX(-5px)}
-    }
-
-    .archive-top{
-      display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:18px;
-      margin-bottom:18px;
-    }
-
-    .archive-titlebox,
-    .archive-stats,
-    .archive-file{
-      border:1px solid rgba(255,120,190,.18);
-      background:rgba(255,255,255,.03);
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.02);
-    }
-
-    .archive-titlebox{
-      padding:20px;
-      min-height:190px;
-    }
-
-    .archive-titlebox h2{
-      margin:0 0 10px;
-      font-size:42px;
-      line-height:1;
-      color:#ff9fd0;
-      letter-spacing:.5px;
-      text-transform:uppercase;
-    }
-
-    .archive-titlebox p{
-      margin:0;
-      font-size:14px;
-      line-height:1.68;
-      color:#ead9e1;
-      max-width:620px;
-    }
-
-    .archive-stats{
-      padding:16px;
-      display:grid;
-      gap:10px;
-    }
-
-    .hud-stat{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      padding:10px 12px;
-      border:1px solid rgba(255,255,255,.06);
-      background:rgba(255,255,255,.03);
-      font-size:13px;
-      text-transform:uppercase;
-      letter-spacing:.8px;
-    }
-
-    .hud-stat span:first-child{ color:#caa2b6; }
-    .hud-stat span:last-child{ color:#fff; font-weight:700; }
-
-    .archive-grid{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:16px;
-    }
-
-    .archive-file{
-      padding:18px;
-      min-height:170px;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .archive-file::before{
-      content:"";
-      position:absolute;
-      inset:auto 0 0 0;
-      height:2px;
-      background:linear-gradient(to right, transparent, #ff6fbe, transparent);
-      opacity:.6;
-    }
-
-    .archive-tag{
-      display:inline-block;
-      margin-bottom:12px;
-      padding:4px 8px;
-      font-size:10px;
-      text-transform:uppercase;
-      letter-spacing:1px;
-      color:#111;
-      background:#ff9fd0;
-    }
-
-    .archive-file h3{
-      margin:0 0 10px;
-      color:#fff;
-      font-size:22px;
-      text-transform:uppercase;
-      line-height:1.15;
-    }
-
-    .archive-file p{
-      margin:0 0 12px;
-      font-size:13px;
-      line-height:1.58;
-      color:#dec8d5;
-    }
-
-    .archive-meta{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-
-    .archive-pill{
-      padding:4px 8px;
-      font-size:11px;
-      border:1px solid rgba(255,255,255,.14);
-      color:#f0d4e3;
-      background:rgba(255,255,255,.04);
-    }
-
-    /* =========================
-       LAB / BIOS
-    ========================= */
-    .lab-main{
-      background:#000;
-      color:#87ffe0;
-      font-family:"Courier New", monospace;
-    }
-
-    .lab-main .rail{
-      background:#001010;
-      border-right:1px solid #1bcfb5;
-    }
-
-    .lab-main .rail-btn{
-      background:#021d1d;
-      border:1px solid #53fdd8;
-      color:#9effee;
-      border-radius:4px;
-    }
-
-    .lab-main .rail-label,
-    .lab-main .rail-help{
-      color:#7efce3;
-    }
-
-    .lab-main .world-main{
-      background:
-        repeating-linear-gradient(
-          to bottom,
-          rgba(127,255,224,.05) 0px,
-          rgba(127,255,224,.05) 1px,
-          transparent 1px,
-          transparent 3px
-        ),
-        #000;
-    }
-
-    .lab-guide .bubble{
-      background:#05362d;
-      color:#87ffe0;
-      border:1px solid rgba(127,255,224,.24);
-    }
-
-    .lab-char{
-      width:52px;
-      height:88px;
-      background:
-        linear-gradient(#8dffe6 0 0) center 14px / 20px 4px no-repeat,
-        linear-gradient(#8dffe6 0 0) center 26px / 28px 14px no-repeat,
-        linear-gradient(#8dffe6 0 0) 18px 46px / 6px 22px no-repeat,
-        linear-gradient(#8dffe6 0 0) 28px 46px / 6px 22px no-repeat,
-        linear-gradient(#8dffe6 0 0) 12px 30px / 6px 16px no-repeat,
-        linear-gradient(#8dffe6 0 0) 34px 30px / 6px 16px no-repeat;
-      animation:labPulse 1.3s ease-in-out infinite;
-    }
-
-    @keyframes labPulse{
-      0%,100%{opacity:1; transform:translateY(0)}
-      50%{opacity:.72; transform:translateY(-3px)}
-    }
-
-    .lab-topline{
-      display:flex;
-      justify-content:space-between;
-      gap:20px;
-      padding:10px 12px;
-      border:1px solid rgba(127,255,224,.25);
-      font-size:12px;
-      letter-spacing:.8px;
-      text-transform:uppercase;
-      margin-bottom:14px;
-    }
-
-    .lab-setup{
-      display:grid;
-      grid-template-columns:1.05fr .95fr;
-      gap:14px;
-      margin-bottom:14px;
-    }
-
-    .lab-menu,
-    .lab-ascii-box,
-    .lab-bank{
-      border:1px solid rgba(127,255,224,.28);
-      padding:14px;
-      background:rgba(0,0,0,.55);
-    }
-
-    .lab-menu pre,
-    .lab-ascii-box pre,
-    .lab-bank pre{
-      margin:0;
-      white-space:pre-wrap;
-      line-height:1.42;
-      font-size:13px;
-      color:#8dffe6;
-    }
-
-    .lab-ascii-box pre{
-      font-size:11px;
-      line-height:1.12;
-    }
-
-    .lab-banks{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:14px;
-    }
-
-    /* =========================
-       PLAYROOM / WII
-    ========================= */
-    .play-main{
-      background:
-        radial-gradient(circle at top center, rgba(255,255,255,.92), rgba(255,255,255,.65) 34%, transparent 70%),
-        linear-gradient(to bottom,#f7fbff 0%, #eef5fb 100%);
-      color:#173750;
-      font-family:Arial, Helvetica, sans-serif;
-    }
-
-    .play-main .rail{
-      background:linear-gradient(to bottom,#eff7fd,#dceaf5);
-      border-right:1px solid #bfd0de;
-    }
-
-    .play-main .rail-btn{
-      border:1px solid #bdd0df;
-      background:linear-gradient(to bottom,#fff,#eaf4fb);
-      color:#5f8eaf;
-      border-radius:10px;
-      box-shadow:0 2px 4px rgba(0,0,0,.05);
-    }
-
-    .play-main .rail-label,
-    .play-main .rail-help{
-      color:#7ba1bd;
-    }
-
-    .play-title{
-      font-size:40px;
-      font-weight:700;
-      color:#6f9ec1;
-      letter-spacing:.3px;
-      text-align:center;
-    }
-
-    .play-sub{
-      margin-top:6px;
-      font-size:12px;
-      letter-spacing:.7px;
-      text-transform:uppercase;
-      color:#8fb0c8;
-      text-align:center;
-    }
-
-    .play-tabs{
-      display:flex;
-      justify-content:center;
-      gap:10px;
-      margin:22px 0 18px;
-      flex-wrap:wrap;
-    }
-
-    .play-tab{
-      padding:9px 16px;
-      border:1px solid #c7d9e6;
-      background:linear-gradient(to bottom,#fff,#f0f7fc);
-      border-radius:999px;
-      font-size:13px;
-      color:#5d8bad;
-      box-shadow:0 2px 6px rgba(0,0,0,.05);
-    }
-
-    .play-tab.active{
-      background:linear-gradient(to bottom,#8dd3ff,#6cbde8);
-      color:#fff;
-      border-color:#60acd5;
-    }
-
-    .play-panel{
-      display:none;
-      margin-top:10px;
-    }
-
-    .play-panel.show{
-      display:block;
-    }
-
-    .wii-grid{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:18px;
-      max-width:1120px;
-      margin:0 auto;
-    }
-
-    .wii-tile{
-      min-height:180px;
-      border:1px solid #d3e2ec;
-      border-radius:26px;
-      background:linear-gradient(to bottom,#ffffff,#eef6fb);
-      box-shadow:
-        0 12px 22px rgba(140,168,191,.14),
-        inset 0 1px 0 rgba(255,255,255,.9);
-      padding:18px;
-      text-align:left;
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-end;
-      gap:8px;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .wii-tile.playable{
-      cursor:pointer;
-    }
-
-    .wii-tile::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(to bottom, rgba(255,255,255,.55), transparent 50%);
-      pointer-events:none;
-    }
-
-    .wii-tile .lab1{
-      font-size:24px;
-      font-weight:700;
-      color:#5587ad;
-      position:relative;
-      z-index:1;
-    }
-
-    .wii-tile .lab2{
-      font-size:12px;
-      color:#84a5bc;
-      position:relative;
-      z-index:1;
-      line-height:1.4;
-    }
-
-    .tile-mario{
-      background:
-        linear-gradient(to bottom,rgba(255,255,255,.84),rgba(255,255,255,.2)),
-        linear-gradient(135deg,#8dd7ff,#dff5ff);
-    }
-
-    .tile-cooking{
-      background:
-        linear-gradient(to bottom,rgba(255,255,255,.84),rgba(255,255,255,.2)),
-        linear-gradient(135deg,#ffdff0,#fff7fb);
-    }
-
-    .tile-pac{
-      background:
-        linear-gradient(to bottom,rgba(255,255,255,.84),rgba(255,255,255,.2)),
-        linear-gradient(135deg,#fff7c1,#fffdf2);
-    }
-
-    .tile-sims{
-      background:
-        linear-gradient(to bottom,rgba(255,255,255,.84),rgba(255,255,255,.2)),
-        linear-gradient(135deg,#dff7e8,#f6fff9);
-    }
-
-    .tile-gta{
-      background:
-        linear-gradient(to bottom,rgba(255,255,255,.84),rgba(255,255,255,.2)),
-        linear-gradient(135deg,#ffe4f1,#fff7fb);
-    }
-
-    .tile-retro{
-      background:
-        linear-gradient(to bottom,rgba(255,255,255,.84),rgba(255,255,255,.2)),
-        linear-gradient(135deg,#ece6ff,#f9f7ff);
-    }
-
-    .wii-info{
-      max-width:1120px;
-      margin:18px auto 0;
-      padding:18px 20px;
-      border:1px solid #d1e1eb;
-      border-radius:24px;
-      background:linear-gradient(to bottom,#fff,#f5fbff);
-      box-shadow:0 12px 22px rgba(140,168,191,.08);
-    }
-
-    .wii-info .k{
-      font-size:10px;
-      text-transform:uppercase;
-      letter-spacing:.8px;
-      color:#8bb0c8;
-      margin-bottom:8px;
-    }
-
-    .wii-info h3{
-      margin:0 0 8px;
-      font-size:22px;
-      color:#608eb1;
-    }
-
-    .wii-info p{
-      margin:0;
-      font-size:14px;
-      line-height:1.6;
-      color:#60778d;
-    }
-
-    .wii-guide .bubble{
-      background:#fff;
-      color:#6e9fc4;
-      border:1px solid #d4e4f1;
-    }
-
-    .wii-char{
-      width:54px;
-      height:90px;
-      background:
-        radial-gradient(circle at 50% 16%, #f1d1bd 0 12px, transparent 13px),
-        linear-gradient(#9cd0f4 0 0) center 30px / 22px 28px no-repeat,
-        linear-gradient(#7aa2c1 0 0) 18px 57px / 7px 22px no-repeat,
-        linear-gradient(#7aa2c1 0 0) 29px 57px / 7px 22px no-repeat,
-        linear-gradient(#f1d1bd 0 0) 10px 34px / 7px 18px no-repeat,
-        linear-gradient(#f1d1bd 0 0) 37px 34px / 7px 18px no-repeat;
-      animation:wiiBounce 1.5s ease-in-out infinite;
-    }
-
-    @keyframes wiiBounce{
-      0%,100%{transform:translateY(0)}
-      50%{transform:translateY(-4px)}
-    }
-
-    .play-inner-panel{
-      max-width:1120px;
-      margin:0 auto;
-      border:1px solid #d0e0ea;
-      border-radius:24px;
-      background:linear-gradient(to bottom,#fff,#f5fbff);
-      box-shadow:0 12px 22px rgba(140,168,191,.10);
-      overflow:hidden;
-    }
-
-    .panel-head{
-      padding:14px 18px;
-      border-bottom:1px solid #d8e6f0;
-      background:linear-gradient(to bottom,#ffffff,#eef5fb);
-    }
-
-    .panel-head h3{
-      margin:0 0 6px;
-      font-size:22px;
-      color:#5e90b4;
-    }
-
-    .panel-head p{
-      margin:0;
-      font-size:13px;
-      color:#6d89a1;
-      line-height:1.45;
-    }
-
-    /* Mario game */
-    .mario-wrap{ padding:16px; }
-
-    .mario-hud{
-      display:flex;
-      gap:18px;
-      flex-wrap:wrap;
-      margin-bottom:12px;
-      font-size:13px;
-      color:#496982;
-    }
-
-    .mario-stage{
-      position:relative;
-      width:100%;
-      height:340px;
-      overflow:hidden;
-      border:1px solid #91b8d6;
-      border-radius:18px;
-      background:
-        linear-gradient(to bottom,#85d4ff 0%, #7bcfff 60%, #6ac7ff 100%);
-    }
-
-    .mario-cloud{
-      position:absolute;
-      background:#fff;
-      border-radius:999px;
-      opacity:.94;
-    }
-    .mario-cloud.c1{ width:70px; height:24px; top:24px; left:80px; }
-    .mario-cloud.c2{ width:94px; height:28px; top:50px; right:140px; }
-
-    .mario-ground{
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:0;
-      height:82px;
-      background:linear-gradient(to bottom,#6dcc48,#4ea82e);
-      border-top:4px solid #3a8324;
-    }
-
-    .mario-brick{
-      position:absolute;
-      width:48px;
-      height:48px;
-      background:linear-gradient(#c87632,#b86423);
-      border:2px solid #8c4918;
-      box-shadow:inset 0 -4px 0 rgba(0,0,0,.12);
-    }
-
-    .mario-brick::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(to right, transparent 0 14px, rgba(0,0,0,.14) 14px 16px, transparent 16px 32px, rgba(0,0,0,.14) 32px 34px, transparent 34px),
-        linear-gradient(to bottom, transparent 0 14px, rgba(0,0,0,.14) 14px 16px, transparent 16px 32px, rgba(0,0,0,.14) 32px 34px, transparent 34px);
-      opacity:.6;
-    }
-
-    .mario-coin{
-      position:absolute;
-      width:22px;
-      height:22px;
-      border-radius:50%;
-      background:radial-gradient(circle at 35% 35%, #fff7a3 0%, #ffd84a 55%, #e3b900 100%);
-      border:2px solid #b98d00;
-      box-shadow:0 0 8px rgba(255,215,74,.45);
-    }
-
-    .mario-player{
-      position:absolute;
-      width:30px;
-      height:46px;
-      left:40px;
-      bottom:82px;
-      z-index:3;
-    }
-
-    .mario-player .head{
-      position:absolute;
-      top:0;
-      left:8px;
-      width:14px;
-      height:14px;
-      background:#f2c6a7;
-      border:1px solid rgba(0,0,0,.14);
-    }
-
-    .mario-player .hat{
-      position:absolute;
-      top:-4px;
-      left:5px;
-      width:20px;
-      height:7px;
-      background:#d94231;
-      border:1px solid rgba(0,0,0,.14);
-    }
-
-    .mario-player .body{
-      position:absolute;
-      top:14px;
-      left:7px;
-      width:16px;
-      height:16px;
-      background:#2b60d6;
-    }
-
-    .mario-player .arm{
-      position:absolute;
-      top:16px;
-      width:5px;
-      height:12px;
-      background:#f2c6a7;
-    }
-
-    .mario-player .arm.a1{ left:2px; }
-    .mario-player .arm.a2{ right:2px; }
-
-    .mario-player .leg{
-      position:absolute;
-      top:30px;
-      width:6px;
-      height:16px;
-      background:#6b3b18;
-    }
-
-    .mario-player .leg.l1{ left:8px; }
-    .mario-player .leg.l2{ right:8px; }
-
-    .mario-controls{
-      margin-top:12px;
-      font-size:12px;
-      color:#617e97;
-    }
-
-    /* Cooking game */
-    .cook-wrap{ padding:16px; }
-
-    .cook-hud{
-      display:flex;
-      gap:18px;
-      flex-wrap:wrap;
-      margin-bottom:12px;
-      font-size:13px;
-      color:#7b6281;
-    }
-
-    .cook-board{
-      border:1px solid #e3bfd1;
-      background:linear-gradient(to bottom,#fff8fc,#ffeef6);
-      border-radius:18px;
-      padding:16px;
-      display:grid;
-      grid-template-columns:1.2fr .8fr;
-      gap:16px;
-    }
-
-    .cook-stage{
-      min-height:300px;
-      border:1px dashed #e0aeca;
-      border-radius:18px;
-      background:linear-gradient(to bottom,#fff,#fff4fa);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex-direction:column;
-      gap:16px;
-      text-align:center;
-      padding:20px;
-    }
-
-    #cook-target{
-      font-size:92px;
-      line-height:1;
-      filter:drop-shadow(0 4px 8px rgba(0,0,0,.12));
-      user-select:none;
-      transition:transform .08s ease;
-    }
-
-    #cook-target:active{
-      transform:scale(.94);
-    }
-
-    .cook-stage p{
-      margin:0;
-      font-size:14px;
-      color:#885f78;
-      line-height:1.5;
-      max-width:320px;
-    }
-
-    .cook-side{
-      border:1px solid #e7c7d7;
-      border-radius:16px;
-      background:#fff;
-      padding:16px;
-    }
-
-    .cook-side h4{
-      margin:0 0 10px;
-      font-size:16px;
-      color:#bf6a96;
-    }
-
-    .cook-list{
-      display:grid;
-      gap:10px;
-      font-size:13px;
-      color:#6e5a66;
-    }
-
-    .cook-btn{
-      margin-top:14px;
-      padding:10px 12px;
-      border:1px solid #de8fba;
-      background:linear-gradient(to bottom,#ffd3ea,#ffb7db);
-      border-radius:999px;
-      color:#7b2657;
-      font-weight:700;
-    }
-
-    /* Pacman game */
-    .pac-wrap{ padding:16px; }
-
-    .pac-hud{
-      display:flex;
-      gap:18px;
-      flex-wrap:wrap;
-      margin-bottom:12px;
-      font-size:13px;
-      color:#6a8497;
-    }
-
-    .pac-stage{
-      position:relative;
-      width:100%;
-      height:340px;
-      border:1px solid #cfd7ea;
-      border-radius:18px;
-      overflow:hidden;
-      background:
-        linear-gradient(to bottom,#0a1028,#040714);
-    }
-
-    .pac-grid{
-      position:absolute;
-      inset:0;
-      background:
-        repeating-linear-gradient(90deg, transparent 0 28px, rgba(46,91,255,.14) 28px 30px),
-        repeating-linear-gradient(0deg, transparent 0 28px, rgba(46,91,255,.14) 28px 30px);
-      opacity:.45;
-      pointer-events:none;
-    }
-
-    .pac-player{
-      position:absolute;
-      width:28px;
-      height:28px;
-      border-radius:50%;
-      background:#fff200;
-      clip-path:polygon(100% 50%,0% 5%,0% 95%);
-      filter:drop-shadow(0 0 6px rgba(255,242,0,.6));
-      z-index:2;
-    }
-
-    .pac-dot{
-      position:absolute;
-      width:8px;
-      height:8px;
-      border-radius:50%;
-      background:#fff;
-      box-shadow:0 0 6px rgba(255,255,255,.6);
-    }
-
-    .pac-ghost{
-      position:absolute;
-      font-size:24px;
-      z-index:2;
-      filter:drop-shadow(0 0 8px currentColor);
-    }
-
-    /* =========================
-       STUDIO / SIMS
-    ========================= */
-    .studio-main{
-      background:linear-gradient(to bottom,#e7fff0,#d8f1ff);
-      color:#264d59;
-      font-family:Arial, Helvetica, sans-serif;
-    }
-
-    .studio-main .rail{
-      background:linear-gradient(to bottom,#f1fff6,#d8f4e7);
-      border-right:1px solid #b9dccc;
-    }
-
-    .studio-main .rail-btn{
-      border:1px solid #a8d0ba;
-      background:linear-gradient(to bottom,#fff,#ebfff2);
-      color:#2f7d72;
-      border-radius:8px;
-    }
-
-    .studio-main .rail-label,
-    .studio-main .rail-help{
-      color:#4f8e7d;
-    }
-
-    .studio-guide .bubble{
-      background:#f8fdff;
-      color:#2f7d72;
-      border:1px solid #b5d6d0;
-    }
-
-    .sims-char{
-      width:56px;
-      height:92px;
-      background:
-        radial-gradient(circle at 50% 16%, #f4d1b8 0 12px, transparent 13px),
-        linear-gradient(#59c78d 0 0) center 29px / 22px 28px no-repeat,
-        linear-gradient(#4d86b7 0 0) 18px 58px / 8px 22px no-repeat,
-        linear-gradient(#4d86b7 0 0) 30px 58px / 8px 22px no-repeat,
-        linear-gradient(#f4d1b8 0 0) 10px 35px / 7px 17px no-repeat,
-        linear-gradient(#f4d1b8 0 0) 39px 35px / 7px 17px no-repeat,
-        linear-gradient(135deg,transparent 0 35%, #76ff66 35% 65%, transparent 65% 100%) center 2px / 16px 18px no-repeat;
-      animation:simsFloat 1.8s ease-in-out infinite;
-    }
-
-    @keyframes simsFloat{
-      0%,100%{transform:translateX(0)}
-      50%{transform:translateX(-4px)}
-    }
-
-    .studio-header{
-      display:grid;
-      grid-template-columns:1.2fr .8fr;
-      gap:16px;
-      margin-bottom:16px;
-    }
-
-    .studio-mainbox,
-    .studio-statbox,
-    .studio-card{
-      border:1px solid #b7dccc;
-      background:rgba(255,255,255,.78);
-      box-shadow:0 8px 16px rgba(0,0,0,.04);
-    }
-
-    .studio-mainbox{
-      padding:18px;
-      min-height:160px;
-    }
-
-    .studio-mainbox h2{
-      margin:0 0 10px;
-      font-size:34px;
-      color:#2f7d72;
-    }
-
-    .studio-mainbox p{
-      margin:0;
-      font-size:14px;
-      line-height:1.62;
-      color:#426269;
-    }
-
-    .studio-statbox{
-      padding:16px;
-      display:grid;
-      gap:10px;
-      align-content:start;
-    }
-
-    .sim-stat{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      padding:10px 12px;
-      border:1px solid #d1ead8;
-      background:#fff;
-      font-size:13px;
-    }
-
-    .sim-stat span:first-child{ color:#58806b; }
-    .sim-stat span:last-child{ color:#2f7d72; font-weight:700; }
-
-    .studio-grid{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:14px;
-    }
-
-    .studio-card{
-      min-height:150px;
-      padding:16px;
-    }
-
-    .studio-card h3{
-      margin:0 0 10px;
-      font-size:18px;
-      color:#2f7d72;
-    }
-
-    .studio-card p{
-      margin:0;
-      font-size:14px;
-      line-height:1.55;
-      color:#49656b;
-    }
-
-    /* =========================
-       MANIFESTO / TEXT SOFTWARE
-    ========================= */
-    .manifesto-main{
-      background:#d8d1b9;
-      font-family:"Courier New", monospace;
-      color:#1c1a14;
-    }
-
-    .manifesto-main .rail{
-      background:linear-gradient(to bottom,#d0c6a8,#b8ab87);
-      border-right:1px solid #9b8d67;
-    }
-
-    .manifesto-main .rail-btn{
-      border:1px solid #8d7d56;
-      background:linear-gradient(to bottom,#f8f1df,#d4c5a1);
-      color:#5a4c28;
-      border-radius:4px;
-    }
-
-    .manifesto-main .rail-label,
-    .manifesto-main .rail-help{
-      color:#6c5e38;
-    }
-
-    .editor-guide .bubble{
-      background:#fff8e8;
-      color:#736749;
-      border:1px solid #d7c9a2;
-    }
-
-    .editor-char{
-      width:54px;
-      height:88px;
-      background:
-        radial-gradient(circle at 50% 16%, #f3d2b9 0 12px, transparent 13px),
-        linear-gradient(#d4b06a 0 0) center 30px / 22px 28px no-repeat,
-        linear-gradient(#856c3e 0 0) 18px 58px / 7px 22px no-repeat,
-        linear-gradient(#856c3e 0 0) 29px 58px / 7px 22px no-repeat,
-        linear-gradient(#f3d2b9 0 0) 11px 35px / 7px 18px no-repeat,
-        linear-gradient(#f3d2b9 0 0) 36px 35px / 7px 18px no-repeat;
-      animation:editorStep 1.6s ease-in-out infinite;
-    }
-
-    @keyframes editorStep{
-      0%,100%{transform:translateX(0)}
-      50%{transform:translateX(-3px)}
-    }
-
-    .editor-shell{
-      border:2px solid #86785a;
-      background:#f7f0d9;
-      box-shadow:0 10px 16px rgba(0,0,0,.10);
-      max-width:920px;
-    }
-
-    .editor-top{
-      padding:8px 12px;
-      background:#c8bc98;
-      border-bottom:2px solid #86785a;
-      font-size:13px;
-      color:#4b4023;
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-    }
-
-    .editor-body{
-      padding:20px 22px;
-      min-height:420px;
-      background:
-        repeating-linear-gradient(
-          to bottom,
-          transparent 0 27px,
-          rgba(0,0,0,.08) 27px 28px
-        ),
-        #fff8e8;
-    }
-
-    .editor-body h2{
-      margin:0 0 14px;
-      font-size:28px;
-      color:#574b2e;
-    }
-
-    .editor-body p{
-      margin:0 0 14px;
-      font-size:15px;
-      line-height:1.8;
-      color:#2f2b21;
-    }
-
-    /* =========================
-       CONTACT
-    ========================= */
-    .contact-main{
-      background:linear-gradient(to bottom,#fbfdff,#eef5fb);
-      color:#22384b;
-    }
-
-    .contact-main .rail{
-      background:linear-gradient(to bottom,#eef5fb,#d7e3ef);
-      border-right:1px solid #bfcfde;
-    }
-
-    .contact-main .rail-btn{
-      border:1px solid #b4c6d6;
-      background:linear-gradient(to bottom,#fff,#edf4fa);
-      color:#5f82a0;
-      border-radius:4px;
-    }
-
-    .contact-main .rail-label,
-    .contact-main .rail-help{
-      color:#647f97;
-    }
-
-    .contact-guide .bubble{
-      background:#fff;
-      color:#5f87ad;
-      border:1px solid #d0deeb;
-    }
-
-    .contact-char{
-      width:54px;
-      height:88px;
-      background:
-        radial-gradient(circle at 50% 16%, #f1cfb5 0 12px, transparent 13px),
-        linear-gradient(#8cb7e1 0 0) center 30px / 22px 28px no-repeat,
-        linear-gradient(#4e6e9d 0 0) 18px 58px / 7px 22px no-repeat,
-        linear-gradient(#4e6e9d 0 0) 29px 58px / 7px 22px no-repeat,
-        linear-gradient(#f1cfb5 0 0) 11px 35px / 7px 18px no-repeat,
-        linear-gradient(#f1cfb5 0 0) 36px 35px / 7px 18px no-repeat;
-      animation:contactDrift 1.7s ease-in-out infinite;
-    }
-
-    @keyframes contactDrift{
-      0%,100%{transform:translateY(0)}
-      50%{transform:translateY(-3px)}
-    }
-
-    .contact-box{
-      max-width:560px;
-      padding:22px;
-      border:1px solid #cad7e5;
-      background:#fff;
-      box-shadow:0 8px 18px rgba(0,0,0,.06);
-    }
-
-    .contact-box .k{
-      font-size:10px;
-      text-transform:uppercase;
-      letter-spacing:.8px;
-      color:#7890a8;
-      margin-bottom:10px;
-    }
-
-    .contact-box h2{
-      margin:0 0 10px;
-      font-size:28px;
-      color:#34597f;
-    }
-
-    .contact-box p{
-      margin:0 0 14px;
-      font-size:14px;
-      line-height:1.6;
-    }
-
-    .contact-box a{
-      font-size:18px;
-      font-weight:700;
-      color:#2d6db8;
-      text-decoration:none;
-    }
-
-    /* =========================
-       RESPONSIVE
-    ========================= */
-    @media (max-width:1150px){
-      .xp-explorer,
-      .archive-top,
-      .lab-setup,
-      .studio-header,
-      .cook-board{
-        grid-template-columns:1fr;
-      }
-
-      .xp-content,
-      .archive-grid,
-      .lab-banks,
-      .wii-grid,
-      .studio-grid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
-      }
-    }
-
-    @media (max-width:760px){
-      .world-body{
-        grid-template-columns:58px 1fr;
-      }
-
-      #start-menu{
-        width:320px;
-      }
-
-      .guide{
-        right:12px;
-        top:12px;
-        transform:scale(.9);
-        transform-origin:top right;
-      }
-
-      .xp-content,
-      .archive-grid,
-      .lab-banks,
-      .wii-grid,
-      .studio-grid{
-        grid-template-columns:1fr;
-      }
-
-      .mario-stage,
-      .pac-stage{
-        height:300px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <div id="boot">
+  <!-- BOOT -->
+  <div id="boot-screen">
     <div class="boot-logo">BLUCINELAB OS</div>
-    <div class="boot-sub">Starting system...</div>
-    <div class="boot-bar"><div class="boot-fill"></div></div>
-    <div class="boot-lines" id="boot-lines"></div>
+    <div class="boot-sub">Starting visual shell...</div>
+    <div class="boot-bar">
+      <div class="boot-bar-fill"></div>
+    </div>
+    <div class="boot-lines">
+      Booting XP desktop...
+      Mounting Archive...
+      Mounting Lab...
+      Mounting Playroom...
+      System ready...
+    </div>
   </div>
 
-  <div id="topbar">
-    <span class="top-title">BLUCINELAB OS</span>
-    <span class="top-small">LOAD: READY</span>
-    <span class="top-small">MODE: XP DESKTOP</span>
+  <!-- TOP BAR -->
+  <div id="top-status">
+    <span>BLUCINELAB OS</span>
+    <span>DESKTOP MODE</span>
+    <span>VISUAL SYSTEM READY</span>
   </div>
 
-  <div id="desktop">
-    <button class="desktop-icon" data-open="shell" style="top:40px;left:18px">
+  <!-- DESKTOP -->
+  <main id="desktop">
+
+    <button class="desktop-icon" data-open="win-shell" style="top:56px;left:18px;">
       <span class="icon-art monitor"></span>
       <span class="icon-label">BLUCINELAB</span>
     </button>
 
-    <button class="desktop-icon" data-open="archive" style="top:140px;left:18px">
+    <button class="desktop-icon" data-open="win-archive" style="top:156px;left:18px;">
       <span class="icon-art folder"></span>
       <span class="icon-label">Archive</span>
     </button>
 
-    <button class="desktop-icon" data-open="lab" style="top:240px;left:18px">
+    <button class="desktop-icon" data-open="win-lab" style="top:256px;left:18px;">
       <span class="icon-art monitor"></span>
       <span class="icon-label">Lab</span>
     </button>
 
-    <button class="desktop-icon" data-open="playroom" style="top:340px;left:18px">
+    <button class="desktop-icon" data-open="win-playroom" style="top:356px;left:18px;">
       <span class="icon-art gamepad"></span>
       <span class="icon-label">Playroom</span>
     </button>
 
-    <button class="desktop-icon" data-open="studio" style="top:440px;left:18px">
+    <button class="desktop-icon" data-open="win-studio" style="top:456px;left:18px;">
       <span class="icon-art image"></span>
       <span class="icon-label">Studio</span>
     </button>
 
-    <button class="desktop-icon" data-open="manifesto" style="top:540px;left:18px">
+    <button class="desktop-icon" data-open="win-manifesto" style="top:556px;left:18px;">
       <span class="icon-art doc"></span>
       <span class="icon-label">Manifesto</span>
     </button>
 
-    <button class="desktop-icon" data-open="contact" style="top:640px;left:18px">
+    <button class="desktop-icon" data-open="win-contact" style="top:656px;left:18px;">
       <span class="icon-art mail"></span>
       <span class="icon-label">Contact</span>
     </button>
 
-    <button class="desktop-icon" style="top:740px;left:18px">
+    <button class="desktop-icon" style="top:756px;left:18px;">
       <span class="icon-art trash"></span>
       <span class="icon-label">Recycle Bin</span>
     </button>
-  </div>
+  </main>
 
-  <div id="taskbar">
-    <button id="start-btn" type="button">
-      <span class="orb"></span>
-      <span>start</span>
-    </button>
-
-    <div id="task-buttons"></div>
-
-    <div id="tray">
-      <span class="dot"></span>
-      <span id="clock">00:00</span>
-    </div>
-  </div>
-
-  <div id="start-menu">
-    <div class="start-top">
-      <div class="start-pic"></div>
-      <div class="start-name">BLUCINELAB</div>
-    </div>
-
-    <div class="start-body">
-      <div class="start-left">
-        <button class="start-link" data-open="shell"><span class="start-link-art monitor"></span><span>Home</span></button>
-        <button class="start-link" data-open="archive"><span class="start-link-art folder"></span><span>Archive</span></button>
-        <button class="start-link" data-open="lab"><span class="start-link-art monitor"></span><span>Lab</span></button>
-        <button class="start-link" data-open="playroom"><span class="start-link-art gamepad"></span><span>Playroom</span></button>
-        <button class="start-link" data-open="studio"><span class="start-link-art image"></span><span>Studio</span></button>
-        <button class="start-link" data-open="manifesto"><span class="start-link-art doc"></span><span>Manifesto</span></button>
-        <button class="start-link" data-open="contact"><span class="start-link-art mail"></span><span>Contact</span></button>
+  <!-- SHELL WINDOW -->
+  <section
+    class="xp-window"
+    id="win-shell"
+    data-window-title="BLUCINELAB"
+    style="display:none; top:82px; left:150px; width:760px; height:470px;"
+  >
+    <div class="xp-titlebar" data-drag-handle>
+      <div class="xp-title-left">
+        <span class="xp-mini-icon monitor"></span>
+        <span class="xp-title-text">BLUCINELAB</span>
       </div>
-
-      <div class="start-right">
-        <div class="start-item">Projects</div>
-        <div class="start-item">Visual Systems</div>
-        <div class="start-item">Research</div>
-        <div class="start-item">Help and Support</div>
+      <div class="xp-title-controls">
+        <button class="xp-control" data-minimize="win-shell">_</button>
+        <button class="xp-control" data-maximize="win-shell">□</button>
+        <button class="xp-control close" data-close="win-shell">×</button>
       </div>
     </div>
 
-    <div class="start-bottom">
-      <button id="shutdown" type="button">Turn Off Computer</button>
-    </div>
-  </div>
-
-  <!-- HOME -->
-  <section class="win show" id="shell" data-title="BLUCINELAB OS">
-    <div class="titlebar">
-      <div class="title-left">
-        <span class="title-icon orb"></span>
-        <span class="title-text">BLUCINELAB OS</span>
-      </div>
-      <div class="title-controls">
-        <button class="ctrl close" data-open="shell">×</button>
-      </div>
+    <div class="xp-menubar">
+      <span>File</span>
+      <span>Edit</span>
+      <span>View</span>
+      <span>Help</span>
     </div>
 
-    <div class="world-body shell-main">
-      <aside class="rail">
-        <button class="rail-btn" data-open="shell">⌂</button>
-        <button class="rail-btn" data-open="archive">A</button>
-        <button class="rail-btn" data-open="lab">L</button>
-        <div class="rail-label">home</div>
-        <div class="rail-help">desktop / system / worlds</div>
-      </aside>
-
-      <div class="world-main">
-        <div class="shell-top">
-          <div>
-            <div class="kicker">desktop / xp shell / active</div>
-            <h1>BLUCINELAB OS</h1>
-            <p>
-              BLUCINELAB è uno studio visivo indipendente che lavora tra immagine,
-              spazio, direzione, installazione, identità, sistemi digitali e costruzione percettiva.
-              Questo sito non mostra i lavori come elenco piatto: li organizza come mondi.
-              Ogni finestra è un registro visivo diverso dello stesso sistema.
-            </p>
-          </div>
-
-          <div class="guide shell-guide">
-            <div class="bubble">apri le icone</div>
-            <div class="char char-xp">
-              <span class="head"></span>
-              <span class="body"></span>
-              <span class="arm left"></span>
-              <span class="arm right"></span>
-              <span class="leg left"></span>
-              <span class="leg right"></span>
-            </div>
-          </div>
+    <div class="shell-body">
+      <div class="shell-hero">
+        <div>
+          <div class="shell-kicker">system / home / active</div>
+          <h1>BLUCINELAB</h1>
+          <p>
+            Studio visivo indipendente che lavora tra immagine, spazio, direzione,
+            identità, ambienti digitali e costruzione percettiva.
+          </p>
         </div>
-
-        <div class="xp-explorer">
-          <div class="xp-sidebar">
-            <div class="xp-block">
-              <h3>BLUCINELAB</h3>
-              <p>Studio visivo indipendente orientato a mondi, immagini, sistemi, allestimenti e ambienti digitali.</p>
-            </div>
-            <div class="xp-block">
-              <h3>Focus</h3>
-              <p>Web design, identità visiva, exhibition, image direction, sistemi editoriali, superfici narrative.</p>
-            </div>
-            <div class="xp-block">
-              <h3>Metodo</h3>
-              <p>Riduzione, coerenza, atmosfera, gerarchia, costruzione di presenza e memoria.</p>
-            </div>
-          </div>
-
-          <div class="xp-content">
-            <button class="shell-card" data-open="archive">
-              <span class="shell-card-art folder"></span>
-              <span class="shell-card-title">Archive</span>
-              <span class="shell-card-text">Lavori, dossier, casi studio, tracce pubbliche, materiali protetti.</span>
-            </button>
-
-            <button class="shell-card" data-open="lab">
-              <span class="shell-card-art monitor"></span>
-              <span class="shell-card-title">Lab</span>
-              <span class="shell-card-text">Segnali, memoria, test, appunti grezzi e diagnostica interna.</span>
-            </button>
-
-            <button class="shell-card" data-open="playroom">
-              <span class="shell-card-art gamepad"></span>
-              <span class="shell-card-title">Playroom</span>
-              <span class="shell-card-text">Console-site: canali giocabili e grammatica Wii.</span>
-            </button>
-
-            <button class="shell-card" data-open="studio">
-              <span class="shell-card-art image"></span>
-              <span class="shell-card-title">Studio</span>
-              <span class="shell-card-text">Composizione, relazione tra elementi, tono, margini e ritmo.</span>
-            </button>
-
-            <button class="shell-card" data-open="manifesto">
-              <span class="shell-card-art doc"></span>
-              <span class="shell-card-title">Manifesto</span>
-              <span class="shell-card-text">Forma come orientamento, non decorazione.</span>
-            </button>
-
-            <button class="shell-card" data-open="contact">
-              <span class="shell-card-art mail"></span>
-              <span class="shell-card-title">Contact</span>
-              <span class="shell-card-text">Commissioni, collaborazioni, sistemi digitali e progetti culturali.</span>
-            </button>
-          </div>
+        <div class="shell-guide">
+          <div class="shell-bubble">apri i mondi</div>
+          <div class="shell-character"></div>
         </div>
+      </div>
+
+      <div class="shell-grid">
+        <button class="shell-card" data-open="win-archive">
+          <span class="shell-card-icon folder"></span>
+          <strong>Archive</strong>
+          <span>Lavori, dossier, file pubblici, nodi protetti.</span>
+        </button>
+
+        <button class="shell-card" data-open="win-lab">
+          <span class="shell-card-icon monitor"></span>
+          <strong>Lab</strong>
+          <span>Segnali, memoria, test, ricerca e diagnostica.</span>
+        </button>
+
+        <button class="shell-card" data-open="win-playroom">
+          <span class="shell-card-icon gamepad"></span>
+          <strong>Playroom</strong>
+          <span>Console-site con canali e moduli interattivi.</span>
+        </button>
+
+        <button class="shell-card" data-open="win-studio">
+          <span class="shell-card-icon image"></span>
+          <strong>Studio</strong>
+          <span>Metodo, riduzione, coerenza, costruzione atmosferica.</span>
+        </button>
+
+        <button class="shell-card" data-open="win-manifesto">
+          <span class="shell-card-icon doc"></span>
+          <strong>Manifesto</strong>
+          <span>Forma come orientamento, non decorazione.</span>
+        </button>
+
+        <button class="shell-card" data-open="win-contact">
+          <span class="shell-card-icon mail"></span>
+          <strong>Contact</strong>
+          <span>Commissioni, collaborazioni, sistemi visivi e digitali.</span>
+        </button>
       </div>
     </div>
   </section>
 
   <!-- ARCHIVE / GTA -->
-  <section class="win" id="archive" data-title="Archive">
-    <div class="titlebar">
-      <div class="title-left">
-        <span class="title-icon folder"></span>
-        <span class="title-text">Archive</span>
+  <section
+    class="xp-window world-window archive-world"
+    id="win-archive"
+    data-window-title="Archive"
+    style="display:none;"
+  >
+    <div class="xp-titlebar" data-drag-handle>
+      <div class="xp-title-left">
+        <span class="xp-mini-icon folder"></span>
+        <span class="xp-title-text">Archive</span>
       </div>
-      <div class="title-controls">
-        <button class="ctrl close" data-open="shell">×</button>
+      <div class="xp-title-controls">
+        <button class="xp-control" data-minimize="win-archive">_</button>
+        <button class="xp-control close" data-close="win-archive">×</button>
       </div>
     </div>
 
-    <div class="world-body archive-main">
-      <aside class="rail">
-        <button class="rail-btn" data-open="shell">⌂</button>
-        <button class="rail-btn" data-open="archive">A</button>
-        <button class="rail-btn" data-open="lab">L</button>
-        <div class="rail-label">archive</div>
-        <div class="rail-help">chiudi / torna / sfoglia</div>
+    <div class="world-shell archive-layout">
+      <aside class="world-rail archive-rail">
+        <button class="world-rail-btn" data-close="win-archive">×</button>
+        <button class="world-rail-btn" data-open="win-shell">⌂</button>
+        <div class="world-rail-label">ARCHIVE</div>
+        <div class="world-rail-help">return / close / dossier</div>
       </aside>
 
-      <div class="world-main">
-        <div class="guide archive-guide">
-          <div class="bubble">mission / files / access</div>
-          <div class="gta-char"></div>
+      <div class="archive-main">
+
+        <div class="gta-scene">
+          <div class="gta-sun"></div>
+          <div class="gta-palm p1"></div>
+          <div class="gta-palm p2"></div>
+          <div class="gta-palm p3"></div>
+          <div class="gta-road"></div>
+          <div class="gta-building b1"></div>
+          <div class="gta-building b2"></div>
+          <div class="gta-building b3"></div>
+          <div class="gta-car c1"></div>
+          <div class="gta-car c2"></div>
+          <div class="gta-character"></div>
+
+          <div class="gta-hud-top">
+            <div class="gta-hud-time">22:08</div>
+            <div class="gta-hud-money">$500000000</div>
+            <div class="gta-hud-health">♥ 100</div>
+            <div class="gta-hud-stars">★ ★ ★ ★ ★ ★</div>
+          </div>
+
+          <div class="gta-minimap">
+            <div class="map-grid"></div>
+            <div class="map-path"></div>
+            <div class="map-dot"></div>
+          </div>
         </div>
 
-        <div class="archive-top">
-          <div class="archive-titlebox">
-            <div class="kicker" style="color:#f3a8d3">urban dossier / gta-like hud / mission archive</div>
+        <div class="archive-overlay">
+          <div class="archive-title-panel">
+            <div class="archive-kicker">vice city / mission archive / visual records</div>
             <h2>ARCHIVE</h2>
             <p>
-              Qui l’archivio non è una griglia editoriale neutra ma un sistema di accesso:
-              file pubblici, nodi protetti, tracce di progetto, lavori espositivi, identità,
-              ambienti digitali, processi. L’idea è più vicina a un menu di gioco urbano
-              che a un portfolio levigato.
+              Questa non è una cartella neutra. È un archivio-missione:
+              dossier di progetto, identità, ambienti digitali, mostre,
+              processi, file visibili, file protetti, record parziali.
             </p>
           </div>
 
-          <div class="archive-stats">
-            <div class="hud-stat"><span>Status</span><span>Online</span></div>
-            <div class="hud-stat"><span>Public Files</span><span>12</span></div>
-            <div class="hud-stat"><span>Protected Nodes</span><span>07</span></div>
-            <div class="hud-stat"><span>Integrity</span><span>High</span></div>
-            <div class="hud-stat"><span>Noise Level</span><span>Controlled</span></div>
+          <div class="archive-side-stats">
+            <div class="archive-stat"><span>Status</span><strong>Online</strong></div>
+            <div class="archive-stat"><span>Public Files</span><strong>12</strong></div>
+            <div class="archive-stat"><span>Restricted</span><strong>07</strong></div>
+            <div class="archive-stat"><span>Visual Integrity</span><strong>High</strong></div>
+            <div class="archive-stat"><span>Noise</span><strong>Low</strong></div>
           </div>
-        </div>
 
-        <div class="archive-grid">
-          <article class="archive-file">
-            <span class="archive-tag">Exhibition</span>
-            <h3>Mostre / Allestimenti / Spazio</h3>
-            <p>Progetti in cui immagine, ambiente e presenza fisica diventano struttura narrativa e campo percettivo.</p>
-            <div class="archive-meta">
-              <span class="archive-pill">public</span>
-              <span class="archive-pill">space</span>
-              <span class="archive-pill">installation</span>
-            </div>
-          </article>
+          <div class="archive-cards">
+            <article class="archive-card">
+              <span class="archive-tag">MISSION 01</span>
+              <h3>EXHIBITION / SPACE</h3>
+              <p>Allestimenti, relazione tra immagine e spazio, ambienti narrativi, presenza fisica.</p>
+            </article>
 
-          <article class="archive-file">
-            <span class="archive-tag">Identity</span>
-            <h3>Identità / Segni / Linguaggi</h3>
-            <p>Sistemi visivi costruiti con logica editoriale, ritmo tipografico e controllo della presenza.</p>
-            <div class="archive-meta">
-              <span class="archive-pill">brand</span>
-              <span class="archive-pill">type</span>
-              <span class="archive-pill">system</span>
-            </div>
-          </article>
+            <article class="archive-card">
+              <span class="archive-tag">MISSION 02</span>
+              <h3>IDENTITY / LANGUAGE</h3>
+              <p>Sistemi visivi, gerarchia tipografica, presenza, ritmo editoriale, riconoscibilità.</p>
+            </article>
 
-          <article class="archive-file">
-            <span class="archive-tag">Digital</span>
-            <h3>Web / Interfacce / Presenza</h3>
-            <p>Ambienti digitali che non si limitano a informare, ma costruiscono tono, gerarchia e desiderabilità.</p>
-            <div class="archive-meta">
-              <span class="archive-pill">web</span>
-              <span class="archive-pill">ui</span>
-              <span class="archive-pill">presence</span>
-            </div>
-          </article>
+            <article class="archive-card">
+              <span class="archive-tag">MISSION 03</span>
+              <h3>WEB / DIGITAL ENVIRONMENTS</h3>
+              <p>Interfacce, ambienti online, presenza, desiderabilità, orientamento percettivo.</p>
+            </article>
 
-          <article class="archive-file">
-            <span class="archive-tag">Process</span>
-            <h3>Bozze / Layer / Appunti</h3>
-            <p>La parte non rifinita del lavoro resta utile perché mostra selezione, taglio e trasformazione.</p>
-            <div class="archive-meta">
-              <span class="archive-pill">draft</span>
-              <span class="archive-pill">trace</span>
-              <span class="archive-pill">materials</span>
-            </div>
-          </article>
+            <article class="archive-card">
+              <span class="archive-tag">MISSION 04</span>
+              <h3>PROCESS / TRACE FILES</h3>
+              <p>Bozze, layer, appunti, materiali instabili, passaggi di trasformazione.</p>
+            </article>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- LAB -->
-  <section class="win" id="lab" data-title="Lab">
-    <div class="titlebar">
-      <div class="title-left">
-        <span class="title-icon monitor"></span>
-        <span class="title-text">Lab</span>
+  <section
+    class="xp-window world-window lab-world"
+    id="win-lab"
+    data-window-title="Lab"
+    style="display:none;"
+  >
+    <div class="xp-titlebar" data-drag-handle>
+      <div class="xp-title-left">
+        <span class="xp-mini-icon monitor"></span>
+        <span class="xp-title-text">Lab</span>
       </div>
-      <div class="title-controls">
-        <button class="ctrl close" data-open="shell">×</button>
+      <div class="xp-title-controls">
+        <button class="xp-control" data-minimize="win-lab">_</button>
+        <button class="xp-control close" data-close="win-lab">×</button>
       </div>
     </div>
 
-    <div class="world-body lab-main">
-      <aside class="rail">
-        <button class="rail-btn" data-open="shell">⌂</button>
-        <button class="rail-btn" data-open="archive">A</button>
-        <button class="rail-btn" data-open="playroom">P</button>
-        <div class="rail-label">lab</div>
-        <div class="rail-help">bios / scan / signal</div>
+    <div class="world-shell lab-layout">
+      <aside class="world-rail lab-rail">
+        <button class="world-rail-btn" data-close="win-lab">×</button>
+        <button class="world-rail-btn" data-open="win-shell">⌂</button>
+        <div class="world-rail-label">LAB</div>
       </aside>
 
-      <div class="world-main">
-        <div class="guide lab-guide">
-          <div class="bubble">signal ready</div>
-          <div class="lab-char"></div>
-        </div>
-
+      <div class="lab-main">
         <div class="lab-topline">
           <span>MR BIOS (TM) BLUCINELAB INTERNAL SYSTEM</span>
-          <span>VER 1.03 / PORT 03 / STATUS ACTIVE</span>
+          <span>VER 1.03 / STATUS ACTIVE</span>
         </div>
 
-        <div class="lab-setup">
-          <div class="lab-menu">
+        <div class="lab-grid">
+          <div class="lab-box">
 <pre>AWARD MODULAR BIOS V6.00PG
-COPYRIGHT (C) BLUCINELAB 2026
 
 [00] STANDARD CMOS FEATURES
 [01] ADVANCED BIOS FEATURES
@@ -2508,153 +302,115 @@ COPYRIGHT (C) BLUCINELAB 2026
 [03] VISUAL MEMORY BANK
 [04] ARCHIVE TRACE
 [05] PROCESS STACK
-[06] AI SLOT
-[07] INTERNAL NOTE
-[08] EXIT
+[06] EXIT
 
 > SELECTED: [04] ARCHIVE TRACE
 > STATUS: SIGNAL PRESENT
-> PING: 127.0.0.1 :: OK
-> TRACE.LOG :: LOADED</pre>
+> TRACE.LOG LOADED</pre>
           </div>
 
-          <div class="lab-ascii-box">
-<pre>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@%%%%##**++==--::..@@@@@@@@@@@
-@@@@@%%##**++==--::..    @@@@@@@@@@@
-@@@%%##**+==--::.   SIGNAL READY@@@@
-@@%%#**+==--::. INTERNAL TRACE @@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</pre>
+          <div class="lab-box">
+<pre>@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@ SIGNAL READY @@@@@@@
+@@@@@@ TRACE ONLINE @@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@</pre>
           </div>
-        </div>
 
-        <div class="lab-banks">
-          <div class="lab-bank">
+          <div class="lab-box">
 <pre>BANK 1
 
 BLUCINELAB usa il laboratorio
 come forma di osservazione.
 
-Qui entrano:
 - test
 - segnali
 - appunti
-- errori fertili
-- linguaggi instabili</pre>
+- errori fertili</pre>
           </div>
 
-          <div class="lab-bank">
+          <div class="lab-box">
 <pre>BANK 2
 
 THE LAB DOES NOT HIDE.
 THE LAB EXPOSES.
 
-NOT EVERYTHING HAS TO LOOK
-SOLVED.
-
 PART OF THE VALUE IS IN
 SHOWING THE SYSTEM THINKING.</pre>
-          </div>
-
-          <div class="lab-bank">
-<pre>BANK 3
-
-STATUS
-PING ............ OK
-MEMORY .......... 92%
-NOISE ........... 41
-SIGNAL .......... 82
-TRACE ........... READY
-
-NEXT:
-OPEN / SCAN / READ / EXEC</pre>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PLAYROOM / WII -->
-  <section class="win" id="playroom" data-title="Playroom">
-    <div class="titlebar">
-      <div class="title-left">
-        <span class="title-icon gamepad"></span>
-        <span class="title-text">Playroom</span>
+  <!-- PLAYROOM -->
+  <section
+    class="xp-window world-window playroom-world"
+    id="win-playroom"
+    data-window-title="Playroom"
+    style="display:none;"
+  >
+    <div class="xp-titlebar" data-drag-handle>
+      <div class="xp-title-left">
+        <span class="xp-mini-icon gamepad"></span>
+        <span class="xp-title-text">Playroom</span>
       </div>
-      <div class="title-controls">
-        <button class="ctrl close" data-open="shell">×</button>
+      <div class="xp-title-controls">
+        <button class="xp-control" data-minimize="win-playroom">_</button>
+        <button class="xp-control close" data-close="win-playroom">×</button>
       </div>
     </div>
 
-    <div class="world-body play-main">
-      <aside class="rail">
-        <button class="rail-btn" data-open="shell">⌂</button>
-        <button class="rail-btn" data-play-view="hub">H</button>
-        <button class="rail-btn" data-play-view="mario">M</button>
-        <button class="rail-btn" data-play-view="cooking">C</button>
-        <button class="rail-btn" data-play-view="pacman">P</button>
-        <div class="rail-label">play</div>
-        <div class="rail-help">hub / mario / cooking / pac</div>
+    <div class="world-shell playroom-layout">
+      <aside class="world-rail playroom-rail">
+        <button class="world-rail-btn" data-close="win-playroom">×</button>
+        <button class="world-rail-btn" data-open="win-shell">⌂</button>
+        <div class="world-rail-label">PLAY</div>
       </aside>
 
-      <div class="world-main">
-        <div class="guide wii-guide">
-          <div class="bubble">scegli un canale</div>
-          <div class="wii-char"></div>
+      <div class="playroom-main">
+        <div class="playroom-header">
+          <h2>PLAYROOM</h2>
+          <p>Wii channel menu / playable modules</p>
         </div>
 
-        <div class="play-title">PLAYROOM</div>
-        <div class="play-sub">literal wii channel menu / playable modules</div>
-
-        <div class="play-tabs">
-          <button class="play-tab active" data-play-view="hub">Hub</button>
+        <div class="playroom-tabs">
+          <button class="play-tab is-active" data-play-view="hub">Hub</button>
           <button class="play-tab" data-play-view="mario">Mario</button>
-          <button class="play-tab" data-play-view="cooking">Cooking Mama</button>
-          <button class="play-tab" data-play-view="pacman">Pac-Man</button>
+          <button class="play-tab" data-play-view="cooking">Cooking</button>
         </div>
 
         <!-- HUB -->
         <div class="play-panel show" id="play-hub">
           <div class="wii-grid">
-            <button class="wii-tile tile-mario playable" data-play-view="mario">
-              <span class="lab1">Mario</span>
-              <span class="lab2">run / jump / collect / stage</span>
+            <button class="wii-tile playable" data-play-view="mario">
+              <span class="wii-title">Mario</span>
+              <span class="wii-sub">run / jump / collect</span>
             </button>
 
-            <button class="wii-tile tile-cooking playable" data-play-view="cooking">
-              <span class="lab1">Cooking Mama</span>
-              <span class="lab2">tap / timer / rounds / score</span>
+            <button class="wii-tile playable pink" data-play-view="cooking">
+              <span class="wii-title">Cooking Mama</span>
+              <span class="wii-sub">click / timer / rounds</span>
             </button>
 
-            <button class="wii-tile tile-pac playable" data-play-view="pacman">
-              <span class="lab1">Pac-Man</span>
-              <span class="lab2">maze / dots / ghosts / score</span>
-            </button>
-
-            <div class="wii-tile tile-sims">
-              <span class="lab1">The Sims</span>
-              <span class="lab2">future channel</span>
+            <div class="wii-tile locked">
+              <span class="wii-title">Pac-Man</span>
+              <span class="wii-sub">future channel</span>
             </div>
 
-            <div class="wii-tile tile-gta">
-              <span class="lab1">GTA</span>
-              <span class="lab2">archive already active</span>
+            <div class="wii-tile locked">
+              <span class="wii-title">The Sims</span>
+              <span class="wii-sub">future channel</span>
             </div>
 
-            <div class="wii-tile tile-retro">
-              <span class="lab1">Invaders</span>
-              <span class="lab2">future channel</span>
+            <div class="wii-tile locked">
+              <span class="wii-title">GTA</span>
+              <span class="wii-sub">archive logic</span>
             </div>
-          </div>
 
-          <div class="wii-info">
-            <div class="k">hub</div>
-            <h3>Canali giocabili reali</h3>
-            <p>
-              Questa finestra non è più decorativa. Da qui puoi aprire tre moduli interattivi:
-              Mario, Cooking Mama e Pac-Man. Gli altri canali restano slot futuri per non
-              gonfiare il sistema con placeholder finti.
-            </p>
+            <div class="wii-tile locked">
+              <span class="wii-title">Invaders</span>
+              <span class="wii-sub">future channel</span>
+            </div>
           </div>
         </div>
 
@@ -2663,7 +419,7 @@ OPEN / SCAN / READ / EXEC</pre>
           <div class="play-inner-panel">
             <div class="panel-head">
               <h3>MARIO MINI GAME</h3>
-              <p>Muovi con ← →. Salta con spazio. Raccogli le monete. Reset automatico quando entri qui.</p>
+              <p>← → per muoverti. Spazio per saltare. Raccogli tutte le monete.</p>
             </div>
 
             <div class="mario-wrap">
@@ -2711,7 +467,7 @@ OPEN / SCAN / READ / EXEC</pre>
           <div class="play-inner-panel">
             <div class="panel-head">
               <h3>COOKING MAMA MINI GAME</h3>
-              <p>Clicca il più possibile sull’ingrediente entro il tempo. Ogni round cambia ingrediente. Premi restart per ripartire.</p>
+              <p>Clicca l’ingrediente più volte possibile entro il tempo.</p>
             </div>
 
             <div class="cook-wrap">
@@ -2734,40 +490,11 @@ OPEN / SCAN / READ / EXEC</pre>
                     <div>• Click rapidi = più punteggio</div>
                     <div>• Ogni round dura 10 secondi</div>
                     <div>• Dopo ogni round cambia ingrediente</div>
-                    <div>• Il totale resta attivo finché non fai restart</div>
+                    <div>• Restart per ripartire</div>
                   </div>
 
                   <button class="cook-btn" id="cook-restart" type="button">Restart Game</button>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- PACMAN -->
-        <div class="play-panel" id="play-pacman">
-          <div class="play-inner-panel">
-            <div class="panel-head">
-              <h3>PAC-MAN MINI GAME</h3>
-              <p>Muovi con le frecce. Mangia i punti. Evita i fantasmi. Reset automatico quando entri qui.</p>
-            </div>
-
-            <div class="pac-wrap">
-              <div class="pac-hud">
-                <div>Dots: <strong id="pac-dots-left">20</strong></div>
-                <div>Score: <strong id="pac-score">0</strong></div>
-                <div>Status: <strong id="pac-status">READY</strong></div>
-              </div>
-
-              <div class="pac-stage" id="pac-stage">
-                <div class="pac-grid"></div>
-                <div class="pac-player" id="pac-player"></div>
-                <div class="pac-ghost" id="ghost-1" style="color:#ff5f87;">👻</div>
-                <div class="pac-ghost" id="ghost-2" style="color:#63d5ff;">👻</div>
-              </div>
-
-              <div class="mario-controls">
-                Controlli: frecce direzionali.
               </div>
             </div>
           </div>
@@ -2778,71 +505,68 @@ OPEN / SCAN / READ / EXEC</pre>
   </section>
 
   <!-- STUDIO -->
-  <section class="win" id="studio" data-title="Studio">
-    <div class="titlebar">
-      <div class="title-left">
-        <span class="title-icon image"></span>
-        <span class="title-text">Studio</span>
+  <section
+    class="xp-window world-window studio-world"
+    id="win-studio"
+    data-window-title="Studio"
+    style="display:none;"
+  >
+    <div class="xp-titlebar" data-drag-handle>
+      <div class="xp-title-left">
+        <span class="xp-mini-icon image"></span>
+        <span class="xp-title-text">Studio</span>
       </div>
-      <div class="title-controls">
-        <button class="ctrl close" data-open="shell">×</button>
+      <div class="xp-title-controls">
+        <button class="xp-control" data-minimize="win-studio">_</button>
+        <button class="xp-control close" data-close="win-studio">×</button>
       </div>
     </div>
 
-    <div class="world-body studio-main">
-      <aside class="rail">
-        <button class="rail-btn" data-open="shell">⌂</button>
-        <button class="rail-btn" data-open="studio">S</button>
-        <button class="rail-btn" data-open="manifesto">M</button>
-        <div class="rail-label">studio</div>
-        <div class="rail-help">room / build / simulate</div>
+    <div class="world-shell studio-layout">
+      <aside class="world-rail studio-rail">
+        <button class="world-rail-btn" data-close="win-studio">×</button>
+        <button class="world-rail-btn" data-open="win-shell">⌂</button>
+        <div class="world-rail-label">STUDIO</div>
       </aside>
 
-      <div class="world-main">
-        <div class="guide studio-guide">
-          <div class="bubble">sim room</div>
-          <div class="sims-char"></div>
-        </div>
-
+      <div class="studio-main">
         <div class="studio-header">
           <div class="studio-mainbox">
-            <div class="kicker" style="color:#5b9c85">studio / simulation logic / build state</div>
+            <div class="studio-kicker">simulation / method / visual order</div>
             <h2>STUDIO</h2>
             <p>
-              Lo studio è trattato come una stanza di simulazione: ogni progetto è una
-              composizione di stati, materiali, gerarchie e relazioni. Il punto non è
-              aggiungere elementi ma controllare il sistema e rendere coerenti tono,
-              atmosfera, margini e struttura.
+              Il progetto è una stanza da costruire. Atmosfera, ritmo, margini,
+              composizione, gerarchia e presenza vengono trattati come parametri.
             </p>
           </div>
 
           <div class="studio-statbox">
-            <div class="sim-stat"><span>Coherence</span><span>94</span></div>
-            <div class="sim-stat"><span>Atmosphere</span><span>87</span></div>
-            <div class="sim-stat"><span>Selection</span><span>91</span></div>
-            <div class="sim-stat"><span>Noise</span><span>Low</span></div>
+            <div class="sim-stat"><span>Coherence</span><strong>94</strong></div>
+            <div class="sim-stat"><span>Atmosphere</span><strong>87</strong></div>
+            <div class="sim-stat"><span>Selection</span><strong>91</strong></div>
+            <div class="sim-stat"><span>Noise</span><strong>Low</strong></div>
           </div>
         </div>
 
         <div class="studio-grid">
           <article class="studio-card">
             <h3>Atmosfera</h3>
-            <p>Luce, ritmo, materiale, vuoti e tensione tra elementi. L’immagine va trattata come ambiente.</p>
+            <p>Luce, materiale, profondità, tensione tra superfici e forme.</p>
           </article>
 
           <article class="studio-card">
             <h3>Riduzione</h3>
-            <p>Togliere ciò che indebolisce. La chiarezza arriva più dalla selezione che dall’accumulo.</p>
+            <p>Togliere ciò che indebolisce per dare più chiarezza al sistema.</p>
           </article>
 
           <article class="studio-card">
             <h3>Direzione</h3>
-            <p>Ogni progetto deve avere un centro leggibile, un asse e una postura precisa.</p>
+            <p>Ogni progetto deve avere un centro leggibile e un asse percettivo.</p>
           </article>
 
           <article class="studio-card">
             <h3>Coerenza</h3>
-            <p>Un linguaggio deve restare riconoscibile tra web, spazio, stampa, identità e racconto.</p>
+            <p>Un linguaggio deve restare riconoscibile tra web, spazio e stampa.</p>
           </article>
         </div>
       </div>
@@ -2850,624 +574,117 @@ OPEN / SCAN / READ / EXEC</pre>
   </section>
 
   <!-- MANIFESTO -->
-  <section class="win" id="manifesto" data-title="Manifesto">
-    <div class="titlebar">
-      <div class="title-left">
-        <span class="title-icon doc"></span>
-        <span class="title-text">Manifesto</span>
+  <section
+    class="xp-window"
+    id="win-manifesto"
+    data-window-title="Manifesto"
+    style="display:none; top:110px; left:190px; width:760px; height:500px;"
+  >
+    <div class="xp-titlebar" data-drag-handle>
+      <div class="xp-title-left">
+        <span class="xp-mini-icon doc"></span>
+        <span class="xp-title-text">Manifesto</span>
       </div>
-      <div class="title-controls">
-        <button class="ctrl close" data-open="shell">×</button>
+      <div class="xp-title-controls">
+        <button class="xp-control" data-minimize="win-manifesto">_</button>
+        <button class="xp-control" data-maximize="win-manifesto">□</button>
+        <button class="xp-control close" data-close="win-manifesto">×</button>
       </div>
     </div>
 
-    <div class="world-body manifesto-main">
-      <aside class="rail">
-        <button class="rail-btn" data-open="shell">⌂</button>
-        <button class="rail-btn" data-open="manifesto">M</button>
-        <button class="rail-btn" data-open="contact">C</button>
-        <div class="rail-label">text</div>
-        <div class="rail-help">leggi / scorri / chiudi</div>
-      </aside>
+    <div class="xp-menubar">
+      <span>File</span>
+      <span>Read</span>
+      <span>View</span>
+    </div>
 
-      <div class="world-main">
-        <div class="guide editor-guide">
-          <div class="bubble">readme.txt</div>
-          <div class="editor-char"></div>
-        </div>
-
-        <div class="editor-shell">
-          <div class="editor-top">
-            <span>BLUCINELAB_EDITOR.EXE</span>
-            <span>READ ONLY / VERSION 01</span>
-          </div>
-
-          <div class="editor-body">
-            <h2>MANIFESTO</h2>
-            <p>
-              BLUCINELAB non usa la forma come decorazione.
-              La usa come orientamento, montaggio, gerarchia e tensione leggibile.
-            </p>
-            <p>
-              Ogni progetto è una stanza mentale, un dispositivo di immagine,
-              una superficie che organizza attenzione.
-            </p>
-            <p>
-              L’obiettivo non è produrre semplicemente output “belli”,
-              ma costruire presenza, tono, gerarchia e memoria.
-            </p>
-            <p>
-              Il sito stesso deve comportarsi come un progetto:
-              non una vetrina piatta, ma un sistema di accessi e mondi.
-            </p>
-          </div>
-        </div>
-      </div>
+    <div class="manifesto-body">
+      <h2>MANIFESTO</h2>
+      <p>BLUCINELAB non usa la forma come decorazione. La usa come orientamento.</p>
+      <p>Ogni progetto è una stanza mentale, un dispositivo di immagine, una superficie che organizza attenzione.</p>
+      <p>L’obiettivo non è riempire ma costruire presenza, tono, gerarchia e memoria.</p>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section class="win" id="contact" data-title="Contact">
-    <div class="titlebar">
-      <div class="title-left">
-        <span class="title-icon mail"></span>
-        <span class="title-text">Contact</span>
+  <section
+    class="xp-window"
+    id="win-contact"
+    data-window-title="Contact"
+    style="display:none; top:130px; left:230px; width:520px; height:330px;"
+  >
+    <div class="xp-titlebar" data-drag-handle>
+      <div class="xp-title-left">
+        <span class="xp-mini-icon mail"></span>
+        <span class="xp-title-text">Contact</span>
       </div>
-      <div class="title-controls">
-        <button class="ctrl close" data-open="shell">×</button>
+      <div class="xp-title-controls">
+        <button class="xp-control" data-minimize="win-contact">_</button>
+        <button class="xp-control" data-maximize="win-contact">□</button>
+        <button class="xp-control close" data-close="win-contact">×</button>
       </div>
     </div>
 
-    <div class="world-body contact-main">
-      <aside class="rail">
-        <button class="rail-btn" data-open="shell">⌂</button>
-        <button class="rail-btn" data-open="contact">C</button>
-        <button class="rail-btn" data-open="archive">A</button>
-        <div class="rail-label">mail</div>
-        <div class="rail-help">contact / exit / return</div>
-      </aside>
+    <div class="xp-menubar">
+      <span>File</span>
+      <span>Send</span>
+      <span>Help</span>
+    </div>
 
-      <div class="world-main">
-        <div class="guide contact-guide">
-          <div class="bubble">scrivi qui</div>
-          <div class="contact-char"></div>
-        </div>
-
-        <div class="contact-box">
-          <div class="k">contact / email / direct</div>
-          <h2>CONTACT</h2>
-          <p>
-            Per progetti culturali, direzione visiva, identità, web design,
-            allestimenti, sistemi digitali e collaborazioni.
-          </p>
-          <p>
-            BLUCINELAB lavora meglio quando il contesto è chiaro,
-            il progetto ha peso e la relazione richiede visione,
-            selezione e precisione.
-          </p>
-          <a href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a>
-        </div>
-      </div>
+    <div class="contact-body">
+      <div class="contact-kicker">email / direct</div>
+      <h2>CONTACT</h2>
+      <p>Commissioni, collaborazioni, identità visiva, ambienti digitali, allestimenti.</p>
+      <a href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a>
     </div>
   </section>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const $ = (s, c = document) => c.querySelector(s);
-      const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
-
-      const boot = $("#boot");
-      const bootLines = $("#boot-lines");
-      const startBtn = $("#start-btn");
-      const startMenu = $("#start-menu");
-      const taskButtons = $("#task-buttons");
-      const clock = $("#clock");
-      const shutdown = $("#shutdown");
-      const windows = $$(".win");
-
-      /* =========================
-         BOOT
-      ========================= */
-      const bootText = [
-        "Booting visual shell...",
-        "Loading XP desktop resources...",
-        "Mounting archive / lab / playroom...",
-        "Applying full screen worlds...",
-        "System ready."
-      ];
-
-      let bootLine = 0;
-      const lineTimer = setInterval(() => {
-        if (bootLine < bootText.length) {
-          bootLines.textContent += bootText[bootLine] + "\\n";
-          bootLine++;
-        }
-      }, 800);
-
-      setTimeout(() => {
-        clearInterval(lineTimer);
-        boot.style.display = "none";
-      }, 4300);
-
-      /* =========================
-         CLOCK
-      ========================= */
-      function updateClock() {
-        const now = new Date();
-        const hh = String(now.getHours()).padStart(2, "0");
-        const mm = String(now.getMinutes()).padStart(2, "0");
-        clock.textContent = hh + ":" + mm;
-      }
-      updateClock();
-      setInterval(updateClock, 1000);
-
-      /* =========================
-         WINDOW SYSTEM
-      ========================= */
-      let topZ = 100;
-
-      function visible(win) {
-        return getComputedStyle(win).display !== "none";
-      }
-
-      function bringFront(win) {
-        topZ += 1;
-        win.style.zIndex = String(topZ);
-        updateTaskbar();
-      }
-
-      function showWindow(id) {
-        const win = document.getElementById(id);
-        if (!win) return;
-        windows.forEach(w => w.classList.remove("show"));
-        win.classList.add("show");
-        bringFront(win);
-        closeStart();
-      }
-
-      function closeStart() {
-        startMenu.classList.remove("open");
-      }
-
-      function updateTaskbar() {
-        taskButtons.innerHTML = "";
-        windows.forEach(win => {
-          if (!visible(win)) return;
-          const btn = document.createElement("button");
-          btn.type = "button";
-          btn.className = "task-item active";
-          btn.textContent = win.dataset.title || win.id;
-          btn.addEventListener("click", () => showWindow(win.id));
-          taskButtons.appendChild(btn);
-        });
-      }
-
-      $$("[data-open]").forEach(el => {
-        el.addEventListener("click", (e) => {
-          const id = el.dataset.open;
-          if (!id) return;
-          e.preventDefault();
-          showWindow(id);
-        });
-      });
-
-      startBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        startMenu.classList.toggle("open");
-      });
-
-      document.addEventListener("click", (e) => {
-        if (!startMenu.contains(e.target) && !startBtn.contains(e.target)) {
-          closeStart();
-        }
-      });
-
-      shutdown.addEventListener("click", () => {
-        document.body.innerHTML = `
-          <div style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#000;color:#00ff66;font-family:'Courier New',monospace;gap:16px;">
-            <div style="font-size:28px;letter-spacing:1px;">BLUCINELAB OS</div>
-            <div style="font-size:18px;">It is now safe to turn off your computer.</div>
-            <button onclick="location.reload()" style="padding:10px 18px;border:1px solid #00ff66;background:#001c0d;color:#00ff66;cursor:pointer;">Restart</button>
-          </div>
-        `;
-      });
-
-      /* =========================
-         PLAYROOM TABS
-      ========================= */
-      const playViews = {
-        hub: $("#play-hub"),
-        mario: $("#play-mario"),
-        cooking: $("#play-cooking"),
-        pacman: $("#play-pacman")
-      };
-
-      function showPlayView(name) {
-        Object.entries(playViews).forEach(([key, panel]) => {
-          panel.classList.toggle("show", key === name);
-        });
-
-        $$("[data-play-view]").forEach(btn => {
-          btn.classList.toggle("active", btn.dataset.playView === name);
-        });
-
-        if (name === "mario") resetMario();
-        if (name === "cooking") resetCooking();
-        if (name === "pacman") resetPacman();
-      }
-
-      $$("[data-play-view]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          showPlayView(btn.dataset.playView);
-        });
-      });
-
-      /* =========================
-         MARIO GAME
-      ========================= */
-      const marioStage = $("#mario-stage");
-      const marioPlayer = $("#mario-player");
-      const marioCoinsDisp = $("#mario-coins");
-      const marioScoreDisp = $("#mario-score");
-      const marioStatusDisp = $("#mario-status");
-
-      const mario = {
-        x: 40,
-        y: 0,
-        vx: 0,
-        vy: 0,
-        speed: 4.2,
-        jump: 13,
-        gravity: 0.7,
-        ground: 82,
-        keys: { left:false, right:false },
-        score: 0,
-        coins: 0,
-        raf: null
-      };
-
-      function showMarioCoins() {
-        $$(".mario-coin", marioStage).forEach(coin => {
-          coin.dataset.active = "1";
-          coin.style.display = "block";
-        });
-      }
-
-      function renderMario() {
-        marioPlayer.style.left = mario.x + "px";
-        marioPlayer.style.bottom = (mario.ground + mario.y) + "px";
-      }
-
-      function resetMario() {
-        mario.x = 40;
-        mario.y = 0;
-        mario.vx = 0;
-        mario.vy = 0;
-        mario.score = 0;
-        mario.coins = 0;
-        mario.keys.left = false;
-        mario.keys.right = false;
-        marioCoinsDisp.textContent = "0";
-        marioScoreDisp.textContent = "0";
-        marioStatusDisp.textContent = "READY";
-        showMarioCoins();
-        renderMario();
-      }
-
-      function collectMarioCoins() {
-        $$(".mario-coin", marioStage).forEach(coin => {
-          if (coin.dataset.active !== "1") return;
-
-          const coinLeft = parseFloat(coin.style.left);
-          const coinBottom = parseFloat(coin.style.bottom);
-          const px = mario.x + 15;
-          const py = mario.ground + mario.y + 22;
-
-          const dx = px - (coinLeft + 11);
-          const dy = py - (coinBottom + 11);
-          const dist = Math.sqrt(dx*dx + dy*dy);
-
-          if (dist < 30) {
-            coin.dataset.active = "0";
-            coin.style.display = "none";
-            mario.coins += 1;
-            mario.score += 100;
-            marioCoinsDisp.textContent = String(mario.coins);
-            marioScoreDisp.textContent = String(mario.score);
-            marioStatusDisp.textContent = mario.coins >= 4 ? "WIN" : "COIN";
-          }
-        });
-      }
-
-      function marioLoop() {
-        const stageWidth = marioStage.clientWidth;
-
-        mario.vx = 0;
-        if (mario.keys.left) mario.vx = -mario.speed;
-        if (mario.keys.right) mario.vx = mario.speed;
-
-        mario.x += mario.vx;
-        if (mario.x < 0) mario.x = 0;
-        if (mario.x > stageWidth - 34) mario.x = stageWidth - 34;
-
-        mario.vy -= mario.gravity;
-        mario.y += mario.vy;
-
-        if (mario.y <= 0) {
-          mario.y = 0;
-          mario.vy = 0;
-        }
-
-        collectMarioCoins();
-        renderMario();
-        mario.raf = requestAnimationFrame(marioLoop);
-      }
-
-      function startMarioLoop() {
-        cancelAnimationFrame(mario.raf);
-        marioLoop();
-      }
-
-      document.addEventListener("keydown", (e) => {
-        if ($("#play-mario").classList.contains("show")) {
-          if (e.key === "ArrowLeft") mario.keys.left = true;
-          if (e.key === "ArrowRight") mario.keys.right = true;
-          if ((e.key === " " || e.code === "Space") && mario.y === 0) {
-            mario.vy = mario.jump;
-            marioStatusDisp.textContent = "JUMP";
-            e.preventDefault();
-          }
-        }
-      });
-
-      document.addEventListener("keyup", (e) => {
-        if (e.key === "ArrowLeft") mario.keys.left = false;
-        if (e.key === "ArrowRight") mario.keys.right = false;
-      });
-
-      resetMario();
-      startMarioLoop();
-
-      /* =========================
-         COOKING GAME
-      ========================= */
-      const cookTarget = $("#cook-target");
-      const cookInstruction = $("#cook-instruction");
-      const cookRoundDisp = $("#cook-round");
-      const cookTimeDisp = $("#cook-time");
-      const cookScoreDisp = $("#cook-score");
-      const cookStatusDisp = $("#cook-status");
-      const cookRestart = $("#cook-restart");
-
-      const cookItems = ["🍅","🥕","🍳","🍓","🥔","🧅"];
-      const cook = {
-        round: 1,
-        time: 10,
-        score: 0,
-        current: "🍅",
-        timer: null
-      };
-
-      function applyCookState() {
-        cookTarget.textContent = cook.current;
-        cookRoundDisp.textContent = String(cook.round);
-        cookTimeDisp.textContent = String(cook.time);
-        cookScoreDisp.textContent = String(cook.score);
-      }
-
-      function nextCookItem() {
-        cook.current = cookItems[Math.floor(Math.random() * cookItems.length)];
-        cookInstruction.textContent = "Clicca l’ingrediente il più possibile.";
-        applyCookState();
-      }
-
-      function stopCookingTimer() {
-        if (cook.timer) clearInterval(cook.timer);
-        cook.timer = null;
-      }
-
-      function startCookingTimer() {
-        stopCookingTimer();
-        cookStatusDisp.textContent = "COOKING";
-
-        cook.timer = setInterval(() => {
-          cook.time -= 1;
-          cookTimeDisp.textContent = String(cook.time);
-
-          if (cook.time <= 0) {
-            stopCookingTimer();
-            cookStatusDisp.textContent = "ROUND END";
-            cook.round += 1;
-            cook.time = 10;
-            nextCookItem();
-          }
-        }, 1000);
-      }
-
-      function resetCooking() {
-        stopCookingTimer();
-        cook.round = 1;
-        cook.time = 10;
-        cook.score = 0;
-        cook.current = "🍅";
-        cookStatusDisp.textContent = "READY";
-        cookInstruction.textContent = "Clicca l’ingrediente per cucinare.";
-        applyCookState();
-      }
-
-      cookTarget.addEventListener("click", () => {
-        if (!$("#play-cooking").classList.contains("show")) return;
-        if (!cook.timer) startCookingTimer();
-        cook.score += 1;
-        cookScoreDisp.textContent = String(cook.score);
-        cookStatusDisp.textContent = "GOOD";
-      });
-
-      cookRestart.addEventListener("click", () => {
-        resetCooking();
-      });
-
-      resetCooking();
-
-      /* =========================
-         PACMAN GAME
-      ========================= */
-      const pacStage = $("#pac-stage");
-      const pacPlayer = $("#pac-player");
-      const ghost1 = $("#ghost-1");
-      const ghost2 = $("#ghost-2");
-      const pacDotsDisp = $("#pac-dots-left");
-      const pacScoreDisp = $("#pac-score");
-      const pacStatusDisp = $("#pac-status");
-
-      const pac = {
-        x: 40,
-        y: 40,
-        dirX: 3.5,
-        dirY: 0,
-        score: 0,
-        dots: [],
-        ghosts: [
-          { el: ghost1, x: 260, y: 150, vx: 1.6, vy: 1.2 },
-          { el: ghost2, x: 520, y: 210, vx: -1.5, vy: 1.4 }
-        ],
-        raf: null
-      };
-
-      function clearPacDots() {
-        $$(".pac-dot", pacStage).forEach(d => d.remove());
-        pac.dots = [];
-      }
-
-      function buildPacDots() {
-        clearPacDots();
-        const points = [
-          [70,70],[140,70],[210,70],[280,70],[350,70],
-          [420,70],[490,70],[560,70],[630,70],[700,70],
-          [90,150],[170,150],[250,150],[330,150],[410,150],
-          [490,150],[570,150],[650,150],[220,240],[520,250]
-        ];
-
-        points.forEach(([x,y]) => {
-          const d = document.createElement("div");
-          d.className = "pac-dot";
-          d.style.left = x + "px";
-          d.style.top = y + "px";
-          d.dataset.active = "1";
-          pacStage.appendChild(d);
-          pac.dots.push({ el:d, x, y, active:true });
-        });
-      }
-
-      function renderPacPlayer() {
-        pacPlayer.style.left = pac.x + "px";
-        pacPlayer.style.top = pac.y + "px";
-        const angle = Math.atan2(pac.dirY, pac.dirX) * 180 / Math.PI;
-        pacPlayer.style.transform = `rotate(${angle}deg)`;
-      }
-
-      function renderPacGhosts() {
-        pac.ghosts.forEach(g => {
-          g.el.style.left = g.x + "px";
-          g.el.style.top = g.y + "px";
-        });
-      }
-
-      function resetPacman() {
-        pac.x = 40;
-        pac.y = 40;
-        pac.dirX = 3.5;
-        pac.dirY = 0;
-        pac.score = 0;
-        pacStatusDisp.textContent = "READY";
-        pacScoreDisp.textContent = "0";
-        buildPacDots();
-        pacDotsDisp.textContent = String(pac.dots.length);
-        pac.ghosts[0].x = 260; pac.ghosts[0].y = 150; pac.ghosts[0].vx = 1.6; pac.ghosts[0].vy = 1.2;
-        pac.ghosts[1].x = 520; pac.ghosts[1].y = 210; pac.ghosts[1].vx = -1.5; pac.ghosts[1].vy = 1.4;
-        renderPacPlayer();
-        renderPacGhosts();
-      }
-
-      function collectPacDots() {
-        pac.dots.forEach(d => {
-          if (!d.active) return;
-          const dx = (pac.x + 14) - (d.x + 4);
-          const dy = (pac.y + 14) - (d.y + 4);
-          if (Math.sqrt(dx*dx + dy*dy) < 20) {
-            d.active = false;
-            d.el.remove();
-            pac.score += 10;
-            pacScoreDisp.textContent = String(pac.score);
-            const left = pac.dots.filter(x => x.active).length;
-            pacDotsDisp.textContent = String(left);
-            pacStatusDisp.textContent = left === 0 ? "WIN" : "DOT";
-          }
-        });
-      }
-
-      function updateGhosts() {
-        const w = pacStage.clientWidth;
-        const h = pacStage.clientHeight;
-
-        pac.ghosts.forEach(g => {
-          g.x += g.vx;
-          g.y += g.vy;
-
-          if (g.x < 0 || g.x > w - 26) g.vx *= -1;
-          if (g.y < 0 || g.y > h - 26) g.vy *= -1;
-
-          const dx = (pac.x + 14) - (g.x + 12);
-          const dy = (pac.y + 14) - (g.y + 12);
-          const dist = Math.sqrt(dx*dx + dy*dy);
-
-          if (dist < 24) {
-            pacStatusDisp.textContent = "HIT";
-            pac.x = 40;
-            pac.y = 40;
-          }
-        });
-      }
-
-      function pacLoop() {
-        const w = pacStage.clientWidth;
-        const h = pacStage.clientHeight;
-
-        pac.x += pac.dirX;
-        pac.y += pac.dirY;
-
-        if (pac.x < 0) pac.x = 0;
-        if (pac.y < 0) pac.y = 0;
-        if (pac.x > w - 28) pac.x = w - 28;
-        if (pac.y > h - 28) pac.y = h - 28;
-
-        collectPacDots();
-        updateGhosts();
-        renderPacPlayer();
-        renderPacGhosts();
-
-        pac.raf = requestAnimationFrame(pacLoop);
-      }
-
-      function startPacLoop() {
-        cancelAnimationFrame(pac.raf);
-        pacLoop();
-      }
-
-      document.addEventListener("keydown", (e) => {
-        if (!$("#play-pacman").classList.contains("show")) return;
-
-        if (e.key === "ArrowLeft") { pac.dirX = -3.5; pac.dirY = 0; }
-        if (e.key === "ArrowRight") { pac.dirX = 3.5; pac.dirY = 0; }
-        if (e.key === "ArrowUp") { pac.dirX = 0; pac.dirY = -3.5; }
-        if (e.key === "ArrowDown") { pac.dirX = 0; pac.dirY = 3.5; }
-      });
-
-      resetPacman();
-      startPacLoop();
-
-      updateTaskbar();
-    });
-  </script>
+  <!-- TASKBAR -->
+  <footer id="taskbar">
+    <button id="start-button">
+      <span class="start-orb"></span>
+      <span>start</span>
+    </button>
+
+    <div id="taskbar-windows"></div>
+
+    <div id="taskbar-tray">
+      <span class="tray-dot"></span>
+      <span id="taskbar-clock">00:00</span>
+    </div>
+  </footer>
+
+  <!-- START MENU -->
+  <nav id="start-menu">
+    <div class="start-top">
+      <div class="start-user-pic"></div>
+      <div class="start-user-name">BLUCINELAB</div>
+    </div>
+
+    <div class="start-body">
+      <div class="start-left">
+        <button class="start-link" data-open="win-shell"><span class="start-link-art monitor"></span><span>Home</span></button>
+        <button class="start-link" data-open="win-archive"><span class="start-link-art folder"></span><span>Archive</span></button>
+        <button class="start-link" data-open="win-lab"><span class="start-link-art monitor"></span><span>Lab</span></button>
+        <button class="start-link" data-open="win-playroom"><span class="start-link-art gamepad"></span><span>Playroom</span></button>
+        <button class="start-link" data-open="win-studio"><span class="start-link-art image"></span><span>Studio</span></button>
+        <button class="start-link" data-open="win-manifesto"><span class="start-link-art doc"></span><span>Manifesto</span></button>
+        <button class="start-link" data-open="win-contact"><span class="start-link-art mail"></span><span>Contact</span></button>
+      </div>
+
+      <div class="start-right">
+        <div class="start-item">Projects</div>
+        <div class="start-item">Visual Systems</div>
+        <div class="start-item">Research</div>
+        <div class="start-item">Support</div>
+      </div>
+    </div>
+
+    <div class="start-bottom">
+      <button id="shutdown-button">Turn Off Computer</button>
+    </div>
+  </nav>
+
+  <script src="script.js"></script>
 </body>
 </html>
