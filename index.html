@@ -7,15 +7,15 @@
   <style>
     :root{
       --taskbar-h: 40px;
+      --topbar-h: 28px;
       --boot-green: #00ff66;
+
       --xp-blue-1: #4f8ff7;
       --xp-blue-2: #2d6bd1;
       --xp-blue-3: #1c4fb6;
       --xp-border: #0a246a;
-      --xp-window: #ece9d8;
-      --xp-panel: #f7f4ec;
-      --xp-shadow: 0 10px 28px rgba(0,0,0,.22);
-      --rail-w: 72px;
+
+      --rail-w: 76px;
     }
 
     *{ box-sizing:border-box; }
@@ -42,8 +42,13 @@
       cursor:pointer;
     }
 
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
     /* =========================
-       BOOT / TELETEXT
+       BOOT
     ========================= */
     #boot{
       position:fixed;
@@ -81,14 +86,19 @@
       position:absolute;
       inset:0;
       background:
-        linear-gradient(transparent 0%, rgba(0,255,102,.025) 50%, transparent 100%);
-      animation:bootFlicker .18s infinite alternate;
+        linear-gradient(
+          to bottom,
+          transparent 0%,
+          rgba(0,255,102,.025) 48%,
+          transparent 100%
+        );
+      animation:bootFlicker .14s infinite alternate;
       pointer-events:none;
     }
 
     @keyframes bootFlicker{
-      from{ opacity:.65; }
-      to{ opacity:.95; }
+      from{ opacity:.68; }
+      to{ opacity:.96; }
     }
 
     .boot-logo{
@@ -107,7 +117,7 @@
 
     .boot-bar{
       position:relative;
-      width:min(420px,82vw);
+      width:min(440px,84vw);
       height:24px;
       border:2px solid var(--boot-green);
       background:#00140a;
@@ -124,7 +134,7 @@
           #00ff66 0 10px,
           #00d453 10px 20px
         );
-      animation:bootFill 4.2s linear forwards;
+      animation:bootFill 4.25s linear forwards;
     }
 
     @keyframes bootFill{
@@ -134,13 +144,39 @@
 
     .boot-lines{
       position:relative;
-      width:min(500px,86vw);
-      min-height:110px;
+      width:min(520px,86vw);
+      min-height:120px;
       white-space:pre-line;
       font-size:15px;
       line-height:1.45;
       opacity:.92;
+      text-align:left;
     }
+
+    /* =========================
+       TOP STATUS BAR
+    ========================= */
+    #topbar{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      height:var(--topbar-h);
+      z-index:9000;
+      display:flex;
+      align-items:center;
+      gap:18px;
+      padding:0 12px;
+      color:#fff;
+      background:linear-gradient(90deg, rgba(0,0,0,.72), rgba(0,0,0,.28));
+      border-bottom:1px solid rgba(255,255,255,.14);
+      font-family:"Courier New", monospace;
+      font-size:14px;
+      letter-spacing:.3px;
+    }
+
+    .top-title{ color:#dff2ff; font-weight:700; }
+    .top-small{ color:#fff39b; font-size:12px; }
 
     /* =========================
        DESKTOP XP
@@ -183,7 +219,7 @@
     }
 
     /* =========================
-       DESKTOP ICONS
+       ICONS
     ========================= */
     .desktop-icon{
       position:absolute;
@@ -396,7 +432,6 @@
       display:flex;
       align-items:center;
       gap:8px;
-      cursor:pointer;
       font-size:18px;
       font-weight:700;
       font-style:italic;
@@ -459,9 +494,7 @@
       box-shadow:0 0 6px rgba(156,255,90,.65);
     }
 
-    #clock{
-      font-size:12px;
-    }
+    #clock{ font-size:12px; }
 
     /* =========================
        START MENU
@@ -479,9 +512,7 @@
       box-shadow:0 12px 26px rgba(0,0,0,.28);
     }
 
-    #start-menu.open{
-      display:block;
-    }
+    #start-menu.open{ display:block; }
 
     .start-top{
       height:62px;
@@ -532,7 +563,6 @@
       gap:10px;
       padding:8px 10px;
       text-align:left;
-      cursor:pointer;
       color:#111;
       font-size:14px;
       border-radius:3px;
@@ -577,11 +607,10 @@
       font-weight:700;
       padding:6px 12px;
       border-radius:14px;
-      cursor:pointer;
     }
 
     /* =========================
-       FULLSCREEN WINDOWS
+       WINDOWS
     ========================= */
     .win{
       position:fixed;
@@ -590,12 +619,10 @@
       display:none;
       flex-direction:column;
       overflow:hidden;
-      background:var(--xp-window);
+      background:#ece9d8;
     }
 
-    .win.show{
-      display:flex;
-    }
+    .win.show{ display:flex; }
 
     .titlebar{
       height:30px;
@@ -660,10 +687,11 @@
       color:#0b2c74;
       font-size:12px;
       font-weight:700;
-      padding:0;
       line-height:1;
       border-radius:3px;
-      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
     .ctrl.close{
@@ -698,7 +726,9 @@
       font-size:16px;
       font-weight:700;
       border-radius:4px;
-      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
     .rail-label{
@@ -727,17 +757,45 @@
       padding:20px 22px 24px;
     }
 
-    /* SHELL */
-    .shell-main{
-      background:linear-gradient(to bottom, rgba(255,255,255,.46), rgba(255,255,255,.2)), #eef4ff;
-    }
-
-    .shell-kicker{
+    .kicker{
       font-size:11px;
       text-transform:uppercase;
-      letter-spacing:.6px;
-      color:#6482b8;
+      letter-spacing:.7px;
       margin-bottom:8px;
+      opacity:.84;
+    }
+
+    .guide{
+      position:absolute;
+      right:18px;
+      top:16px;
+      z-index:5;
+      pointer-events:none;
+    }
+
+    .bubble{
+      display:inline-block;
+      margin-bottom:8px;
+      padding:6px 8px;
+      font-size:11px;
+      line-height:1.2;
+      border-radius:10px;
+      box-shadow:0 2px 8px rgba(0,0,0,.12);
+    }
+
+    .char{
+      position:relative;
+      width:60px;
+      height:92px;
+    }
+
+    /* =========================
+       HOME / XP FILE MANAGER
+    ========================= */
+    .shell-main{
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,.46), rgba(255,255,255,.2)),
+        #eef4ff;
     }
 
     .shell-main h1{
@@ -748,9 +806,9 @@
 
     .shell-main p{
       margin:0;
-      max-width:640px;
+      max-width:730px;
       font-size:15px;
-      line-height:1.58;
+      line-height:1.62;
       color:#2d2d2d;
     }
 
@@ -758,32 +816,66 @@
       display:flex;
       justify-content:space-between;
       gap:24px;
+      margin-bottom:24px;
     }
 
-    .shell-grid{
-      margin-top:24px;
+    .xp-explorer{
+      display:grid;
+      grid-template-columns:240px 1fr;
+      border:1px solid #b6c8e6;
+      background:#fff;
+      box-shadow:0 10px 22px rgba(67,103,155,.10);
+      min-height:420px;
+    }
+
+    .xp-sidebar{
+      background:linear-gradient(to bottom,#f4f8ff,#dce9fb);
+      border-right:1px solid #b6c8e6;
+      padding:14px;
+      display:grid;
+      align-content:start;
+      gap:12px;
+    }
+
+    .xp-block{
+      border:1px solid #bbd1ef;
+      background:#fff;
+      padding:12px;
+    }
+
+    .xp-block h3{
+      margin:0 0 8px;
+      font-size:14px;
+      color:#1a4fa0;
+    }
+
+    .xp-block p{
+      margin:0;
+      font-size:12px;
+      line-height:1.5;
+      color:#3d4a5f;
+    }
+
+    .xp-content{
+      padding:16px;
       display:grid;
       grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:16px;
+      gap:14px;
+      align-content:start;
+      background:#fefefe;
     }
 
     .shell-card{
-      min-height:136px;
+      min-height:148px;
       border:1px solid #b7c9e6;
       background:linear-gradient(to bottom,#ffffff,#e9f2ff);
-      border-radius:8px;
       padding:16px;
       display:flex;
       flex-direction:column;
       align-items:flex-start;
       gap:8px;
       text-align:left;
-      cursor:pointer;
       box-shadow:0 6px 14px rgba(67,103,155,.08);
-    }
-
-    .shell-card:hover{
-      background:linear-gradient(to bottom,#ffffff,#dfeeff);
     }
 
     .shell-card-art{
@@ -807,29 +899,10 @@
       color:#3b3b3b;
     }
 
-    /* GUIDES */
-    .guide{
-      position:absolute;
-      right:18px;
-      top:16px;
-      z-index:5;
-      pointer-events:none;
-    }
-
-    .bubble{
-      display:inline-block;
-      margin-bottom:8px;
-      padding:6px 8px;
-      font-size:11px;
-      line-height:1.2;
-      border-radius:10px;
-      box-shadow:0 2px 8px rgba(0,0,0,.12);
-    }
-
-    .char{
-      position:relative;
-      width:60px;
-      height:92px;
+    .shell-guide .bubble{
+      background:#fff;
+      color:#567cac;
+      border:1px solid #d8e5f2;
     }
 
     .char-xp .head,
@@ -904,60 +977,137 @@
     @keyframes legL{ 0%,100%{transform:rotate(14deg)} 50%{transform:rotate(-12deg)} }
     @keyframes legR{ 0%,100%{transform:rotate(-14deg)} 50%{transform:rotate(12deg)} }
 
-    /* ARCHIVE */
+    /* =========================
+       ARCHIVE / GTA-LIKE HUD
+    ========================= */
     .archive-main{
-      background:linear-gradient(135deg,#111319 0%, #25122b 42%, #131313 100%);
+      background:
+        radial-gradient(circle at top right, rgba(255,70,180,.18), transparent 34%),
+        linear-gradient(135deg,#0e0f14 0%, #171820 36%, #220f23 65%, #0f1015 100%);
       color:#f7d8ea;
+      font-family:Arial, Helvetica, sans-serif;
     }
 
-    .archive-main h2{
+    .archive-main .rail{
+      background:linear-gradient(to bottom,#13141b,#0b0c11);
+      border-right:1px solid rgba(255,255,255,.09);
+    }
+
+    .archive-main .rail-btn{
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      color:#ff99cb;
+    }
+
+    .archive-main .rail-label,
+    .archive-main .rail-help{
+      color:#d89cbc;
+    }
+
+    .archive-hero{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:18px;
+      margin-bottom:18px;
+    }
+
+    .archive-titlebox,
+    .archive-stats,
+    .archive-mission,
+    .archive-file{
+      border:1px solid rgba(255,120,190,.18);
+      background:rgba(255,255,255,.03);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.02);
+    }
+
+    .archive-titlebox{
+      padding:20px;
+      min-height:180px;
+    }
+
+    .archive-titlebox h2{
       margin:0 0 10px;
-      font-size:36px;
+      font-size:40px;
+      line-height:1;
       color:#ff9fd0;
+      letter-spacing:.5px;
+      text-transform:uppercase;
     }
 
-    .archive-main p{
+    .archive-titlebox p{
       margin:0;
       font-size:14px;
-      line-height:1.6;
+      line-height:1.68;
       color:#ead9e1;
-      max-width:620px;
+      max-width:600px;
     }
 
+    .archive-stats{
+      padding:16px;
+      display:grid;
+      gap:10px;
+    }
+
+    .hud-stat{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:10px 12px;
+      border:1px solid rgba(255,255,255,.06);
+      background:rgba(255,255,255,.03);
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+    }
+
+    .hud-stat span:first-child{ color:#caa2b6; }
+    .hud-stat span:last-child{ color:#fff; font-weight:700; }
+
     .archive-grid{
-      margin-top:24px;
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
       gap:16px;
     }
 
-    .archive-card{
-      min-height:140px;
-      padding:16px;
-      border:1px solid rgba(255,121,190,.32);
-      background:rgba(255,255,255,.04);
+    .archive-file{
+      padding:18px;
+      min-height:170px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .archive-file::before{
+      content:"";
+      position:absolute;
+      inset:auto 0 0 0;
+      height:2px;
+      background:linear-gradient(to right, transparent, #ff6fbe, transparent);
+      opacity:.6;
     }
 
     .archive-tag{
       display:inline-block;
-      margin-bottom:10px;
+      margin-bottom:12px;
       padding:4px 8px;
       font-size:10px;
       text-transform:uppercase;
-      letter-spacing:.8px;
+      letter-spacing:1px;
       color:#111;
       background:#ff9fd0;
     }
 
-    .archive-card h3{
+    .archive-file h3{
       margin:0 0 10px;
       color:#fff;
-      font-size:20px;
+      font-size:22px;
+      text-transform:uppercase;
+      line-height:1.15;
     }
 
-    .archive-card p{
+    .archive-file p{
+      margin:0;
       font-size:13px;
-      line-height:1.55;
+      line-height:1.58;
       color:#dec8d5;
     }
 
@@ -983,7 +1133,9 @@
       50%{transform:translateX(-5px)}
     }
 
-    /* LAB */
+    /* =========================
+       LAB / BIOS
+    ========================= */
     .lab-main{
       background:#000;
       color:#87ffe0;
@@ -992,12 +1144,12 @@
 
     .lab-main .rail{
       background:#001010;
-      border-right-color:#1bcfb5;
+      border-right:1px solid #1bcfb5;
     }
 
     .lab-main .rail-btn{
       background:#021d1d;
-      border-color:#53fdd8;
+      border:1px solid #53fdd8;
       color:#9effee;
     }
 
@@ -1006,42 +1158,64 @@
       color:#7efce3;
     }
 
+    .lab-main .world-main{
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(127,255,224,.05) 0px,
+          rgba(127,255,224,.05) 1px,
+          transparent 1px,
+          transparent 3px
+        ),
+        #000;
+    }
+
     .lab-topline{
       display:flex;
       justify-content:space-between;
       gap:20px;
-      padding-bottom:10px;
-      border-bottom:1px solid rgba(127,255,224,.28);
+      padding:10px 12px;
+      border:1px solid rgba(127,255,224,.25);
       font-size:12px;
-      letter-spacing:.6px;
+      letter-spacing:.8px;
+      text-transform:uppercase;
+      margin-bottom:14px;
     }
 
-    .lab-grid{
-      margin-top:16px;
+    .lab-setup{
       display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
+      grid-template-columns:1.05fr .95fr;
       gap:14px;
+      margin-bottom:14px;
     }
 
-    .lab-panel{
-      margin:0;
-      min-height:240px;
-      padding:14px;
+    .lab-menu,
+    .lab-ascii-box,
+    .lab-bank{
       border:1px solid rgba(127,255,224,.28);
-      background:
-        repeating-linear-gradient(
-          to bottom,
-          rgba(127,255,224,.05) 0 2px,
-          transparent 2px 5px
-        );
+      padding:14px;
+      background:rgba(0,0,0,.55);
+    }
+
+    .lab-menu pre,
+    .lab-ascii-box pre,
+    .lab-bank pre{
+      margin:0;
       white-space:pre-wrap;
-      line-height:1.4;
+      line-height:1.42;
       font-size:13px;
       color:#8dffe6;
     }
 
-    .lab-panel.ascii{
+    .lab-ascii-box pre{
       font-size:11px;
+      line-height:1.12;
+    }
+
+    .lab-banks{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
     }
 
     .lab-guide .bubble{
@@ -1068,92 +1242,202 @@
       50%{opacity:.72; transform:translateY(-3px)}
     }
 
-    /* PLAYROOM */
+    /* =========================
+       PLAYROOM / WII
+    ========================= */
     .play-main{
-      background:linear-gradient(to bottom,#f8fbff 0%, #eef5fc 100%);
+      background:
+        radial-gradient(circle at top center, rgba(255,255,255,.92), rgba(255,255,255,.65) 34%, transparent 70%),
+        linear-gradient(to bottom,#f7fbff 0%, #eef5fb 100%);
       color:#173750;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    .play-main .rail{
+      background:linear-gradient(to bottom,#eff7fd,#dceaf5);
+      border-right:1px solid #bfd0de;
+    }
+
+    .play-main .rail-btn{
+      border:1px solid #bdd0df;
+      background:linear-gradient(to bottom,#fff,#eaf4fb);
+      color:#5f8eaf;
+      border-radius:10px;
+    }
+
+    .play-main .rail-label,
+    .play-main .rail-help{
+      color:#7ba1bd;
     }
 
     .play-title{
-      font-size:36px;
+      font-size:38px;
       font-weight:700;
-      color:#5b95bf;
+      color:#6f9ec1;
+      letter-spacing:.3px;
+      text-align:center;
     }
 
     .play-sub{
-      margin-top:4px;
+      margin-top:6px;
       font-size:12px;
-      letter-spacing:.6px;
+      letter-spacing:.7px;
       text-transform:uppercase;
-      color:#7ba4c4;
+      color:#8fb0c8;
+      text-align:center;
     }
 
-    .play-grid{
-      margin-top:20px;
+    .play-tabs{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      margin:22px 0 18px;
+      flex-wrap:wrap;
+    }
+
+    .play-tab{
+      padding:9px 16px;
+      border:1px solid #c7d9e6;
+      background:linear-gradient(to bottom,#fff,#f0f7fc);
+      border-radius:999px;
+      font-size:13px;
+      color:#5d8bad;
+      box-shadow:0 2px 6px rgba(0,0,0,.05);
+    }
+
+    .play-tab.active{
+      background:linear-gradient(to bottom,#8dd3ff,#6cbde8);
+      color:#fff;
+      border-color:#60acd5;
+    }
+
+    .play-panel{
+      display:none;
+      margin-top:10px;
+    }
+
+    .play-panel.show{
+      display:block;
+    }
+
+    .wii-grid{
       display:grid;
       grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:16px;
+      gap:18px;
+      max-width:1100px;
+      margin:0 auto;
     }
 
-    .play-tile{
-      min-height:140px;
-      border:1px solid #c9dae9;
-      border-radius:18px;
-      background:linear-gradient(to bottom,#ffffff,#edf6fd);
-      box-shadow:0 10px 24px rgba(97,141,178,.12);
-      padding:16px;
+    .wii-tile{
+      min-height:170px;
+      border:1px solid #d3e2ec;
+      border-radius:24px;
+      background:linear-gradient(to bottom,#ffffff,#eef6fb);
+      box-shadow:
+        0 12px 22px rgba(140,168,191,.14),
+        inset 0 1px 0 rgba(255,255,255,.9);
+      padding:18px;
       text-align:left;
       display:flex;
       flex-direction:column;
       justify-content:flex-end;
-      gap:6px;
+      gap:8px;
+      position:relative;
+      overflow:hidden;
     }
 
-    .play-tile .lab1{
-      font-size:20px;
+    .wii-tile.playable{
+      cursor:pointer;
+    }
+
+    .wii-tile::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to bottom, rgba(255,255,255,.55), transparent 50%);
+      pointer-events:none;
+    }
+
+    .wii-tile .lab1{
+      font-size:22px;
       font-weight:700;
-      color:#3d79a4;
+      color:#5587ad;
+      position:relative;
+      z-index:1;
     }
 
-    .play-tile .lab2{
+    .wii-tile .lab2{
       font-size:12px;
-      color:#7ba1bc;
+      color:#84a5bc;
+      position:relative;
+      z-index:1;
     }
 
-    .tile-mario{ background:linear-gradient(to bottom,#ffffff,#eaf7ff), linear-gradient(135deg,#7ec9ff,#64bbff); }
-    .tile-cooking{ background:linear-gradient(to bottom,#fff9ff,#ffeaf5); }
-    .tile-pac{ background:linear-gradient(to bottom,#fffef2,#fff2c8); }
-    .tile-sims{ background:linear-gradient(to bottom,#f4fff5,#dcf5e6); }
-    .tile-gta{ background:linear-gradient(to bottom,#fff6fb,#ffe0ef); }
-    .tile-retro{ background:linear-gradient(to bottom,#f8f5ff,#ece0ff); }
-
-    .play-note{
-      margin-top:20px;
-      padding:18px;
-      border:1px solid #c9dae9;
-      border-radius:18px;
-      background:#fff;
+    .tile-mario{
+      background:
+        linear-gradient(to bottom,rgba(255,255,255,.84),rgba(255,255,255,.2)),
+        linear-gradient(135deg,#8dd7ff,#dff5ff);
     }
 
-    .play-note .k{
+    .tile-cooking{
+      background:
+        linear-gradient(to bottom,rgba(255,255,255,.84),rgba(255,255,255,.2)),
+        linear-gradient(135deg,#ffdff0,#fff7fb);
+    }
+
+    .tile-pac{
+      background:
+        linear-gradient(to bottom,rgba(255,255,255,.84),rgba(255,255,255,.2)),
+        linear-gradient(135deg,#fff7c1,#fffdf2);
+    }
+
+    .tile-sims{
+      background:
+        linear-gradient(to bottom,rgba(255,255,255,.84),rgba(255,255,255,.2)),
+        linear-gradient(135deg,#dff7e8,#f6fff9);
+    }
+
+    .tile-gta{
+      background:
+        linear-gradient(to bottom,rgba(255,255,255,.84),rgba(255,255,255,.2)),
+        linear-gradient(135deg,#ffe4f1,#fff7fb);
+    }
+
+    .tile-retro{
+      background:
+        linear-gradient(to bottom,rgba(255,255,255,.84),rgba(255,255,255,.2)),
+        linear-gradient(135deg,#ece6ff,#f9f7ff);
+    }
+
+    .wii-info{
+      max-width:1100px;
+      margin:18px auto 0;
+      padding:18px 20px;
+      border:1px solid #d1e1eb;
+      border-radius:24px;
+      background:linear-gradient(to bottom,#fff,#f5fbff);
+      box-shadow:0 12px 22px rgba(140,168,191,.08);
+    }
+
+    .wii-info .k{
       font-size:10px;
       text-transform:uppercase;
       letter-spacing:.8px;
-      color:#7ba4c4;
+      color:#8bb0c8;
       margin-bottom:8px;
     }
 
-    .play-note h3{
+    .wii-info h3{
       margin:0 0 8px;
       font-size:22px;
-      color:#426f94;
+      color:#608eb1;
     }
 
-    .play-note p{
+    .wii-info p{
       margin:0;
       font-size:14px;
-      line-height:1.55;
-      color:#53697d;
+      line-height:1.6;
+      color:#60778d;
     }
 
     .wii-guide .bubble{
@@ -1180,11 +1464,336 @@
       50%{transform:translateY(-4px)}
     }
 
-    /* STUDIO */
-    .studio-main{
-      background:linear-gradient(to bottom,#e8f6ff,#d8eef8);
-      color:#264d59;
+    .play-inner-panel{
+      max-width:1100px;
+      margin:0 auto;
+      border:1px solid #d0e0ea;
+      border-radius:24px;
+      background:linear-gradient(to bottom,#fff,#f5fbff);
+      box-shadow:0 12px 22px rgba(140,168,191,.10);
+      overflow:hidden;
     }
+
+    .panel-head{
+      padding:14px 18px;
+      border-bottom:1px solid #d8e6f0;
+      background:linear-gradient(to bottom,#ffffff,#eef5fb);
+    }
+
+    .panel-head h3{
+      margin:0 0 6px;
+      font-size:22px;
+      color:#5e90b4;
+    }
+
+    .panel-head p{
+      margin:0;
+      font-size:13px;
+      color:#6d89a1;
+      line-height:1.45;
+    }
+
+    /* MARIO GAME */
+    .mario-wrap{ padding:16px; }
+
+    .mario-hud{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+      font-size:13px;
+      color:#496982;
+    }
+
+    .mario-stage{
+      position:relative;
+      width:100%;
+      height:340px;
+      overflow:hidden;
+      border:1px solid #91b8d6;
+      border-radius:18px;
+      background:
+        linear-gradient(to bottom,#85d4ff 0%, #7bcfff 60%, #6ac7ff 100%);
+    }
+
+    .mario-cloud{
+      position:absolute;
+      background:#fff;
+      border-radius:999px;
+      opacity:.94;
+    }
+    .mario-cloud.c1{ width:70px; height:24px; top:24px; left:80px; }
+    .mario-cloud.c2{ width:94px; height:28px; top:50px; right:140px; }
+
+    .mario-ground{
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:82px;
+      background:linear-gradient(to bottom,#6dcc48,#4ea82e);
+      border-top:4px solid #3a8324;
+    }
+
+    .mario-brick{
+      position:absolute;
+      width:48px;
+      height:48px;
+      background:linear-gradient(#c87632,#b86423);
+      border:2px solid #8c4918;
+      box-shadow:inset 0 -4px 0 rgba(0,0,0,.12);
+    }
+
+    .mario-brick::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(to right, transparent 0 14px, rgba(0,0,0,.14) 14px 16px, transparent 16px 32px, rgba(0,0,0,.14) 32px 34px, transparent 34px),
+        linear-gradient(to bottom, transparent 0 14px, rgba(0,0,0,.14) 14px 16px, transparent 16px 32px, rgba(0,0,0,.14) 32px 34px, transparent 34px);
+      opacity:.6;
+    }
+
+    .mario-coin{
+      position:absolute;
+      width:22px;
+      height:22px;
+      border-radius:50%;
+      background:radial-gradient(circle at 35% 35%, #fff7a3 0%, #ffd84a 55%, #e3b900 100%);
+      border:2px solid #b98d00;
+      box-shadow:0 0 8px rgba(255,215,74,.45);
+    }
+
+    .mario-player{
+      position:absolute;
+      width:30px;
+      height:46px;
+      left:40px;
+      bottom:82px;
+      z-index:3;
+    }
+
+    .mario-player .head{
+      position:absolute;
+      top:0;
+      left:8px;
+      width:14px;
+      height:14px;
+      background:#f2c6a7;
+      border:1px solid rgba(0,0,0,.14);
+    }
+
+    .mario-player .hat{
+      position:absolute;
+      top:-4px;
+      left:5px;
+      width:20px;
+      height:7px;
+      background:#d94231;
+      border:1px solid rgba(0,0,0,.14);
+    }
+
+    .mario-player .body{
+      position:absolute;
+      top:14px;
+      left:7px;
+      width:16px;
+      height:16px;
+      background:#2b60d6;
+    }
+
+    .mario-player .arm{
+      position:absolute;
+      top:16px;
+      width:5px;
+      height:12px;
+      background:#f2c6a7;
+    }
+
+    .mario-player .arm.a1{ left:2px; }
+    .mario-player .arm.a2{ right:2px; }
+
+    .mario-player .leg{
+      position:absolute;
+      top:30px;
+      width:6px;
+      height:16px;
+      background:#6b3b18;
+    }
+
+    .mario-player .leg.l1{ left:8px; }
+    .mario-player .leg.l2{ right:8px; }
+
+    .mario-controls{
+      margin-top:12px;
+      font-size:12px;
+      color:#617e97;
+    }
+
+    /* COOKING */
+    .cook-wrap{ padding:16px; }
+
+    .cook-hud{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+      font-size:13px;
+      color:#7b6281;
+    }
+
+    .cook-board{
+      border:1px solid #e3bfd1;
+      background:linear-gradient(to bottom,#fff8fc,#ffeef6);
+      border-radius:18px;
+      padding:16px;
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:16px;
+    }
+
+    .cook-stage{
+      min-height:300px;
+      border:1px dashed #e0aeca;
+      border-radius:18px;
+      background:linear-gradient(to bottom,#fff,#fff4fa);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      gap:16px;
+      text-align:center;
+      padding:20px;
+    }
+
+    #cook-target{
+      font-size:92px;
+      line-height:1;
+      filter:drop-shadow(0 4px 8px rgba(0,0,0,.12));
+      user-select:none;
+      transition:transform .08s ease;
+    }
+
+    #cook-target:active{
+      transform:scale(.94);
+    }
+
+    .cook-stage p{
+      margin:0;
+      font-size:14px;
+      color:#885f78;
+      line-height:1.5;
+      max-width:320px;
+    }
+
+    .cook-side{
+      border:1px solid #e7c7d7;
+      border-radius:16px;
+      background:#fff;
+      padding:16px;
+    }
+
+    .cook-side h4{
+      margin:0 0 10px;
+      font-size:16px;
+      color:#bf6a96;
+    }
+
+    .cook-list{
+      display:grid;
+      gap:10px;
+      font-size:13px;
+      color:#6e5a66;
+    }
+
+    .cook-btn{
+      margin-top:14px;
+      padding:10px 12px;
+      border:1px solid #de8fba;
+      background:linear-gradient(to bottom,#ffd3ea,#ffb7db);
+      border-radius:999px;
+      color:#7b2657;
+      font-weight:700;
+    }
+
+    /* =========================
+       STUDIO / SIMS-LIKE
+    ========================= */
+    .studio-main{
+      background:linear-gradient(to bottom,#e7fff0,#d8f1ff);
+      color:#264d59;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    .studio-main .rail{
+      background:linear-gradient(to bottom,#f1fff6,#d8f4e7);
+      border-right:1px solid #b9dccc;
+    }
+
+    .studio-main .rail-btn{
+      border:1px solid #a8d0ba;
+      background:linear-gradient(to bottom,#fff,#ebfff2);
+      color:#2f7d72;
+      border-radius:8px;
+    }
+
+    .studio-main .rail-label,
+    .studio-main .rail-help{
+      color:#4f8e7d;
+    }
+
+    .studio-header{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:16px;
+      margin-bottom:16px;
+    }
+
+    .studio-mainbox,
+    .studio-statbox,
+    .studio-card{
+      border:1px solid #b7dccc;
+      background:rgba(255,255,255,.78);
+      box-shadow:0 8px 16px rgba(0,0,0,.04);
+    }
+
+    .studio-mainbox{
+      padding:18px;
+      min-height:160px;
+    }
+
+    .studio-mainbox h2{
+      margin:0 0 10px;
+      font-size:34px;
+      color:#2f7d72;
+    }
+
+    .studio-mainbox p{
+      margin:0;
+      font-size:14px;
+      line-height:1.62;
+      color:#426269;
+    }
+
+    .studio-statbox{
+      padding:16px;
+      display:grid;
+      gap:10px;
+      align-content:start;
+    }
+
+    .sim-stat{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border:1px solid #d1ead8;
+      background:#fff;
+      font-size:13px;
+    }
+
+    .sim-stat span:first-child{ color:#58806b; }
+    .sim-stat span:last-child{ color:#2f7d72; font-weight:700; }
 
     .studio-grid{
       display:grid;
@@ -1192,29 +1801,22 @@
       gap:14px;
     }
 
-    .studio-box{
-      min-height:130px;
-      padding:16px;
-      border:1px solid #a5c8d5;
-      border-radius:10px;
-      background:#f8fdff;
-    }
-
-    .studio-box.big{
-      grid-column:1 / -1;
+    .studio-card{
       min-height:150px;
+      padding:16px;
     }
 
-    .studio-box h3{
+    .studio-card h3{
       margin:0 0 10px;
       font-size:18px;
       color:#2f7d72;
     }
 
-    .studio-box p{
+    .studio-card p{
       margin:0;
       font-size:14px;
       line-height:1.55;
+      color:#49656b;
     }
 
     .sims-guide .bubble{
@@ -1242,38 +1844,72 @@
       50%{transform:translateX(-4px)}
     }
 
-    /* MANIFESTO */
+    /* =========================
+       MANIFESTO / TEXT SOFTWARE
+    ========================= */
     .manifesto-main{
+      background:#d8d1b9;
+      font-family:"Courier New", monospace;
+      color:#1c1a14;
+    }
+
+    .manifesto-main .rail{
+      background:linear-gradient(to bottom,#d0c6a8,#b8ab87);
+      border-right:1px solid #9b8d67;
+    }
+
+    .manifesto-main .rail-btn{
+      border:1px solid #8d7d56;
+      background:linear-gradient(to bottom,#f8f1df,#d4c5a1);
+      color:#5a4c28;
+    }
+
+    .manifesto-main .rail-label,
+    .manifesto-main .rail-help{
+      color:#6c5e38;
+    }
+
+    .editor-shell{
+      border:2px solid #86785a;
       background:#f7f0d9;
-      color:#2f2b21;
+      box-shadow:0 10px 16px rgba(0,0,0,.10);
+      max-width:920px;
     }
 
-    .paper{
-      max-width:760px;
-      padding:24px;
-      border:1px solid #d0c39e;
-      background:#fff8e8;
-      box-shadow:0 8px 18px rgba(0,0,0,.08);
+    .editor-top{
+      padding:8px 12px;
+      background:#c8bc98;
+      border-bottom:2px solid #86785a;
+      font-size:13px;
+      color:#4b4023;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
     }
 
-    .paper .k{
-      font-size:10px;
-      text-transform:uppercase;
-      letter-spacing:.8px;
-      color:#7d6f4b;
-      margin-bottom:10px;
+    .editor-body{
+      padding:20px 22px;
+      min-height:420px;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          transparent 0 27px,
+          rgba(0,0,0,.08) 27px 28px
+        ),
+        #fff8e8;
     }
 
-    .paper h2{
-      margin:0 0 12px;
-      font-size:32px;
-      color:#5c5138;
+    .editor-body h2{
+      margin:0 0 14px;
+      font-size:28px;
+      color:#574b2e;
     }
 
-    .paper p{
-      margin:0 0 12px;
+    .editor-body p{
+      margin:0 0 14px;
       font-size:15px;
-      line-height:1.7;
+      line-height:1.8;
+      color:#2f2b21;
     }
 
     .editor-guide .bubble{
@@ -1300,14 +1936,16 @@
       50%{transform:translateX(-3px)}
     }
 
-    /* CONTACT */
+    /* =========================
+       CONTACT
+    ========================= */
     .contact-main{
       background:linear-gradient(to bottom,#fbfdff,#eef5fb);
       color:#22384b;
     }
 
     .contact-box{
-      max-width:460px;
+      max-width:560px;
       padding:22px;
       border:1px solid #cad7e5;
       background:#fff;
@@ -1331,7 +1969,7 @@
     .contact-box p{
       margin:0 0 14px;
       font-size:14px;
-      line-height:1.55;
+      line-height:1.6;
     }
 
     .contact-box a{
@@ -1365,27 +2003,33 @@
       50%{transform:translateY(-3px)}
     }
 
-    @media (max-width:1100px){
-      .shell-grid,
+    @media (max-width:1150px){
+      .archive-hero,
+      .studio-header,
+      .cook-board{
+        grid-template-columns:1fr;
+      }
+
+      .xp-explorer{
+        grid-template-columns:1fr;
+      }
+
+      .xp-content,
       .archive-grid,
-      .lab-grid,
-      .play-grid,
+      .lab-banks,
+      .wii-grid,
       .studio-grid{
         grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+
+      .lab-setup{
+        grid-template-columns:1fr;
       }
     }
 
     @media (max-width:760px){
       .world-body{
         grid-template-columns:58px 1fr;
-      }
-
-      .shell-grid,
-      .archive-grid,
-      .lab-grid,
-      .play-grid,
-      .studio-grid{
-        grid-template-columns:1fr;
       }
 
       #start-menu{
@@ -1398,6 +2042,18 @@
         transform:scale(.9);
         transform-origin:top right;
       }
+
+      .xp-content,
+      .archive-grid,
+      .lab-banks,
+      .wii-grid,
+      .studio-grid{
+        grid-template-columns:1fr;
+      }
+
+      .mario-stage{
+        height:300px;
+      }
     }
   </style>
 </head>
@@ -1408,6 +2064,12 @@
     <div class="boot-sub">Starting system...</div>
     <div class="boot-bar"><div class="boot-fill"></div></div>
     <div class="boot-lines" id="boot-lines"></div>
+  </div>
+
+  <div id="topbar">
+    <span class="top-title">BLUCINELAB OS</span>
+    <span class="top-small">LOAD: READY</span>
+    <span class="top-small">MODE: XP DESKTOP</span>
   </div>
 
   <div id="desktop">
@@ -1484,9 +2146,9 @@
       </div>
 
       <div class="start-right">
-        <div class="start-item">My Documents</div>
-        <div class="start-item">My Pictures</div>
-        <div class="start-item">Control Panel</div>
+        <div class="start-item">Projects</div>
+        <div class="start-item">Visual Systems</div>
+        <div class="start-item">Research</div>
         <div class="start-item">Help and Support</div>
       </div>
     </div>
@@ -1520,16 +2182,18 @@
       <div class="world-main shell-main">
         <div class="shell-top">
           <div>
-            <div class="shell-kicker">desktop / xp shell / active</div>
+            <div class="kicker">desktop / xp shell / active</div>
             <h1>BLUCINELAB OS</h1>
             <p>
-              Desktop XP realistico fuori. Mondi radicalmente diversi dentro:
-              archivio urbano, BIOS lab, playroom Wii, studio sim, manifesto editor, contact window.
+              BLUCINELAB è uno studio visivo indipendente che lavora tra immagine,
+              spazio, direzione, installazione, identità, sistemi digitali e costruzione percettiva.
+              Il sito non presenta i servizi come elenco neutro: li organizza come mondi.
+              Ogni finestra corrisponde a una postura, a un linguaggio, a uno stato del lavoro.
             </p>
           </div>
 
-          <div class="guide">
-            <div class="bubble" style="background:#fff;color:#567cac;border:1px solid #d8e5f2">apri le icone</div>
+          <div class="guide shell-guide">
+            <div class="bubble">apri le icone</div>
             <div class="char char-xp">
               <span class="head"></span>
               <span class="body"></span>
@@ -1541,42 +2205,59 @@
           </div>
         </div>
 
-        <div class="shell-grid">
-          <button class="shell-card" data-open="archive">
-            <span class="shell-card-art folder"></span>
-            <span class="shell-card-title">Archive</span>
-            <span class="shell-card-text">Mondo urbano / GTA / dossier / segnali.</span>
-          </button>
+        <div class="xp-explorer">
+          <div class="xp-sidebar">
+            <div class="xp-block">
+              <h3>BLUCINELAB</h3>
+              <p>Studio visivo indipendente orientato a mondi, immagini, sistemi, allestimenti e ambienti digitali.</p>
+            </div>
+            <div class="xp-block">
+              <h3>Focus</h3>
+              <p>Web design, identità visiva, exhibition, image direction, sistemi editoriali, superfici narrative.</p>
+            </div>
+            <div class="xp-block">
+              <h3>Metodo</h3>
+              <p>Riduzione, coerenza, atmosfera, gerarchia, costruzione di presenza e memoria.</p>
+            </div>
+          </div>
 
-          <button class="shell-card" data-open="lab">
-            <span class="shell-card-art monitor"></span>
-            <span class="shell-card-title">Lab</span>
-            <span class="shell-card-text">BIOS / terminale / tracce / scanline.</span>
-          </button>
+          <div class="xp-content">
+            <button class="shell-card" data-open="archive">
+              <span class="shell-card-art folder"></span>
+              <span class="shell-card-title">Archive</span>
+              <span class="shell-card-text">Lavori, casi studio, tracce pubbliche, materiali protetti, frammenti processuali.</span>
+            </button>
 
-          <button class="shell-card" data-open="playroom">
-            <span class="shell-card-art gamepad"></span>
-            <span class="shell-card-title">Playroom</span>
-            <span class="shell-card-text">Hub Wii / giochi / tempo / console.</span>
-          </button>
+            <button class="shell-card" data-open="lab">
+              <span class="shell-card-art monitor"></span>
+              <span class="shell-card-title">Lab</span>
+              <span class="shell-card-text">La parte analitica: segnali, memoria, test, linguaggi grezzi e diagnostica.</span>
+            </button>
 
-          <button class="shell-card" data-open="studio">
-            <span class="shell-card-art image"></span>
-            <span class="shell-card-title">Studio</span>
-            <span class="shell-card-text">Simulazione 2000 / stanze / processi.</span>
-          </button>
+            <button class="shell-card" data-open="playroom">
+              <span class="shell-card-art gamepad"></span>
+              <span class="shell-card-title">Playroom</span>
+              <span class="shell-card-text">Un hub sperimentale in cui il linguaggio del gioco diventa interfaccia.</span>
+            </button>
 
-          <button class="shell-card" data-open="manifesto">
-            <span class="shell-card-art doc"></span>
-            <span class="shell-card-title">Manifesto</span>
-            <span class="shell-card-text">Editor vecchio / testo / postura / intenti.</span>
-          </button>
+            <button class="shell-card" data-open="studio">
+              <span class="shell-card-art image"></span>
+              <span class="shell-card-title">Studio</span>
+              <span class="shell-card-text">Metodo, composizione, relazione tra elementi, tono, margini e spazio.</span>
+            </button>
 
-          <button class="shell-card" data-open="contact">
-            <span class="shell-card-art mail"></span>
-            <span class="shell-card-title">Contact</span>
-            <span class="shell-card-text">Finestra pulita / uscita / contatto.</span>
-          </button>
+            <button class="shell-card" data-open="manifesto">
+              <span class="shell-card-art doc"></span>
+              <span class="shell-card-title">Manifesto</span>
+              <span class="shell-card-text">La posizione di BLUCINELAB: forma come orientamento, non decorazione.</span>
+            </button>
+
+            <button class="shell-card" data-open="contact">
+              <span class="shell-card-art mail"></span>
+              <span class="shell-card-title">Contact</span>
+              <span class="shell-card-text">Commissioni, collaborazioni, identità, allestimenti, progetti culturali e digitali.</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -1605,40 +2286,54 @@
 
       <div class="world-main">
         <div class="guide archive-guide">
-          <div class="bubble">cartelle / file / tracce</div>
+          <div class="bubble">mission / files / access</div>
           <div class="gta-char"></div>
         </div>
 
-        <div class="shell-kicker" style="color:#f3a8d3">urban archive / gta interface / file system</div>
-        <h2>ARCHIVE</h2>
-        <p>
-          Dossier, case study, segnali, materiali protetti, lavori pubblici,
-          frammenti. Un menu urbano, notturno, duro, più vicino a un videogioco che a un portfolio classico.
-        </p>
+        <div class="archive-hero">
+          <div class="archive-titlebox">
+            <div class="kicker" style="color:#f3a8d3">urban dossier / mission archive / gta-like ui</div>
+            <h2>ARCHIVE</h2>
+            <p>
+              Qui l’archivio non è una griglia neutra ma una superficie narrativa:
+              lavori, processi, elementi di identità, materiali espositivi, sistemi digitali,
+              grafiche, allestimenti, appunti di costruzione. Alcuni file sono pubblici,
+              altri sono visibili solo come tracce, livelli di accesso o segnali.
+            </p>
+          </div>
+
+          <div class="archive-stats">
+            <div class="hud-stat"><span>Status</span><span>Online</span></div>
+            <div class="hud-stat"><span>Public Files</span><span>12</span></div>
+            <div class="hud-stat"><span>Protected Nodes</span><span>07</span></div>
+            <div class="hud-stat"><span>Visual Integrity</span><span>High</span></div>
+            <div class="hud-stat"><span>Noise Level</span><span>Controlled</span></div>
+          </div>
+        </div>
 
         <div class="archive-grid">
-          <article class="archive-card">
-            <span class="archive-tag">Case Study</span>
-            <h3>Palazzo / Mostra / Allestimento</h3>
-            <p>Una scheda aperta sul rapporto tra spazio, immagine e presenza.</p>
+          <article class="archive-file">
+            <span class="archive-tag">Exhibition</span>
+            <h3>Mostre / Allestimenti / Spazio</h3>
+            <p>Progetti in cui il rapporto tra immagine, ambiente e presenza fisica diventa struttura narrativa, montaggio spaziale e soglia percettiva.</p>
           </article>
 
-          <article class="archive-card">
-            <span class="archive-tag">Confidential</span>
-            <h3>Brand / Direction / Protected</h3>
-            <p>Materiali non completamente accessibili, mostrati come tracce.</p>
+          <article class="archive-file">
+            <span class="archive-tag">Identity</span>
+            <h3>Identità / Segni / Comunicazione</h3>
+            <p>Sistemi visivi costruiti con logica editoriale, ritmo tipografico, selezione e direzione, non come semplice decorazione superficiale.</p>
           </article>
 
-          <article class="archive-card">
-            <span class="archive-tag">Visual File</span>
-            <h3>Locandine / Identità / Segni</h3>
-            <p>Elementi di archivio organizzati per tono, peso e intensità.</p>
+          <article class="archive-file">
+            <span class="archive-tag">Digital</span>
+            <h3>Interfacce / Web / Presenza</h3>
+            <p>Ambienti digitali che non si limitano a informare, ma costruiscono tono, atmosfera, desiderabilità e orientamento.</p>
           </article>
 
-          <article class="archive-card">
+          <article class="archive-file">
             <span class="archive-tag">Process</span>
-            <h3>Appunti / Layer / Materiale</h3>
-            <p>La parte sporca del lavoro, lasciata visibile come prova.</p>
+            <h3>Bozze / Layer / Materiale</h3>
+            <p>La parte non rifinita del lavoro resta utile perché mostra metodo, selezione, tensione e trasformazione del progetto.</p>
           </article>
         </div>
       </div>
@@ -1677,39 +2372,78 @@
           <span>VER 1.03 / PORT 03 / STATUS ACTIVE</span>
         </div>
 
-        <div class="lab-grid">
-<pre class="lab-panel">AWARD MODULAR BIOS V6.00PG
+        <div class="lab-setup">
+          <div class="lab-menu">
+<pre>AWARD MODULAR BIOS V6.00PG
 COPYRIGHT (C) BLUCINELAB 2026
 
-[00] SYSTEM CHECK
-[01] VISUAL MEMORY BANK
-[02] ARCHIVE TRACE
-[03] SIGNAL TEST
-[04] AI SLOT
-[05] EXIT
+[00] STANDARD CMOS FEATURES
+[01] ADVANCED BIOS FEATURES
+[02] SIGNAL TEST
+[03] VISUAL MEMORY BANK
+[04] ARCHIVE TRACE
+[05] PROCESS STACK
+[06] AI SLOT
+[07] INTERNAL NOTE
+[08] EXIT
 
-STATUS:
-PING ............. OK
-TRACE ............ READY
-NOISE ............ 41
-SIGNAL ........... 82</pre>
+> SELECTED: [04] ARCHIVE TRACE
+> STATUS: SIGNAL PRESENT
+> PING: 127.0.0.1 :: OK
+> TRACE.LOG :: LOADED</pre>
+          </div>
 
-<pre class="lab-panel">THERE WAS ONCE A STUDIO
-THAT DID NOT WANT TO LOOK
-LIKE A STUDIO.
+          <div class="lab-ascii-box">
+<pre>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@%%%%##**++==--::..@@@@@@@@@@@
+@@@@@%%##**++==--::..    @@@@@@@@@@@
+@@@%%##**+==--::.   SIGNAL READY@@@@
+@@%%#**+==--::. INTERNAL TRACE @@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</pre>
+          </div>
+        </div>
 
-IT WANTED TO BECOME
-A MACHINE OF MEMORY.
+        <div class="lab-banks">
+          <div class="lab-bank">
+<pre>BANK 1
+
+BLUCINELAB usa il laboratorio
+come forma di osservazione.
+
+Qui entrano:
+- test
+- segnali
+- appunti
+- errori fertili
+- linguaggi non stabilizzati</pre>
+          </div>
+
+          <div class="lab-bank">
+<pre>BANK 2
 
 THE LAB DOES NOT HIDE.
-THE LAB EXPOSES.</pre>
+THE LAB EXPOSES.
 
-<pre class="lab-panel ascii">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@%%%%##**++==--::..@@@@@
-@@@@@%%##**++==--::..    @@@@@
-@@@%%##**+==--::.   SIGNAL@@@@
-@@%%#**+==--::. READY    @@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</pre>
+NOT EVERYTHING HAS TO LOOK
+SOLVED.
+
+PART OF THE VALUE IS IN
+SHOWING THE SYSTEM THINKING.</pre>
+          </div>
+
+          <div class="lab-bank">
+<pre>BANK 3
+
+STATUS
+PING ............ OK
+MEMORY .......... 92%
+NOISE ........... 41
+SIGNAL .......... 82
+TRACE ........... READY
+
+NEXT:
+OPEN / SCAN / READ / EXEC</pre>
+          </div>
         </div>
       </div>
     </div>
@@ -1730,10 +2464,11 @@ THE LAB EXPOSES.</pre>
     <div class="world-body play-main">
       <aside class="rail">
         <button class="rail-btn" data-open="shell">⌂</button>
-        <button class="rail-btn" data-open="playroom">P</button>
-        <button class="rail-btn" data-open="studio">S</button>
+        <button class="rail-btn" data-play-view="hub">H</button>
+        <button class="rail-btn" data-play-view="mario">M</button>
+        <button class="rail-btn" data-play-view="cooking">C</button>
         <div class="rail-label">play</div>
-        <div class="rail-help">scegli / apri / gioca</div>
+        <div class="rail-help">hub / mario / cooking</div>
       </aside>
 
       <div class="world-main">
@@ -1743,48 +2478,145 @@ THE LAB EXPOSES.</pre>
         </div>
 
         <div class="play-title">PLAYROOM</div>
-        <div class="play-sub">temporal game hub / wii inspired</div>
+        <div class="play-sub">temporal game hub / wii channel inspired</div>
 
-        <div class="play-grid">
-          <div class="play-tile tile-mario">
-            <span class="lab1">Mario</span>
-            <span class="lab2">pixel / run / jump</span>
+        <div class="play-tabs">
+          <button class="play-tab active" data-play-view="hub">Hub</button>
+          <button class="play-tab" data-play-view="mario">Mario</button>
+          <button class="play-tab" data-play-view="cooking">Cooking Mama</button>
+        </div>
+
+        <!-- HUB -->
+        <div class="play-panel show" id="play-hub">
+          <div class="wii-grid">
+            <button class="wii-tile tile-mario playable" data-play-view="mario">
+              <span class="lab1">Mario</span>
+              <span class="lab2">pixel / run / jump / coins</span>
+            </button>
+
+            <button class="wii-tile tile-cooking playable" data-play-view="cooking">
+              <span class="lab1">Cooking Mama</span>
+              <span class="lab2">click / timer / rounds</span>
+            </button>
+
+            <div class="wii-tile tile-pac">
+              <span class="lab1">Pac-Man</span>
+              <span class="lab2">future channel</span>
+            </div>
+
+            <div class="wii-tile tile-sims">
+              <span class="lab1">The Sims</span>
+              <span class="lab2">future channel</span>
+            </div>
+
+            <div class="wii-tile tile-gta">
+              <span class="lab1">GTA</span>
+              <span class="lab2">future channel</span>
+            </div>
+
+            <div class="wii-tile tile-retro">
+              <span class="lab1">Invaders</span>
+              <span class="lab2">future channel</span>
+            </div>
           </div>
 
-          <div class="play-tile tile-cooking">
-            <span class="lab1">Cooking Mama</span>
-            <span class="lab2">cute / click / rhythm</span>
-          </div>
-
-          <div class="play-tile tile-pac">
-            <span class="lab1">Pac-Man</span>
-            <span class="lab2">arcade / maze</span>
-          </div>
-
-          <div class="play-tile tile-sims">
-            <span class="lab1">The Sims</span>
-            <span class="lab2">life / room / sim</span>
-          </div>
-
-          <div class="play-tile tile-gta">
-            <span class="lab1">GTA</span>
-            <span class="lab2">urban / menu / dossier</span>
-          </div>
-
-          <div class="play-tile tile-retro">
-            <span class="lab1">Invaders</span>
-            <span class="lab2">retro / signal / grid</span>
+          <div class="wii-info">
+            <div class="k">hub</div>
+            <h3>Playroom ora è davvero un hub</h3>
+            <p>
+              Questa finestra è il canale-console del sito. Da qui si aprono due giochi reali,
+              mentre gli altri restano canali futuri. Il senso non è riempire tutto subito,
+              ma costruire un ecosistema leggibile e scalabile.
+            </p>
           </div>
         </div>
 
-        <div class="play-note">
-          <div class="k">hub</div>
-          <h3>Wii pulita fuori, giochi dentro dopo</h3>
-          <p>
-            Questa finestra è il contenitore Wii-like. La struttura è pronta
-            per ricevere Mario e Cooking Mama reali nel passaggio successivo.
-          </p>
+        <!-- MARIO -->
+        <div class="play-panel" id="play-mario">
+          <div class="play-inner-panel">
+            <div class="panel-head">
+              <h3>MARIO MINI GAME</h3>
+              <p>Muovi il personaggio con ← →. Salta con spazio. Raccogli tutte le monete. La partita si resetta quando riapri la vista.</p>
+            </div>
+
+            <div class="mario-wrap">
+              <div class="mario-hud">
+                <div>Coins: <strong id="mario-coins">0</strong></div>
+                <div>Score: <strong id="mario-score">0</strong></div>
+                <div>Status: <strong id="mario-status">READY</strong></div>
+              </div>
+
+              <div class="mario-stage" id="mario-stage">
+                <div class="mario-cloud c1"></div>
+                <div class="mario-cloud c2"></div>
+
+                <div class="mario-brick" style="left:180px; bottom:150px;"></div>
+                <div class="mario-brick" style="left:360px; bottom:190px;"></div>
+                <div class="mario-brick" style="left:560px; bottom:140px;"></div>
+
+                <div class="mario-coin" data-coin style="left:190px; bottom:208px;"></div>
+                <div class="mario-coin" data-coin style="left:370px; bottom:248px;"></div>
+                <div class="mario-coin" data-coin style="left:570px; bottom:198px;"></div>
+                <div class="mario-coin" data-coin style="left:720px; bottom:110px;"></div>
+
+                <div class="mario-player" id="mario-player">
+                  <div class="hat"></div>
+                  <div class="head"></div>
+                  <div class="body"></div>
+                  <div class="arm a1"></div>
+                  <div class="arm a2"></div>
+                  <div class="leg l1"></div>
+                  <div class="leg l2"></div>
+                </div>
+
+                <div class="mario-ground"></div>
+              </div>
+
+              <div class="mario-controls">
+                Controlli: ← → per muoverti, spazio per saltare.
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- COOKING -->
+        <div class="play-panel" id="play-cooking">
+          <div class="play-inner-panel">
+            <div class="panel-head">
+              <h3>COOKING MAMA MINI GAME</h3>
+              <p>Clicca il più possibile sull’ingrediente entro il tempo. Ogni round cambia ingrediente. Premi restart per ripartire.</p>
+            </div>
+
+            <div class="cook-wrap">
+              <div class="cook-hud">
+                <div>Round: <strong id="cook-round">1</strong></div>
+                <div>Time: <strong id="cook-time">10</strong></div>
+                <div>Score: <strong id="cook-score">0</strong></div>
+                <div>Status: <strong id="cook-status">READY</strong></div>
+              </div>
+
+              <div class="cook-board">
+                <div class="cook-stage">
+                  <div id="cook-target">🍅</div>
+                  <p id="cook-instruction">Clicca l’ingrediente per cucinare.</p>
+                </div>
+
+                <div class="cook-side">
+                  <h4>Kitchen Log</h4>
+                  <div class="cook-list">
+                    <div>• Click rapidi = più punteggio</div>
+                    <div>• Ogni round dura 10 secondi</div>
+                    <div>• Dopo ogni round cambia ingrediente</div>
+                    <div>• Il totale resta in memoria finché non fai restart</div>
+                  </div>
+
+                  <button class="cook-btn" id="cook-restart" type="button">Restart Game</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -1816,30 +2648,45 @@ THE LAB EXPOSES.</pre>
           <div class="sims-char"></div>
         </div>
 
+        <div class="studio-header">
+          <div class="studio-mainbox">
+            <div class="kicker" style="color:#5b9c85">studio / simulation logic / build state</div>
+            <h2>STUDIO</h2>
+            <p>
+              Questa finestra mostra il metodo: non un backstage sentimentale,
+              ma una stanza di coordinamento. Atmosfera, margini, ordine, tono,
+              materiali e relazioni tra elementi sono trattati come parametri
+              di progetto e non come effetti secondari.
+            </p>
+          </div>
+
+          <div class="studio-statbox">
+            <div class="sim-stat"><span>Coherence</span><span>94</span></div>
+            <div class="sim-stat"><span>Atmosphere</span><span>87</span></div>
+            <div class="sim-stat"><span>Selection</span><span>91</span></div>
+            <div class="sim-stat"><span>Noise</span><span>Low</span></div>
+          </div>
+        </div>
+
         <div class="studio-grid">
-          <article class="studio-box big">
-            <h3>Visual Room</h3>
-            <p>Uno spazio che ragiona come una stanza da simulazione: layout, oggetti, intenzioni, tono, equilibrio.</p>
+          <article class="studio-card">
+            <h3>Atmosfera</h3>
+            <p>Luce, ritmo, materiale, vuoti e tensione tra elementi. L’immagine va trattata come ambiente.</p>
           </article>
 
-          <article class="studio-box">
-            <h3>Atmosphere</h3>
-            <p>Luce, ritmo, spazio, ordine.</p>
+          <article class="studio-card">
+            <h3>Riduzione</h3>
+            <p>Togliere ciò che indebolisce. La chiarezza arriva più dalla selezione che dall’accumulo.</p>
           </article>
 
-          <article class="studio-box">
-            <h3>Method</h3>
-            <p>Togliere, allineare, far leggere meglio.</p>
+          <article class="studio-card">
+            <h3>Direzione</h3>
+            <p>Ogni progetto deve avere un centro leggibile, un asse e una postura precisa.</p>
           </article>
 
-          <article class="studio-box">
-            <h3>Surface</h3>
-            <p>Ogni elemento è parte della stanza.</p>
-          </article>
-
-          <article class="studio-box">
-            <h3>Position</h3>
-            <p>Una forma chiara è una posizione chiara.</p>
+          <article class="studio-card">
+            <h3>Coerenza</h3>
+            <p>Un linguaggio deve restare riconoscibile tra web, spazio, stampa, identità e racconto.</p>
           </article>
         </div>
       </div>
@@ -1873,12 +2720,34 @@ THE LAB EXPOSES.</pre>
           <div class="editor-char"></div>
         </div>
 
-        <div class="paper">
-          <div class="k">editor / note / old text mode</div>
-          <h2>MANIFESTO</h2>
-          <p>BLUCINELAB non usa la forma come decorazione. La usa come orientamento, come montaggio, come tensione leggibile.</p>
-          <p>Ogni progetto è una stanza mentale, un dispositivo di immagine, una superficie che organizza attenzione.</p>
-          <p>Il sito non deve sembrare un portfolio standard. Deve sembrare un sistema che apre stati diversi del lavoro.</p>
+        <div class="editor-shell">
+          <div class="editor-top">
+            <span>BLUCINELAB_EDITOR.EXE</span>
+            <span>READ ONLY / VERSION 01</span>
+          </div>
+
+          <div class="editor-body">
+            <h2>MANIFESTO</h2>
+            <p>
+              BLUCINELAB non usa la forma come decorazione.
+              La usa come orientamento, come montaggio,
+              come tensione leggibile.
+            </p>
+            <p>
+              Ogni progetto è una stanza mentale,
+              un dispositivo di immagine,
+              una superficie che organizza attenzione.
+            </p>
+            <p>
+              L’obiettivo non è produrre semplicemente output “belli”,
+              ma costruire presenza, tono, gerarchia e memoria.
+            </p>
+            <p>
+              Il sito stesso deve comportarsi come un progetto:
+              non una vetrina piatta,
+              ma un sistema di accessi, mondi, registri e soglie.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -1914,7 +2783,15 @@ THE LAB EXPOSES.</pre>
         <div class="contact-box">
           <div class="k">contact / email / direct</div>
           <h2>CONTACT</h2>
-          <p>Per progetti, collaborazioni, sistemi visivi, allestimenti, identità.</p>
+          <p>
+            Per progetti culturali, direzione visiva, identità, web design,
+            allestimenti, sistemi digitali e collaborazioni.
+          </p>
+          <p>
+            BLUCINELAB lavora meglio quando il contesto è chiaro,
+            il progetto ha peso e la relazione richiede visione,
+            selezione e precisione.
+          </p>
           <a href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a>
         </div>
       </div>
@@ -1935,6 +2812,9 @@ THE LAB EXPOSES.</pre>
       const shutdown = $("#shutdown");
       const windows = $$(".win");
 
+      /* =========================
+         BOOT
+      ========================= */
       const bootText = [
         "Booting visual shell...",
         "Loading XP desktop resources...",
@@ -1956,16 +2836,21 @@ THE LAB EXPOSES.</pre>
         boot.style.display = "none";
       }, 4300);
 
+      /* =========================
+         CLOCK
+      ========================= */
       function updateClock() {
         const now = new Date();
         const hh = String(now.getHours()).padStart(2, "0");
         const mm = String(now.getMinutes()).padStart(2, "0");
         clock.textContent = hh + ":" + mm;
       }
-
       updateClock();
       setInterval(updateClock, 1000);
 
+      /* =========================
+         WINDOW SYSTEM
+      ========================= */
       let topZ = 100;
 
       function visible(win) {
@@ -1981,10 +2866,10 @@ THE LAB EXPOSES.</pre>
       function showWindow(id) {
         const win = document.getElementById(id);
         if (!win) return;
-
         windows.forEach(w => w.classList.remove("show"));
         win.classList.add("show");
         bringFront(win);
+        updateTaskbar();
         closeStart();
       }
 
@@ -1994,10 +2879,8 @@ THE LAB EXPOSES.</pre>
 
       function updateTaskbar() {
         taskButtons.innerHTML = "";
-
         windows.forEach(win => {
           if (!visible(win)) return;
-
           const btn = document.createElement("button");
           btn.type = "button";
           btn.className = "task-item active";
@@ -2037,6 +2920,239 @@ THE LAB EXPOSES.</pre>
         `;
       });
 
+      /* =========================
+         PLAYROOM NAV
+      ========================= */
+      const playViews = {
+        hub: $("#play-hub"),
+        mario: $("#play-mario"),
+        cooking: $("#play-cooking")
+      };
+
+      function showPlayView(name) {
+        Object.entries(playViews).forEach(([key, panel]) => {
+          panel.classList.toggle("show", key === name);
+        });
+
+        $$("[data-play-view]").forEach(btn => {
+          btn.classList.toggle("active", btn.dataset.playView === name);
+        });
+
+        if (name === "mario") resetMario();
+        if (name === "cooking") resetCooking();
+      }
+
+      $$("[data-play-view]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          showPlayView(btn.dataset.playView);
+        });
+      });
+
+      /* =========================
+         MARIO GAME
+      ========================= */
+      const marioStage = $("#mario-stage");
+      const marioPlayer = $("#mario-player");
+      const marioCoinsDisp = $("#mario-coins");
+      const marioScoreDisp = $("#mario-score");
+      const marioStatusDisp = $("#mario-status");
+
+      let mario = {
+        x: 40,
+        y: 0,
+        vx: 0,
+        vy: 0,
+        speed: 4,
+        jump: 13,
+        gravity: 0.7,
+        ground: 82,
+        keys: { left:false, right:false },
+        score: 0,
+        coins: 0,
+        raf: null
+      };
+
+      function createMarioCoins() {
+        $$(".mario-coin", marioStage).forEach(coin => {
+          coin.dataset.active = "1";
+          coin.style.display = "block";
+        });
+      }
+
+      function renderMario() {
+        marioPlayer.style.left = mario.x + "px";
+        marioPlayer.style.bottom = (mario.ground + mario.y) + "px";
+      }
+
+      function resetMario() {
+        mario.x = 40;
+        mario.y = 0;
+        mario.vx = 0;
+        mario.vy = 0;
+        mario.score = 0;
+        mario.coins = 0;
+        marioCoinsDisp.textContent = "0";
+        marioScoreDisp.textContent = "0";
+        marioStatusDisp.textContent = "READY";
+        createMarioCoins();
+        renderMario();
+      }
+
+      function collectMarioCoins() {
+        $$(".mario-coin", marioStage).forEach(coin => {
+          if (coin.dataset.active !== "1") return;
+
+          const coinLeft = parseFloat(coin.style.left);
+          const coinBottom = parseFloat(coin.style.bottom);
+          const px = mario.x + 15;
+          const py = mario.ground + mario.y + 22;
+
+          const dx = px - (coinLeft + 11);
+          const dy = py - (coinBottom + 11);
+          const dist = Math.sqrt(dx*dx + dy*dy);
+
+          if (dist < 30) {
+            coin.dataset.active = "0";
+            coin.style.display = "none";
+            mario.coins += 1;
+            mario.score += 100;
+            marioCoinsDisp.textContent = String(mario.coins);
+            marioScoreDisp.textContent = String(mario.score);
+            marioStatusDisp.textContent = mario.coins >= 4 ? "WIN" : "COIN";
+          }
+        });
+      }
+
+      function marioLoop() {
+        const stageWidth = marioStage.clientWidth;
+
+        mario.vx = 0;
+        if (mario.keys.left) mario.vx = -mario.speed;
+        if (mario.keys.right) mario.vx = mario.speed;
+
+        mario.x += mario.vx;
+        if (mario.x < 0) mario.x = 0;
+        if (mario.x > stageWidth - 34) mario.x = stageWidth - 34;
+
+        mario.vy -= mario.gravity;
+        mario.y += mario.vy;
+
+        if (mario.y <= 0) {
+          mario.y = 0;
+          mario.vy = 0;
+        }
+
+        collectMarioCoins();
+        renderMario();
+        mario.raf = requestAnimationFrame(marioLoop);
+      }
+
+      function startMarioLoop() {
+        cancelAnimationFrame(mario.raf);
+        marioLoop();
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (!$("#play-mario").classList.contains("show")) return;
+
+        if (e.key === "ArrowLeft") mario.keys.left = true;
+        if (e.key === "ArrowRight") mario.keys.right = true;
+
+        if ((e.key === " " || e.code === "Space") && mario.y === 0) {
+          mario.vy = mario.jump;
+          marioStatusDisp.textContent = "JUMP";
+          e.preventDefault();
+        }
+      });
+
+      document.addEventListener("keyup", (e) => {
+        if (e.key === "ArrowLeft") mario.keys.left = false;
+        if (e.key === "ArrowRight") mario.keys.right = false;
+      });
+
+      resetMario();
+      startMarioLoop();
+
+      /* =========================
+         COOKING GAME
+      ========================= */
+      const cookTarget = $("#cook-target");
+      const cookInstruction = $("#cook-instruction");
+      const cookRoundDisp = $("#cook-round");
+      const cookTimeDisp = $("#cook-time");
+      const cookScoreDisp = $("#cook-score");
+      const cookStatusDisp = $("#cook-status");
+      const cookRestart = $("#cook-restart");
+
+      const cookItems = ["🍅","🥕","🍳","🍓","🥔","🧅"];
+      let cook = {
+        round: 1,
+        time: 10,
+        score: 0,
+        current: "🍅",
+        timer: null
+      };
+
+      function applyCookState() {
+        cookTarget.textContent = cook.current;
+        cookRoundDisp.textContent = String(cook.round);
+        cookTimeDisp.textContent = String(cook.time);
+        cookScoreDisp.textContent = String(cook.score);
+      }
+
+      function nextCookItem() {
+        cook.current = cookItems[Math.floor(Math.random() * cookItems.length)];
+        cookInstruction.textContent = "Clicca l’ingrediente il più possibile.";
+        applyCookState();
+      }
+
+      function stopCookingTimer() {
+        if (cook.timer) clearInterval(cook.timer);
+        cook.timer = null;
+      }
+
+      function startCookingTimer() {
+        stopCookingTimer();
+        cookStatusDisp.textContent = "COOKING";
+
+        cook.timer = setInterval(() => {
+          cook.time -= 1;
+          cookTimeDisp.textContent = String(cook.time);
+
+          if (cook.time <= 0) {
+            stopCookingTimer();
+            cookStatusDisp.textContent = "ROUND END";
+            cook.round += 1;
+            cook.time = 10;
+            nextCookItem();
+          }
+        }, 1000);
+      }
+
+      function resetCooking() {
+        stopCookingTimer();
+        cook.round = 1;
+        cook.time = 10;
+        cook.score = 0;
+        cook.current = "🍅";
+        cookStatusDisp.textContent = "READY";
+        cookInstruction.textContent = "Clicca l’ingrediente per cucinare.";
+        applyCookState();
+      }
+
+      cookTarget.addEventListener("click", () => {
+        if (!$("#play-cooking").classList.contains("show")) return;
+        if (!cook.timer) startCookingTimer();
+        cook.score += 1;
+        cookScoreDisp.textContent = String(cook.score);
+        cookStatusDisp.textContent = "GOOD";
+      });
+
+      cookRestart.addEventListener("click", () => {
+        resetCooking();
+      });
+
+      resetCooking();
       updateTaskbar();
     });
   </script>
