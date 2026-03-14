@@ -1,7 +1,3 @@
-/* =========================
-BASE
-========================= */
-
 body{
 margin:0;
 font-family:Tahoma, Arial, sans-serif;
@@ -11,20 +7,20 @@ background:black;
 
 
 
-/* =========================
+/* =======================
 DESKTOP XP REAL
-========================= */
+======================= */
 
 #desktop{
 
 position:fixed;
 inset:0;
 
-/* colline XP fake */
-
 background:
-radial-gradient(circle at 50% 120%, #4fc441 0%, #3b8e2f 40%, #2f6f22 70%, #1e4f15 100%),
-linear-gradient(#7ec0ff 0%, #5fa8ff 30%, #4a90e2 60%, #3a7bd5 100%);
+linear-gradient(#7ec0ff 0%, #5fa8ff 30%, #4a90e2 50%, #3a7bd5 70%),
+radial-gradient(circle at 50% 120%, #4fc441 0%, #3b8e2f 40%, #2f6f22 70%, #1e4f15 100%);
+
+background-blend-mode:normal;
 
 display:flex;
 flex-wrap:wrap;
@@ -37,15 +33,15 @@ padding:20px;
 
 
 
-/* =========================
-ICON XP
-========================= */
+/* =======================
+ICON XP REAL
+======================= */
 
 .icon{
 
-width:90px;
+width:80px;
 
-margin:8px;
+margin:10px;
 
 display:flex;
 flex-direction:column;
@@ -64,25 +60,21 @@ font-size:12px;
 
 .iconImg{
 
-font-size:42px;
-
-margin-bottom:4px;
+font-size:44px;
 
 }
 
 .iconText{
 
-font-size:12px;
-
-text-align:center;
+margin-top:4px;
 
 }
 
 
 
-/* =========================
-TASKBAR XP LUNA
-========================= */
+/* =======================
+TASKBAR XP
+======================= */
 
 #taskbar{
 
@@ -104,13 +96,11 @@ justify-content:space-between;
 
 color:white;
 
-box-shadow:0 -2px 4px rgba(0,0,0,0.5);
-
 }
 
 
 
-/* START BUTTON */
+/* START */
 
 #startBtn{
 
@@ -128,8 +118,6 @@ font-weight:bold;
 
 cursor:pointer;
 
-box-shadow:inset 0 1px 0 #8fff8f;
-
 }
 
 
@@ -146,9 +134,9 @@ font-size:12px;
 
 
 
-/* =========================
-START MENU XP
-========================= */
+/* =======================
+START MENU
+======================= */
 
 #startMenu{
 
@@ -186,9 +174,9 @@ color:white;
 
 
 
-/* =========================
-WINDOW XP REAL
-========================= */
+/* =======================
+WINDOW XP
+======================= */
 
 .window{
 
@@ -205,13 +193,11 @@ box-shadow:6px 6px 0 black;
 
 display:none;
 
-border-radius:4px;
-
 }
 
 
 
-/* TITLEBAR XP */
+/* TITLEBAR */
 
 .titlebar{
 
@@ -222,9 +208,7 @@ background:linear-gradient(#3a6ea5,#245edb);
 color:white;
 
 display:flex;
-
 align-items:center;
-
 justify-content:space-between;
 
 padding:0 6px;
@@ -248,8 +232,6 @@ color:white;
 padding:0 6px;
 
 cursor:pointer;
-
-border-radius:2px;
 
 }
 
@@ -298,9 +280,7 @@ overflow:auto;
 
 
 
-/* =========================
-NANO
-========================= */
+/* NANO */
 
 .nano{
 
@@ -325,9 +305,7 @@ animation:walk 3s infinite;
 
 
 
-/* =========================
-WORLD COLORS
-========================= */
+/* WORLDS */
 
 .archive{
 
