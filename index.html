@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BLUCINELAB OS — XP Worlds / LAB CORE</title>
+  <title>BLUCINELAB OS v1.4 — XP HOME / BIOS LAB</title>
   <meta
     name="description"
     content="BLUCINELAB — studio visivo indipendente tra immagine, spazio, direzione, ricerca e costruzione percettiva."
@@ -17,66 +17,30 @@
 
   <style>
     :root{
-      --scorebar-h: 30px;
-      --taskbar-h: 46px;
+      --xp-blue-1:#245edb;
+      --xp-blue-2:#0c3caa;
+      --xp-blue-3:#3a6ff0;
+      --xp-task:#245edb;
+      --xp-task-dark:#1941a5;
+      --xp-task-light:#3f7cf3;
+      --xp-green:#39b54a;
+      --xp-green-dark:#248137;
+      --xp-window:#ece9d8;
+      --xp-border:#0a246a;
+      --xp-text:#000;
+      --xp-shadow: 3px 3px 0 rgba(0,0,0,.35);
 
-      --xp-sky-1: #69a4ff;
-      --xp-sky-2: #bfe3ff;
-      --xp-green-1: #4ab52f;
-      --xp-green-2: #7dd84b;
-      --xp-green-3: #2f8d1f;
+      --c-yellow:#fff200;
+      --c-cyan:#00f6ff;
+      --c-magenta:#ff2dfb;
+      --c-green:#3cff6a;
+      --c-red:#ff2b4f;
+      --c-white:#ffffff;
+      --c-black:#000000;
 
-      --ui-white: #ffffff;
-      --ui-black: #000000;
-      --ui-gray: #d9d9d9;
-      --ui-gray-2: #bfbfbf;
-      --ui-gray-3: #767676;
-      --ui-blue: #245dff;
-      --ui-blue-dark: #1030a8;
-      --ui-green: #14a13a;
-      --ui-green-dark: #0a6b23;
-      --ui-red: #cc3535;
-
-      --chaos-bg: #000010;
-      --chaos-bg-2: #020013;
-      --chaos-bg-3: #14002a;
-      --chaos-win: #001008;
-      --chaos-win-2: #02160d;
-      --chaos-bar: #001eff;
-      --chaos-bar2: #00006b;
-      --chaos-yellow: #fff200;
-      --chaos-cyan: #00f6ff;
-      --chaos-magenta: #ff2dfb;
-      --chaos-green: #3cff6a;
-      --chaos-red: #ff2b4f;
-      --chaos-gray: #cfcfcf;
-
-      --sims-green-1:#8be36b;
-      --sims-green-2:#4cbf4a;
-      --sims-green-3:#1d6f35;
-      --sims-blue:#ccefff;
-
-      --city-black:#070707;
-      --city-gray:#171717;
-      --city-yellow:#ffd331;
-      --city-orange:#ff8c1a;
-      --city-red:#ff5b37;
-      --city-green:#8cff87;
-
-      --arcade-black:#050505;
-      --arcade-blue:#1320b5;
-      --arcade-yellow:#ffe600;
-      --arcade-pink:#ff4df5;
-      --arcade-cyan:#52f2ff;
-
-      --signal-bg:#08110a;
-      --signal-green:#57ff7a;
-      --signal-green-dim:#1d6a30;
-
-      --lcd-bg:#d7e8b2;
-      --lcd-mid:#95b16f;
-      --lcd-dark:#405731;
-      --lcd-ink:#1e2d16;
+      --scorebar-h:30px;
+      --taskbar-h:42px;
+      --desktop-icon-w:84px;
     }
 
     *{
@@ -85,23 +49,29 @@
       box-sizing:border-box;
     }
 
-    html, body{
+    html,body{
       width:100%;
       min-height:100%;
     }
 
     body{
-      font-family:'Press Start 2P', monospace;
+      min-height:100vh;
       overflow:hidden;
-      background:#5ea0ff;
-      color:#fff;
-      image-rendering:pixelated;
-      -webkit-font-smoothing:none;
       position:relative;
+      font-family:Tahoma, Arial, sans-serif;
+      color:#000;
+      background:#5c93e8;
     }
 
     body.has-custom-cursor{
       cursor:none;
+    }
+
+    button,
+    input,
+    textarea,
+    select{
+      font:inherit;
     }
 
     a{
@@ -109,16 +79,10 @@
       text-decoration:none;
     }
 
-    button{
-      border:none;
-      background:none;
-      font:inherit;
-    }
-
     .cursor-outer{
       position:fixed;
-      width:24px;
-      height:24px;
+      width:20px;
+      height:20px;
       pointer-events:none;
       z-index:99999;
       transform:translate(-50%,-50%);
@@ -137,108 +101,51 @@
       height:0;
       border-top:0;
       border-right:0;
-      border-bottom:13px solid transparent;
-      border-left:13px solid #fff200;
+      border-bottom:12px solid transparent;
+      border-left:12px solid #fff;
       filter:
-        drop-shadow(0 0 3px rgba(255,242,0,.9))
-        drop-shadow(2px 2px 0 #000);
+        drop-shadow(1px 1px 0 #000)
+        drop-shadow(0 0 1px #000);
     }
 
-    /* BOOT */
-    #boot{
-      position:fixed;
-      inset:0;
-      z-index:99998;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:18px;
-      background:#000;
-    }
-
-    #boot-logo{
-      font-size:clamp(18px,4vw,34px);
-      color:#00ff66;
-      text-shadow:
-        0 0 12px rgba(0,255,102,.8),
-        0 0 32px rgba(0,255,102,.3);
-      letter-spacing:4px;
-    }
-
-    #boot-sub{
-      font-family:'VT323', monospace;
-      font-size:26px;
-      color:#8c8c8c;
-      letter-spacing:2px;
-    }
-
-    #boot-bar-wrap{
-      width:360px;
-      height:24px;
-      border:3px solid #00ff66;
-      background:#020202;
-      overflow:hidden;
-    }
-
-    #boot-bar{
-      width:0%;
-      height:100%;
-      background:linear-gradient(90deg,#00ff66,#00aa55);
-      transition:width .14s linear;
-    }
-
-    #boot-text{
-      width:380px;
-      height:84px;
-      overflow:hidden;
-      font-family:'VT323', monospace;
-      font-size:22px;
-      color:#00ff66;
-      white-space:pre-line;
-    }
-
-    /* XP DESKTOP */
+    /* DESKTOP XP */
     #desktop{
       position:fixed;
       inset:0;
       overflow:hidden;
-      background:
-        radial-gradient(circle at 50% 18%, rgba(255,255,255,.40) 0%, rgba(255,255,255,0) 28%),
-        linear-gradient(to bottom, var(--xp-sky-2) 0%, var(--xp-sky-1) 52%, #72b7ff 100%);
       z-index:0;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,.08), rgba(255,255,255,0)),
+        linear-gradient(to bottom, #87b4ff 0%, #5c93e8 38%, #4f8a2e 39%, #67b63b 55%, #74c746 100%);
     }
 
+    /* colline XP */
     #desktop::before{
       content:'';
       position:absolute;
       left:-10%;
-      right:-10%;
-      bottom:0;
+      bottom:11%;
+      width:120%;
       height:42%;
       background:
-        radial-gradient(ellipse at 50% 100%, rgba(255,255,255,.20) 0%, rgba(255,255,255,0) 40%),
-        linear-gradient(to bottom, var(--xp-green-2) 0%, var(--xp-green-1) 42%, var(--xp-green-3) 100%);
-      border-top-left-radius:55% 100%;
-      border-top-right-radius:55% 100%;
-      transform:scaleX(1.08);
+        radial-gradient(ellipse at 30% 100%, #74c746 0%, #67b63b 55%, transparent 56%),
+        radial-gradient(ellipse at 70% 100%, #5aa92f 0%, #4f9728 48%, transparent 49%);
+      opacity:.95;
+      pointer-events:none;
     }
 
+    /* nuvole */
     #desktop::after{
       content:'';
       position:absolute;
       inset:0;
       pointer-events:none;
-      opacity:.05;
       background:
-        repeating-linear-gradient(
-          to bottom,
-          rgba(255,255,255,.15) 0,
-          rgba(255,255,255,.15) 1px,
-          rgba(0,0,0,.08) 2px,
-          rgba(0,0,0,.08) 4px
-        );
-      mix-blend-mode:multiply;
+        radial-gradient(circle at 18% 16%, rgba(255,255,255,.95) 0 34px, transparent 35px),
+        radial-gradient(circle at 23% 15%, rgba(255,255,255,.95) 0 24px, transparent 25px),
+        radial-gradient(circle at 74% 19%, rgba(255,255,255,.9) 0 28px, transparent 29px),
+        radial-gradient(circle at 79% 18%, rgba(255,255,255,.92) 0 20px, transparent 21px);
+      opacity:.75;
     }
 
     /* TOP BAR */
@@ -251,285 +158,193 @@
       z-index:8000;
       display:flex;
       align-items:center;
-      gap:16px;
-      padding:0 10px;
-      background:linear-gradient(90deg, rgba(0,0,0,.82) 0%, rgba(0,0,0,.58) 60%, rgba(0,0,0,.18) 100%);
-      border-bottom:1px solid rgba(255,255,255,.22);
-      user-select:none;
+      gap:20px;
+      padding:0 12px;
+      background:linear-gradient(90deg, rgba(0,0,0,.78), rgba(0,0,0,.35));
+      color:#fff;
+      font-family:'VT323', monospace;
+      font-size:18px;
+      border-bottom:1px solid rgba(255,255,255,.18);
+    }
+
+    #score-bar .sc{
+      color:var(--c-yellow);
+      font-family:'Press Start 2P', monospace;
       font-size:8px;
     }
 
     #score-bar .nm{
-      font-family:'VT323', monospace;
-      font-size:18px;
-      color:#d7f4ff;
-      letter-spacing:1px;
-    }
-
-    #score-bar .sc{
-      color:#fff58c;
-      text-shadow:0 0 6px rgba(255,245,140,.4);
+      color:#dff4ff;
+      letter-spacing:.5px;
+      font-size:20px;
+      text-shadow:0 0 6px rgba(255,255,255,.25);
     }
 
     #lives-disp{
-      color:#ffd4d4;
+      color:#ffd1db;
+      font-family:'Press Start 2P', monospace;
+      font-size:8px;
+    }
+
+    #egg-btn{
+      position:fixed;
+      top:4px;
+      right:10px;
+      z-index:8001;
+      padding:3px 8px;
+      font-family:'Press Start 2P', monospace;
+      font-size:7px;
+      color:#fff;
+      background:rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.4);
+    }
+
+    body.has-custom-cursor #egg-btn{ cursor:none; }
+
+    #egg-btn:hover{
+      background:rgba(0,0,0,.65);
+    }
+
+    /* PACMAN LAYER */
+    #pacman-layer{
+      position:fixed;
+      inset:0;
+      z-index:200;
+      pointer-events:none;
+    }
+
+    .pac{
+      position:absolute;
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      background:var(--c-yellow);
+      clip-path:polygon(100% 50%,0% 0%,0% 100%);
+      filter:drop-shadow(0 0 6px rgba(255,242,0,.7)) drop-shadow(1px 1px 0 #000);
+      animation:chomp .18s steps(2) infinite;
+      transition:left .04s linear, top .04s linear;
+      display:none;
+    }
+
+    @keyframes chomp{
+      0%{clip-path:polygon(100% 50%,0% 5%,0% 95%);}
+      50%{clip-path:polygon(100% 50%,0% 50%,0% 50%);}
+      100%{clip-path:polygon(100% 50%,0% 5%,0% 95%);}
+    }
+
+    .dot{
+      position:absolute;
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:#fff;
+      box-shadow:0 0 6px rgba(255,255,255,.9);
+      display:none;
+    }
+
+    .power-dot{
+      width:16px;
+      height:16px;
+      background:var(--c-cyan);
+      box-shadow:0 0 10px rgba(0,246,255,.95), 0 0 18px rgba(0,246,255,.38);
+      animation:powerPulse .5s ease-in-out infinite alternate;
+    }
+
+    @keyframes powerPulse{
+      from{transform:scale(1);}
+      to{transform:scale(1.25);}
+    }
+
+    .ghost{
+      position:absolute;
+      font-size:24px;
+      filter:drop-shadow(0 0 8px currentColor);
+      transition:left .06s linear, top .06s linear;
+      display:none;
     }
 
     /* DESKTOP ICONS */
     .desktop-icon{
       position:fixed;
-      z-index:60;
-      width:102px;
+      z-index:50;
+      width:var(--desktop-icon-w);
       display:flex;
       flex-direction:column;
       align-items:center;
-      gap:6px;
+      gap:4px;
       padding:4px;
-      background:transparent;
       border:none;
+      background:transparent;
     }
 
-    body.has-custom-cursor .desktop-icon{
-      cursor:none;
-    }
+    body.has-custom-cursor .desktop-icon{ cursor:none; }
 
     .desktop-icon .icon-img{
-      font-size:42px;
+      font-size:36px;
       line-height:1;
-      filter:drop-shadow(2px 2px 0 rgba(0,0,0,.9));
-      transition:transform .08s steps(2,end);
+      filter:drop-shadow(1px 1px 0 rgba(0,0,0,.9));
     }
 
     .desktop-icon .icon-label{
-      padding:4px 6px;
+      padding:2px 4px;
       text-align:center;
-      line-height:1.55;
-      font-size:7px;
+      line-height:1.4;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:12px;
       color:#fff;
-      text-shadow:1px 1px 0 #000;
-      background:transparent;
-    }
-
-    .desktop-icon:hover .icon-img,
-    .desktop-icon.is-selected .icon-img{
-      transform:translateY(-1px) scale(1.04);
+      text-shadow:1px 1px 1px rgba(0,0,0,.9);
+      border:1px solid transparent;
     }
 
     .desktop-icon:hover .icon-label,
     .desktop-icon.is-selected .icon-label{
-      background:#0d3aa8;
-      color:#fff;
+      background:rgba(49,106,197,.55);
+      border:1px dotted #fff;
     }
 
-    /* TASKBAR */
-    #taskbar{
-      position:fixed;
-      left:0;
-      right:0;
-      bottom:0;
-      height:var(--taskbar-h);
-      z-index:9000;
-      display:flex;
-      align-items:center;
-      gap:6px;
-      padding:0 8px;
-      color:#000;
-      background:linear-gradient(to bottom,#3a84ff 0%, #1f63df 46%, #1749b5 100%);
-      border-top:2px solid rgba(255,255,255,.6);
-      box-shadow:0 -1px 0 rgba(0,0,0,.55);
-      user-select:none;
-    }
-
-    #taskbar-start{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      white-space:nowrap;
-      padding:6px 12px;
-      font-size:8px;
-      color:#fff;
-      text-shadow:1px 1px 0 #000;
-      background:linear-gradient(135deg,var(--ui-green) 0%, var(--ui-green-dark) 100%);
-      border:3px solid #fff;
-      border-right-color:#000;
-      border-bottom-color:#000;
-      border-radius:8px;
-      box-shadow:inset 1px 1px 0 rgba(255,255,255,.35), inset -1px -1px 0 rgba(0,0,0,.55);
-    }
-
-    body.has-custom-cursor #taskbar-start{
-      cursor:none;
-    }
-
-    #taskbar-start::before{
-      content:'⊞';
-      font-size:12px;
-    }
-
-    #taskbar-start:hover{
-      filter:brightness(1.08);
-    }
-
-    #taskbar-tasks{
-      display:flex;
-      align-items:center;
-      gap:6px;
-      min-width:0;
-      flex:1;
-      overflow:hidden;
-    }
-
-    .taskbar-btn{
-      max-width:170px;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-      padding:6px 10px;
-      font-size:7px;
-      color:#000;
-      background:linear-gradient(to bottom,#ececec 0%, #bebebe 100%);
-      border:2px solid #fff;
-      border-right-color:#707070;
-      border-bottom-color:#707070;
-    }
-
-    body.has-custom-cursor .taskbar-btn{
-      cursor:none;
-    }
-
-    .taskbar-btn.active{
-      border-color:#707070 #fff #fff #707070;
-    }
-
-    #clock{
-      margin-left:auto;
-      min-width:88px;
-      text-align:center;
-      padding:4px 8px;
-      font-family:'VT323', monospace;
-      font-size:22px;
-      color:#000;
-      background:#ececec;
-      border:2px inset #808080;
-    }
-
-    /* START MENU */
-    #start-menu{
-      position:fixed;
-      left:0;
-      bottom:var(--taskbar-h);
-      width:300px;
-      z-index:9999;
-      display:none;
-      flex-direction:column;
-      background:linear-gradient(to right,#8b8b8b 0%, #d6d6d6 100%);
-      border:3px solid #fff;
-      border-bottom:none;
-      box-shadow:6px 6px 0 rgba(0,0,0,.82);
-    }
-
-    #start-menu.open{
-      display:flex;
-    }
-
-    .start-banner{
-      position:absolute;
-      left:0;
-      top:0;
-      bottom:0;
-      width:38px;
-      padding:10px 7px;
-      background:linear-gradient(to bottom,#1140c8 0%, #245dff 100%);
-      color:#fff;
-      font-size:9px;
-      writing-mode:vertical-rl;
-      transform:rotate(180deg);
-      letter-spacing:2px;
-      text-shadow:1px 1px 0 #000;
-    }
-
-    .start-items{
-      margin-left:38px;
-      display:flex;
-      flex-direction:column;
-    }
-
-    .start-item{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 14px;
-      font-family:'VT323', monospace;
-      font-size:24px;
-      color:#000;
-      border-bottom:1px solid #9a9a9a;
-      background:transparent;
-      text-align:left;
-    }
-
-    body.has-custom-cursor .start-item{
-      cursor:none;
-    }
-
-    .start-item:hover{
-      background:#000080;
-      color:#fff;
-    }
-
-    .start-item-icon{
-      font-size:18px;
-    }
-
-    /* WINDOWS BASE */
+    /* GENERIC WINDOWS */
     .win{
       position:fixed;
       z-index:100;
       display:flex;
       flex-direction:column;
-      min-width:320px;
       overflow:hidden;
-      resize:both;
-      background:linear-gradient(to bottom,#f8f8f8 0%, #d8d8d8 100%);
-      border:3px solid #f4f4f4;
-      box-shadow:
-        6px 6px 0 rgba(0,0,0,.65),
-        0 0 0 1px rgba(255,255,255,.18);
-      animation:winPop .14s cubic-bezier(.17,.67,.24,1.44);
-      color:#000;
+      border:1px solid var(--xp-border);
+      background:var(--xp-window);
+      box-shadow:var(--xp-shadow);
+      animation:winPop .16s ease-out;
     }
 
     @keyframes winPop{
-      from{ transform:scale(.55); opacity:0; }
-      to{ transform:scale(1); opacity:1; }
+      from{transform:scale(.96); opacity:0;}
+      to{transform:scale(1); opacity:1;}
     }
 
     .win-titlebar{
+      flex-shrink:0;
       display:flex;
       align-items:center;
       gap:8px;
-      padding:7px 10px;
+      min-height:30px;
+      padding:5px 8px;
+      color:#fff;
+      background:linear-gradient(90deg, var(--xp-blue-1), var(--xp-blue-3));
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:13px;
+      font-weight:700;
       cursor:move;
       user-select:none;
-      white-space:nowrap;
-      color:#fff;
-      font-size:9px;
-      background:linear-gradient(90deg,#1d57da 0%, #3b7cff 60%, #1643a5 100%);
-      text-shadow:1px 1px 0 rgba(0,0,0,.95);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.22);
-      min-height:34px;
-      flex-shrink:0;
     }
 
     .win-icon{
-      font-size:13px;
-      filter:drop-shadow(1px 1px 0 #000);
-      flex-shrink:0;
+      font-size:15px;
     }
 
     .win-title{
       flex:1;
       overflow:hidden;
       text-overflow:ellipsis;
+      white-space:nowrap;
     }
 
     .win-controls{
@@ -544,51 +359,40 @@
       display:flex;
       align-items:center;
       justify-content:center;
+      background:linear-gradient(to bottom, #fff, #dcdcdc);
+      border:1px solid #245;
       color:#000;
-      font-size:9px;
-      background:linear-gradient(to bottom,#f1f1f1 0%, #bcbcbc 100%);
-      border:2px solid #fff;
-      border-right-color:#000;
-      border-bottom-color:#000;
-      line-height:1;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:12px;
+      font-weight:700;
     }
 
-    body.has-custom-cursor .win-btn{
-      cursor:none;
-    }
+    body.has-custom-cursor .win-btn{ cursor:none; }
 
     .win-btn:hover{
-      background:#fff;
+      filter:brightness(1.06);
     }
 
     .win-btn.close{
-      font-weight:bold;
-    }
-
-    .win-btn.close:hover{
+      background:linear-gradient(to bottom, #ff8f8f, #d64444);
       color:#fff;
-      background:var(--ui-red);
+      border-color:#7f1f1f;
     }
 
     .win-menubar{
-      display:flex;
-      gap:16px;
-      padding:4px 8px;
-      font-family:'VT323', monospace;
-      font-size:20px;
-      color:#000;
-      background:#cfcfcf;
-      border-bottom:2px solid #707070;
       flex-shrink:0;
+      display:flex;
+      gap:18px;
+      padding:4px 8px;
+      background:#ece9d8;
+      border-bottom:1px solid #b9b39c;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:12px;
+      color:#000;
     }
 
     .win-menubar span{
-      padding:0 5px;
-    }
-
-    .win-menubar span:hover{
-      background:#000080;
-      color:#fff;
+      padding:0 2px;
     }
 
     .win-body{
@@ -596,765 +400,68 @@
       flex:1;
       overflow:auto;
       padding:16px;
-      font-family:'VT323', monospace;
-      font-size:22px;
-      line-height:1.42;
+      background:#fff;
       color:#111;
-      background:#f4f4f4;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:14px;
+      line-height:1.45;
     }
 
     .win-body h1,
     .win-body h2{
-      margin:0 0 10px;
-      font-size:14px;
-      line-height:1.7;
-      color:#113399;
+      margin:0 0 12px;
+      font-size:19px;
+      line-height:1.2;
+      color:#163d82;
+      font-family:Tahoma, Arial, sans-serif;
     }
 
     .win-body h3{
-      margin:10px 0 6px;
-      font-size:10px;
-      line-height:1.6;
-      color:#1f63df;
+      margin:0 0 8px;
+      font-size:14px;
+      color:#1a4ca3;
+      font-family:Tahoma, Arial, sans-serif;
     }
 
     .win-body p{
       margin-bottom:10px;
-      font-size:21px;
+      font-size:14px;
       color:#111;
+    }
+
+    .label{
+      display:block;
+      margin-bottom:8px;
+      font-family:'Press Start 2P', monospace;
+      font-size:7px;
+      color:#4c6fb6;
+      line-height:1.6;
     }
 
     .field-card{
       margin-bottom:12px;
       padding:12px;
-      background:#fff;
-      border:2px solid #b5b5b5;
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.3);
-    }
-
-    .field-card:hover{
-      border-color:#3b7cff;
-    }
-
-    .label{
-      display:block;
-      margin-bottom:6px;
-      font-size:8px;
-      line-height:1.7;
-      color:#0f2ea8;
+      background:#f5f6fa;
+      border:1px solid #c6d2ea;
     }
 
     .tag{
       display:inline-block;
-      margin:3px;
-      padding:4px 8px;
-      font-size:7px;
-      border:2px solid currentColor;
+      margin:2px;
+      padding:3px 7px;
+      font-family:'Press Start 2P', monospace;
+      font-size:6px;
+      border:1px solid currentColor;
       background:#fff;
     }
 
-    .tag.yellow{ color:#9f8a00; }
-    .tag.cyan{ color:#006f9a; }
-    .tag.magenta{ color:#8a007f; }
-    .tag.green{ color:#007a22; }
-
-    /* HOME */
-    #hero-win{
-      top:60px;
-      left:calc(50% - 320px);
-      width:640px;
-      min-height:300px;
-    }
-
-    /* FULLSCREEN WORLD WINDOW */
-    .fullscreen-window{
-      top: var(--scorebar-h) !important;
-      left: 0 !important;
-      width: 100vw !important;
-      height: calc(100vh - var(--scorebar-h) - var(--taskbar-h)) !important;
-      min-width: 100vw !important;
-      min-height: calc(100vh - var(--scorebar-h) - var(--taskbar-h)) !important;
-      resize: none !important;
-      z-index: 9500 !important;
-      border-width: 4px !important;
-    }
-
-    /* ========= LAB / CHAOS ========= */
-    .chaos-window{
-      background:
-        linear-gradient(to bottom, rgba(255,255,255,.04), rgba(255,255,255,0)),
-        linear-gradient(to bottom, var(--chaos-win) 0%, var(--chaos-win-2) 100%) !important;
-      color:#fff !important;
-      border:4px solid #f4f4f4 !important;
-      box-shadow:
-        6px 6px 0 rgba(0,0,0,.98),
-        0 0 0 1px rgba(255,255,255,.08),
-        0 0 18px rgba(0,255,255,.08) !important;
-    }
-
-    .chaos-window .win-titlebar{
-      background:
-        linear-gradient(90deg, var(--chaos-bar) 0%, #2d4cff 48%, var(--chaos-bar2) 100%) !important;
-      color:#fff !important;
-    }
-
-    .chaos-window .win-menubar{
-      background:var(--chaos-gray) !important;
-      color:#000 !important;
-    }
-
-    .chaos-window .win-body{
-      background:
-        linear-gradient(to bottom, rgba(0,255,255,.025), rgba(255,255,255,0)),
-        linear-gradient(to bottom, rgba(0,0,0,.1), rgba(0,0,0,0)) !important;
-      color:var(--chaos-green) !important;
-      font-size:26px !important;
-      padding:0 !important;
-      overflow:hidden !important;
-    }
-
-    .chaos-window .win-body h1,
-    .chaos-window .win-body h2{
-      color:var(--chaos-yellow) !important;
-      font-size:14px !important;
-      text-shadow:
-        0 0 10px rgba(255,242,0,.52),
-        2px 0 0 rgba(255,0,255,.18),
-        -2px 0 0 rgba(0,246,255,.18);
-    }
-
-    .chaos-window .win-body h3{
-      color:var(--chaos-cyan) !important;
-      font-size:10px !important;
-      text-shadow:
-        0 0 8px rgba(0,246,255,.42),
-        1px 0 0 rgba(255,0,255,.15);
-    }
-
-    .chaos-window .win-body p{
-      color:#90ffa1 !important;
-      font-size:23px !important;
-    }
-
-    .chaos-window .label{
-      color:var(--chaos-magenta) !important;
-      text-shadow:0 0 6px rgba(255,45,251,.52);
-    }
-
-    .chaos-window .field-card{
-      background:
-        linear-gradient(to bottom, rgba(60,255,106,.08), rgba(60,255,106,.03)),
-        rgba(255,255,255,.018) !important;
-      border:2px solid rgba(60,255,106,.35) !important;
-      box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,.04),
-        0 0 0 1px rgba(0,0,0,.45);
-    }
-
-    .chaos-window .tag{ background:rgba(255,255,255,.02) !important; }
-    .chaos-window .tag.yellow{ color:var(--chaos-yellow); border-color:rgba(255,242,0,.95); }
-    .chaos-window .tag.cyan{ color:var(--chaos-cyan); border-color:rgba(0,246,255,.95); }
-    .chaos-window .tag.magenta{ color:var(--chaos-magenta); border-color:rgba(255,45,251,.95); }
-    .chaos-window .tag.green{ color:var(--chaos-green); border-color:rgba(60,255,106,.95); }
-
-    .chaos-desktop-bg{
-      position:absolute;
-      inset:0;
-      z-index:0;
-      pointer-events:none;
-      background:
-        radial-gradient(circle at 18% 16%, rgba(0,120,255,.28) 0%, transparent 24%),
-        radial-gradient(circle at 82% 10%, rgba(255,0,255,.18) 0%, transparent 22%),
-        radial-gradient(circle at 52% 80%, rgba(0,255,170,.12) 0%, transparent 24%),
-        linear-gradient(to bottom, #040812 0%, #03030b 54%, #000000 100%);
-      animation:desktopHue 24s linear infinite;
-    }
-
-    .chaos-desktop-bg::before{
-      content:'';
-      position:absolute;
-      inset:0;
-      background:
-        repeating-linear-gradient(0deg, transparent 0, transparent 22px, rgba(60,255,106,.08) 22px, rgba(60,255,106,.08) 24px),
-        repeating-linear-gradient(90deg, transparent 0, transparent 22px, rgba(0,246,255,.05) 22px, rgba(0,246,255,.05) 24px);
-      opacity:1;
-    }
-
-    .chaos-desktop-bg::after{
-      content:'';
-      position:absolute;
-      inset:0;
-      background:
-        repeating-linear-gradient(to bottom, rgba(255,255,255,.015) 0, rgba(255,255,255,.015) 1px, rgba(0,0,0,.28) 2px, rgba(0,0,0,.28) 4px);
-      mix-blend-mode:multiply;
-    }
-
-    @keyframes desktopHue{
-      0%{filter:hue-rotate(0deg);}
-      50%{filter:hue-rotate(18deg);}
-      100%{filter:hue-rotate(0deg);}
-    }
-
-    #lab-glitch-layer{
-      position:absolute;
-      inset:0;
-      z-index:1;
-      pointer-events:none;
-      overflow:hidden;
-    }
-
-    .lab-shell{
-      position:relative;
-      z-index:2;
-      display:grid;
-      grid-template-columns: 280px minmax(0, 1fr) 320px;
-      height:100%;
-    }
-
-    .lab-panel{
-      min-height:0;
-      overflow:auto;
-      padding:16px;
-      border-right:1px solid rgba(255,255,255,.06);
-    }
-
-    .lab-panel:last-child{
-      border-right:none;
-      border-left:1px solid rgba(255,255,255,.06);
-    }
-
-    .lab-left{
-      background:rgba(0,0,0,.22);
-    }
-
-    .lab-center{
-      background:rgba(255,255,255,.01);
-      overflow:auto;
-      padding:18px;
-    }
-
-    .lab-right{
-      background:rgba(0,0,0,.16);
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-
-    .lab-block{
-      margin-bottom:14px;
-      padding:12px;
-      border:2px solid rgba(60,255,106,.28);
-      background:
-        linear-gradient(to bottom, rgba(60,255,106,.05), rgba(60,255,106,.015)),
-        rgba(255,255,255,.015);
-    }
-
-    .lab-list{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      margin-top:10px;
-    }
-
-    .lab-list button{
-      text-align:left;
-      padding:10px;
-      border:2px solid rgba(0,246,255,.26);
-      color:var(--chaos-yellow);
-      background:rgba(0,0,0,.22);
-      font-family:'Press Start 2P', monospace;
-      font-size:7px;
-      line-height:1.8;
-    }
-
-    .lab-list button:hover{
-      border-color:var(--chaos-cyan);
-      background:rgba(0,246,255,.06);
-    }
-
-    .lab-viewer{
-      min-height:220px;
-      border:2px solid rgba(255,255,255,.14);
-      background:#000;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
-    }
-
-    .lab-viewer img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      image-rendering:pixelated;
-    }
-
-    .lab-log{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      font-family:'VT323', monospace;
-      font-size:20px;
-      color:#9dffb0;
-      background:rgba(0,0,0,.25);
-      border:2px solid rgba(255,45,251,.18);
-      padding:12px;
-      min-height:180px;
-    }
-
-    .lab-log-line{
-      border-bottom:1px dashed rgba(255,255,255,.08);
-      padding-bottom:6px;
-    }
-
-    .lab-mini-hud{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:10px;
-    }
-
-    .lab-hud-card{
-      padding:10px;
-      border:2px solid rgba(255,242,0,.22);
-      background:rgba(0,0,0,.22);
-      color:var(--chaos-yellow);
-    }
-
-    .lab-hud-card strong{
-      display:block;
-      margin-top:8px;
-      font-family:'VT323', monospace;
-      font-size:28px;
-      color:var(--chaos-cyan);
-    }
-
-    .glitch{
-      position:relative;
-      animation:glitchText 3s infinite;
-    }
-
-    @keyframes glitchText{
-      0%,88%,100%{text-shadow:none; transform:translate(0,0);}
-      89%{text-shadow:3px 0 var(--chaos-red), -3px 0 var(--chaos-cyan); transform:translate(1px,0);}
-      91%{text-shadow:-3px 0 var(--chaos-magenta), 3px 0 var(--chaos-yellow); transform:translate(-1px,0);}
-      93%{text-shadow:2px 0 var(--chaos-cyan), -2px 0 var(--chaos-red); transform:translate(0,1px);}
-    }
-
-    .glitch-bar{
-      position:absolute;
-      left:0;
-      right:0;
-      height:8px;
-      opacity:0;
-      background:
-        linear-gradient(90deg, rgba(255,0,255,.0) 0%, rgba(255,0,255,.65) 15%, rgba(0,255,255,.75) 45%, rgba(255,255,0,.6) 72%, rgba(255,0,255,0) 100%);
-      mix-blend-mode:screen;
-      transform:translateX(-100%);
-      animation:glitchBar 700ms linear forwards;
-    }
-
-    @keyframes glitchBar{
-      0%{opacity:.95; transform:translateX(-100%);}
-      100%{opacity:0; transform:translateX(100%);}
-    }
-
-    .noise-burst{
-      position:absolute;
-      inset:auto 0 auto 0;
-      height:40px;
-      opacity:0;
-      background:
-        repeating-linear-gradient(90deg, rgba(255,255,255,.8) 0 2px, rgba(0,0,0,.8) 2px 4px, rgba(0,255,255,.8) 4px 6px, rgba(255,0,255,.8) 6px 8px);
-      mix-blend-mode:screen;
-      animation:noiseBurst .28s steps(4,end) forwards;
-    }
-
-    @keyframes noiseBurst{
-      0%{opacity:.8; transform:translateX(0);}
-      100%{opacity:0; transform:translateX(30px);}
-    }
-
-    /* ========= WORLDS / SIMS ========= */
-    .sims-window{
-      background:linear-gradient(to bottom, #dff6ff 0%, #c6ecff 100%) !important;
-      color:#17361f !important;
-      border-color:#ffffff !important;
-    }
-
-    .sims-window .win-titlebar{
-      background:linear-gradient(90deg, #2fbe57 0%, #74df74 60%, #1c7d38 100%) !important;
-    }
-
-    .sims-window .win-menubar{
-      background:#d7f6dc !important;
-    }
-
-    .sims-window .win-body{
-      background:
-        linear-gradient(to bottom, rgba(255,255,255,.38), rgba(255,255,255,.14)),
-        linear-gradient(135deg, #c9f5c7 0%, #9ee2b7 100%) !important;
-      color:#17361f !important;
-    }
-
-    .sims-window .win-body h1,
-    .sims-window .win-body h2{
-      color:#1c7d38 !important;
-      text-shadow:none !important;
-    }
-
-    .sims-window .win-body h3{
-      color:#245dff !important;
-      text-shadow:none !important;
-    }
-
-    .sims-window .win-body p{
-      color:#17361f !important;
-    }
-
-    .sims-window .label{
-      color:#2b7d49 !important;
-    }
-
-    .sims-grid{
-      display:grid;
-      grid-template-columns:repeat(3, minmax(120px, 1fr));
-      gap:14px;
-      margin-top:14px;
-    }
-
-    .sims-card{
-      padding:14px;
-      background:rgba(255,255,255,.7);
-      border:2px solid #4cbf4a;
-      min-height:110px;
-    }
-
-    .sims-diamond{
-      display:inline-block;
-      margin-bottom:10px;
-      font-size:28px;
-      color:#20d254;
-      text-shadow:0 0 8px rgba(32,210,84,.25);
-    }
-
-    /* ========= CITY / GTA ========= */
-    .city-window{
-      background:linear-gradient(to bottom,#090909 0%, #1a1a1a 100%) !important;
-      color:#fff !important;
-      border-color:#d4d4d4 !important;
-    }
-
-    .city-window .win-titlebar{
-      background:linear-gradient(90deg,#111 0%, #343434 55%, #111 100%) !important;
-    }
-
-    .city-window .win-menubar{
-      background:#202020 !important;
-      color:#e6e6e6 !important;
-      border-bottom-color:#444 !important;
-    }
-
-    .city-window .win-menubar span:hover{
-      background:#ff8c1a !important;
-      color:#000 !important;
-    }
-
-    .city-window .win-body{
-      background:
-        linear-gradient(to bottom, rgba(255,160,40,.05), rgba(0,0,0,.1)),
-        linear-gradient(to bottom, #0c0c0c 0%, #181818 100%) !important;
-      color:#f0f0f0 !important;
-    }
-
-    .city-window .win-body h1,
-    .city-window .win-body h2{
-      color:var(--city-yellow) !important;
-    }
-
-    .city-window .win-body h3{
-      color:var(--city-orange) !important;
-    }
-
-    .city-window .win-body p{
-      color:#d8d8d8 !important;
-    }
-
-    .city-window .label{
-      color:#ffb84f !important;
-    }
-
-    .hud{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:10px;
-      margin-top:14px;
-    }
-
-    .hud-card{
-      padding:12px;
-      border:2px solid #4a4a4a;
-      background:#111;
-      color:#fff;
-      min-height:86px;
-    }
-
-    .hud-value{
-      display:block;
-      margin-top:8px;
-      font-family:'VT323', monospace;
-      font-size:30px;
-      color:var(--city-green);
-    }
-
-    /* ========= PLAY / PACMAN ========= */
-    .arcade-window{
-      background:linear-gradient(to bottom,#050505 0%, #101736 100%) !important;
-      color:#fff !important;
-      border-color:#eee !important;
-    }
-
-    .arcade-window .win-titlebar{
-      background:linear-gradient(90deg,#1a2fff 0%, #7134ff 55%, #ff3ce7 100%) !important;
-    }
-
-    .arcade-window .win-menubar{
-      background:#1a1a30 !important;
-      color:#fff !important;
-      border-bottom-color:#2b2b60 !important;
-    }
-
-    .arcade-window .win-body{
-      background:
-        radial-gradient(circle at center, rgba(82,242,255,.06) 0%, transparent 25%),
-        linear-gradient(to bottom, #050505 0%, #0f1532 100%) !important;
-      color:#fff !important;
-    }
-
-    .arcade-window .win-body h1,
-    .arcade-window .win-body h2{
-      color:var(--arcade-yellow) !important;
-      text-shadow:0 0 8px rgba(255,230,0,.4);
-    }
-
-    .arcade-window .win-body h3{
-      color:var(--arcade-cyan) !important;
-      text-shadow:0 0 8px rgba(82,242,255,.28);
-    }
-
-    .arcade-window .win-body p{
-      color:#e6e6ff !important;
-    }
-
-    .arcade-window .label{
-      color:var(--arcade-pink) !important;
-    }
-
-    .arcade-board{
-      margin-top:16px;
-      display:grid;
-      grid-template-columns:repeat(10, 1fr);
-      gap:6px;
-      background:#0a0f25;
-      border:2px solid var(--arcade-blue);
-      padding:10px;
-    }
-
-    .dot-cell{
-      height:18px;
-      background:
-        radial-gradient(circle at center, #ffe600 0 24%, transparent 26%);
-      opacity:.8;
-    }
-
-    .dot-cell.wall{
-      background:#2130d5;
-    }
-
-    .dot-cell.pac{
-      background:
-        radial-gradient(circle at center, #ffe600 0 44%, transparent 46%);
-    }
-
-    .dot-cell.ghost{
-      background:
-        radial-gradient(circle at center, #ff4df5 0 42%, transparent 44%);
-    }
-
-    /* ========= SIGNALS / SPACE INVADERS ========= */
-    .signal-window{
-      background:linear-gradient(to bottom,#071008 0%, #0d1b0f 100%) !important;
-      color:#dfffe3 !important;
-      border-color:#dfffe3 !important;
-    }
-
-    .signal-window .win-titlebar{
-      background:linear-gradient(90deg,#102715 0%, #2c5f33 60%, #18381d 100%) !important;
-    }
-
-    .signal-window .win-menubar{
-      background:#102715 !important;
-      color:#dfffe3 !important;
-      border-bottom-color:#2d6d39 !important;
-    }
-
-    .signal-window .win-menubar span:hover{
-      background:#57ff7a !important;
-      color:#071008 !important;
-    }
-
-    .signal-window .win-body{
-      background:
-        radial-gradient(circle at center, rgba(87,255,122,.08) 0%, transparent 20%),
-        linear-gradient(to bottom, #071008 0%, #0d1b0f 100%) !important;
-      color:#dfffe3 !important;
-    }
-
-    .signal-window .win-body h1,
-    .signal-window .win-body h2{
-      color:#57ff7a !important;
-    }
-
-    .signal-window .win-body h3{
-      color:#a5ffb8 !important;
-    }
-
-    .signal-window .win-body p{
-      color:#dfffe3 !important;
-    }
-
-    .signal-window .label{
-      color:#8efaa4 !important;
-    }
-
-    .radar{
-      margin-top:16px;
-      border:2px solid #57ff7a;
-      background:
-        radial-gradient(circle at center, rgba(87,255,122,.06) 0%, transparent 60%),
-        #071008;
-      min-height:260px;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .radar::before,
-    .radar::after{
-      content:'';
-      position:absolute;
-      background:#2c5f33;
-      opacity:.7;
-    }
-
-    .radar::before{
-      left:50%;
-      top:0;
-      width:2px;
-      height:100%;
-      transform:translateX(-50%);
-    }
-
-    .radar::after{
-      top:50%;
-      left:0;
-      width:100%;
-      height:2px;
-      transform:translateY(-50%);
-    }
-
-    .radar-ring{
-      position:absolute;
-      border:2px solid rgba(87,255,122,.4);
-      border-radius:50%;
-      left:50%;
-      top:50%;
-      transform:translate(-50%,-50%);
-    }
-
-    .radar-ring.r1{ width:90px; height:90px; }
-    .radar-ring.r2{ width:170px; height:170px; }
-    .radar-ring.r3{ width:250px; height:250px; }
-
-    .blip{
-      position:absolute;
-      width:12px;
-      height:12px;
-      background:#57ff7a;
-      box-shadow:0 0 10px rgba(87,255,122,.55);
-    }
-
-    /* ========= GROWTH / TAMAGOTCHI ========= */
-    .growth-window{
-      background:linear-gradient(to bottom,#cfe1ad 0%, #adc584 100%) !important;
-      color:#1e2d16 !important;
-      border-color:#f2f7e8 !important;
-    }
-
-    .growth-window .win-titlebar{
-      background:linear-gradient(90deg,#728e54 0%, #95b16f 60%, #5f7746 100%) !important;
-      color:#f7fff0 !important;
-      text-shadow:none !important;
-    }
-
-    .growth-window .win-menubar{
-      background:#b8cf90 !important;
-      color:#1e2d16 !important;
-      border-bottom-color:#718956 !important;
-    }
-
-    .growth-window .win-body{
-      background:
-        linear-gradient(to bottom, rgba(255,255,255,.2), rgba(255,255,255,.06)),
-        linear-gradient(to bottom, var(--lcd-bg) 0%, #c6dca0 100%) !important;
-      color:#1e2d16 !important;
-    }
-
-    .growth-window .win-body h1,
-    .growth-window .win-body h2,
-    .growth-window .win-body h3,
-    .growth-window .win-body p,
-    .growth-window .label{
-      color:var(--lcd-ink) !important;
-      text-shadow:none !important;
-    }
-
-    .lcd-screen{
-      margin-top:16px;
-      background:#dcebb8;
-      border:4px solid #6f8655;
-      box-shadow:inset 0 0 0 3px #b4cb8b;
-      padding:18px;
-      min-height:250px;
-      color:#1e2d16;
-    }
-
-    .lcd-pet{
-      font-family:'VT323', monospace;
-      font-size:44px;
-      line-height:1.2;
-      text-align:center;
-      margin:20px 0;
-    }
-
-    .lcd-stats{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:10px;
-      margin-top:14px;
-    }
-
-    .lcd-stat{
-      border:2px solid #6f8655;
-      padding:10px;
-      background:rgba(255,255,255,.16);
-      font-family:'VT323', monospace;
-      font-size:24px;
-      text-align:center;
-    }
+    .tag.yellow{color:#9f7f00;}
+    .tag.cyan{color:#006f8d;}
+    .tag.magenta{color:#8e2c92;}
+    .tag.green{color:#287b39;}
 
     .spinner{
       display:inline-block;
-      font-size:24px;
       animation:spin .6s steps(8) infinite;
     }
 
@@ -1362,111 +469,606 @@
       to{transform:rotate(360deg);}
     }
 
-    @media (max-width: 1100px){
-      .lab-shell{
-        grid-template-columns: 250px minmax(0,1fr) 280px;
-      }
+    .muted{
+      color:#666 !important;
+      font-size:12px !important;
+    }
+
+    /* FILE GRID */
+    .file-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+      gap:12px;
+      margin-top:10px;
+    }
+
+    .file-card{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:8px;
+      min-height:96px;
+      padding:10px;
+      color:#111;
+      background:#fff;
+      border:1px solid #c6d2ea;
+      text-align:left;
+    }
+
+    .file-card:hover{
+      background:#eef4ff;
+      border-color:#7ca0df;
+    }
+
+    .file-icon{
+      font-size:28px;
+      line-height:1;
+    }
+
+    .file-name{
+      font-family:'Press Start 2P', monospace;
+      font-size:7px;
+      line-height:1.6;
+      color:#244c98;
+    }
+
+    .file-meta{
+      font-size:12px;
+      color:#446;
+      font-family:Tahoma, Arial, sans-serif;
+    }
+
+    .viewer-image{
+      width:100%;
+      display:block;
+      border:1px solid #7a89a8;
+      background:#000;
+      image-rendering:pixelated;
+    }
+
+    /* FULLSCREEN WORLD WINDOW */
+    .world-fullscreen{
+      top:var(--scorebar-h);
+      left:0;
+      width:100vw;
+      height:calc(100vh - var(--scorebar-h) - var(--taskbar-h));
+      border:0;
+      box-shadow:none;
+      z-index:5000;
+    }
+
+    .world-fullscreen .win-titlebar{
+      min-height:34px;
+      padding:7px 10px;
+      border-bottom:1px solid rgba(255,255,255,.15);
+    }
+
+    /* LAB BIOS WINDOW */
+    #win-lab{
+      display:none;
+    }
+
+    #win-lab.world-fullscreen{
+      background:#000;
+      color:#7fffe0;
+    }
+
+    #win-lab .win-titlebar{
+      background:linear-gradient(90deg, #001414, #003535);
+      color:#8dffef;
+      font-family:"Courier New", monospace;
+      font-size:14px;
+      letter-spacing:.5px;
+      border-bottom:2px solid #53fdd8;
+    }
+
+    #win-lab .win-btn{
+      background:#021d1d;
+      color:#8dffef;
+      border:1px solid #53fdd8;
+      width:24px;
+      height:24px;
+      font-family:"Courier New", monospace;
+    }
+
+    #win-lab .win-btn.close{
+      background:#320909;
+      color:#fff;
+      border:1px solid #ff8c8c;
+    }
+
+    #win-lab .win-menubar{
+      background:#001111;
+      color:#77f5de;
+      border-bottom:1px solid rgba(127,255,224,.25);
+      font-family:"Courier New", monospace;
+      font-size:13px;
+    }
+
+    #win-lab .win-body{
+      background:#000;
+      color:#86ffe4;
+      font-family:"Courier New", monospace;
+      font-size:14px;
+      line-height:1.45;
+      padding:0;
+      overflow:hidden;
+      image-rendering:pixelated;
+      text-rendering:geometricPrecision;
+      -webkit-font-smoothing:none;
+      position:relative;
+    }
+
+    #win-lab .win-body::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(127,255,224,.06) 0px,
+          rgba(127,255,224,.06) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+      opacity:.9;
+      mix-blend-mode:screen;
+      z-index:2;
+    }
+
+    #win-lab .win-body::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at center, transparent 54%, rgba(0,0,0,.22) 100%);
+      z-index:2;
+    }
+
+    .lab-shell{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns: 1.1fr 1fr;
+      grid-template-rows:auto 1fr auto;
+      gap:0;
+      width:100%;
+      height:100%;
+      min-height:calc(100vh - var(--scorebar-h) - var(--taskbar-h) - 66px);
+      background:#000;
+      color:#88ffe7;
+    }
+
+    .lab-topline{
+      grid-column:1 / -1;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:10px 14px;
+      border-bottom:1px solid #1bcfb5;
+      font-size:13px;
+      background:#000;
+      font-family:"Courier New", monospace;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+    }
+
+    .lab-left,
+    .lab-right{
+      min-height:0;
+      overflow:auto;
+      padding:14px;
+    }
+
+    .lab-left{
+      border-right:1px solid #1bcfb5;
+    }
+
+    .lab-right{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-left:1px solid rgba(0,0,0,0);
+      position:relative;
+    }
+
+    .lab-right::before{
+      content:"";
+      position:absolute;
+      inset:14px;
+      border:1px solid #1bcfb5;
+      pointer-events:none;
+    }
+
+    .lab-bottom{
+      grid-column:1 / -1;
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:0;
+      border-top:1px solid #1bcfb5;
+      min-height:120px;
+    }
+
+    .lab-block{
+      border-right:1px solid #1bcfb5;
+      padding:12px 14px;
+      font-size:13px;
+      line-height:1.45;
+      font-family:"Courier New", monospace;
+      overflow:auto;
+    }
+
+    .lab-block:last-child{
+      border-right:0;
+    }
+
+    .lab-pre{
+      font-family:"Courier New", monospace;
+      font-size:13px;
+      line-height:1.38;
+      white-space:pre-wrap;
+      color:#8effe6;
+    }
+
+    .lab-ascii{
+      font-family:"Courier New", monospace;
+      font-size:10px;
+      line-height:1;
+      color:#affff1;
+      white-space:pre;
+      text-align:center;
+      opacity:.95;
+    }
+
+    .lab-nav{
+      display:flex;
+      gap:14px;
+      padding:10px 14px;
+      border-bottom:1px solid #1bcfb5;
+      font-family:"Courier New", monospace;
+      font-size:13px;
+      text-transform:uppercase;
+    }
+
+    .lab-nav span{
+      color:#88ffe7;
+    }
+
+    .lab-hud{
+      display:flex;
+      gap:22px;
+      padding:8px 14px;
+      border-top:1px solid rgba(127,255,224,.2);
+      font-family:"Courier New", monospace;
+      font-size:13px;
+    }
+
+    .lab-hud b{
+      color:#c7fff7;
+    }
+
+    /* OTHER WINDOWS POSITIONS */
+    #hero-win{
+      top:54px;
+      left:120px;
+      width:720px;
+      min-height:330px;
+    }
+
+    #win-archive{
+      top:98px;
+      left:170px;
+      width:540px;
+      display:none;
+    }
+
+    #win-studio{
+      top:122px;
+      left:240px;
+      width:540px;
+      display:none;
+    }
+
+    #win-contact{
+      top:160px;
+      left:210px;
+      width:470px;
+      display:none;
+    }
+
+    #win-manifesto{
+      top:182px;
+      left:180px;
+      width:560px;
+      display:none;
+    }
+
+    #win-gallery{
+      top:110px;
+      left:330px;
+      width:560px;
+      display:none;
+    }
+
+    #win-img-1{
+      top:120px;
+      left:380px;
+      width:480px;
+      display:none;
+    }
+
+    #win-img-2{
+      top:150px;
+      left:410px;
+      width:460px;
+      display:none;
+    }
+
+    #win-img-3{
+      top:180px;
+      left:440px;
+      width:500px;
+      display:none;
+    }
+
+    /* TASKBAR XP */
+    #taskbar{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      height:var(--taskbar-h);
+      z-index:9000;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      padding:0 6px;
+      color:#fff;
+      background:linear-gradient(to bottom, var(--xp-task-light), var(--xp-task-dark));
+      border-top:1px solid rgba(255,255,255,.35);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.22);
+      user-select:none;
+    }
+
+    #taskbar-start{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+      padding:6px 14px;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:16px;
+      font-style:italic;
+      font-weight:700;
+      color:#fff;
+      background:linear-gradient(135deg, #4bc15c 0%, #2c8e3d 100%);
+      border:1px solid rgba(255,255,255,.4);
+      border-radius:6px;
+      box-shadow:inset 1px 1px 0 rgba(255,255,255,.28);
+    }
+
+    #taskbar-start::before{
+      content:'⊞';
+      font-size:15px;
+      font-style:normal;
+    }
+
+    body.has-custom-cursor #taskbar-start{ cursor:none; }
+
+    #taskbar-tasks{
+      display:flex;
+      align-items:center;
+      gap:4px;
+      min-width:0;
+      flex:1;
+      overflow:hidden;
+    }
+
+    .taskbar-btn{
+      max-width:180px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      padding:6px 10px;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:12px;
+      color:#fff;
+      background:rgba(255,255,255,.15);
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:3px;
+    }
+
+    .taskbar-btn.active{
+      background:rgba(255,255,255,.28);
+    }
+
+    #clock{
+      margin-left:auto;
+      min-width:84px;
+      text-align:center;
+      padding:4px 8px;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:12px;
+      color:#fff;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:2px;
+    }
+
+    /* START MENU XP */
+    #start-menu{
+      position:fixed;
+      left:0;
+      bottom:var(--taskbar-h);
+      width:280px;
+      z-index:9999;
+      display:none;
+      flex-direction:column;
+      background:#fff;
+      border:1px solid #245;
+      box-shadow:4px 4px 10px rgba(0,0,0,.35);
+      overflow:hidden;
+    }
+
+    #start-menu.open{
+      display:flex;
+    }
+
+    .start-banner{
+      background:linear-gradient(to bottom, #0e4bbb, #1c73f5);
+      color:#fff;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:26px;
+      font-weight:700;
+      padding:16px 14px;
+    }
+
+    .start-items{
+      display:flex;
+      flex-direction:column;
+      background:#f6f7fb;
+    }
+
+    .start-item{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:16px;
+      color:#111;
+      border-top:1px solid #edf0f7;
+      background:transparent;
+      text-align:left;
+    }
+
+    .start-item:hover{
+      background:#2b66ce;
+      color:#fff;
+    }
+
+    .start-item-icon{
+      font-size:18px;
+    }
+
+    /* ALERTS */
+    .win-alert{
+      min-width:320px;
+      max-width:420px;
+      resize:none;
+    }
+
+    .win-alert .win-body{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:12px;
+      padding:18px;
+      font-size:14px;
+    }
+
+    .win-alert .alert-row{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+    }
+
+    .win-alert .alert-icon{
+      flex-shrink:0;
+      font-size:26px;
+    }
+
+    .win-alert .alert-msg{
+      font-size:14px;
+      line-height:1.4;
+      color:#111;
+    }
+
+    .win-alert .alert-btns{
+      display:flex;
+      gap:10px;
+      margin-top:6px;
+    }
+
+    .alert-ok{
+      padding:6px 16px;
+      background:linear-gradient(to bottom, #fff, #dcdcdc);
+      border:1px solid #245;
+      color:#000;
+      font-family:Tahoma, Arial, sans-serif;
+      font-size:12px;
     }
 
     @media (max-width:900px){
       #hero-win{
-        left:32px;
-        width:min(640px, calc(100vw - 56px));
+        left:30px;
+        width:min(92vw,720px);
       }
 
-      .sims-grid,
-      .hud,
-      .lcd-stats{
-        grid-template-columns:1fr 1fr;
-      }
-
-      .lab-shell{
-        grid-template-columns: 1fr;
-      }
-
-      .lab-left,
-      .lab-right{
-        border:none;
-      }
-
-      .lab-right{
-        border-top:1px solid rgba(255,255,255,.06);
-      }
-    }
-
-    @media (max-width:700px){
-      .desktop-icon{
-        width:84px;
-      }
-
-      .desktop-icon .icon-img{
-        font-size:36px;
+      .win{
+        min-width:260px;
       }
     }
 
     @media (max-width:600px){
+      .cursor-outer{
+        display:none !important;
+      }
+
       #hero-win{
-        top:50px;
+        top:48px;
         left:4px;
-        right:4px;
-        width:calc(100% - 8px);
+        width:calc(100vw - 8px);
       }
 
       .win{
-        min-width:220px;
-        max-width:calc(100vw - 8px);
         resize:none;
+        max-width:calc(100vw - 8px);
       }
 
-      #taskbar{
-        gap:4px;
-        padding:0 4px;
+      #win-archive,
+      #win-studio,
+      #win-contact,
+      #win-manifesto,
+      #win-gallery,
+      #win-img-1,
+      #win-img-2,
+      #win-img-3{
+        left:4px !important;
+        width:calc(100vw - 8px) !important;
       }
 
-      #taskbar-start{
-        padding:5px 8px;
-        font-size:6px;
+      #taskbar-tasks{
+        display:none;
       }
 
-      .taskbar-btn{
-        max-width:100px;
-      }
-
-      #clock{
-        min-width:70px;
-        font-size:18px;
-        padding:3px 6px;
-      }
-
-      #start-menu{
-        width:220px;
-      }
-
-      .start-item{
-        font-size:20px;
-      }
-
-      .win-body{
-        font-size:18px;
-      }
-
-      .win-body p{
-        font-size:18px;
-      }
-
-      .win-body h1,
-      .win-body h2{
-        font-size:10px;
-      }
-
-      .win-body h3{
-        font-size:8px;
-      }
-
-      .sims-grid,
-      .hud,
-      .lcd-stats{
+      .lab-shell{
         grid-template-columns:1fr;
+        grid-template-rows:auto auto 1fr auto;
+      }
+
+      .lab-left{
+        border-right:0;
+        border-bottom:1px solid #1bcfb5;
+      }
+
+      .lab-right{
+        min-height:240px;
+      }
+
+      .lab-bottom{
+        grid-template-columns:1fr;
+      }
+
+      .lab-block{
+        border-right:0;
+        border-bottom:1px solid #1bcfb5;
+      }
+
+      .lab-block:last-child{
+        border-bottom:0;
       }
     }
 
@@ -1488,70 +1090,55 @@
   <div id="score-bar">
     <span class="nm">BLUCINELAB OS</span>
     <span class="sc">SCORE: <span id="score-num">0</span></span>
-    <span id="lives-disp">MODE: XP HOME</span>
+    <span id="lives-disp">LIVES: ♥♥♥</span>
+  </div>
+
+  <button id="egg-btn" type="button" title="???">INSERT COIN</button>
+
+  <div id="pacman-layer" aria-hidden="true">
+    <div class="pac" id="pac"></div>
   </div>
 
   <div id="desktop"></div>
 
-  <!-- DESKTOP ICONS -->
-  <button class="desktop-icon" style="top:56px;left:16px" data-win="win-archive" type="button">
+  <button class="desktop-icon" style="top:56px;left:16px" id="icon-archive" data-win="win-archive" type="button">
     <div class="icon-img">📁</div>
     <div class="icon-label">ARCHIVE</div>
   </button>
 
-  <button class="desktop-icon" style="top:156px;left:18px" data-win="win-studio" type="button">
+  <button class="desktop-icon" style="top:156px;left:18px" id="icon-studio" data-win="win-studio" type="button">
     <div class="icon-img">🎨</div>
     <div class="icon-label">STUDIO</div>
   </button>
 
-  <button class="desktop-icon" style="top:256px;left:16px" data-win="win-lab" type="button">
+  <button class="desktop-icon" style="top:256px;left:16px" id="icon-lab" data-win="win-lab" type="button">
     <div class="icon-img">🔬</div>
-    <div class="icon-label">LAB.EXE</div>
+    <div class="icon-label">LAB</div>
   </button>
 
-  <button class="desktop-icon" style="top:356px;left:18px" data-win="win-worlds" type="button">
-    <div class="icon-img">🏡</div>
-    <div class="icon-label">WORLDS</div>
-  </button>
-
-  <button class="desktop-icon" style="top:456px;left:16px" data-win="win-city" type="button">
-    <div class="icon-img">🌃</div>
-    <div class="icon-label">CITY</div>
-  </button>
-
-  <button class="desktop-icon" style="top:556px;left:18px" data-win="win-play" type="button">
-    <div class="icon-img">👾</div>
-    <div class="icon-label">PLAY</div>
-  </button>
-
-  <button class="desktop-icon" style="top:56px;right:18px" data-win="win-signals" type="button">
-    <div class="icon-img">📡</div>
-    <div class="icon-label">SIGNALS</div>
-  </button>
-
-  <button class="desktop-icon" style="top:156px;right:16px" data-win="win-growth" type="button">
-    <div class="icon-img">🥚</div>
-    <div class="icon-label">GROWTH</div>
-  </button>
-
-  <button class="desktop-icon" style="top:256px;right:18px" data-win="win-contact" type="button">
+  <button class="desktop-icon" style="top:356px;left:18px" id="icon-contact" data-win="win-contact" type="button">
     <div class="icon-img">📧</div>
     <div class="icon-label">CONTACT</div>
   </button>
 
-  <button class="desktop-icon" style="top:356px;right:16px" data-win="win-manifesto" type="button">
+  <button class="desktop-icon" style="top:456px;left:16px" id="icon-manifesto" data-win="win-manifesto" type="button">
     <div class="icon-img">📜</div>
     <div class="icon-label">MANIFEST</div>
+  </button>
+
+  <button class="desktop-icon" style="top:556px;left:18px" id="icon-gallery" data-win="win-gallery" type="button">
+    <div class="icon-img">🖼️</div>
+    <div class="icon-label">GALLERY</div>
   </button>
 
   <!-- HOME -->
   <section class="win" id="hero-win" aria-label="Homepage">
     <div class="win-titlebar" data-drag="hero-win">
       <span class="win-icon">🖥</span>
-      <span class="win-title">BLUCINELAB OS — WINDOWS XP HOME</span>
+      <span class="win-title">BLUCINELAB — HOME</span>
       <div class="win-controls">
-        <button class="win-btn" data-minimize="hero-win" type="button">_</button>
-        <button class="win-btn" data-maximize="hero-win" type="button">□</button>
+        <button class="win-btn" data-minimize="hero-win" type="button" aria-label="Minimizza">_</button>
+        <button class="win-btn" data-maximize="hero-win" type="button" aria-label="Massimizza">□</button>
       </div>
     </div>
 
@@ -1564,457 +1151,527 @@
 
     <div class="win-body" style="min-height:260px;">
       <span class="label">HOME / XP MODE / BOLOGNA</span>
-      <h1>BLUCINELAB</h1>
-      <p>Questa è la base stabile del sistema.</p>
-      <p>La home resta familiare e leggibile. I mondi si aprono come finestre totalizzanti, senza cambiare pagina.</p>
+      <h1>COSTRUIRE IMMAGINI CHE PENSANO</h1>
+      <p>BLUCINELAB è uno studio visivo indipendente che lavora tra immagine, spazio, direzione e ricerca.</p>
+      <p>Cinema, identità, ambienti digitali, installazioni, archivi, processi: non come servizi separati, ma come un unico campo di costruzione percettiva, culturale e narrativa.</p>
 
       <div style="margin-top:10px;display:flex;flex-wrap:wrap;">
-        <span class="tag yellow">XP HOME</span>
-        <span class="tag cyan">WORLD WINDOWS</span>
-        <span class="tag magenta">NO PAGE SWITCH</span>
-        <span class="tag green">LIVE SYSTEM</span>
+        <span class="tag yellow">WEB DESIGN</span>
+        <span class="tag cyan">VISUAL IDENTITY</span>
+        <span class="tag magenta">EXHIBITION</span>
+        <span class="tag green">IMAGE DIRECTION</span>
       </div>
 
       <div style="margin-top:18px;" class="field-card">
-        <span class="label">STATUS</span>
-        <h3>STRUTTURA ATTIVA</h3>
-        <p>LAB conserva il vecchio BLUCINELAB. Gli altri mondi distribuiscono le reference per sezione.</p>
+        <span class="label">SYSTEM STATUS</span>
+        <h3>HOME STABILE / XP MODE</h3>
+        <p>Questa è la superficie stabile del sito. Le altre finestre possono cambiare epoca, risoluzione e mondo visivo.</p>
       </div>
 
-      <div style="margin-top:14px; font-size:20px; color:#111;">
+      <div style="margin-top:14px; font-size:14px; color:#244c98;">
         <span class="spinner">◐</span>
-        &nbsp;DESKTOP CARICATO — APRI LE ICONE
+        &nbsp;SISTEMA CARICATO — APRI LE ICONE O IL MENU START
       </div>
     </div>
   </section>
 
-  <!-- CLASSIC WINDOWS -->
-  <section class="win" id="win-archive" aria-label="Archive" style="top:94px;left:180px;width:520px;display:none;">
+  <!-- ARCHIVE -->
+  <section class="win" id="win-archive" aria-label="Archive">
     <div class="win-titlebar" data-drag="win-archive">
       <span class="win-icon">📁</span>
       <span class="win-title">ARCHIVE — Lavori e processi</span>
       <div class="win-controls">
         <button class="win-btn" data-minimize="win-archive" type="button">_</button>
-        <button class="win-btn close" data-close="win-archive" type="button">X</button>
+        <button class="win-btn close" data-close="win-archive" type="button">✕</button>
       </div>
     </div>
+
     <div class="win-menubar">
       <span>File</span>
       <span>Sort</span>
       <span>View</span>
+      <span>Open</span>
     </div>
-    <div class="win-body" style="min-height:280px;">
-      <span class="label">ARCHIVE / XP MODE</span>
-      <h2>LAVORI E PROCESSI</h2>
+
+    <div class="win-body" style="min-height:300px;">
+      <span class="label">ARCHIVE / PUBLIC WORKS / OPEN FILES</span>
+      <h2>LAVORI, PROCESSI, STATI DI VISIBILITÀ</h2>
+
       <div class="field-card">
         <span class="label">PUBLIC WORKS</span>
-        <h3>ARCHIVIO</h3>
-        <p>Case study, processi, materiali, stati di visibilità.</p>
+        <h3>ENTRA NELL'ARCHIVIO</h3>
+        <p>Case study, superfici protette, immagini, test e pagine di processo organizzate per stato e profondità.</p>
       </div>
-      <p>Questa finestra resta volutamente nella grammatica XP.</p>
+
+      <div class="file-grid">
+        <button class="file-card" type="button" data-open="win-img-1">
+          <span class="file-icon">🖼️</span>
+          <span class="file-name">CITY_01.BMP</span>
+          <span class="file-meta">Apri immagine</span>
+        </button>
+
+        <button class="file-card" type="button" data-open="win-img-2">
+          <span class="file-icon">🖼️</span>
+          <span class="file-name">SIGNAL_02.PCX</span>
+          <span class="file-meta">Apri immagine</span>
+        </button>
+
+        <button class="file-card" type="button" data-open="win-img-3">
+          <span class="file-icon">🖼️</span>
+          <span class="file-name">ARCHIVE_03.GIF</span>
+          <span class="file-meta">Apri immagine</span>
+        </button>
+
+        <button class="file-card" type="button" data-open="win-gallery">
+          <span class="file-icon">📂</span>
+          <span class="file-name">OPEN_GALLERY</span>
+          <span class="file-meta">Cartella immagini</span>
+        </button>
+      </div>
+
+      <p class="muted" style="margin-top:14px;">► Click su icone, start menu o file interni.</p>
     </div>
   </section>
 
-  <section class="win" id="win-studio" aria-label="Studio" style="top:120px;left:220px;width:500px;display:none;">
+  <!-- STUDIO -->
+  <section class="win" id="win-studio" aria-label="Studio">
     <div class="win-titlebar" data-drag="win-studio">
       <span class="win-icon">🎨</span>
       <span class="win-title">STUDIO — Metodo e coerenza</span>
       <div class="win-controls">
         <button class="win-btn" data-minimize="win-studio" type="button">_</button>
-        <button class="win-btn close" data-close="win-studio" type="button">X</button>
+        <button class="win-btn close" data-close="win-studio" type="button">✕</button>
       </div>
     </div>
+
     <div class="win-menubar">
       <span>File</span>
       <span>Method</span>
       <span>Values</span>
     </div>
+
     <div class="win-body" style="min-height:260px;">
-      <span class="label">STUDIO / XP MODE</span>
+      <span class="label">STUDIO / METODO</span>
       <h2>METODO, RIDUZIONE, COERENZA</h2>
+
       <div class="field-card">
         <span class="label">SELECTION</span>
         <h3>TOGLIERE CIÒ CHE INDEBOLISCE</h3>
-        <p>Meno dispersione, più struttura, più tensione.</p>
+        <p>La prima mossa è spesso sottrattiva. Meno dispersione, più struttura, più tensione.</p>
       </div>
+
+      <div class="field-card">
+        <span class="label">ATMOSPHERE</span>
+        <h3>COSTRUIRE IL CAMPO PERCETTIVO</h3>
+        <p>Luce, tipo, immagine, spazio e ritmo lavorano come un unico sistema continuo.</p>
+      </div>
+
       <div class="field-card">
         <span class="label">COHERENCE</span>
         <h3>MANTENERE UN LINGUAGGIO INTERNO</h3>
         <p>Il progetto deve restare riconoscibile tra pagina, ambiente, racconto e direzione.</p>
       </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">
+        <span class="tag cyan">CARE</span>
+        <span class="tag yellow">PRECISION</span>
+        <span class="tag magenta">RESEARCH</span>
+        <span class="tag green">EXPERIENCE</span>
+      </div>
     </div>
   </section>
 
-  <section class="win" id="win-contact" aria-label="Contact" style="top:160px;left:210px;width:460px;display:none;">
+  <!-- LAB BIOS -->
+  <section class="win world-fullscreen" id="win-lab" aria-label="Lab BIOS">
+    <div class="win-titlebar">
+      <span class="win-icon">⌘</span>
+      <span class="win-title">MR BIOS (TM) — BLUCINELAB INTERNAL LAB / VERSION 1.03</span>
+      <div class="win-controls">
+        <button class="win-btn close" data-close="win-lab" type="button" aria-label="Chiudi">✕</button>
+      </div>
+    </div>
+
+    <div class="win-menubar">
+      <span>SUMMARY</span>
+      <span>FIXED</span>
+      <span>BOOT</span>
+      <span>SEQ</span>
+      <span>MORE+</span>
+    </div>
+
+    <div class="win-body">
+      <div class="lab-shell">
+        <div class="lab-topline">
+          <span>MR BIOS (TM) &nbsp; COPYRIGHT BLUCINELAB(C) 2026</span>
+          <span>RESEARCH &nbsp; VER V1.03 &nbsp; PORT...3</span>
+        </div>
+
+        <div class="lab-left">
+<pre class="lab-pre">ECHO OFF
+MODE CON: COLS=80 LINES=25
+COLOR 0B
+
+SIMULATE BIOS SETUP SCREEN WITH INTERACTIVE MENU
+AWARD MODULAR BIOS V6.00PG - SYSTEM CONFIGURATION UTILITY
+COPYRIGHT (C) 1984-1991 AWARD SOFTWARE, INC.
+
+========================================================
+                BLUCINELAB // INTERNAL LAB
+========================================================
+
+[00] STANDARD CMOS FEATURES
+[01] ADVANCED BIOS FEATURES
+[02] INTEGRATED PERIPHERALS
+[03] POWER MANAGEMENT SETUP
+[04] INPUT/OUTPUT CONFIG
+[05] ARCHIVE TRACE
+[06] AI / SIGNAL TEST
+[07] VISUAL MEMORY BANK
+[08] EXIT BIOS
+
+> SELECTED: [05] ARCHIVE TRACE
+> STATUS: SIGNAL PRESENT
+> PING: 127.0.0.1 :: OK
+
+--------------------------------------------------------
+LENA'S STORY
+--------------------------------------------------------
+THERE WAS ONCE A STUDIO THAT DID NOT WANT TO
+LOOK LIKE A STUDIO.
+
+IT WANTED TO BECOME A MACHINE OF MEMORY,
+A SCREEN THAT COULD OPEN IMAGE, SPACE,
+DIRECTION, TRACE, FRAGMENT.
+
+THE LAB IS NOT THE HOME.
+THE HOME PROTECTS.
+THE LAB EXPOSES.
+
+EVERY FILE IS A TRACE.
+EVERY TRACE IS A SHADOW.
+EVERY SHADOW IS A METHOD.
+
+BLUCINELAB INTERNAL NOTE:
+THE ARCHIVE DOES NOT STORE PROJECTS.
+IT STORES STATES OF ATTENTION.
+
+> MEMORY.LOG loaded
+> SIGNAL.BIN ready
+> TRACE.EXE waiting
+</pre>
+        </div>
+
+        <div class="lab-right">
+<pre class="lab-ascii">
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@%%%%%###**++==--::..      ..::--==++**
+@@@@@@@@@@@%%%###**++==--::..                 ...::--
+@@@@@@%%%###**++==--::..                           ..
+@@@@%%%##**++==--::..      .:-=++***++=-:.           
+@@@%%##**++==--::.      :=*#%%%%%%%%%%%%#*=:         
+@@%%##**+==--::.      .=#%%%%%%%%%%%%%%%%%%#=.       
+@%%##**+==--::.      .+%%%%%%%##***##%%%%%%%+.       
+@%%#**+==--::.      .*%%%%#*+=-::::-=+*#%%%%*.       
+%%##*++=--::.       =%%%#+-::..    ..::-+#%%%=       
+%%##*+=--::.        +%%%*:.            .:*%%%+       
+%%#*+=--::.         *%%%=:              :=%%%*       
+%%#*+=--::.         *%%%=:              :=%%%*       
+%%##*+=--::.        +%%%*:.            .:*%%%+       
+%%##*++=--::.       =%%%#+-::..    ..::-+#%%%=       
+@%%#**+==--::.      .*%%%%#*+=-::::-=+*#%%%%*.       
+@@%%##**+==--::.      .+%%%%%%%##***##%%%%%%%+.      
+@@@%%##**++==--::.      .=#%%%%%%%%%%%%%%%%%%#=.     
+@@@@%%%###**++==--::.      :=*#%%%%%%%%%%%%#*=:      
+@@@@@@%%%###**++==--::..      .:-=++***++=-:.        
+@@@@@@@@@@%%%###**++==--::..                          
+@@@@@@@@@@@@@@@%%%%%###**++==--::..        SIGNAL    
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+</pre>
+        </div>
+
+        <div class="lab-bottom">
+          <div class="lab-block">
+<pre class="lab-pre">BANK 1
+TRACE_01 .............. OK
+TRACE_02 .............. OK
+TRACE_03 .............. OK
+TRACE_04 .............. WARN
+
+COMMANDS:
+[F1] OPEN
+[F2] SCAN
+[F3] READ
+[F4] EXEC</pre>
+          </div>
+
+          <div class="lab-block">
+<pre class="lab-pre">BANK 2
+I HATE THE CLEAN INTERFACE
+I HATE THE EMPTY PORTFOLIO
+I HATE THE DEAD PAGE
+I WANT THE MACHINE TO SHOW ITS TEETH
+
+STATUS:
+SIGNAL .............. 82
+NOISE ............... 41
+TRACE ............... 19</pre>
+          </div>
+
+          <div class="lab-block">
+<pre class="lab-pre">SYSTEM
+LOCALHOST :: ACTIVE
+PING :: 3.2 GB
+MEMORY :: 92%
+PORT :: OPEN
+
+READ:
+"Il vecchio BLUCINELAB è
+stato concentrato nel LAB.
+La home XP lo protegge,
+il LAB lo espone."</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="win" id="win-contact" aria-label="Contact">
     <div class="win-titlebar" data-drag="win-contact">
       <span class="win-icon">📧</span>
       <span class="win-title">CONTACT — Apri una conversazione</span>
       <div class="win-controls">
         <button class="win-btn" data-minimize="win-contact" type="button">_</button>
-        <button class="win-btn close" data-close="win-contact" type="button">X</button>
+        <button class="win-btn close" data-close="win-contact" type="button">✕</button>
       </div>
     </div>
+
     <div class="win-menubar">
       <span>File</span>
       <span>Send</span>
     </div>
+
     <div class="win-body" style="min-height:220px;">
-      <span class="label">CONTACT / XP MODE</span>
-      <h2>CONTATTO</h2>
-      <div class="field-card">
+      <span class="label">CONTACT / EMAIL</span>
+      <h2>POCHI PROGETTI, FATTI BENE</h2>
+      <p>BLUCINELAB lavora meglio quando il contesto è chiaro, il progetto ha peso e la collaborazione richiede visione, rigore e qualità della relazione.</p>
+
+      <div class="field-card" style="margin-top:10px;">
         <span class="label">ADDRESS</span>
         <h3><a href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a></h3>
         <p>Commissioni, collaborazioni, progetti culturali, direzione visiva, sistemi digitali, installazioni.</p>
       </div>
+
+      <div class="field-card">
+        <span class="label">TIMING</span>
+        <p>Indica scadenze, materiali già esistenti, vincoli e finestra di lavoro prevista.</p>
+      </div>
     </div>
   </section>
 
-  <section class="win" id="win-manifesto" aria-label="Manifesto" style="top:180px;left:150px;width:560px;display:none;">
+  <!-- MANIFESTO -->
+  <section class="win" id="win-manifesto" aria-label="Manifesto">
     <div class="win-titlebar" data-drag="win-manifesto">
       <span class="win-icon">📜</span>
       <span class="win-title">MANIFESTO — Un laboratorio contemporaneo</span>
       <div class="win-controls">
         <button class="win-btn" data-minimize="win-manifesto" type="button">_</button>
-        <button class="win-btn close" data-close="win-manifesto" type="button">X</button>
+        <button class="win-btn close" data-close="win-manifesto" type="button">✕</button>
       </div>
     </div>
+
     <div class="win-menubar">
       <span>File</span>
       <span>Print</span>
       <span>Share</span>
     </div>
+
     <div class="win-body" style="min-height:240px;">
-      <span class="label">MANIFESTO / XP MODE</span>
+      <span class="label">MANIFESTO</span>
       <h2>UN LABORATORIO CONTEMPORANEO DELL'IMMAGINE</h2>
-      <p>La home resta chiara. Ogni finestra apre un mondo distinto, ma sempre dentro lo stesso sistema.</p>
+      <p>BLUCINELAB nasce dall'idea che l'immagine non sia una superficie da riempire, ma una forma di lettura del mondo. Per questo lavoriamo tra rigore e immaginazione, metodo e sensibilità, costruzione tecnica e profondità emotiva.</p>
+      <p>Ci interessano progetti capaci di generare presenza, esperienza, memoria, relazione. Progetti culturali, editoriali, installativi, digitali o ibridi, in cui la forma non decora ma orienta, chiarisce e intensifica.</p>
+
+      <div style="margin-top:14px;">
+        <h2>POSIZIONE</h2>
+        <p>Il sito tiene insieme studio, archivio e ricerca. Non presenta una somma di prestazioni, ma una postura.</p>
+      </div>
     </div>
   </section>
 
-  <!-- LAB -->
-  <section class="win chaos-window fullscreen-window" id="win-lab" aria-label="Lab" style="display:none;">
-    <div class="chaos-desktop-bg"></div>
-    <div id="lab-glitch-layer"></div>
-
-    <div class="win-titlebar">
-      <span class="win-icon">🔬</span>
-      <span class="win-title glitch">LAB.EXE — CHAOS VISUAL CORE</span>
+  <!-- GALLERY -->
+  <section class="win" id="win-gallery" aria-label="Gallery">
+    <div class="win-titlebar" data-drag="win-gallery">
+      <span class="win-icon">🖼️</span>
+      <span class="win-title">GALLERY — Segnali e superfici</span>
       <div class="win-controls">
-        <button class="win-btn close" data-close="win-lab" type="button">X</button>
+        <button class="win-btn" data-minimize="win-gallery" type="button">_</button>
+        <button class="win-btn close" data-close="win-gallery" type="button">✕</button>
       </div>
     </div>
 
     <div class="win-menubar">
       <span>File</span>
-      <span>Research</span>
-      <span>Archive</span>
-      <span>Signal</span>
-      <span>Future</span>
+      <span>Image</span>
+      <span>View</span>
     </div>
 
-    <div class="win-body">
-      <div class="lab-shell">
-        <aside class="lab-panel lab-left">
-          <span class="label">MODULES / DIRECT ACCESS</span>
-          <h2>ACCESSI</h2>
+    <div class="win-body" style="min-height:300px;">
+      <span class="label">GALLERY / SIGNALS / BMP / GIF</span>
+      <h2>APRIRE IMMAGINI COME FINESTRE</h2>
+      <p>Questa cartella dimostra la logica: archivio → file → immagine → nuova finestra.</p>
 
-          <div class="lab-list">
-            <button type="button" onclick="labSetView('neon')">NEON_CITY.BMP</button>
-            <button type="button" onclick="labSetView('radar')">RADAR_SIGNAL.PCX</button>
-            <button type="button" onclick="labSetView('memory')">ARCHIVE_MEMORY.GIF</button>
-            <button type="button" onclick="labSetView('system')">SYSTEM_MAP.SYS</button>
-            <button type="button" onclick="labPulse()">SIGNAL.BIN</button>
-            <button type="button" onclick="labBurst()">BURST.EXE</button>
-            <button type="button" onclick="labModeMessage()">MEMORY.LOG</button>
-          </div>
-
-          <div class="lab-block" style="margin-top:14px;">
-            <span class="label">CORE</span>
-            <h3>VECCHIO SITO</h3>
-            <p>Qui ritrovi la materia più vicina al BLUCINELAB precedente: notte, signali, viewer, files, instabilità controllata.</p>
-          </div>
-        </aside>
-
-        <main class="lab-center">
-          <div class="lab-block">
-            <span class="label">LAB / ACTIVE RESEARCH / CHAOS MODE</span>
-            <h1>MATERIALI IN FORMAZIONE, FUTURI POSSIBILI</h1>
-            <p>Questa è la stanza che conserva davvero il vecchio linguaggio del sito.</p>
-            <p>Più scura, più sintetica, più arcade, più densa. Non è sparita. È stata concentrata qui.</p>
-
-            <div style="margin-top:10px;display:flex;flex-wrap:wrap;">
-              <span class="tag yellow">PACMAN</span>
-              <span class="tag cyan">ARCADE</span>
-              <span class="tag magenta">GLITCH</span>
-              <span class="tag green">ARCHIVE</span>
-            </div>
-          </div>
-
-          <div class="lab-block">
-            <span class="label">VIEWER</span>
-            <h3 id="lab-view-title">NEON_CITY.BMP</h3>
-            <div class="lab-viewer" id="lab-viewer">
-              <img id="lab-view-image" alt="Lab view"
-                src="data:image/svg+xml;utf8,
-                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
-                  <rect width='800' height='520' fill='%23000b1f'/>
-                  <rect y='370' width='800' height='150' fill='%23000814'/>
-                  <circle cx='620' cy='120' r='64' fill='%23ff2dfb'/>
-                  <rect x='80' y='210' width='80' height='160' fill='%23001352'/>
-                  <rect x='180' y='180' width='110' height='190' fill='%23001980'/>
-                  <rect x='320' y='150' width='90' height='220' fill='%23001d9e'/>
-                  <rect x='438' y='120' width='130' height='250' fill='%230023c7'/>
-                  <rect x='590' y='190' width='80' height='180' fill='%2300177f'/>
-                  <rect x='690' y='160' width='60' height='210' fill='%230021aa'/>
-                  <g fill='%23fff200'>
-                    <rect x='98' y='236' width='12' height='18'/><rect x='118' y='236' width='12' height='18'/>
-                    <rect x='98' y='264' width='12' height='18'/><rect x='118' y='264' width='12' height='18'/>
-                    <rect x='206' y='210' width='14' height='20'/><rect x='230' y='210' width='14' height='20'/><rect x='254' y='210' width='14' height='20'/>
-                    <rect x='206' y='240' width='14' height='20'/><rect x='254' y='240' width='14' height='20'/>
-                    <rect x='348' y='180' width='14' height='20'/><rect x='372' y='180' width='14' height='20'/>
-                    <rect x='348' y='210' width='14' height='20'/><rect x='372' y='210' width='14' height='20'/>
-                    <rect x='472' y='150' width='16' height='22'/><rect x='500' y='150' width='16' height='22'/><rect x='528' y='150' width='16' height='22'/>
-                    <rect x='472' y='184' width='16' height='22'/><rect x='528' y='184' width='16' height='22'/>
-                  </g>
-                  <rect y='390' width='800' height='8' fill='%2300f6ff'/>
-                  <rect y='408' width='800' height='4' fill='%23ff2dfb'/>
-                </svg>" />
-            </div>
-          </div>
-
-          <div class="lab-block">
-            <span class="label">CURRENT POSITION</span>
-            <h3>NON UNA PAGINA, MA UN NODO</h3>
-            <p>Il LAB non raccoglie tutte le reference. Tiene solo la parte originaria: ricerca, viewer, segnali, instabilità, memoria del sistema.</p>
-          </div>
-        </main>
-
-        <aside class="lab-panel lab-right">
-          <div class="lab-mini-hud">
-            <div class="lab-hud-card">SIGNAL<strong id="lab-signal-num">07</strong></div>
-            <div class="lab-hud-card">NOISE<strong id="lab-noise-num">21</strong></div>
-            <div class="lab-hud-card">FILES<strong id="lab-files-num">12</strong></div>
-            <div class="lab-hud-card">TRACE<strong id="lab-trace-num">84</strong></div>
-          </div>
-
-          <div class="lab-log" id="lab-log">
-            <div class="lab-log-line">[OK] chaos layer mounted</div>
-            <div class="lab-log-line">[OK] viewer ready</div>
-            <div class="lab-log-line">[OK] signal memory online</div>
-            <div class="lab-log-line">[WAIT] anomaly detection</div>
-          </div>
-
-          <div class="lab-block">
-            <span class="label">ANOMALIES</span>
-            <h3>EVENTI</h3>
-            <p>Apri file, cambia viewer, genera burst e lascia che il layer si comporti come un sistema vivo ma controllato.</p>
-          </div>
-        </aside>
+      <div class="file-grid">
+        <button class="file-card" type="button" data-open="win-img-1">
+          <span class="file-icon">📸</span>
+          <span class="file-name">NEON_CITY.BMP</span>
+          <span class="file-meta">open viewer</span>
+        </button>
+        <button class="file-card" type="button" data-open="win-img-2">
+          <span class="file-icon">📸</span>
+          <span class="file-name">RADAR_SIGNAL.PCX</span>
+          <span class="file-meta">open viewer</span>
+        </button>
+        <button class="file-card" type="button" data-open="win-img-3">
+          <span class="file-icon">📸</span>
+          <span class="file-name">ARCHIVE_MEMORY.GIF</span>
+          <span class="file-meta">open viewer</span>
+        </button>
       </div>
     </div>
   </section>
 
-  <!-- WORLDS / THE SIMS -->
-  <section class="win sims-window fullscreen-window" id="win-worlds" aria-label="Worlds" style="display:none;">
-    <div class="win-titlebar">
-      <span class="win-icon">🏡</span>
-      <span class="win-title">WORLDS — BUILD / SPACE / SET</span>
+  <!-- VIEWERS -->
+  <section class="win" id="win-img-1" aria-label="Image 1">
+    <div class="win-titlebar" data-drag="win-img-1">
+      <span class="win-icon">🖼️</span>
+      <span class="win-title">VIEWER — NEON_CITY.BMP</span>
       <div class="win-controls">
-        <button class="win-btn close" data-close="win-worlds" type="button">X</button>
+        <button class="win-btn" data-minimize="win-img-1" type="button">_</button>
+        <button class="win-btn close" data-close="win-img-1" type="button">✕</button>
       </div>
     </div>
-    <div class="win-menubar">
-      <span>Build</span>
-      <span>Rooms</span>
-      <span>Objects</span>
-      <span>Set</span>
-    </div>
-    <div class="win-body">
-      <div class="world-content">
-        <span class="label">WORLDS / SIMS MODE</span>
-        <h1>COSTRUIRE MONDI, STANZE, ATMOSFERE</h1>
-        <p>Questa sezione parla di set design, spatial thinking, costruzione dell’ambiente e organizzazione percettiva.</p>
-
-        <div class="sims-grid">
-          <div class="sims-card">
-            <div class="sims-diamond">◆</div>
-            <h3>ROOM LOGIC</h3>
-            <p>Spazio come sistema.</p>
-          </div>
-          <div class="sims-card">
-            <div class="sims-diamond">◆</div>
-            <h3>OBJECTS</h3>
-            <p>Props, arredo, segnali.</p>
-          </div>
-          <div class="sims-card">
-            <div class="sims-diamond">◆</div>
-            <h3>SET DESIGN</h3>
-            <p>Ambienti che raccontano.</p>
-          </div>
-        </div>
-      </div>
+    <div class="win-menubar"><span>File</span><span>Zoom</span><span>Close</span></div>
+    <div class="win-body" style="min-height:260px;">
+      <span class="label">VIEWER / BITMAP</span>
+      <img class="viewer-image" alt="Neon city"
+        src="data:image/svg+xml;utf8,
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
+          <rect width='800' height='520' fill='%23000b1f'/>
+          <rect y='370' width='800' height='150' fill='%23000814'/>
+          <circle cx='620' cy='120' r='64' fill='%23ff2dfb'/>
+          <rect x='80' y='210' width='80' height='160' fill='%23001352'/>
+          <rect x='180' y='180' width='110' height='190' fill='%23001980'/>
+          <rect x='320' y='150' width='90' height='220' fill='%23001d9e'/>
+          <rect x='438' y='120' width='130' height='250' fill='%230023c7'/>
+          <rect x='590' y='190' width='80' height='180' fill='%2300177f'/>
+          <rect x='690' y='160' width='60' height='210' fill='%230021aa'/>
+          <g fill='%23fff200'>
+            <rect x='98' y='236' width='12' height='18'/><rect x='118' y='236' width='12' height='18'/>
+            <rect x='98' y='264' width='12' height='18'/><rect x='118' y='264' width='12' height='18'/>
+            <rect x='206' y='210' width='14' height='20'/><rect x='230' y='210' width='14' height='20'/><rect x='254' y='210' width='14' height='20'/>
+            <rect x='206' y='240' width='14' height='20'/><rect x='254' y='240' width='14' height='20'/>
+            <rect x='348' y='180' width='14' height='20'/><rect x='372' y='180' width='14' height='20'/>
+            <rect x='348' y='210' width='14' height='20'/><rect x='372' y='210' width='14' height='20'/>
+            <rect x='472' y='150' width='16' height='22'/><rect x='500' y='150' width='16' height='22'/><rect x='528' y='150' width='16' height='22'/>
+            <rect x='472' y='184' width='16' height='22'/><rect x='528' y='184' width='16' height='22'/>
+          </g>
+          <rect y='390' width='800' height='8' fill='%2300f6ff'/>
+          <rect y='408' width='800' height='4' fill='%23ff2dfb'/>
+        </svg>"/>
     </div>
   </section>
 
-  <!-- CITY / GTA -->
-  <section class="win city-window fullscreen-window" id="win-city" aria-label="City" style="display:none;">
-    <div class="win-titlebar">
-      <span class="win-icon">🌃</span>
-      <span class="win-title">CITY — NIGHT / MAP / LOCATION</span>
+  <section class="win" id="win-img-2" aria-label="Image 2">
+    <div class="win-titlebar" data-drag="win-img-2">
+      <span class="win-icon">🖼️</span>
+      <span class="win-title">VIEWER — RADAR_SIGNAL.PCX</span>
       <div class="win-controls">
-        <button class="win-btn close" data-close="win-city" type="button">X</button>
+        <button class="win-btn" data-minimize="win-img-2" type="button">_</button>
+        <button class="win-btn close" data-close="win-img-2" type="button">✕</button>
       </div>
     </div>
-    <div class="win-menubar">
-      <span>Map</span>
-      <span>Drive</span>
-      <span>Signals</span>
-      <span>Location</span>
-    </div>
-    <div class="win-body">
-      <div class="world-content">
-        <span class="label">CITY / GTA MODE</span>
-        <h1>URBANITÀ, PRODUZIONE, IMMAGINARIO NOTTURNO</h1>
-        <p>Sezione per location, città, notte, produzione e immaginario metropolitano.</p>
-
-        <div class="hud">
-          <div class="hud-card">ZONE<span class="hud-value">05</span></div>
-          <div class="hud-card">LIGHT<span class="hud-value">87</span></div>
-          <div class="hud-card">RISK<span class="hud-value">14</span></div>
-          <div class="hud-card">FLOW<span class="hud-value">99</span></div>
-        </div>
-      </div>
+    <div class="win-menubar"><span>File</span><span>Signal</span><span>Close</span></div>
+    <div class="win-body" style="min-height:260px;">
+      <span class="label">VIEWER / SIGNAL</span>
+      <img class="viewer-image" alt="Radar"
+        src="data:image/svg+xml;utf8,
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
+          <rect width='800' height='520' fill='%2300040a'/>
+          <circle cx='400' cy='260' r='170' fill='none' stroke='%2300ff66' stroke-width='4'/>
+          <circle cx='400' cy='260' r='120' fill='none' stroke='%2300ff66' stroke-width='4'/>
+          <circle cx='400' cy='260' r='70' fill='none' stroke='%2300ff66' stroke-width='4'/>
+          <line x1='400' y1='90' x2='400' y2='430' stroke='%2300ff66' stroke-width='4'/>
+          <line x1='230' y1='260' x2='570' y2='260' stroke='%2300ff66' stroke-width='4'/>
+          <path d='M400 260 L550 120 A170 170 0 0 1 570 260 Z' fill='%2300ff66' opacity='.18'/>
+          <circle cx='515' cy='188' r='10' fill='%23fff200'/>
+          <circle cx='335' cy='320' r='8' fill='%23ff2dfb'/>
+          <circle cx='455' cy='332' r='6' fill='%2300f6ff'/>
+          <rect x='20' y='20' width='180' height='40' fill='%23001210'/>
+          <text x='34' y='47' font-family='monospace' font-size='24' fill='%2300ff66'>RADAR_SCAN_02</text>
+        </svg>"/>
     </div>
   </section>
 
-  <!-- PLAY / PACMAN -->
-  <section class="win arcade-window fullscreen-window" id="win-play" aria-label="Play" style="display:none;">
-    <div class="win-titlebar">
-      <span class="win-icon">👾</span>
-      <span class="win-title">PLAY — ARCADE / PAC MODE</span>
+  <section class="win" id="win-img-3" aria-label="Image 3">
+    <div class="win-titlebar" data-drag="win-img-3">
+      <span class="win-icon">🖼️</span>
+      <span class="win-title">VIEWER — ARCHIVE_MEMORY.GIF</span>
       <div class="win-controls">
-        <button class="win-btn close" data-close="win-play" type="button">X</button>
+        <button class="win-btn" data-minimize="win-img-3" type="button">_</button>
+        <button class="win-btn close" data-close="win-img-3" type="button">✕</button>
       </div>
     </div>
-    <div class="win-menubar">
-      <span>Arcade</span>
-      <span>Bonus</span>
-      <span>Loop</span>
-      <span>Play</span>
-    </div>
-    <div class="win-body">
-      <div class="world-content">
-        <span class="label">PLAY / PACMAN MODE</span>
-        <h1>GIOCO, RITMO, INTERAZIONE</h1>
-        <p>Questa sezione può raccogliere micro-giochi, easter egg e comportamenti ludici del sito.</p>
-
-        <div class="arcade-board">
-          <div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div>
-          <div class="dot-cell wall"></div><div class="dot-cell pac"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell ghost"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell wall"></div>
-          <div class="dot-cell wall"></div><div class="dot-cell"></div><div class="dot-cell wall"></div><div class="dot-cell"></div><div class="dot-cell wall"></div><div class="dot-cell"></div><div class="dot-cell wall"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell wall"></div>
-          <div class="dot-cell wall"></div><div class="dot-cell"></div><div class="dot-cell wall"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell wall"></div><div class="dot-cell"></div><div class="dot-cell ghost"></div><div class="dot-cell wall"></div>
-          <div class="dot-cell wall"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell wall"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell"></div><div class="dot-cell wall"></div>
-          <div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div><div class="dot-cell wall"></div>
-        </div>
-      </div>
+    <div class="win-menubar"><span>File</span><span>Memory</span><span>Close</span></div>
+    <div class="win-body" style="min-height:260px;">
+      <span class="label">VIEWER / MEMORY</span>
+      <img class="viewer-image" alt="Memory archive"
+        src="data:image/svg+xml;utf8,
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
+          <rect width='800' height='520' fill='%230a0018'/>
+          <rect x='60' y='80' width='680' height='360' fill='%2300122a' stroke='%2300f6ff' stroke-width='4'/>
+          <rect x='90' y='110' width='160' height='120' fill='%23ff2dfb' opacity='.8'/>
+          <rect x='270' y='110' width='200' height='70' fill='%2300f6ff' opacity='.8'/>
+          <rect x='270' y='194' width='110' height='36' fill='%23fff200' opacity='.85'/>
+          <rect x='500' y='110' width='190' height='120' fill='%2300ff66' opacity='.8'/>
+          <rect x='90' y='260' width='600' height='30' fill='%23fff200'/>
+          <rect x='90' y='310' width='320' height='90' fill='%2300ff66' opacity='.7'/>
+          <rect x='430' y='310' width='260' height='90' fill='%23ff2dfb' opacity='.7'/>
+          <text x='108' y='278' font-family='monospace' font-size='24' fill='%23000000'>ARCHIVE / MEMORY / SIGNAL / TRACE</text>
+        </svg>"/>
     </div>
   </section>
 
-  <!-- SIGNALS / SPACE INVADERS -->
-  <section class="win signal-window fullscreen-window" id="win-signals" aria-label="Signals" style="display:none;">
-    <div class="win-titlebar">
-      <span class="win-icon">📡</span>
-      <span class="win-title">SIGNALS — RADAR / DEFENSE / SCAN</span>
-      <div class="win-controls">
-        <button class="win-btn close" data-close="win-signals" type="button">X</button>
-      </div>
-    </div>
-    <div class="win-menubar">
-      <span>Scan</span>
-      <span>Defense</span>
-      <span>Wave</span>
-      <span>Signal</span>
-    </div>
-    <div class="win-body">
-      <div class="world-content">
-        <span class="label">SIGNALS / INVADERS MODE</span>
-        <h1>SEGNALI, ALLERTA, RILEVAMENTO</h1>
-        <p>Qui vivono monitoraggio, rilevazione, immagini come impulsi e sistemi di allarme percettivo.</p>
-
-        <div class="radar">
-          <div class="radar-ring r1"></div>
-          <div class="radar-ring r2"></div>
-          <div class="radar-ring r3"></div>
-          <div class="blip" style="left:60%; top:28%;"></div>
-          <div class="blip" style="left:36%; top:58%;"></div>
-          <div class="blip" style="left:68%; top:66%;"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- GROWTH / TAMAGOTCHI -->
-  <section class="win growth-window fullscreen-window" id="win-growth" aria-label="Growth" style="display:none;">
-    <div class="win-titlebar">
-      <span class="win-icon">🥚</span>
-      <span class="win-title">GROWTH — CARE / PROCESS / EVOLUTION</span>
-      <div class="win-controls">
-        <button class="win-btn close" data-close="win-growth" type="button">X</button>
-      </div>
-    </div>
-    <div class="win-menubar">
-      <span>Care</span>
-      <span>Feed</span>
-      <span>Status</span>
-      <span>Grow</span>
-    </div>
-    <div class="win-body">
-      <div class="world-content">
-        <span class="label">GROWTH / TAMAGOTCHI MODE</span>
-        <h1>PROGETTI COME ORGANISMI VIVI</h1>
-        <p>Sezione perfetta per parlare di processi, incubazione, crescita, cura e maturazione dei lavori.</p>
-
-        <div class="lcd-screen">
-          <div class="lcd-pet">(•‿•)</div>
-          <div class="lcd-stats">
-            <div class="lcd-stat">IDEA 92</div>
-            <div class="lcd-stat">FORM 78</div>
-            <div class="lcd-stat">CARE 99</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
+  <!-- TASKBAR -->
   <div id="taskbar">
-    <button id="taskbar-start" type="button">START</button>
+    <button id="taskbar-start" type="button">start</button>
     <div id="taskbar-tasks"></div>
     <div id="clock">00:00:00</div>
   </div>
 
+  <!-- START MENU -->
   <nav id="start-menu" aria-label="Start Menu">
     <div class="start-banner">BLUCINELAB</div>
     <div class="start-items">
       <button class="start-item" data-open="win-archive" type="button"><span class="start-item-icon">📁</span> Archive</button>
       <button class="start-item" data-open="win-studio" type="button"><span class="start-item-icon">🎨</span> Studio</button>
       <button class="start-item" data-open="win-lab" type="button"><span class="start-item-icon">🔬</span> Lab</button>
-      <button class="start-item" data-open="win-worlds" type="button"><span class="start-item-icon">🏡</span> Worlds</button>
-      <button class="start-item" data-open="win-city" type="button"><span class="start-item-icon">🌃</span> City</button>
-      <button class="start-item" data-open="win-play" type="button"><span class="start-item-icon">👾</span> Play</button>
-      <button class="start-item" data-open="win-signals" type="button"><span class="start-item-icon">📡</span> Signals</button>
-      <button class="start-item" data-open="win-growth" type="button"><span class="start-item-icon">🥚</span> Growth</button>
       <button class="start-item" data-open="win-contact" type="button"><span class="start-item-icon">📧</span> Contact</button>
       <button class="start-item" data-open="win-manifesto" type="button"><span class="start-item-icon">📜</span> Manifesto</button>
+      <button class="start-item" data-open="win-gallery" type="button"><span class="start-item-icon">🖼️</span> Gallery</button>
+      <button class="start-item" id="sm-pacman" type="button"><span class="start-item-icon">👾</span> Pac-Man</button>
       <button class="start-item" id="sm-shutdown" type="button"><span class="start-item-icon">🔴</span> Shut Down</button>
     </div>
   </nav>
 
-  <div id="boot">
-    <div id="boot-logo">BLUCINELAB</div>
-    <div id="boot-sub">VISUAL STUDIO OS — BOLOGNA</div>
-    <div id="boot-bar-wrap">
-      <div id="boot-bar"></div>
+  <!-- BOOT -->
+  <div id="boot" style="position:fixed;inset:0;z-index:99998;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:#000;">
+    <div id="boot-logo" style="font-family:'Press Start 2P', monospace;font-size:clamp(18px,4vw,34px);letter-spacing:4px;color:#00ff00;text-shadow:0 0 20px rgba(0,255,0,.8),0 0 42px rgba(0,255,0,.34);">BLUCINELAB</div>
+    <div id="boot-sub" style="font-family:'VT323', monospace;font-size:28px;letter-spacing:2px;color:#9d9d9d;text-align:center;">VISUAL STUDIO OS — BOLOGNA</div>
+    <div id="boot-bar-wrap" style="position:relative;overflow:hidden;width:360px;height:24px;border:3px solid #00ff00;background:rgba(0,0,0,.75);">
+      <div id="boot-bar" style="width:0%;height:100%;background:linear-gradient(90deg,#00ff00 0%, #00b53f 100%);transition:width .1s linear;"></div>
     </div>
-    <div id="boot-text"></div>
+    <div id="boot-text" style="width:380px;height:96px;overflow:hidden;text-align:left;font-family:'VT323', monospace;font-size:22px;color:#00ff00;white-space:pre-line;"></div>
   </div>
 
   <script>
@@ -2023,34 +1680,41 @@
 
     const state = {
       topZ: 200,
+      popupShown: false,
       bootDone: false,
       selectedIcon: null,
-      labChaosStarted: false,
-      labCounters: {
-        signal: 7,
-        noise: 21,
-        files: 12,
-        trace: 84
+      konamiSeq: [],
+      pac: {
+        active: false,
+        x: 200,
+        y: 200,
+        dirX: 2.4,
+        dirY: 0,
+        score: 0,
+        lives: 3,
+        powerMode: false,
+        powerTimer: 0,
+        dots: [],
+        ghosts: [],
+        animationId: null
       }
     };
 
-    // cursor
+    /* CURSOR */
     (function initCursor(){
       const cur = $('#cur');
       if (!cur) return;
-
       const hasFinePointer = window.matchMedia('(pointer:fine)').matches;
       if (!hasFinePointer) return;
 
       document.body.classList.add('has-custom-cursor');
-
       document.addEventListener('mousemove', e => {
         cur.style.left = e.clientX + 'px';
         cur.style.top = e.clientY + 'px';
       });
     })();
 
-    // clock
+    /* CLOCK */
     function updateClock(){
       const now = new Date();
       const clock = $('#clock');
@@ -2061,46 +1725,67 @@
         String(now.getMinutes()).padStart(2,'0') + ':' +
         String(now.getSeconds()).padStart(2,'0');
     }
+
     setInterval(updateClock, 1000);
     updateClock();
 
-    // boot
+    /* BOOT */
     (function initBoot(){
       const boot = $('#boot');
       const bootBar = $('#boot-bar');
       const bootText = $('#boot-text');
-      if (!boot || !bootBar || !bootText) return;
 
-      const lines = [
-        'BLUCINELAB OS — AVVIO SISTEMA',
-        'Caricamento desktop XP... OK',
-        'Montaggio finestre... OK',
-        'Preparazione mondi... OK',
-        'Ripristino LAB core... OK',
+      if (!boot || !bootBar || !bootText) {
+        state.bootDone = true;
+        return;
+      }
+
+      const alreadyBooted = sessionStorage.getItem('blucinelab_booted');
+
+      if (alreadyBooted) {
+        boot.remove();
+        state.bootDone = true;
+        showWelcomePopupOnce();
+        return;
+      }
+
+      const bootLines = [
+        'BLUCINELAB OS v1.4 — AVVIO SISTEMA',
+        'Caricamento shell XP... OK',
+        'Inizializzazione ARCHIVE... OK',
+        'Inizializzazione STUDIO... OK',
+        'Montaggio modulo BIOS/LAB... OK',
+        'Avvio interfaccia utente... OK',
         'SISTEMA PRONTO.'
       ];
 
-      let i = 0;
-      function step(){
-        if (i < lines.length) {
-          bootText.textContent += lines[i] + '\n';
-          i++;
-          bootBar.style.width = Math.round((i / lines.length) * 100) + '%';
-          setTimeout(step, 260);
+      let lineIdx = 0;
+
+      function bootStep(){
+        if (lineIdx < bootLines.length) {
+          bootText.textContent += bootLines[lineIdx] + '\n';
+          lineIdx++;
+          const progress = Math.round((lineIdx / bootLines.length) * 100);
+          bootBar.style.width = progress + '%';
+          setTimeout(bootStep, 220);
         } else {
+          sessionStorage.setItem('blucinelab_booted', '1');
           setTimeout(() => {
-            boot.style.transition = 'opacity .45s ease';
+            boot.style.transition = 'opacity .5s ease';
             boot.style.opacity = '0';
             setTimeout(() => {
               boot.remove();
               state.bootDone = true;
-            }, 450);
-          }, 400);
+              showWelcomePopupOnce();
+            }, 500);
+          }, 500);
         }
       }
-      setTimeout(step, 400);
+
+      setTimeout(bootStep, 500);
     })();
 
+    /* WINDOWS */
     function bringToFront(win){
       if (!win) return;
       win.style.zIndex = ++state.topZ;
@@ -2117,18 +1802,6 @@
       if (menubar) menubar.style.display = '';
     }
 
-    function setModeLabel(id){
-      const map = {
-        'win-lab':'MODE: LAB',
-        'win-worlds':'MODE: WORLDS',
-        'win-city':'MODE: CITY',
-        'win-play':'MODE: PLAY',
-        'win-signals':'MODE: SIGNALS',
-        'win-growth':'MODE: GROWTH'
-      };
-      $('#lives-disp').textContent = map[id] || 'MODE: XP HOME';
-    }
-
     function openWindow(id){
       const win = document.getElementById(id);
       if (!win) return;
@@ -2142,12 +1815,6 @@
       }
 
       bringToFront(win);
-      setModeLabel(id);
-
-      if (id === 'win-lab') {
-        startLabChaos();
-      }
-
       updateTaskbar();
     }
 
@@ -2157,20 +1824,11 @@
 
       if (id === 'hero-win') {
         openWindow(id);
+        bringToFront(win);
         return;
       }
 
       win.style.display = 'none';
-
-      const anyWorldOpen = [
-        'win-lab','win-worlds','win-city','win-play','win-signals','win-growth'
-      ].some(worldId => {
-        const w = document.getElementById(worldId);
-        return w && getComputedStyle(w).display !== 'none';
-      });
-
-      $('#lives-disp').textContent = anyWorldOpen ? $('#lives-disp').textContent : 'MODE: XP HOME';
-
       updateTaskbar();
     }
 
@@ -2195,7 +1853,12 @@
 
     function maximizeWindow(id){
       const win = document.getElementById(id);
-      if (!win || win.classList.contains('fullscreen-window')) return;
+      if (!win) return;
+
+      if (id === 'win-lab') {
+        openWindow(id);
+        return;
+      }
 
       if (win.dataset.maximized === '1') {
         win.style.top = win.dataset.prevTop || '';
@@ -2209,10 +1872,10 @@
         win.dataset.prevW = win.style.width;
         win.dataset.prevH = win.style.height;
 
-        win.style.top = '40px';
-        win.style.left = '16px';
-        win.style.width = (window.innerWidth - 32) + 'px';
-        win.style.height = (window.innerHeight - 86) + 'px';
+        win.style.top = '42px';
+        win.style.left = '20px';
+        win.style.width = (window.innerWidth - 40) + 'px';
+        win.style.height = (window.innerHeight - 90) + 'px';
         win.dataset.maximized = '1';
       }
 
@@ -2249,10 +1912,11 @@
       });
     }
 
+    /* DRAG */
     function makeWindowDraggable(titlebar){
       const winId = titlebar.dataset.drag;
       const win = document.getElementById(winId);
-      if (!win || win.classList.contains('fullscreen-window')) return;
+      if (!win || win.classList.contains('world-fullscreen')) return;
 
       let dragging = false;
       let ox = 0;
@@ -2260,28 +1924,53 @@
 
       titlebar.addEventListener('mousedown', e => {
         if (e.target.closest('.win-btn')) return;
+
         dragging = true;
         const rect = win.getBoundingClientRect();
         ox = e.clientX - rect.left;
         oy = e.clientY - rect.top;
+
         bringToFront(win);
         e.preventDefault();
       });
 
       document.addEventListener('mousemove', e => {
         if (!dragging) return;
-        const maxLeft = window.innerWidth - 120;
-        const maxTop = window.innerHeight - 60;
+
+        const maxLeft = window.innerWidth - 140;
+        const maxTop = window.innerHeight - 80;
 
         win.style.left = Math.max(0, Math.min(maxLeft, e.clientX - ox)) + 'px';
-        win.style.top = Math.max(28, Math.min(maxTop, e.clientY - oy)) + 'px';
+        win.style.top = Math.max(32, Math.min(maxTop, e.clientY - oy)) + 'px';
       });
 
       document.addEventListener('mouseup', () => dragging = false);
+
+      titlebar.addEventListener('touchstart', e => {
+        if (e.target.closest('.win-btn')) return;
+        dragging = true;
+        const t = e.touches[0];
+        const rect = win.getBoundingClientRect();
+        ox = t.clientX - rect.left;
+        oy = t.clientY - rect.top;
+        bringToFront(win);
+      }, { passive:true });
+
+      document.addEventListener('touchmove', e => {
+        if (!dragging) return;
+        const t = e.touches[0];
+        const maxLeft = window.innerWidth - 140;
+        const maxTop = window.innerHeight - 80;
+        win.style.left = Math.max(0, Math.min(maxLeft, t.clientX - ox)) + 'px';
+        win.style.top = Math.max(32, Math.min(maxTop, t.clientY - oy)) + 'px';
+      }, { passive:true });
+
+      document.addEventListener('touchend', () => dragging = false);
     }
 
     $$('[data-drag]').forEach(makeWindowDraggable);
 
+    /* BUTTONS */
     $$('[data-close]').forEach(btn => {
       btn.addEventListener('click', () => closeWindow(btn.dataset.close));
     });
@@ -2294,7 +1983,7 @@
       btn.addEventListener('click', () => maximizeWindow(btn.dataset.maximize));
     });
 
-    // ICONS CLICKABLE
+    /* DESKTOP ICONS - UN CLICK */
     $$('.desktop-icon[data-win]').forEach(icon => {
       icon.addEventListener('click', () => {
         $$('.desktop-icon').forEach(i => i.classList.remove('is-selected'));
@@ -2304,7 +1993,15 @@
       });
     });
 
-    // START MENU
+    /* GENERIC OPEN BUTTONS */
+    $$('[data-open]').forEach(item => {
+      item.addEventListener('click', () => {
+        openWindow(item.dataset.open);
+        $('#start-menu')?.classList.remove('open');
+      });
+    });
+
+    /* START MENU */
     const startMenu = $('#start-menu');
     const startButton = $('#taskbar-start');
 
@@ -2321,18 +2018,11 @@
       });
     }
 
-    $$('[data-open]').forEach(item => {
-      item.addEventListener('click', () => {
-        openWindow(item.dataset.open);
-        startMenu?.classList.remove('open');
-      });
-    });
-
     $('#sm-shutdown')?.addEventListener('click', () => {
       document.body.innerHTML = `
         <div style="background:#000;color:#00ff66;font-family:'Press Start 2P',monospace;font-size:14px;display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:20px;">
           <div>È SICURO SPEGNERE IL COMPUTER</div>
-          <div style="font-size:9px;color:#808080;">BLUCINELAB OS</div>
+          <div style="font-size:9px;color:#808080;">BLUCINELAB OS v1.4</div>
           <button onclick="location.reload()" style="font-family:'Press Start 2P',monospace;font-size:8px;padding:10px 20px;background:#000;color:#00ff66;border:2px solid #00ff66;cursor:pointer;margin-top:20px;">
             ↺ RIAVVIA
           </button>
@@ -2340,198 +2030,394 @@
       `;
     });
 
-    // LAB CHAOS
-    function labLog(message){
-      const log = $('#lab-log');
-      if (!log) return;
-      const row = document.createElement('div');
-      row.className = 'lab-log-line';
-      row.textContent = message;
-      log.prepend(row);
+    /* FOCUS */
+    $$('.win').forEach(win => {
+      win.addEventListener('mousedown', () => bringToFront(win));
+    });
 
-      const rows = $$('.lab-log-line', log);
-      if (rows.length > 8) {
-        rows[rows.length - 1].remove();
-      }
-    }
+    /* ALERTS */
+    let alertZ = 9000;
 
-    function updateLabHud(){
-      $('#lab-signal-num').textContent = String(state.labCounters.signal).padStart(2,'0');
-      $('#lab-noise-num').textContent = String(state.labCounters.noise).padStart(2,'0');
-      $('#lab-files-num').textContent = String(state.labCounters.files).padStart(2,'0');
-      $('#lab-trace-num').textContent = String(state.labCounters.trace).padStart(2,'0');
-    }
+    function showAlert(title, msg, onOk = null){
+      const w = document.createElement('div');
+      w.className = 'win win-alert';
+      w.style.top = (110 + Math.random() * 80) + 'px';
+      w.style.left = (Math.max(20, window.innerWidth / 2 - 170 + Math.random() * 80)) + 'px';
+      w.style.zIndex = ++alertZ;
 
-    function labGlitchNow(){
-      const layer = $('#lab-glitch-layer');
-      const lab = $('#win-lab');
-      if (!layer || !lab || getComputedStyle(lab).display === 'none') return;
+      w.innerHTML = `
+        <div class="win-titlebar" style="background:linear-gradient(90deg,#245edb,#3a6ff0)">
+          <span class="win-icon">⚠</span>
+          <span class="win-title">${title}</span>
+          <div class="win-controls">
+            <button class="win-btn close" type="button">✕</button>
+          </div>
+        </div>
+        <div class="win-body">
+          <div class="alert-row">
+            <span class="alert-icon">🔔</span>
+            <span class="alert-msg">${msg.replace(/\n/g, '<br>')}</span>
+          </div>
+          <div class="alert-btns">
+            <button class="alert-ok" type="button">OK</button>
+          </div>
+        </div>
+      `;
 
-      const bar = document.createElement('div');
-      bar.className = 'glitch-bar';
-      bar.style.top = Math.floor(Math.random() * (window.innerHeight - 20)) + 'px';
-      bar.style.height = (6 + Math.random() * 18) + 'px';
-      layer.appendChild(bar);
-      setTimeout(() => bar.remove(), 800);
+      document.body.appendChild(w);
+      bringToFront(w);
 
-      if (Math.random() > 0.5) {
-        const burst = document.createElement('div');
-        burst.className = 'noise-burst';
-        burst.style.top = Math.floor(Math.random() * (window.innerHeight - 40)) + 'px';
-        layer.appendChild(burst);
-        setTimeout(() => burst.remove(), 300);
-      }
-    }
+      const closeBtn = $('.close', w);
+      const okBtn = $('.alert-ok', w);
 
-    function startLabChaos(){
-      if (state.labChaosStarted) return;
-      state.labChaosStarted = true;
-
-      setInterval(() => {
-        if ($('#win-lab') && getComputedStyle($('#win-lab')).display !== 'none') {
-          if (Math.random() > 0.42) {
-            labGlitchNow();
-            state.labCounters.noise += 1;
-            state.labCounters.trace += 1;
-            updateLabHud();
-          }
-        }
-      }, 2600);
-
-      setInterval(() => {
-        if ($('#win-lab') && getComputedStyle($('#win-lab')).display !== 'none') {
-          if (Math.random() > 0.66) {
-            labLog('[SCAN] signal fluctuation detected');
-          }
-        }
-      }, 4800);
-    }
-
-    function labSetView(mode){
-      const title = $('#lab-view-title');
-      const img = $('#lab-view-image');
-      if (!title || !img) return;
-
-      const sources = {
-        neon: {
-          title: 'NEON_CITY.BMP',
-          src: `data:image/svg+xml;utf8,
-          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
-            <rect width='800' height='520' fill='%23000b1f'/>
-            <rect y='370' width='800' height='150' fill='%23000814'/>
-            <circle cx='620' cy='120' r='64' fill='%23ff2dfb'/>
-            <rect x='80' y='210' width='80' height='160' fill='%23001352'/>
-            <rect x='180' y='180' width='110' height='190' fill='%23001980'/>
-            <rect x='320' y='150' width='90' height='220' fill='%23001d9e'/>
-            <rect x='438' y='120' width='130' height='250' fill='%230023c7'/>
-            <rect x='590' y='190' width='80' height='180' fill='%2300177f'/>
-            <rect x='690' y='160' width='60' height='210' fill='%230021aa'/>
-            <g fill='%23fff200'>
-              <rect x='98' y='236' width='12' height='18'/><rect x='118' y='236' width='12' height='18'/>
-              <rect x='98' y='264' width='12' height='18'/><rect x='118' y='264' width='12' height='18'/>
-              <rect x='206' y='210' width='14' height='20'/><rect x='230' y='210' width='14' height='20'/><rect x='254' y='210' width='14' height='20'/>
-              <rect x='206' y='240' width='14' height='20'/><rect x='254' y='240' width='14' height='20'/>
-            </g>
-            <rect y='390' width='800' height='8' fill='%2300f6ff'/>
-            <rect y='408' width='800' height='4' fill='%23ff2dfb'/>
-          </svg>`
-        },
-        radar: {
-          title: 'RADAR_SIGNAL.PCX',
-          src: `data:image/svg+xml;utf8,
-          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
-            <rect width='800' height='520' fill='%2300040a'/>
-            <circle cx='400' cy='260' r='170' fill='none' stroke='%2300ff66' stroke-width='4'/>
-            <circle cx='400' cy='260' r='120' fill='none' stroke='%2300ff66' stroke-width='4'/>
-            <circle cx='400' cy='260' r='70' fill='none' stroke='%2300ff66' stroke-width='4'/>
-            <line x1='400' y1='90' x2='400' y2='430' stroke='%2300ff66' stroke-width='4'/>
-            <line x1='230' y1='260' x2='570' y2='260' stroke='%2300ff66' stroke-width='4'/>
-            <path d='M400 260 L550 120 A170 170 0 0 1 570 260 Z' fill='%2300ff66' opacity='.18'/>
-            <circle cx='515' cy='188' r='10' fill='%23fff200'/>
-            <circle cx='335' cy='320' r='8' fill='%23ff2dfb'/>
-            <circle cx='455' cy='332' r='6' fill='%2300f6ff'/>
-          </svg>`
-        },
-        memory: {
-          title: 'ARCHIVE_MEMORY.GIF',
-          src: `data:image/svg+xml;utf8,
-          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
-            <rect width='800' height='520' fill='%230a0018'/>
-            <rect x='60' y='80' width='680' height='360' fill='%2300122a' stroke='%2300f6ff' stroke-width='4'/>
-            <rect x='90' y='110' width='160' height='120' fill='%23ff2dfb' opacity='.8'/>
-            <rect x='270' y='110' width='200' height='70' fill='%2300f6ff' opacity='.8'/>
-            <rect x='270' y='194' width='110' height='36' fill='%23fff200' opacity='.85'/>
-            <rect x='500' y='110' width='190' height='120' fill='%2300ff66' opacity='.8'/>
-            <rect x='90' y='260' width='600' height='30' fill='%23fff200'/>
-            <rect x='90' y='310' width='320' height='90' fill='%2300ff66' opacity='.7'/>
-            <rect x='430' y='310' width='260' height='90' fill='%23ff2dfb' opacity='.7'/>
-          </svg>`
-        },
-        system: {
-          title: 'SYSTEM_MAP.SYS',
-          src: `data:image/svg+xml;utf8,
-          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
-            <rect width='800' height='520' fill='%23000a10'/>
-            <rect x='40' y='40' width='720' height='440' fill='%23001318' stroke='%233cff6a' stroke-width='4'/>
-            <rect x='90' y='110' width='140' height='80' fill='%2300f6ff' opacity='.85'/>
-            <rect x='290' y='80' width='220' height='120' fill='%23ff2dfb' opacity='.75'/>
-            <rect x='560' y='120' width='150' height='90' fill='%23fff200' opacity='.82'/>
-            <rect x='130' y='270' width='220' height='110' fill='%233cff6a' opacity='.75'/>
-            <rect x='420' y='250' width='220' height='130' fill='%2300f6ff' opacity='.45'/>
-            <line x1='230' y1='150' x2='290' y2='140' stroke='%23fff200' stroke-width='4'/>
-            <line x1='510' y1='140' x2='560' y2='165' stroke='%233cff6a' stroke-width='4'/>
-            <line x1='350' y1='325' x2='420' y2='315' stroke='%23ff2dfb' stroke-width='4'/>
-          </svg>`
-        }
+      const destroy = () => {
+        w.remove();
+        if (typeof onOk === 'function') onOk();
       };
 
-      const item = sources[mode];
-      if (!item) return;
+      closeBtn?.addEventListener('click', () => w.remove());
+      okBtn?.addEventListener('click', destroy);
 
-      title.textContent = item.title;
-      img.src = item.src;
-
-      state.labCounters.files += 1;
-      state.labCounters.signal += 1;
-      state.labCounters.trace += 2;
-      updateLabHud();
-
-      labLog('[OPEN] ' + item.title);
-      $('#score-num').textContent = String(Number($('#score-num').textContent) + 15);
-
-      labGlitchNow();
+      return w;
     }
 
-    function labPulse(){
-      state.labCounters.signal += 3;
-      state.labCounters.noise += 2;
-      state.labCounters.trace += 1;
-      updateLabHud();
-      labLog('[EXEC] SIGNAL.BIN pulse injected');
-      $('#score-num').textContent = String(Number($('#score-num').textContent) + 25);
-      labGlitchNow();
+    function showWelcomePopupOnce(){
+      if (state.popupShown) return;
+      state.popupShown = true;
+
+      setTimeout(() => {
+        showAlert(
+          'BENVENUTO',
+          'Home XP stabile.\nApri ARCHIVE, STUDIO, LAB, CONTACT, GALLERY e MANIFEST.'
+        );
+      }, 900);
     }
 
-    function labBurst(){
-      state.labCounters.signal += 5;
-      state.labCounters.noise += 6;
-      state.labCounters.trace += 3;
-      updateLabHud();
-      labLog('[EXEC] BURST.EXE noise event');
-      $('#score-num').textContent = String(Number($('#score-num').textContent) + 50);
-      for (let i = 0; i < 4; i++) {
-        setTimeout(() => labGlitchNow(), i * 120);
+    /* EASTER EGG */
+    $('#egg-btn')?.addEventListener('click', () => {
+      showAlert(
+        '??? INSERT COIN ???',
+        'Hai trovato il segreto.\nPac-Man è attivabile dal menu Start.'
+      );
+    });
+
+    const KONAMI = [
+      'ArrowUp','ArrowUp',
+      'ArrowDown','ArrowDown',
+      'ArrowLeft','ArrowRight',
+      'ArrowLeft','ArrowRight',
+      'b','a'
+    ];
+
+    document.addEventListener('keydown', e => {
+      state.konamiSeq.push(e.key);
+      state.konamiSeq = state.konamiSeq.slice(-10);
+
+      if (JSON.stringify(state.konamiSeq) === JSON.stringify(KONAMI)) {
+        showAlert('🌈 CHEAT CODE!', 'MODALITÀ ARCOBALENO ATTIVATA!');
+        document.body.style.animation = 'rainbowShift 1.2s linear infinite';
+        if (!$('#rainbow-style')) {
+          const style = document.createElement('style');
+          style.id = 'rainbow-style';
+          style.textContent = `
+            @keyframes rainbowShift {
+              0% { filter:hue-rotate(0deg); }
+              100% { filter:hue-rotate(360deg); }
+            }
+          `;
+          document.head.appendChild(style);
+        }
+      }
+    });
+
+    /* PACMAN */
+    const pacLayer = $('#pacman-layer');
+    const pacEl = $('#pac');
+
+    function updatePacHUD(){
+      $('#score-num').textContent = String(state.pac.score);
+      $('#lives-disp').textContent =
+        'LIVES: ' +
+        '♥'.repeat(state.pac.lives) +
+        '♡'.repeat(3 - state.pac.lives);
+    }
+
+    function resetPacDisplay(){
+      pacEl.style.display = state.pac.active ? 'block' : 'none';
+
+      $$('.ghost', pacLayer).forEach(g => {
+        g.style.display = state.pac.active ? 'block' : 'none';
+      });
+
+      $$('.dot', pacLayer).forEach(d => {
+        d.style.display = state.pac.active ? 'block' : 'none';
+      });
+    }
+
+    function spawnDots(){
+      $$('.dot', pacLayer).forEach(d => d.remove());
+      state.pac.dots.length = 0;
+
+      const totalDots = 30;
+
+      for (let i = 0; i < totalDots; i++) {
+        const dot = document.createElement('div');
+        const power = i % 10 === 0;
+
+        dot.className = power ? 'dot power-dot' : 'dot';
+
+        const x = 120 + Math.random() * Math.max(100, window.innerWidth - 200);
+        const y = 60 + Math.random() * Math.max(100, window.innerHeight - 130);
+
+        dot.style.left = x + 'px';
+        dot.style.top = y + 'px';
+        pacLayer.appendChild(dot);
+
+        state.pac.dots.push({
+          el: dot,
+          x,
+          y,
+          eaten: false,
+          power
+        });
       }
     }
 
-    function labModeMessage(){
-      state.labCounters.trace += 4;
-      updateLabHud();
-      labLog('[READ] MEMORY.LOG accessed');
-      alert('Il vecchio BLUCINELAB è stato concentrato nel LAB. La home XP lo protegge, il LAB lo espone.');
+    function spawnGhosts(){
+      $$('.ghost', pacLayer).forEach(g => g.remove());
+      state.pac.ghosts.length = 0;
+
+      const glyphs = ['👻','👹','👺'];
+      const colors = ['#ff0000','#ffb8ff','#00ffff'];
+
+      for (let i = 0; i < 3; i++) {
+        const ghost = document.createElement('div');
+        ghost.className = 'ghost';
+        ghost.textContent = glyphs[i];
+        ghost.style.color = colors[i];
+        ghost.style.left = (300 + i * 140) + 'px';
+        ghost.style.top = '300px';
+
+        pacLayer.appendChild(ghost);
+
+        state.pac.ghosts.push({
+          el: ghost,
+          x: 300 + i * 140,
+          y: 300,
+          vx: (Math.random() - 0.5) * 2,
+          vy: (Math.random() - 0.5) * 2,
+          scared: false
+        });
+      }
     }
 
-    updateLabHud();
+    function resetPacGame(){
+      state.pac.x = Math.max(160, window.innerWidth / 2);
+      state.pac.y = Math.max(160, window.innerHeight / 2);
+      state.pac.dirX = 2.4;
+      state.pac.dirY = 0;
+      state.pac.score = 0;
+      state.pac.lives = 3;
+      state.pac.powerMode = false;
+      state.pac.powerTimer = 0;
+
+      updatePacHUD();
+      spawnDots();
+      spawnGhosts();
+      resetPacDisplay();
+    }
+
+    function pacLoop(){
+      if (!state.pac.active) return;
+
+      const p = state.pac;
+
+      p.x += p.dirX;
+      p.y += p.dirY;
+
+      if (p.x < 10 || p.x > window.innerWidth - 40) p.dirX *= -1;
+      if (p.y < 40 || p.y > window.innerHeight - 50) p.dirY *= -1;
+
+      pacEl.style.left = p.x + 'px';
+      pacEl.style.top = p.y + 'px';
+
+      const angle = Math.atan2(p.dirY, p.dirX) * 180 / Math.PI;
+      pacEl.style.transform = `rotate(${angle}deg)`;
+
+      if (p.powerMode) {
+        p.powerTimer--;
+        if (p.powerTimer <= 0) {
+          p.powerMode = false;
+          p.ghosts.forEach(g => {
+            g.scared = false;
+            g.el.style.filter = '';
+          });
+        }
+      }
+
+      p.dots.forEach(dot => {
+        if (dot.eaten) return;
+
+        const dx = p.x - dot.x;
+        const dy = p.y - dot.y;
+
+        if (Math.sqrt(dx * dx + dy * dy) < 22) {
+          dot.eaten = true;
+          dot.el.style.opacity = '0';
+          setTimeout(() => dot.el.remove(), 200);
+
+          if (dot.power) {
+            p.score += 50;
+            p.powerMode = true;
+            p.powerTimer = 180;
+
+            p.ghosts.forEach(g => {
+              g.scared = true;
+              g.el.style.filter = 'hue-rotate(180deg) brightness(.7)';
+            });
+          } else {
+            p.score += 10;
+          }
+
+          updatePacHUD();
+
+          if (p.dots.every(d => d.eaten)) {
+            setTimeout(() => {
+              spawnDots();
+              resetPacDisplay();
+            }, 700);
+          }
+        }
+      });
+
+      p.ghosts.forEach(g => {
+        const dx = p.x - g.x;
+        const dy = p.y - g.y;
+
+        if (g.scared) {
+          g.vx = g.vx * 0.9 - dx * 0.0022;
+          g.vy = g.vy * 0.9 - dy * 0.0022;
+        } else {
+          g.vx = g.vx * 0.94 + dx * 0.0012;
+          g.vy = g.vy * 0.94 + dy * 0.0012;
+        }
+
+        g.x += g.vx;
+        g.y += g.vy;
+
+        g.x = Math.max(10, Math.min(window.innerWidth - 40, g.x));
+        g.y = Math.max(40, Math.min(window.innerHeight - 50, g.y));
+
+        g.el.style.left = g.x + 'px';
+        g.el.style.top = g.y + 'px';
+
+        const cdx = p.x - g.x;
+        const cdy = p.y - g.y;
+
+        if (Math.sqrt(cdx * cdx + cdy * cdy) < 26) {
+          if (g.scared) {
+            p.score += 200;
+            updatePacHUD();
+
+            g.x = 260 + Math.random() * 220;
+            g.y = 180 + Math.random() * 180;
+            g.vx = (Math.random() - 0.5) * 2;
+            g.vy = (Math.random() - 0.5) * 2;
+            g.scared = false;
+            g.el.style.filter = '';
+          } else {
+            p.lives = Math.max(0, p.lives - 1);
+            updatePacHUD();
+
+            p.x = window.innerWidth / 2;
+            p.y = window.innerHeight / 2;
+            p.dirX = 2.4;
+            p.dirY = 0;
+
+            if (p.lives === 0) {
+              p.active = false;
+              resetPacDisplay();
+              showAlert('GAME OVER', 'Hai perso tutte le vite.\nPunteggio: ' + p.score, () => {
+                resetPacGame();
+              });
+              return;
+            }
+          }
+        }
+      });
+
+      state.pac.animationId = requestAnimationFrame(pacLoop);
+    }
+
+    function togglePacman(){
+      state.pac.active = !state.pac.active;
+      resetPacDisplay();
+
+      if (state.pac.active) {
+        if (state.pac.dots.length === 0 || state.pac.ghosts.length === 0) {
+          resetPacGame();
+        }
+        cancelAnimationFrame(state.pac.animationId);
+        state.pac.animationId = requestAnimationFrame(pacLoop);
+      } else {
+        cancelAnimationFrame(state.pac.animationId);
+      }
+    }
+
+    $('#sm-pacman')?.addEventListener('click', () => {
+      togglePacman();
+      startMenu?.classList.remove('open');
+    });
+
+    document.addEventListener('keydown', e => {
+      if (!state.pac.active) return;
+
+      const spd = 3.5;
+
+      if (e.key === 'ArrowLeft') {
+        state.pac.dirX = -spd;
+        state.pac.dirY = 0;
+        e.preventDefault();
+      }
+      if (e.key === 'ArrowRight') {
+        state.pac.dirX = spd;
+        state.pac.dirY = 0;
+        e.preventDefault();
+      }
+      if (e.key === 'ArrowUp') {
+        state.pac.dirX = 0;
+        state.pac.dirY = -spd;
+        e.preventDefault();
+      }
+      if (e.key === 'ArrowDown') {
+        state.pac.dirX = 0;
+        state.pac.dirY = spd;
+        e.preventDefault();
+      }
+    });
+
+    resetPacGame();
+    state.pac.active = false;
+    resetPacDisplay();
+    updatePacHUD();
+
+    /* RESIZE SAFETY */
+    window.addEventListener('resize', () => {
+      $$('.win').forEach(win => {
+        if (win.classList.contains('world-fullscreen')) return;
+
+        const rect = win.getBoundingClientRect();
+
+        if (rect.right > window.innerWidth) {
+          win.style.left = Math.max(0, window.innerWidth - rect.width - 10) + 'px';
+        }
+
+        if (rect.bottom > window.innerHeight - 30) {
+          win.style.top = Math.max(32, window.innerHeight - rect.height - 42) + 'px';
+        }
+      });
+    });
+
     updateTaskbar();
   </script>
 </body>
