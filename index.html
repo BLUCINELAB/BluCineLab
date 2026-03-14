@@ -11,7 +11,7 @@
 
 <style>
 
-/* ---------- BASE ---------- */
+/* BASE */
 
 body{
 margin:0;
@@ -25,7 +25,7 @@ inset:0;
 background:linear-gradient(#87b4ff,#5c93e8 40%,#4f8a2e 41%,#67b63b);
 }
 
-/* ---------- WINDOW ---------- */
+/* WINDOW */
 
 .win{
 position:fixed;
@@ -47,7 +47,7 @@ overflow:auto;
 padding:10px;
 }
 
-/* ---------- WORLD ---------- */
+/* WORLD */
 
 .world{
 position:fixed;
@@ -57,7 +57,7 @@ width:100vw;
 height:100vh;
 }
 
-/* ---------- RAIL ---------- */
+/* RAIL */
 
 .rail{
 position:absolute;
@@ -73,7 +73,7 @@ align-items:center;
 z-index:10;
 }
 
-/* ---------- NANO ---------- */
+/* NANO */
 
 .nano{
 position:absolute;
@@ -89,25 +89,20 @@ animation:walk 1s infinite;
 100%{transform:translateX(0)}
 }
 
-/* ---------- PLAYROOM WII ---------- */
+/* PLAYROOM */
 
 .playroom{
-
 background:linear-gradient(#ffffff,#ddeeff);
-
 }
 
 .wii-menu{
-
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:20px;
 padding:100px;
-
 }
 
 .wii-btn{
-
 background:white;
 border-radius:20px;
 height:120px;
@@ -117,54 +112,58 @@ justify-content:center;
 font-size:20px;
 box-shadow:0 4px 10px rgba(0,0,0,0.3);
 cursor:pointer;
-
 }
 
-.wii-btn:hover{
-
-transform:scale(1.05);
-
-}
-
-
-/* ---------- GAME SCREEN ---------- */
+/* GAME */
 
 .game{
-
 position:absolute;
 top:0;
 left:70px;
 right:0;
 bottom:0;
 display:none;
-
 }
 
-/* ---------- MARIO ---------- */
+/* MARIO */
 
 #mario{
-
 background:#6bd3ff;
-
 }
 
 .mario-ground{
-
 position:absolute;
 bottom:0;
 height:100px;
 width:100%;
 background:#5ab43c;
-
 }
 
 .mario-player{
-
 position:absolute;
 bottom:100px;
 left:100px;
 font-size:40px;
+}
 
+/* COOKING */
+
+#cooking{
+background:pink;
+display:none;
+text-align:center;
+font-family:"Press Start 2P";
+}
+
+#food{
+font-size:50px;
+margin-top:100px;
+cursor:pointer;
+}
+
+#score{
+margin-top:20px;
+font-size:20px;
 }
 
 </style>
@@ -172,20 +171,13 @@ font-size:40px;
 </head>
 <body>
 
-
 <div id="desktop"></div>
-
-
 
 <!-- HOME -->
 
 <div class="win" style="top:60px;left:100px;width:400px">
 
-<div class="win-titlebar">
-
-HOME
-
-</div>
+<div class="win-titlebar">HOME</div>
 
 <div class="win-body">
 
@@ -206,7 +198,6 @@ XP HOME
 <div class="rail">
 
 <button onclick="closePlay()">X</button>
-
 <button onclick="showMenu()">MENU</button>
 
 </div>
@@ -220,7 +211,7 @@ XP HOME
 MARIO
 </div>
 
-<div class="wii-btn">
+<div class="wii-btn" onclick="startGame('cooking')">
 COOKING
 </div>
 
@@ -235,13 +226,30 @@ TAMA
 </div>
 
 
-<!-- MARIO GAME -->
+<!-- MARIO -->
 
 <div id="mario" class="game">
 
 <div id="player" class="mario-player">🙂</div>
 
 <div class="mario-ground"></div>
+
+</div>
+
+
+<!-- COOKING -->
+
+<div id="cooking" class="game">
+
+<h1>COOKING MAMA</h1>
+
+<div id="food" onclick="cook()">
+🍳
+</div>
+
+<div id="score">
+0
+</div>
 
 </div>
 
@@ -254,48 +262,36 @@ TAMA
 
 <script>
 
-/* ---------- MENU ---------- */
+/* MENU */
 
 function closePlay(){
-
 document.getElementById("playroom").style.display="none"
-
 }
 
 function showMenu(){
-
 document.getElementById("menu").style.display="grid"
-
 hideGames()
-
 }
 
 function startGame(id){
-
 document.getElementById("menu").style.display="none"
-
 hideGames()
-
 document.getElementById(id).style.display="block"
-
 }
 
 function hideGames(){
-
 document.querySelectorAll(".game").forEach(g=>g.style.display="none")
-
 }
 
 
 
-/* ---------- MARIO ---------- */
+/* MARIO */
 
 let player=document.getElementById("player")
 
 let x=100
 let y=0
 let vy=0
-
 let jumping=false
 
 document.addEventListener("keydown",e=>{
@@ -306,10 +302,8 @@ if(e.key=="ArrowRight") x+=10
 if(e.key=="ArrowLeft") x-=10
 
 if(e.key==" " && !jumping){
-
 vy=15
 jumping=true
-
 }
 
 player.style.left=x+"px"
@@ -317,7 +311,6 @@ player.style.left=x+"px"
 }
 
 })
-
 
 function loop(){
 
@@ -327,10 +320,8 @@ y+=vy
 vy-=1
 
 if(y<=0){
-
 y=0
 jumping=false
-
 }
 
 player.style.bottom=100+y+"px"
@@ -342,6 +333,20 @@ requestAnimationFrame(loop)
 }
 
 loop()
+
+
+
+/* COOKING */
+
+let points=0
+
+function cook(){
+
+points++
+
+document.getElementById("score").innerText=points
+
+}
 
 </script>
 
