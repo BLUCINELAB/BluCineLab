@@ -8,14 +8,13 @@
     :root{
       --taskbar-h: 40px;
       --topbar-h: 28px;
-      --boot-green: #00ff66;
+      --rail-w: 74px;
 
-      --xp-blue-1: #4f8ff7;
-      --xp-blue-2: #2d6bd1;
-      --xp-blue-3: #1c4fb6;
-      --xp-border: #0a246a;
-
-      --rail-w: 76px;
+      --xp-blue-1:#4f8ff7;
+      --xp-blue-2:#2d6bd1;
+      --xp-blue-3:#1c4fb6;
+      --xp-border:#0a246a;
+      --boot-green:#00ff66;
     }
 
     *{ box-sizing:border-box; }
@@ -46,6 +45,8 @@
       color:inherit;
       text-decoration:none;
     }
+
+    strong{ font-weight:700; }
 
     /* =========================
        BOOT
@@ -92,7 +93,7 @@
           rgba(0,255,102,.025) 48%,
           transparent 100%
         );
-      animation:bootFlicker .14s infinite alternate;
+      animation:bootFlicker .16s infinite alternate;
       pointer-events:none;
     }
 
@@ -117,7 +118,7 @@
 
     .boot-bar{
       position:relative;
-      width:min(440px,84vw);
+      width:min(450px,84vw);
       height:24px;
       border:2px solid var(--boot-green);
       background:#00140a;
@@ -144,7 +145,7 @@
 
     .boot-lines{
       position:relative;
-      width:min(520px,86vw);
+      width:min(540px,86vw);
       min-height:120px;
       white-space:pre-line;
       font-size:15px;
@@ -168,10 +169,10 @@
       gap:18px;
       padding:0 12px;
       color:#fff;
-      background:linear-gradient(90deg, rgba(0,0,0,.72), rgba(0,0,0,.28));
+      background:linear-gradient(90deg, rgba(0,0,0,.78), rgba(0,0,0,.30));
       border-bottom:1px solid rgba(255,255,255,.14);
       font-family:"Courier New", monospace;
-      font-size:14px;
+      font-size:13px;
       letter-spacing:.3px;
     }
 
@@ -223,7 +224,7 @@
     ========================= */
     .desktop-icon{
       position:absolute;
-      width:88px;
+      width:90px;
       padding:4px;
       display:flex;
       flex-direction:column;
@@ -236,7 +237,7 @@
 
     .desktop-icon:hover .icon-label,
     .desktop-icon:focus-visible .icon-label{
-      background:rgba(35,97,189,.65);
+      background:rgba(35,97,189,.68);
       outline:1px dotted #fff;
     }
 
@@ -474,7 +475,7 @@
     }
 
     #tray{
-      min-width:90px;
+      min-width:92px;
       height:28px;
       padding:0 10px;
       display:flex;
@@ -503,7 +504,7 @@
       position:fixed;
       left:0;
       bottom:var(--taskbar-h);
-      width:356px;
+      width:360px;
       z-index:11000;
       display:none;
       overflow:hidden;
@@ -610,7 +611,7 @@
     }
 
     /* =========================
-       WINDOWS
+       WINDOWS / WORLD WRAPPER
     ========================= */
     .win{
       position:fixed;
@@ -708,8 +709,6 @@
     }
 
     .rail{
-      background:linear-gradient(to bottom,#eef3ff,#cad9f3);
-      border-right:1px solid #aebfdd;
       padding:12px 8px;
       display:flex;
       flex-direction:column;
@@ -720,12 +719,8 @@
     .rail-btn{
       width:42px;
       height:34px;
-      border:1px solid #93a7cb;
-      background:linear-gradient(to bottom,#ffffff,#dfe8f8);
-      color:#12387c;
       font-size:16px;
       font-weight:700;
-      border-radius:4px;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -736,7 +731,6 @@
       font-size:11px;
       text-transform:uppercase;
       letter-spacing:1px;
-      color:#375b97;
       writing-mode:vertical-rl;
       transform:rotate(180deg);
     }
@@ -746,7 +740,6 @@
       font-size:10px;
       line-height:1.3;
       text-align:center;
-      color:#4a648f;
     }
 
     .world-main{
@@ -783,19 +776,116 @@
       box-shadow:0 2px 8px rgba(0,0,0,.12);
     }
 
+    /* generic mascots */
     .char{
       position:relative;
       width:60px;
       height:92px;
     }
 
+    .char-xp .head,
+    .char-xp .body,
+    .char-xp .arm,
+    .char-xp .leg{
+      position:absolute;
+      display:block;
+    }
+
+    .char-xp .head{
+      top:0;
+      left:19px;
+      width:22px;
+      height:22px;
+      border-radius:50%;
+      background:#f4cfb2;
+      border:1px solid rgba(0,0,0,.12);
+    }
+
+    .char-xp .body{
+      top:22px;
+      left:21px;
+      width:18px;
+      height:30px;
+      border-radius:9px;
+      background:#4f8ff7;
+    }
+
+    .char-xp .arm.left{
+      top:26px;
+      left:13px;
+      width:5px;
+      height:22px;
+      background:#f4cfb2;
+      transform-origin:top center;
+      animation:armL 1s ease-in-out infinite;
+    }
+
+    .char-xp .arm.right{
+      top:26px;
+      right:13px;
+      width:5px;
+      height:22px;
+      background:#f4cfb2;
+      transform-origin:top center;
+      animation:armR 1s ease-in-out infinite;
+    }
+
+    .char-xp .leg.left{
+      top:50px;
+      left:23px;
+      width:6px;
+      height:28px;
+      background:#2f56b0;
+      transform-origin:top center;
+      animation:legL 1s ease-in-out infinite;
+    }
+
+    .char-xp .leg.right{
+      top:50px;
+      right:23px;
+      width:6px;
+      height:28px;
+      background:#2f56b0;
+      transform-origin:top center;
+      animation:legR 1s ease-in-out infinite;
+    }
+
+    @keyframes armL{ 0%,100%{transform:rotate(18deg)} 50%{transform:rotate(-16deg)} }
+    @keyframes armR{ 0%,100%{transform:rotate(-18deg)} 50%{transform:rotate(16deg)} }
+    @keyframes legL{ 0%,100%{transform:rotate(14deg)} 50%{transform:rotate(-12deg)} }
+    @keyframes legR{ 0%,100%{transform:rotate(-14deg)} 50%{transform:rotate(12deg)} }
+
     /* =========================
-       HOME / XP FILE MANAGER
+       HOME / XP EXPLORER
     ========================= */
     .shell-main{
       background:
         linear-gradient(to bottom, rgba(255,255,255,.46), rgba(255,255,255,.2)),
         #eef4ff;
+    }
+
+    .shell-main .rail{
+      background:linear-gradient(to bottom,#eef3ff,#cad9f3);
+      border-right:1px solid #aebfdd;
+    }
+
+    .shell-main .rail-btn{
+      border:1px solid #93a7cb;
+      background:linear-gradient(to bottom,#ffffff,#dfe8f8);
+      color:#12387c;
+      border-radius:4px;
+    }
+
+    .shell-main .rail-label,
+    .shell-main .rail-help{
+      color:#4a648f;
+    }
+
+    .shell-top{
+      display:flex;
+      justify-content:space-between;
+      gap:24px;
+      margin-bottom:24px;
     }
 
     .shell-main h1{
@@ -806,17 +896,16 @@
 
     .shell-main p{
       margin:0;
-      max-width:730px;
+      max-width:720px;
       font-size:15px;
       line-height:1.62;
       color:#2d2d2d;
     }
 
-    .shell-top{
-      display:flex;
-      justify-content:space-between;
-      gap:24px;
-      margin-bottom:24px;
+    .shell-guide .bubble{
+      background:#fff;
+      color:#567cac;
+      border:1px solid #d8e5f2;
     }
 
     .xp-explorer{
@@ -899,90 +988,13 @@
       color:#3b3b3b;
     }
 
-    .shell-guide .bubble{
-      background:#fff;
-      color:#567cac;
-      border:1px solid #d8e5f2;
-    }
-
-    .char-xp .head,
-    .char-xp .body,
-    .char-xp .arm,
-    .char-xp .leg{
-      position:absolute;
-      display:block;
-    }
-
-    .char-xp .head{
-      top:0;
-      left:19px;
-      width:22px;
-      height:22px;
-      border-radius:50%;
-      background:#f4cfb2;
-      border:1px solid rgba(0,0,0,.12);
-    }
-
-    .char-xp .body{
-      top:22px;
-      left:21px;
-      width:18px;
-      height:30px;
-      border-radius:9px;
-      background:#4f8ff7;
-    }
-
-    .char-xp .arm.left{
-      top:26px;
-      left:13px;
-      width:5px;
-      height:22px;
-      background:#f4cfb2;
-      transform-origin:top center;
-      animation:armL 1s ease-in-out infinite;
-    }
-
-    .char-xp .arm.right{
-      top:26px;
-      right:13px;
-      width:5px;
-      height:22px;
-      background:#f4cfb2;
-      transform-origin:top center;
-      animation:armR 1s ease-in-out infinite;
-    }
-
-    .char-xp .leg.left{
-      top:50px;
-      left:23px;
-      width:6px;
-      height:28px;
-      background:#2f56b0;
-      transform-origin:top center;
-      animation:legL 1s ease-in-out infinite;
-    }
-
-    .char-xp .leg.right{
-      top:50px;
-      right:23px;
-      width:6px;
-      height:28px;
-      background:#2f56b0;
-      transform-origin:top center;
-      animation:legR 1s ease-in-out infinite;
-    }
-
-    @keyframes armL{ 0%,100%{transform:rotate(18deg)} 50%{transform:rotate(-16deg)} }
-    @keyframes armR{ 0%,100%{transform:rotate(-18deg)} 50%{transform:rotate(16deg)} }
-    @keyframes legL{ 0%,100%{transform:rotate(14deg)} 50%{transform:rotate(-12deg)} }
-    @keyframes legR{ 0%,100%{transform:rotate(-14deg)} 50%{transform:rotate(12deg)} }
-
     /* =========================
-       ARCHIVE / GTA-LIKE HUD
+       ARCHIVE / GTA MENU
     ========================= */
     .archive-main{
       background:
         radial-gradient(circle at top right, rgba(255,70,180,.18), transparent 34%),
+        radial-gradient(circle at left center, rgba(255,255,255,.04), transparent 32%),
         linear-gradient(135deg,#0e0f14 0%, #171820 36%, #220f23 65%, #0f1015 100%);
       color:#f7d8ea;
       font-family:Arial, Helvetica, sans-serif;
@@ -997,6 +1009,7 @@
       border:1px solid rgba(255,255,255,.16);
       background:rgba(255,255,255,.06);
       color:#ff99cb;
+      border-radius:4px;
     }
 
     .archive-main .rail-label,
@@ -1004,7 +1017,29 @@
       color:#d89cbc;
     }
 
-    .archive-hero{
+    .archive-guide .bubble{
+      background:#ff9fd0;
+      color:#111;
+    }
+
+    .gta-char{
+      width:54px;
+      height:88px;
+      background:
+        radial-gradient(circle at 50% 18%, #f0c2a8 0 11px, transparent 12px),
+        linear-gradient(#181818 0 0) center 30px / 20px 30px no-repeat,
+        linear-gradient(#ff4fa8 0 0) center 28px / 24px 14px no-repeat,
+        linear-gradient(#111 0 0) 16px 60px / 8px 24px no-repeat,
+        linear-gradient(#111 0 0) 30px 60px / 8px 24px no-repeat;
+      animation:gtaShift 1.8s ease-in-out infinite;
+    }
+
+    @keyframes gtaShift{
+      0%,100%{transform:translateX(0)}
+      50%{transform:translateX(-5px)}
+    }
+
+    .archive-top{
       display:grid;
       grid-template-columns:1.1fr .9fr;
       gap:18px;
@@ -1013,7 +1048,6 @@
 
     .archive-titlebox,
     .archive-stats,
-    .archive-mission,
     .archive-file{
       border:1px solid rgba(255,120,190,.18);
       background:rgba(255,255,255,.03);
@@ -1022,12 +1056,12 @@
 
     .archive-titlebox{
       padding:20px;
-      min-height:180px;
+      min-height:190px;
     }
 
     .archive-titlebox h2{
       margin:0 0 10px;
-      font-size:40px;
+      font-size:42px;
       line-height:1;
       color:#ff9fd0;
       letter-spacing:.5px;
@@ -1039,7 +1073,7 @@
       font-size:14px;
       line-height:1.68;
       color:#ead9e1;
-      max-width:600px;
+      max-width:620px;
     }
 
     .archive-stats{
@@ -1105,32 +1139,24 @@
     }
 
     .archive-file p{
-      margin:0;
+      margin:0 0 12px;
       font-size:13px;
       line-height:1.58;
       color:#dec8d5;
     }
 
-    .archive-guide .bubble{
-      background:#ff9fd0;
-      color:#111;
+    .archive-meta{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
     }
 
-    .gta-char{
-      width:54px;
-      height:88px;
-      background:
-        radial-gradient(circle at 50% 18%, #f0c2a8 0 11px, transparent 12px),
-        linear-gradient(#181818 0 0) center 30px / 20px 30px no-repeat,
-        linear-gradient(#ff4fa8 0 0) center 28px / 24px 14px no-repeat,
-        linear-gradient(#111 0 0) 16px 60px / 8px 24px no-repeat,
-        linear-gradient(#111 0 0) 30px 60px / 8px 24px no-repeat;
-      animation:gtaShift 1.8s ease-in-out infinite;
-    }
-
-    @keyframes gtaShift{
-      0%,100%{transform:translateX(0)}
-      50%{transform:translateX(-5px)}
+    .archive-pill{
+      padding:4px 8px;
+      font-size:11px;
+      border:1px solid rgba(255,255,255,.14);
+      color:#f0d4e3;
+      background:rgba(255,255,255,.04);
     }
 
     /* =========================
@@ -1151,6 +1177,7 @@
       background:#021d1d;
       border:1px solid #53fdd8;
       color:#9effee;
+      border-radius:4px;
     }
 
     .lab-main .rail-label,
@@ -1168,6 +1195,30 @@
           transparent 3px
         ),
         #000;
+    }
+
+    .lab-guide .bubble{
+      background:#05362d;
+      color:#87ffe0;
+      border:1px solid rgba(127,255,224,.24);
+    }
+
+    .lab-char{
+      width:52px;
+      height:88px;
+      background:
+        linear-gradient(#8dffe6 0 0) center 14px / 20px 4px no-repeat,
+        linear-gradient(#8dffe6 0 0) center 26px / 28px 14px no-repeat,
+        linear-gradient(#8dffe6 0 0) 18px 46px / 6px 22px no-repeat,
+        linear-gradient(#8dffe6 0 0) 28px 46px / 6px 22px no-repeat,
+        linear-gradient(#8dffe6 0 0) 12px 30px / 6px 16px no-repeat,
+        linear-gradient(#8dffe6 0 0) 34px 30px / 6px 16px no-repeat;
+      animation:labPulse 1.3s ease-in-out infinite;
+    }
+
+    @keyframes labPulse{
+      0%,100%{opacity:1; transform:translateY(0)}
+      50%{opacity:.72; transform:translateY(-3px)}
     }
 
     .lab-topline{
@@ -1218,30 +1269,6 @@
       gap:14px;
     }
 
-    .lab-guide .bubble{
-      background:#05362d;
-      color:#87ffe0;
-      border:1px solid rgba(127,255,224,.24);
-    }
-
-    .lab-char{
-      width:52px;
-      height:88px;
-      background:
-        linear-gradient(#8dffe6 0 0) center 14px / 20px 4px no-repeat,
-        linear-gradient(#8dffe6 0 0) center 26px / 28px 14px no-repeat,
-        linear-gradient(#8dffe6 0 0) 18px 46px / 6px 22px no-repeat,
-        linear-gradient(#8dffe6 0 0) 28px 46px / 6px 22px no-repeat,
-        linear-gradient(#8dffe6 0 0) 12px 30px / 6px 16px no-repeat,
-        linear-gradient(#8dffe6 0 0) 34px 30px / 6px 16px no-repeat;
-      animation:labPulse 1.3s ease-in-out infinite;
-    }
-
-    @keyframes labPulse{
-      0%,100%{opacity:1; transform:translateY(0)}
-      50%{opacity:.72; transform:translateY(-3px)}
-    }
-
     /* =========================
        PLAYROOM / WII
     ========================= */
@@ -1263,6 +1290,7 @@
       background:linear-gradient(to bottom,#fff,#eaf4fb);
       color:#5f8eaf;
       border-radius:10px;
+      box-shadow:0 2px 4px rgba(0,0,0,.05);
     }
 
     .play-main .rail-label,
@@ -1271,7 +1299,7 @@
     }
 
     .play-title{
-      font-size:38px;
+      font-size:40px;
       font-weight:700;
       color:#6f9ec1;
       letter-spacing:.3px;
@@ -1324,14 +1352,14 @@
       display:grid;
       grid-template-columns:repeat(3,minmax(0,1fr));
       gap:18px;
-      max-width:1100px;
+      max-width:1120px;
       margin:0 auto;
     }
 
     .wii-tile{
-      min-height:170px;
+      min-height:180px;
       border:1px solid #d3e2ec;
-      border-radius:24px;
+      border-radius:26px;
       background:linear-gradient(to bottom,#ffffff,#eef6fb);
       box-shadow:
         0 12px 22px rgba(140,168,191,.14),
@@ -1359,7 +1387,7 @@
     }
 
     .wii-tile .lab1{
-      font-size:22px;
+      font-size:24px;
       font-weight:700;
       color:#5587ad;
       position:relative;
@@ -1371,6 +1399,7 @@
       color:#84a5bc;
       position:relative;
       z-index:1;
+      line-height:1.4;
     }
 
     .tile-mario{
@@ -1410,7 +1439,7 @@
     }
 
     .wii-info{
-      max-width:1100px;
+      max-width:1120px;
       margin:18px auto 0;
       padding:18px 20px;
       border:1px solid #d1e1eb;
@@ -1465,7 +1494,7 @@
     }
 
     .play-inner-panel{
-      max-width:1100px;
+      max-width:1120px;
       margin:0 auto;
       border:1px solid #d0e0ea;
       border-radius:24px;
@@ -1493,7 +1522,7 @@
       line-height:1.45;
     }
 
-    /* MARIO GAME */
+    /* Mario game */
     .mario-wrap{ padding:16px; }
 
     .mario-hud{
@@ -1630,7 +1659,7 @@
       color:#617e97;
     }
 
-    /* COOKING */
+    /* Cooking game */
     .cook-wrap{ padding:16px; }
 
     .cook-hud{
@@ -1716,8 +1745,68 @@
       font-weight:700;
     }
 
+    /* Pacman game */
+    .pac-wrap{ padding:16px; }
+
+    .pac-hud{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+      font-size:13px;
+      color:#6a8497;
+    }
+
+    .pac-stage{
+      position:relative;
+      width:100%;
+      height:340px;
+      border:1px solid #cfd7ea;
+      border-radius:18px;
+      overflow:hidden;
+      background:
+        linear-gradient(to bottom,#0a1028,#040714);
+    }
+
+    .pac-grid{
+      position:absolute;
+      inset:0;
+      background:
+        repeating-linear-gradient(90deg, transparent 0 28px, rgba(46,91,255,.14) 28px 30px),
+        repeating-linear-gradient(0deg, transparent 0 28px, rgba(46,91,255,.14) 28px 30px);
+      opacity:.45;
+      pointer-events:none;
+    }
+
+    .pac-player{
+      position:absolute;
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      background:#fff200;
+      clip-path:polygon(100% 50%,0% 5%,0% 95%);
+      filter:drop-shadow(0 0 6px rgba(255,242,0,.6));
+      z-index:2;
+    }
+
+    .pac-dot{
+      position:absolute;
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:#fff;
+      box-shadow:0 0 6px rgba(255,255,255,.6);
+    }
+
+    .pac-ghost{
+      position:absolute;
+      font-size:24px;
+      z-index:2;
+      filter:drop-shadow(0 0 8px currentColor);
+    }
+
     /* =========================
-       STUDIO / SIMS-LIKE
+       STUDIO / SIMS
     ========================= */
     .studio-main{
       background:linear-gradient(to bottom,#e7fff0,#d8f1ff);
@@ -1740,6 +1829,31 @@
     .studio-main .rail-label,
     .studio-main .rail-help{
       color:#4f8e7d;
+    }
+
+    .studio-guide .bubble{
+      background:#f8fdff;
+      color:#2f7d72;
+      border:1px solid #b5d6d0;
+    }
+
+    .sims-char{
+      width:56px;
+      height:92px;
+      background:
+        radial-gradient(circle at 50% 16%, #f4d1b8 0 12px, transparent 13px),
+        linear-gradient(#59c78d 0 0) center 29px / 22px 28px no-repeat,
+        linear-gradient(#4d86b7 0 0) 18px 58px / 8px 22px no-repeat,
+        linear-gradient(#4d86b7 0 0) 30px 58px / 8px 22px no-repeat,
+        linear-gradient(#f4d1b8 0 0) 10px 35px / 7px 17px no-repeat,
+        linear-gradient(#f4d1b8 0 0) 39px 35px / 7px 17px no-repeat,
+        linear-gradient(135deg,transparent 0 35%, #76ff66 35% 65%, transparent 65% 100%) center 2px / 16px 18px no-repeat;
+      animation:simsFloat 1.8s ease-in-out infinite;
+    }
+
+    @keyframes simsFloat{
+      0%,100%{transform:translateX(0)}
+      50%{transform:translateX(-4px)}
     }
 
     .studio-header{
@@ -1819,31 +1933,6 @@
       color:#49656b;
     }
 
-    .sims-guide .bubble{
-      background:#f8fdff;
-      color:#2f7d72;
-      border:1px solid #b5d6d0;
-    }
-
-    .sims-char{
-      width:56px;
-      height:92px;
-      background:
-        radial-gradient(circle at 50% 16%, #f4d1b8 0 12px, transparent 13px),
-        linear-gradient(#59c78d 0 0) center 29px / 22px 28px no-repeat,
-        linear-gradient(#4d86b7 0 0) 18px 58px / 8px 22px no-repeat,
-        linear-gradient(#4d86b7 0 0) 30px 58px / 8px 22px no-repeat,
-        linear-gradient(#f4d1b8 0 0) 10px 35px / 7px 17px no-repeat,
-        linear-gradient(#f4d1b8 0 0) 39px 35px / 7px 17px no-repeat,
-        linear-gradient(135deg,transparent 0 35%, #76ff66 35% 65%, transparent 65% 100%) center 2px / 16px 18px no-repeat;
-      animation:simsFloat 1.8s ease-in-out infinite;
-    }
-
-    @keyframes simsFloat{
-      0%,100%{transform:translateX(0)}
-      50%{transform:translateX(-4px)}
-    }
-
     /* =========================
        MANIFESTO / TEXT SOFTWARE
     ========================= */
@@ -1862,11 +1951,36 @@
       border:1px solid #8d7d56;
       background:linear-gradient(to bottom,#f8f1df,#d4c5a1);
       color:#5a4c28;
+      border-radius:4px;
     }
 
     .manifesto-main .rail-label,
     .manifesto-main .rail-help{
       color:#6c5e38;
+    }
+
+    .editor-guide .bubble{
+      background:#fff8e8;
+      color:#736749;
+      border:1px solid #d7c9a2;
+    }
+
+    .editor-char{
+      width:54px;
+      height:88px;
+      background:
+        radial-gradient(circle at 50% 16%, #f3d2b9 0 12px, transparent 13px),
+        linear-gradient(#d4b06a 0 0) center 30px / 22px 28px no-repeat,
+        linear-gradient(#856c3e 0 0) 18px 58px / 7px 22px no-repeat,
+        linear-gradient(#856c3e 0 0) 29px 58px / 7px 22px no-repeat,
+        linear-gradient(#f3d2b9 0 0) 11px 35px / 7px 18px no-repeat,
+        linear-gradient(#f3d2b9 0 0) 36px 35px / 7px 18px no-repeat;
+      animation:editorStep 1.6s ease-in-out infinite;
+    }
+
+    @keyframes editorStep{
+      0%,100%{transform:translateX(0)}
+      50%{transform:translateX(-3px)}
     }
 
     .editor-shell{
@@ -1912,36 +2026,53 @@
       color:#2f2b21;
     }
 
-    .editor-guide .bubble{
-      background:#fff8e8;
-      color:#736749;
-      border:1px solid #d7c9a2;
-    }
-
-    .editor-char{
-      width:54px;
-      height:88px;
-      background:
-        radial-gradient(circle at 50% 16%, #f3d2b9 0 12px, transparent 13px),
-        linear-gradient(#d4b06a 0 0) center 30px / 22px 28px no-repeat,
-        linear-gradient(#856c3e 0 0) 18px 58px / 7px 22px no-repeat,
-        linear-gradient(#856c3e 0 0) 29px 58px / 7px 22px no-repeat,
-        linear-gradient(#f3d2b9 0 0) 11px 35px / 7px 18px no-repeat,
-        linear-gradient(#f3d2b9 0 0) 36px 35px / 7px 18px no-repeat;
-      animation:editorStep 1.6s ease-in-out infinite;
-    }
-
-    @keyframes editorStep{
-      0%,100%{transform:translateX(0)}
-      50%{transform:translateX(-3px)}
-    }
-
     /* =========================
        CONTACT
     ========================= */
     .contact-main{
       background:linear-gradient(to bottom,#fbfdff,#eef5fb);
       color:#22384b;
+    }
+
+    .contact-main .rail{
+      background:linear-gradient(to bottom,#eef5fb,#d7e3ef);
+      border-right:1px solid #bfcfde;
+    }
+
+    .contact-main .rail-btn{
+      border:1px solid #b4c6d6;
+      background:linear-gradient(to bottom,#fff,#edf4fa);
+      color:#5f82a0;
+      border-radius:4px;
+    }
+
+    .contact-main .rail-label,
+    .contact-main .rail-help{
+      color:#647f97;
+    }
+
+    .contact-guide .bubble{
+      background:#fff;
+      color:#5f87ad;
+      border:1px solid #d0deeb;
+    }
+
+    .contact-char{
+      width:54px;
+      height:88px;
+      background:
+        radial-gradient(circle at 50% 16%, #f1cfb5 0 12px, transparent 13px),
+        linear-gradient(#8cb7e1 0 0) center 30px / 22px 28px no-repeat,
+        linear-gradient(#4e6e9d 0 0) 18px 58px / 7px 22px no-repeat,
+        linear-gradient(#4e6e9d 0 0) 29px 58px / 7px 22px no-repeat,
+        linear-gradient(#f1cfb5 0 0) 11px 35px / 7px 18px no-repeat,
+        linear-gradient(#f1cfb5 0 0) 36px 35px / 7px 18px no-repeat;
+      animation:contactDrift 1.7s ease-in-out infinite;
+    }
+
+    @keyframes contactDrift{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-3px)}
     }
 
     .contact-box{
@@ -1979,38 +2110,15 @@
       text-decoration:none;
     }
 
-    .contact-guide .bubble{
-      background:#fff;
-      color:#5f87ad;
-      border:1px solid #d0deeb;
-    }
-
-    .contact-char{
-      width:54px;
-      height:88px;
-      background:
-        radial-gradient(circle at 50% 16%, #f1cfb5 0 12px, transparent 13px),
-        linear-gradient(#8cb7e1 0 0) center 30px / 22px 28px no-repeat,
-        linear-gradient(#4e6e9d 0 0) 18px 58px / 7px 22px no-repeat,
-        linear-gradient(#4e6e9d 0 0) 29px 58px / 7px 22px no-repeat,
-        linear-gradient(#f1cfb5 0 0) 11px 35px / 7px 18px no-repeat,
-        linear-gradient(#f1cfb5 0 0) 36px 35px / 7px 18px no-repeat;
-      animation:contactDrift 1.7s ease-in-out infinite;
-    }
-
-    @keyframes contactDrift{
-      0%,100%{transform:translateY(0)}
-      50%{transform:translateY(-3px)}
-    }
-
+    /* =========================
+       RESPONSIVE
+    ========================= */
     @media (max-width:1150px){
-      .archive-hero,
+      .xp-explorer,
+      .archive-top,
+      .lab-setup,
       .studio-header,
       .cook-board{
-        grid-template-columns:1fr;
-      }
-
-      .xp-explorer{
         grid-template-columns:1fr;
       }
 
@@ -2020,10 +2128,6 @@
       .wii-grid,
       .studio-grid{
         grid-template-columns:repeat(2,minmax(0,1fr));
-      }
-
-      .lab-setup{
-        grid-template-columns:1fr;
       }
     }
 
@@ -2051,7 +2155,8 @@
         grid-template-columns:1fr;
       }
 
-      .mario-stage{
+      .mario-stage,
+      .pac-stage{
         height:300px;
       }
     }
@@ -2170,7 +2275,7 @@
       </div>
     </div>
 
-    <div class="world-body">
+    <div class="world-body shell-main">
       <aside class="rail">
         <button class="rail-btn" data-open="shell">⌂</button>
         <button class="rail-btn" data-open="archive">A</button>
@@ -2179,7 +2284,7 @@
         <div class="rail-help">desktop / system / worlds</div>
       </aside>
 
-      <div class="world-main shell-main">
+      <div class="world-main">
         <div class="shell-top">
           <div>
             <div class="kicker">desktop / xp shell / active</div>
@@ -2187,8 +2292,8 @@
             <p>
               BLUCINELAB è uno studio visivo indipendente che lavora tra immagine,
               spazio, direzione, installazione, identità, sistemi digitali e costruzione percettiva.
-              Il sito non presenta i servizi come elenco neutro: li organizza come mondi.
-              Ogni finestra corrisponde a una postura, a un linguaggio, a uno stato del lavoro.
+              Questo sito non mostra i lavori come elenco piatto: li organizza come mondi.
+              Ogni finestra è un registro visivo diverso dello stesso sistema.
             </p>
           </div>
 
@@ -2225,37 +2330,37 @@
             <button class="shell-card" data-open="archive">
               <span class="shell-card-art folder"></span>
               <span class="shell-card-title">Archive</span>
-              <span class="shell-card-text">Lavori, casi studio, tracce pubbliche, materiali protetti, frammenti processuali.</span>
+              <span class="shell-card-text">Lavori, dossier, casi studio, tracce pubbliche, materiali protetti.</span>
             </button>
 
             <button class="shell-card" data-open="lab">
               <span class="shell-card-art monitor"></span>
               <span class="shell-card-title">Lab</span>
-              <span class="shell-card-text">La parte analitica: segnali, memoria, test, linguaggi grezzi e diagnostica.</span>
+              <span class="shell-card-text">Segnali, memoria, test, appunti grezzi e diagnostica interna.</span>
             </button>
 
             <button class="shell-card" data-open="playroom">
               <span class="shell-card-art gamepad"></span>
               <span class="shell-card-title">Playroom</span>
-              <span class="shell-card-text">Un hub sperimentale in cui il linguaggio del gioco diventa interfaccia.</span>
+              <span class="shell-card-text">Console-site: canali giocabili e grammatica Wii.</span>
             </button>
 
             <button class="shell-card" data-open="studio">
               <span class="shell-card-art image"></span>
               <span class="shell-card-title">Studio</span>
-              <span class="shell-card-text">Metodo, composizione, relazione tra elementi, tono, margini e spazio.</span>
+              <span class="shell-card-text">Composizione, relazione tra elementi, tono, margini e ritmo.</span>
             </button>
 
             <button class="shell-card" data-open="manifesto">
               <span class="shell-card-art doc"></span>
               <span class="shell-card-title">Manifesto</span>
-              <span class="shell-card-text">La posizione di BLUCINELAB: forma come orientamento, non decorazione.</span>
+              <span class="shell-card-text">Forma come orientamento, non decorazione.</span>
             </button>
 
             <button class="shell-card" data-open="contact">
               <span class="shell-card-art mail"></span>
               <span class="shell-card-title">Contact</span>
-              <span class="shell-card-text">Commissioni, collaborazioni, identità, allestimenti, progetti culturali e digitali.</span>
+              <span class="shell-card-text">Commissioni, collaborazioni, sistemi digitali e progetti culturali.</span>
             </button>
           </div>
         </div>
@@ -2263,7 +2368,7 @@
     </div>
   </section>
 
-  <!-- ARCHIVE -->
+  <!-- ARCHIVE / GTA -->
   <section class="win" id="archive" data-title="Archive">
     <div class="titlebar">
       <div class="title-left">
@@ -2290,15 +2395,15 @@
           <div class="gta-char"></div>
         </div>
 
-        <div class="archive-hero">
+        <div class="archive-top">
           <div class="archive-titlebox">
-            <div class="kicker" style="color:#f3a8d3">urban dossier / mission archive / gta-like ui</div>
+            <div class="kicker" style="color:#f3a8d3">urban dossier / gta-like hud / mission archive</div>
             <h2>ARCHIVE</h2>
             <p>
-              Qui l’archivio non è una griglia neutra ma una superficie narrativa:
-              lavori, processi, elementi di identità, materiali espositivi, sistemi digitali,
-              grafiche, allestimenti, appunti di costruzione. Alcuni file sono pubblici,
-              altri sono visibili solo come tracce, livelli di accesso o segnali.
+              Qui l’archivio non è una griglia editoriale neutra ma un sistema di accesso:
+              file pubblici, nodi protetti, tracce di progetto, lavori espositivi, identità,
+              ambienti digitali, processi. L’idea è più vicina a un menu di gioco urbano
+              che a un portfolio levigato.
             </p>
           </div>
 
@@ -2306,7 +2411,7 @@
             <div class="hud-stat"><span>Status</span><span>Online</span></div>
             <div class="hud-stat"><span>Public Files</span><span>12</span></div>
             <div class="hud-stat"><span>Protected Nodes</span><span>07</span></div>
-            <div class="hud-stat"><span>Visual Integrity</span><span>High</span></div>
+            <div class="hud-stat"><span>Integrity</span><span>High</span></div>
             <div class="hud-stat"><span>Noise Level</span><span>Controlled</span></div>
           </div>
         </div>
@@ -2315,25 +2420,45 @@
           <article class="archive-file">
             <span class="archive-tag">Exhibition</span>
             <h3>Mostre / Allestimenti / Spazio</h3>
-            <p>Progetti in cui il rapporto tra immagine, ambiente e presenza fisica diventa struttura narrativa, montaggio spaziale e soglia percettiva.</p>
+            <p>Progetti in cui immagine, ambiente e presenza fisica diventano struttura narrativa e campo percettivo.</p>
+            <div class="archive-meta">
+              <span class="archive-pill">public</span>
+              <span class="archive-pill">space</span>
+              <span class="archive-pill">installation</span>
+            </div>
           </article>
 
           <article class="archive-file">
             <span class="archive-tag">Identity</span>
-            <h3>Identità / Segni / Comunicazione</h3>
-            <p>Sistemi visivi costruiti con logica editoriale, ritmo tipografico, selezione e direzione, non come semplice decorazione superficiale.</p>
+            <h3>Identità / Segni / Linguaggi</h3>
+            <p>Sistemi visivi costruiti con logica editoriale, ritmo tipografico e controllo della presenza.</p>
+            <div class="archive-meta">
+              <span class="archive-pill">brand</span>
+              <span class="archive-pill">type</span>
+              <span class="archive-pill">system</span>
+            </div>
           </article>
 
           <article class="archive-file">
             <span class="archive-tag">Digital</span>
-            <h3>Interfacce / Web / Presenza</h3>
-            <p>Ambienti digitali che non si limitano a informare, ma costruiscono tono, atmosfera, desiderabilità e orientamento.</p>
+            <h3>Web / Interfacce / Presenza</h3>
+            <p>Ambienti digitali che non si limitano a informare, ma costruiscono tono, gerarchia e desiderabilità.</p>
+            <div class="archive-meta">
+              <span class="archive-pill">web</span>
+              <span class="archive-pill">ui</span>
+              <span class="archive-pill">presence</span>
+            </div>
           </article>
 
           <article class="archive-file">
             <span class="archive-tag">Process</span>
-            <h3>Bozze / Layer / Materiale</h3>
-            <p>La parte non rifinita del lavoro resta utile perché mostra metodo, selezione, tensione e trasformazione del progetto.</p>
+            <h3>Bozze / Layer / Appunti</h3>
+            <p>La parte non rifinita del lavoro resta utile perché mostra selezione, taglio e trasformazione.</p>
+            <div class="archive-meta">
+              <span class="archive-pill">draft</span>
+              <span class="archive-pill">trace</span>
+              <span class="archive-pill">materials</span>
+            </div>
           </article>
         </div>
       </div>
@@ -2415,7 +2540,7 @@ Qui entrano:
 - segnali
 - appunti
 - errori fertili
-- linguaggi non stabilizzati</pre>
+- linguaggi instabili</pre>
           </div>
 
           <div class="lab-bank">
@@ -2449,7 +2574,7 @@ OPEN / SCAN / READ / EXEC</pre>
     </div>
   </section>
 
-  <!-- PLAYROOM -->
+  <!-- PLAYROOM / WII -->
   <section class="win" id="playroom" data-title="Playroom">
     <div class="titlebar">
       <div class="title-left">
@@ -2467,8 +2592,9 @@ OPEN / SCAN / READ / EXEC</pre>
         <button class="rail-btn" data-play-view="hub">H</button>
         <button class="rail-btn" data-play-view="mario">M</button>
         <button class="rail-btn" data-play-view="cooking">C</button>
+        <button class="rail-btn" data-play-view="pacman">P</button>
         <div class="rail-label">play</div>
-        <div class="rail-help">hub / mario / cooking</div>
+        <div class="rail-help">hub / mario / cooking / pac</div>
       </aside>
 
       <div class="world-main">
@@ -2478,12 +2604,13 @@ OPEN / SCAN / READ / EXEC</pre>
         </div>
 
         <div class="play-title">PLAYROOM</div>
-        <div class="play-sub">temporal game hub / wii channel inspired</div>
+        <div class="play-sub">literal wii channel menu / playable modules</div>
 
         <div class="play-tabs">
           <button class="play-tab active" data-play-view="hub">Hub</button>
           <button class="play-tab" data-play-view="mario">Mario</button>
           <button class="play-tab" data-play-view="cooking">Cooking Mama</button>
+          <button class="play-tab" data-play-view="pacman">Pac-Man</button>
         </div>
 
         <!-- HUB -->
@@ -2491,18 +2618,18 @@ OPEN / SCAN / READ / EXEC</pre>
           <div class="wii-grid">
             <button class="wii-tile tile-mario playable" data-play-view="mario">
               <span class="lab1">Mario</span>
-              <span class="lab2">pixel / run / jump / coins</span>
+              <span class="lab2">run / jump / collect / stage</span>
             </button>
 
             <button class="wii-tile tile-cooking playable" data-play-view="cooking">
               <span class="lab1">Cooking Mama</span>
-              <span class="lab2">click / timer / rounds</span>
+              <span class="lab2">tap / timer / rounds / score</span>
             </button>
 
-            <div class="wii-tile tile-pac">
+            <button class="wii-tile tile-pac playable" data-play-view="pacman">
               <span class="lab1">Pac-Man</span>
-              <span class="lab2">future channel</span>
-            </div>
+              <span class="lab2">maze / dots / ghosts / score</span>
+            </button>
 
             <div class="wii-tile tile-sims">
               <span class="lab1">The Sims</span>
@@ -2511,7 +2638,7 @@ OPEN / SCAN / READ / EXEC</pre>
 
             <div class="wii-tile tile-gta">
               <span class="lab1">GTA</span>
-              <span class="lab2">future channel</span>
+              <span class="lab2">archive already active</span>
             </div>
 
             <div class="wii-tile tile-retro">
@@ -2522,11 +2649,11 @@ OPEN / SCAN / READ / EXEC</pre>
 
           <div class="wii-info">
             <div class="k">hub</div>
-            <h3>Playroom ora è davvero un hub</h3>
+            <h3>Canali giocabili reali</h3>
             <p>
-              Questa finestra è il canale-console del sito. Da qui si aprono due giochi reali,
-              mentre gli altri restano canali futuri. Il senso non è riempire tutto subito,
-              ma costruire un ecosistema leggibile e scalabile.
+              Questa finestra non è più decorativa. Da qui puoi aprire tre moduli interattivi:
+              Mario, Cooking Mama e Pac-Man. Gli altri canali restano slot futuri per non
+              gonfiare il sistema con placeholder finti.
             </p>
           </div>
         </div>
@@ -2536,7 +2663,7 @@ OPEN / SCAN / READ / EXEC</pre>
           <div class="play-inner-panel">
             <div class="panel-head">
               <h3>MARIO MINI GAME</h3>
-              <p>Muovi il personaggio con ← →. Salta con spazio. Raccogli tutte le monete. La partita si resetta quando riapri la vista.</p>
+              <p>Muovi con ← →. Salta con spazio. Raccogli le monete. Reset automatico quando entri qui.</p>
             </div>
 
             <div class="mario-wrap">
@@ -2607,11 +2734,40 @@ OPEN / SCAN / READ / EXEC</pre>
                     <div>• Click rapidi = più punteggio</div>
                     <div>• Ogni round dura 10 secondi</div>
                     <div>• Dopo ogni round cambia ingrediente</div>
-                    <div>• Il totale resta in memoria finché non fai restart</div>
+                    <div>• Il totale resta attivo finché non fai restart</div>
                   </div>
 
                   <button class="cook-btn" id="cook-restart" type="button">Restart Game</button>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PACMAN -->
+        <div class="play-panel" id="play-pacman">
+          <div class="play-inner-panel">
+            <div class="panel-head">
+              <h3>PAC-MAN MINI GAME</h3>
+              <p>Muovi con le frecce. Mangia i punti. Evita i fantasmi. Reset automatico quando entri qui.</p>
+            </div>
+
+            <div class="pac-wrap">
+              <div class="pac-hud">
+                <div>Dots: <strong id="pac-dots-left">20</strong></div>
+                <div>Score: <strong id="pac-score">0</strong></div>
+                <div>Status: <strong id="pac-status">READY</strong></div>
+              </div>
+
+              <div class="pac-stage" id="pac-stage">
+                <div class="pac-grid"></div>
+                <div class="pac-player" id="pac-player"></div>
+                <div class="pac-ghost" id="ghost-1" style="color:#ff5f87;">👻</div>
+                <div class="pac-ghost" id="ghost-2" style="color:#63d5ff;">👻</div>
+              </div>
+
+              <div class="mario-controls">
+                Controlli: frecce direzionali.
               </div>
             </div>
           </div>
@@ -2643,7 +2799,7 @@ OPEN / SCAN / READ / EXEC</pre>
       </aside>
 
       <div class="world-main">
-        <div class="guide sims-guide">
+        <div class="guide studio-guide">
           <div class="bubble">sim room</div>
           <div class="sims-char"></div>
         </div>
@@ -2653,10 +2809,10 @@ OPEN / SCAN / READ / EXEC</pre>
             <div class="kicker" style="color:#5b9c85">studio / simulation logic / build state</div>
             <h2>STUDIO</h2>
             <p>
-              Questa finestra mostra il metodo: non un backstage sentimentale,
-              ma una stanza di coordinamento. Atmosfera, margini, ordine, tono,
-              materiali e relazioni tra elementi sono trattati come parametri
-              di progetto e non come effetti secondari.
+              Lo studio è trattato come una stanza di simulazione: ogni progetto è una
+              composizione di stati, materiali, gerarchie e relazioni. Il punto non è
+              aggiungere elementi ma controllare il sistema e rendere coerenti tono,
+              atmosfera, margini e struttura.
             </p>
           </div>
 
@@ -2730,12 +2886,10 @@ OPEN / SCAN / READ / EXEC</pre>
             <h2>MANIFESTO</h2>
             <p>
               BLUCINELAB non usa la forma come decorazione.
-              La usa come orientamento, come montaggio,
-              come tensione leggibile.
+              La usa come orientamento, montaggio, gerarchia e tensione leggibile.
             </p>
             <p>
-              Ogni progetto è una stanza mentale,
-              un dispositivo di immagine,
+              Ogni progetto è una stanza mentale, un dispositivo di immagine,
               una superficie che organizza attenzione.
             </p>
             <p>
@@ -2744,8 +2898,7 @@ OPEN / SCAN / READ / EXEC</pre>
             </p>
             <p>
               Il sito stesso deve comportarsi come un progetto:
-              non una vetrina piatta,
-              ma un sistema di accessi, mondi, registri e soglie.
+              non una vetrina piatta, ma un sistema di accessi e mondi.
             </p>
           </div>
         </div>
@@ -2823,11 +2976,11 @@ OPEN / SCAN / READ / EXEC</pre>
         "System ready."
       ];
 
-      let line = 0;
+      let bootLine = 0;
       const lineTimer = setInterval(() => {
-        if (line < bootText.length) {
-          bootLines.textContent += bootText[line] + "\\n";
-          line++;
+        if (bootLine < bootText.length) {
+          bootLines.textContent += bootText[bootLine] + "\\n";
+          bootLine++;
         }
       }, 800);
 
@@ -2869,7 +3022,6 @@ OPEN / SCAN / READ / EXEC</pre>
         windows.forEach(w => w.classList.remove("show"));
         win.classList.add("show");
         bringFront(win);
-        updateTaskbar();
         closeStart();
       }
 
@@ -2921,12 +3073,13 @@ OPEN / SCAN / READ / EXEC</pre>
       });
 
       /* =========================
-         PLAYROOM NAV
+         PLAYROOM TABS
       ========================= */
       const playViews = {
         hub: $("#play-hub"),
         mario: $("#play-mario"),
-        cooking: $("#play-cooking")
+        cooking: $("#play-cooking"),
+        pacman: $("#play-pacman")
       };
 
       function showPlayView(name) {
@@ -2940,6 +3093,7 @@ OPEN / SCAN / READ / EXEC</pre>
 
         if (name === "mario") resetMario();
         if (name === "cooking") resetCooking();
+        if (name === "pacman") resetPacman();
       }
 
       $$("[data-play-view]").forEach(btn => {
@@ -2957,12 +3111,12 @@ OPEN / SCAN / READ / EXEC</pre>
       const marioScoreDisp = $("#mario-score");
       const marioStatusDisp = $("#mario-status");
 
-      let mario = {
+      const mario = {
         x: 40,
         y: 0,
         vx: 0,
         vy: 0,
-        speed: 4,
+        speed: 4.2,
         jump: 13,
         gravity: 0.7,
         ground: 82,
@@ -2972,7 +3126,7 @@ OPEN / SCAN / READ / EXEC</pre>
         raf: null
       };
 
-      function createMarioCoins() {
+      function showMarioCoins() {
         $$(".mario-coin", marioStage).forEach(coin => {
           coin.dataset.active = "1";
           coin.style.display = "block";
@@ -2991,10 +3145,12 @@ OPEN / SCAN / READ / EXEC</pre>
         mario.vy = 0;
         mario.score = 0;
         mario.coins = 0;
+        mario.keys.left = false;
+        mario.keys.right = false;
         marioCoinsDisp.textContent = "0";
         marioScoreDisp.textContent = "0";
         marioStatusDisp.textContent = "READY";
-        createMarioCoins();
+        showMarioCoins();
         renderMario();
       }
 
@@ -3053,15 +3209,14 @@ OPEN / SCAN / READ / EXEC</pre>
       }
 
       document.addEventListener("keydown", (e) => {
-        if (!$("#play-mario").classList.contains("show")) return;
-
-        if (e.key === "ArrowLeft") mario.keys.left = true;
-        if (e.key === "ArrowRight") mario.keys.right = true;
-
-        if ((e.key === " " || e.code === "Space") && mario.y === 0) {
-          mario.vy = mario.jump;
-          marioStatusDisp.textContent = "JUMP";
-          e.preventDefault();
+        if ($("#play-mario").classList.contains("show")) {
+          if (e.key === "ArrowLeft") mario.keys.left = true;
+          if (e.key === "ArrowRight") mario.keys.right = true;
+          if ((e.key === " " || e.code === "Space") && mario.y === 0) {
+            mario.vy = mario.jump;
+            marioStatusDisp.textContent = "JUMP";
+            e.preventDefault();
+          }
         }
       });
 
@@ -3085,7 +3240,7 @@ OPEN / SCAN / READ / EXEC</pre>
       const cookRestart = $("#cook-restart");
 
       const cookItems = ["🍅","🥕","🍳","🍓","🥔","🧅"];
-      let cook = {
+      const cook = {
         round: 1,
         time: 10,
         score: 0,
@@ -3153,6 +3308,164 @@ OPEN / SCAN / READ / EXEC</pre>
       });
 
       resetCooking();
+
+      /* =========================
+         PACMAN GAME
+      ========================= */
+      const pacStage = $("#pac-stage");
+      const pacPlayer = $("#pac-player");
+      const ghost1 = $("#ghost-1");
+      const ghost2 = $("#ghost-2");
+      const pacDotsDisp = $("#pac-dots-left");
+      const pacScoreDisp = $("#pac-score");
+      const pacStatusDisp = $("#pac-status");
+
+      const pac = {
+        x: 40,
+        y: 40,
+        dirX: 3.5,
+        dirY: 0,
+        score: 0,
+        dots: [],
+        ghosts: [
+          { el: ghost1, x: 260, y: 150, vx: 1.6, vy: 1.2 },
+          { el: ghost2, x: 520, y: 210, vx: -1.5, vy: 1.4 }
+        ],
+        raf: null
+      };
+
+      function clearPacDots() {
+        $$(".pac-dot", pacStage).forEach(d => d.remove());
+        pac.dots = [];
+      }
+
+      function buildPacDots() {
+        clearPacDots();
+        const points = [
+          [70,70],[140,70],[210,70],[280,70],[350,70],
+          [420,70],[490,70],[560,70],[630,70],[700,70],
+          [90,150],[170,150],[250,150],[330,150],[410,150],
+          [490,150],[570,150],[650,150],[220,240],[520,250]
+        ];
+
+        points.forEach(([x,y]) => {
+          const d = document.createElement("div");
+          d.className = "pac-dot";
+          d.style.left = x + "px";
+          d.style.top = y + "px";
+          d.dataset.active = "1";
+          pacStage.appendChild(d);
+          pac.dots.push({ el:d, x, y, active:true });
+        });
+      }
+
+      function renderPacPlayer() {
+        pacPlayer.style.left = pac.x + "px";
+        pacPlayer.style.top = pac.y + "px";
+        const angle = Math.atan2(pac.dirY, pac.dirX) * 180 / Math.PI;
+        pacPlayer.style.transform = `rotate(${angle}deg)`;
+      }
+
+      function renderPacGhosts() {
+        pac.ghosts.forEach(g => {
+          g.el.style.left = g.x + "px";
+          g.el.style.top = g.y + "px";
+        });
+      }
+
+      function resetPacman() {
+        pac.x = 40;
+        pac.y = 40;
+        pac.dirX = 3.5;
+        pac.dirY = 0;
+        pac.score = 0;
+        pacStatusDisp.textContent = "READY";
+        pacScoreDisp.textContent = "0";
+        buildPacDots();
+        pacDotsDisp.textContent = String(pac.dots.length);
+        pac.ghosts[0].x = 260; pac.ghosts[0].y = 150; pac.ghosts[0].vx = 1.6; pac.ghosts[0].vy = 1.2;
+        pac.ghosts[1].x = 520; pac.ghosts[1].y = 210; pac.ghosts[1].vx = -1.5; pac.ghosts[1].vy = 1.4;
+        renderPacPlayer();
+        renderPacGhosts();
+      }
+
+      function collectPacDots() {
+        pac.dots.forEach(d => {
+          if (!d.active) return;
+          const dx = (pac.x + 14) - (d.x + 4);
+          const dy = (pac.y + 14) - (d.y + 4);
+          if (Math.sqrt(dx*dx + dy*dy) < 20) {
+            d.active = false;
+            d.el.remove();
+            pac.score += 10;
+            pacScoreDisp.textContent = String(pac.score);
+            const left = pac.dots.filter(x => x.active).length;
+            pacDotsDisp.textContent = String(left);
+            pacStatusDisp.textContent = left === 0 ? "WIN" : "DOT";
+          }
+        });
+      }
+
+      function updateGhosts() {
+        const w = pacStage.clientWidth;
+        const h = pacStage.clientHeight;
+
+        pac.ghosts.forEach(g => {
+          g.x += g.vx;
+          g.y += g.vy;
+
+          if (g.x < 0 || g.x > w - 26) g.vx *= -1;
+          if (g.y < 0 || g.y > h - 26) g.vy *= -1;
+
+          const dx = (pac.x + 14) - (g.x + 12);
+          const dy = (pac.y + 14) - (g.y + 12);
+          const dist = Math.sqrt(dx*dx + dy*dy);
+
+          if (dist < 24) {
+            pacStatusDisp.textContent = "HIT";
+            pac.x = 40;
+            pac.y = 40;
+          }
+        });
+      }
+
+      function pacLoop() {
+        const w = pacStage.clientWidth;
+        const h = pacStage.clientHeight;
+
+        pac.x += pac.dirX;
+        pac.y += pac.dirY;
+
+        if (pac.x < 0) pac.x = 0;
+        if (pac.y < 0) pac.y = 0;
+        if (pac.x > w - 28) pac.x = w - 28;
+        if (pac.y > h - 28) pac.y = h - 28;
+
+        collectPacDots();
+        updateGhosts();
+        renderPacPlayer();
+        renderPacGhosts();
+
+        pac.raf = requestAnimationFrame(pacLoop);
+      }
+
+      function startPacLoop() {
+        cancelAnimationFrame(pac.raf);
+        pacLoop();
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (!$("#play-pacman").classList.contains("show")) return;
+
+        if (e.key === "ArrowLeft") { pac.dirX = -3.5; pac.dirY = 0; }
+        if (e.key === "ArrowRight") { pac.dirX = 3.5; pac.dirY = 0; }
+        if (e.key === "ArrowUp") { pac.dirX = 0; pac.dirY = -3.5; }
+        if (e.key === "ArrowDown") { pac.dirX = 0; pac.dirY = 3.5; }
+      });
+
+      resetPacman();
+      startPacLoop();
+
       updateTaskbar();
     });
   </script>
