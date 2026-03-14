@@ -5,153 +5,103 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BLUCINELAB OS</title>
+<title>BLUCINE OS</title>
 
 <link rel="stylesheet" href="style.css">
 
 </head>
+
 <body>
 
-<!-- DESKTOP -->
+
+
+<!-- ================= BOOT ================= -->
+
+<div id="bootScreen">
+
+<div>BLUCINE OS LOADING...</div>
+
+<div class="bar">
+<div id="bootBar"></div>
+</div>
+
+</div>
+
+
+
+<!-- ================= DESKTOP ================= -->
 
 <div id="desktop">
 
-<div class="icon" onclick="openWindow('playroom')">
-🎮 PLAYROOM
-</div>
 
-<div class="icon" onclick="openWindow('lab')">
-🧪 LAB
-</div>
 
 <div class="icon" onclick="openWindow('archive')">
 📁 ARCHIVE
 </div>
 
+<div class="icon" onclick="openWindow('lab')">
+💻 LAB
+</div>
+
+<div class="icon" onclick="openWindow('playroom')">
+🎮 PLAYROOM
+</div>
+
+<div class="icon" onclick="openWindow('studio')">
+🏠 STUDIO
+</div>
+
+<div class="icon" onclick="openWindow('manifesto')">
+📜 MANIFESTO
 </div>
 
 
-<!-- TASKBAR -->
+
+</div>
+
+
+
+<!-- ================= TASKBAR ================= -->
 
 <div id="taskbar">
 
-<button id="startBtn" onclick="toggleStart()">
+<div id="startBtn" onclick="toggleStart()">
 START
-</button>
+</div>
+
+<div id="clock">
+12:00
+</div>
 
 </div>
 
 
-<!-- START MENU -->
+
+<!-- ================= START MENU ================= -->
 
 <div id="startMenu">
 
-<div onclick="openWindow('playroom')">
-Playroom
+<div onclick="openWindow('archive')">
+Archive
 </div>
 
 <div onclick="openWindow('lab')">
 Lab
 </div>
 
-<div onclick="openWindow('archive')">
-Archive
+<div onclick="openWindow('playroom')">
+Playroom
+</div>
+
+<div onclick="openWindow('studio')">
+Studio
 </div>
 
 </div>
 
 
-<!-- WINDOW PLAYROOM -->
 
-<div class="window" id="playroom">
-
-<div class="sideBar">
-
-<button onclick="closeWindow('playroom')">
-X
-</button>
-
-<button onclick="showMenu()">
-MENU
-</button>
-
-</div>
-
-<div class="content playroom">
-
-<div id="menu">
-
-<button onclick="startGame('mario')">
-MARIO
-</button>
-
-<button onclick="startGame('cooking')">
-COOKING
-</button>
-
-</div>
-
-
-<div id="mario" class="game">
-
-<div id="player">
-🙂
-</div>
-
-<div class="ground"></div>
-
-</div>
-
-
-<div id="cooking" class="game">
-
-<h1>COOKING</h1>
-
-<div id="food" onclick="cook()">
-🍳
-</div>
-
-<div id="score">
-0
-</div>
-
-</div>
-
-<div class="nano">
-🧑
-</div>
-
-</div>
-
-</div>
-
-
-<!-- WINDOW LAB -->
-
-<div class="window" id="lab">
-
-<div class="sideBar">
-
-<button onclick="closeWindow('lab')">
-X
-</button>
-
-</div>
-
-<div class="content lab">
-
-<h1>LAB WORLD</h1>
-
-<div class="nano">
-🤖
-</div>
-
-</div>
-
-</div>
-
-
-<!-- WINDOW ARCHIVE -->
+<!-- ================= ARCHIVE ================= -->
 
 <div class="window" id="archive">
 
@@ -167,16 +117,111 @@ X
 
 <h1>ARCHIVE WORLD</h1>
 
-<div class="nano">
-👾
-</div>
+<div class="nano">👾</div>
 
 </div>
 
 </div>
+
+
+
+<!-- ================= LAB ================= -->
+
+<div class="window" id="lab">
+
+<div class="sideBar">
+
+<button onclick="closeWindow('lab')">
+X
+</button>
+
+</div>
+
+<div class="content lab">
+
+<h1>LAB WORLD</h1>
+
+<div class="nano">🤖</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ================= PLAYROOM ================= -->
+
+<div class="window" id="playroom">
+
+<div class="sideBar">
+
+<button onclick="closeWindow('playroom')">
+X
+</button>
+
+</div>
+
+<div class="content playroom">
+
+<h1>PLAYROOM</h1>
+
+<div class="nano">🎮</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ================= STUDIO ================= -->
+
+<div class="window" id="studio">
+
+<div class="sideBar">
+
+<button onclick="closeWindow('studio')">
+X
+</button>
+
+</div>
+
+<div class="content studio">
+
+<h1>STUDIO WORLD</h1>
+
+<div class="nano">🧑</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ================= MANIFESTO ================= -->
+
+<div class="window" id="manifesto">
+
+<div class="sideBar">
+
+<button onclick="closeWindow('manifesto')">
+X
+</button>
+
+</div>
+
+<div class="content manifesto">
+
+<h1>MANIFESTO</h1>
+
+<div class="nano">📜</div>
+
+</div>
+
+</div>
+
 
 
 <script src="script.js"></script>
 
 </body>
-</html></html>
+</html>
