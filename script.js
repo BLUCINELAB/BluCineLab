@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      BOOT
   ========================= */
-
   function runBoot() {
     if (!bootScreen) return;
     setTimeout(() => {
@@ -29,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      CLOCK
   ========================= */
-
   function updateClock() {
     if (!clock) return;
     const now = new Date();
@@ -44,7 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      HELPERS
   ========================= */
-
   function getWindowTitle(win) {
     return (
       win?.dataset.windowTitle ||
@@ -94,7 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function closeWindowById(id) {
     const win = document.getElementById(id);
     if (!win) return;
-    if (id === "win-shell") return;
     hideWindow(win);
   }
 
@@ -114,11 +110,6 @@ document.addEventListener("DOMContentLoaded", () => {
     startMenu.classList.toggle("open");
   }
 
-  function restoreShellFocus() {
-    if (!shellWindow) return;
-    showWindow(shellWindow);
-  }
-
   function safeText(el, value) {
     if (el) el.textContent = String(value);
   }
@@ -126,15 +117,12 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      TASKBAR
   ========================= */
-
   function updateTaskbar() {
     if (!taskbarWindows) return;
     taskbarWindows.innerHTML = "";
 
-    const windows = $$(".xp-window").filter((win) =>
-      win.id !== "win-shell"
-        ? isVisible(win) || win.dataset.minimized === "1"
-        : true
+    const windows = $$(".xp-window").filter(
+      (win) => isVisible(win) || win.dataset.minimized === "1"
     );
 
     windows.forEach((win) => {
@@ -143,9 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
       item.className = "taskbar-item";
       item.textContent = getWindowTitle(win);
 
-      if (isVisible(win)) {
-        item.classList.add("active");
-      }
+      if (isVisible(win)) item.classList.add("active");
 
       item.addEventListener("click", () => {
         if (win.dataset.minimized === "1" || !isVisible(win)) {
@@ -162,7 +148,6 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      START MENU
   ========================= */
-
   if (startButton) {
     startButton.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -194,9 +179,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     OPEN / CLOSE TRIGGERS
+     OPEN / CLOSE
   ========================= */
-
   $$("[data-open]").forEach((el) => {
     el.addEventListener("click", (e) => {
       const id = el.dataset.open;
@@ -215,17 +199,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  $$("[data-focus-shell]").forEach((el) => {
-    el.addEventListener("click", (e) => {
-      e.preventDefault();
-      restoreShellFocus();
-    });
-  });
-
   /* =========================
      WINDOW CONTROLS
   ========================= */
-
   $$("[data-minimize]").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       const id = btn.dataset.minimize;
@@ -273,8 +249,9 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      DRAG WINDOWS
   ========================= */
-
   $$(".xp-window").forEach((win) => {
+    if (win.classList.contains("world-window")) return;
+
     const handle = $("[data-drag-handle]", win);
     if (!handle) return;
 
@@ -355,9 +332,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* =========================
-     WINDOW FOCUS
+     FOCUS
   ========================= */
-
   $$(".xp-window").forEach((win) => {
     win.addEventListener("mousedown", () => bringToFront(win));
   });
@@ -365,10 +341,10 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      RESIZE GUARD
   ========================= */
-
   window.addEventListener("resize", () => {
     $$(".xp-window").forEach((win) => {
       if (!isVisible(win)) return;
+      if (win.classList.contains("world-window")) return;
 
       const rect = win.getBoundingClientRect();
       if (rect.right > window.innerWidth) {
@@ -381,54 +357,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* =========================
-     WORLD VIEW ROUTER
-     per mondi interni tipo Wii / tabs / channels
+     PLAYROOM ROUTER
   ========================= */
-
-  function initWorldViews() {
-    const triggers = $$("[data-world-view]");
-    if (!triggers.length) return;
-
-    function showWorldView(group, target) {
-      const panels = $$(`[data-world-panel="${group}"]`);
-      const tabs = $$(`[data-world-view][data-world-group="${group}"]`);
-
-      panels.forEach((panel) => {
-        panel.classList.toggle("is-active", panel.dataset.worldTarget === target);
-      });
-
-      tabs.forEach((tab) => {
-        tab.classList.toggle("is-active", tab.dataset.worldView === target);
-      });
-    }
-
-    triggers.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const group = btn.dataset.worldGroup;
-        const target = btn.dataset.worldView;
-        if (!group || !target) return;
-        showWorldView(group, target);
-      });
-    });
-
-    const groups = [...new Set(triggers.map((t) => t.dataset.worldGroup).filter(Boolean))];
-    groups.forEach((group) => {
-      const firstActive =
-        $(`[data-world-view][data-world-group="${group}"].is-active`) ||
-        $(`[data-world-view][data-world-group="${group}"]`);
-      if (firstActive) {
-        showWorldView(group, firstActive.dataset.worldView);
-      }
-    });
-  }
-
-  initWorldViews();
-
-  /* =========================
-     PLAYROOM VIEWS
-     supporto dedicato se usi data-play-view
-  ========================= */
-
   function initPlayroomViews() {
     const playButtons = $$("[data-play-view]");
     if (!playButtons.length) return;
@@ -437,7 +367,6 @@ document.addEventListener("DOMContentLoaded", () => {
       hub: $("#play-hub"),
       mario: $("#play-mario"),
       cooking: $("#play-cooking"),
-      pacman: $("#play-pacman"),
     };
 
     function showPlayView(name) {
@@ -448,11 +377,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       playButtons.forEach((btn) => {
         btn.classList.toggle("active", btn.dataset.playView === name);
+        btn.classList.toggle("is-active", btn.dataset.playView === name);
       });
 
       if (name === "mario") resetMario();
       if (name === "cooking") resetCooking();
-      if (name === "pacman") resetPacman();
     }
 
     playButtons.forEach((btn) => {
@@ -469,7 +398,6 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      MARIO GAME
   ========================= */
-
   const marioStage = $("#mario-stage");
   const marioPlayer = $("#mario-player");
   const marioCoinsDisp = $("#mario-coins");
@@ -477,7 +405,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const marioStatusDisp = $("#mario-status");
 
   const mario = {
-    active: false,
     x: 40,
     y: 0,
     vx: 0,
@@ -496,7 +423,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return !!marioStage && !!marioPlayer;
   }
 
-  function createMarioCoins() {
+  function showMarioCoins() {
     if (!marioReady()) return;
     $$(".mario-coin", marioStage).forEach((coin) => {
       coin.dataset.active = "1";
@@ -506,8 +433,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderMario() {
     if (!marioReady()) return;
-    marioPlayer.style.left = mario.x + "px";
-    marioPlayer.style.bottom = mario.ground + mario.y + "px";
+    marioPlayer.style.left = `${mario.x}px`;
+    marioPlayer.style.bottom = `${mario.ground + mario.y}px`;
   }
 
   function resetMario() {
@@ -516,19 +443,20 @@ document.addEventListener("DOMContentLoaded", () => {
     mario.y = 0;
     mario.vx = 0;
     mario.vy = 0;
-    mario.score = 0;
-    mario.coins = 0;
     mario.keys.left = false;
     mario.keys.right = false;
+    mario.score = 0;
+    mario.coins = 0;
     safeText(marioCoinsDisp, 0);
     safeText(marioScoreDisp, 0);
     safeText(marioStatusDisp, "READY");
-    createMarioCoins();
+    showMarioCoins();
     renderMario();
   }
 
   function collectMarioCoins() {
     if (!marioReady()) return;
+
     $$(".mario-coin", marioStage).forEach((coin) => {
       if (coin.dataset.active !== "1") return;
 
@@ -547,7 +475,6 @@ document.addEventListener("DOMContentLoaded", () => {
         coin.style.display = "none";
         mario.coins += 1;
         mario.score += 100;
-
         safeText(marioCoinsDisp, mario.coins);
         safeText(marioScoreDisp, mario.score);
         safeText(marioStatusDisp, mario.coins >= 4 ? "WIN" : "COIN");
@@ -607,7 +534,6 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      COOKING GAME
   ========================= */
-
   const cookTarget = $("#cook-target");
   const cookInstruction = $("#cook-instruction");
   const cookRoundDisp = $("#cook-round");
@@ -699,39 +625,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     PACMAN BASE
-     pronto per quando aggiungiamo HTML/CSS
+     INITIAL STATE
   ========================= */
-
-  const pacStage = $("#pac-stage");
-  const pacPlayer = $("#pac-player");
-  const pacScoreDisp = $("#pac-score");
-  const pacLivesDisp = $("#pac-lives");
-  const pacStatusDisp = $("#pac-status");
-
-  const pac = {
-    ready: !!pacStage && !!pacPlayer,
-    score: 0,
-    lives: 3,
-  };
-
-  function resetPacman() {
-    if (!pac.ready) return;
-    pac.score = 0;
-    pac.lives = 3;
-    safeText(pacScoreDisp, pac.score);
-    safeText(pacLivesDisp, pac.lives);
-    safeText(pacStatusDisp, "READY");
-  }
-
-  /* =========================
-     INIT
-  ========================= */
-
   if (shellWindow) {
-    shellWindow.style.display = "flex";
     shellWindow.dataset.minimized = "0";
-    bringToFront(shellWindow);
   }
 
   initPlayroomViews();
