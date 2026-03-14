@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BLUCINELAB OS — XP HOME / LAB CHAOS</title>
+  <title>BLUCINELAB OS — XP Home + Lab</title>
   <meta
     name="description"
     content="BLUCINELAB — studio visivo indipendente tra immagine, spazio, direzione, ricerca e costruzione percettiva."
@@ -17,39 +17,39 @@
 
   <style>
     :root{
-      --scorebar-h:30px;
-      --taskbar-h:46px;
+      --scorebar-h: 30px;
+      --taskbar-h: 46px;
 
-      --xp-sky-1:#69a4ff;
-      --xp-sky-2:#bfe3ff;
-      --xp-green-1:#4ab52f;
-      --xp-green-2:#7dd84b;
-      --xp-green-3:#2f8d1f;
+      --xp-sky-1: #69a4ff;
+      --xp-sky-2: #bfe3ff;
+      --xp-green-1: #4ab52f;
+      --xp-green-2: #7dd84b;
+      --xp-green-3: #2f8d1f;
 
-      --ui-white:#ffffff;
-      --ui-black:#000000;
-      --ui-gray:#d9d9d9;
-      --ui-gray-2:#bfbfbf;
-      --ui-gray-3:#767676;
-      --ui-blue:#245dff;
-      --ui-blue-dark:#1030a8;
-      --ui-green:#14a13a;
-      --ui-green-dark:#0a6b23;
-      --ui-red:#cc3535;
+      --ui-white: #ffffff;
+      --ui-black: #000000;
+      --ui-gray: #d9d9d9;
+      --ui-gray-2: #bfbfbf;
+      --ui-gray-3: #767676;
+      --ui-blue: #245dff;
+      --ui-blue-dark: #1030a8;
+      --ui-green: #14a13a;
+      --ui-green-dark: #0a6b23;
+      --ui-red: #cc3535;
 
-      --chaos-bg:#000010;
-      --chaos-bg-2:#020013;
-      --chaos-bg-3:#14002a;
-      --chaos-win:#001008;
-      --chaos-win-2:#02160d;
-      --chaos-bar:#001eff;
-      --chaos-bar2:#00006b;
-      --chaos-yellow:#fff200;
-      --chaos-cyan:#00f6ff;
-      --chaos-magenta:#ff2dfb;
-      --chaos-green:#3cff6a;
-      --chaos-red:#ff2b4f;
-      --chaos-gray:#cfcfcf;
+      --chaos-bg: #000010;
+      --chaos-bg-2: #020013;
+      --chaos-bg-3: #14002a;
+      --chaos-win: #001008;
+      --chaos-win-2: #02160d;
+      --chaos-bar: #001eff;
+      --chaos-bar2: #00006b;
+      --chaos-yellow: #fff200;
+      --chaos-cyan: #00f6ff;
+      --chaos-magenta: #ff2dfb;
+      --chaos-green: #3cff6a;
+      --chaos-red: #ff2b4f;
+      --chaos-gray: #cfcfcf;
     }
 
     *{
@@ -58,7 +58,7 @@
       box-sizing:border-box;
     }
 
-    html,body{
+    html, body{
       width:100%;
       min-height:100%;
     }
@@ -252,7 +252,7 @@
     .desktop-icon{
       position:fixed;
       z-index:60;
-      width:92px;
+      width:96px;
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -357,7 +357,7 @@
     }
 
     .taskbar-btn{
-      max-width:160px;
+      max-width:170px;
       overflow:hidden;
       text-overflow:ellipsis;
       white-space:nowrap;
@@ -493,11 +493,13 @@
       background:linear-gradient(90deg,#1d57da 0%, #3b7cff 60%, #1643a5 100%);
       text-shadow:1px 1px 0 rgba(0,0,0,.95);
       box-shadow:inset 0 1px 0 rgba(255,255,255,.22);
+      min-height:34px;
     }
 
     .win-icon{
       font-size:13px;
       filter:drop-shadow(1px 1px 0 #000);
+      flex-shrink:0;
     }
 
     .win-title{
@@ -513,17 +515,18 @@
     }
 
     .win-btn{
-      width:18px;
-      height:18px;
+      width:22px;
+      height:22px;
       display:flex;
       align-items:center;
       justify-content:center;
       color:#000;
-      font-size:7px;
+      font-size:9px;
       background:linear-gradient(to bottom,#f1f1f1 0%, #bcbcbc 100%);
       border:2px solid #fff;
       border-right-color:#000;
       border-bottom-color:#000;
+      line-height:1;
     }
 
     body.has-custom-cursor .win-btn{
@@ -532,6 +535,10 @@
 
     .win-btn:hover{
       background:#fff;
+    }
+
+    .win-btn.close{
+      font-weight:bold;
     }
 
     .win-btn.close:hover{
@@ -634,22 +641,30 @@
       min-height:300px;
     }
 
-    /* CHAOS LAB FULLSCREEN WINDOW */
+    /* FULLSCREEN-LIKE WINDOW */
+    .fullscreen-window{
+      top: var(--scorebar-h) !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: calc(100vh - var(--scorebar-h) - var(--taskbar-h)) !important;
+      min-width: 100vw !important;
+      min-height: calc(100vh - var(--scorebar-h) - var(--taskbar-h)) !important;
+      resize: none !important;
+      z-index: 9500 !important;
+      border-width: 4px !important;
+    }
+
+    /* LAB WINDOW */
     .chaos-window{
-      position:fixed !important;
-      inset:0 !important;
-      width:100vw !important;
-      height:100vh !important;
-      min-width:100vw !important;
-      min-height:100vh !important;
-      resize:none !important;
-      z-index:9500 !important;
-      border:none !important;
-      box-shadow:none !important;
       background:
         linear-gradient(to bottom, rgba(255,255,255,.04), rgba(255,255,255,0)),
         linear-gradient(to bottom, var(--chaos-win) 0%, var(--chaos-win-2) 100%) !important;
       color:#fff !important;
+      border:4px solid #f4f4f4 !important;
+      box-shadow:
+        6px 6px 0 rgba(0,0,0,.98),
+        0 0 0 1px rgba(255,255,255,.08),
+        0 0 18px rgba(0,255,255,.08) !important;
     }
 
     .chaos-window .win-titlebar{
@@ -893,7 +908,7 @@
 
     .file-grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+      grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
       gap:12px;
       margin-top:10px;
     }
@@ -947,11 +962,6 @@
 
     @keyframes spin{
       to{transform:rotate(360deg);}
-    }
-
-    .muted{
-      color:#6f6f6f !important;
-      font-size:19px !important;
     }
 
     @media (max-width:900px){
@@ -1090,7 +1100,7 @@
       <span class="label">HOME / XP MODE / BOLOGNA</span>
       <h1>BLUCINELAB</h1>
       <p>Home principale in estetica Windows XP. Pulita, leggibile, familiare.</p>
-      <p>Da qui si entra nei diversi ambienti. Il LAB non cambia pagina: apre una finestra totale che copre tutto.</p>
+      <p>Da qui si entra nei diversi ambienti. Il LAB non cambia pagina: apre una finestra totale che copre tutto, ma lascia visibili la barra sopra e la taskbar sotto.</p>
 
       <div style="margin-top:10px;display:flex;flex-wrap:wrap;">
         <span class="tag yellow">WEB DESIGN</span>
@@ -1102,12 +1112,12 @@
       <div style="margin-top:18px;" class="field-card">
         <span class="label">STATUS</span>
         <h3>DEFAULT HOME ATTIVA</h3>
-        <p>Il LAB mantiene la vecchia estetica, ma ora vive come overlay fullscreen nello stesso sito.</p>
+        <p>Il LAB conserva la vecchia anima chaos, ma adesso vive come una vera finestra fullscreen dentro lo stesso sito.</p>
       </div>
 
       <div style="margin-top:14px; font-size:20px; color:#111;">
         <span class="spinner">◐</span>
-        &nbsp;DESKTOP CARICATO — APRI LE ICONE
+        &nbsp;DESKTOP CARICATO — CLICCA LE ICONE
       </div>
     </div>
   </section>
@@ -1118,7 +1128,7 @@
       <span class="win-title">ARCHIVE — Lavori e processi</span>
       <div class="win-controls">
         <button class="win-btn" data-minimize="win-archive" type="button">_</button>
-        <button class="win-btn close" data-close="win-archive" type="button">✕</button>
+        <button class="win-btn close" data-close="win-archive" type="button">X</button>
       </div>
     </div>
     <div class="win-menubar">
@@ -1134,7 +1144,7 @@
         <h3>ARCHIVIO</h3>
         <p>Case study, processi, materiali, stati di visibilità.</p>
       </div>
-      <p>Questa finestra resta volutamente nella grammatica XP. Il salto visivo forte accade nel LAB.</p>
+      <p>Questa finestra resta volutamente nella grammatica XP.</p>
     </div>
   </section>
 
@@ -1144,7 +1154,7 @@
       <span class="win-title">STUDIO — Metodo e coerenza</span>
       <div class="win-controls">
         <button class="win-btn" data-minimize="win-studio" type="button">_</button>
-        <button class="win-btn close" data-close="win-studio" type="button">✕</button>
+        <button class="win-btn close" data-close="win-studio" type="button">X</button>
       </div>
     </div>
     <div class="win-menubar">
@@ -1174,7 +1184,7 @@
       <span class="win-title">CONTACT — Apri una conversazione</span>
       <div class="win-controls">
         <button class="win-btn" data-minimize="win-contact" type="button">_</button>
-        <button class="win-btn close" data-close="win-contact" type="button">✕</button>
+        <button class="win-btn close" data-close="win-contact" type="button">X</button>
       </div>
     </div>
     <div class="win-menubar">
@@ -1198,7 +1208,7 @@
       <span class="win-title">MANIFESTO — Un laboratorio contemporaneo</span>
       <div class="win-controls">
         <button class="win-btn" data-minimize="win-manifesto" type="button">_</button>
-        <button class="win-btn close" data-close="win-manifesto" type="button">✕</button>
+        <button class="win-btn close" data-close="win-manifesto" type="button">X</button>
       </div>
     </div>
     <div class="win-menubar">
@@ -1213,16 +1223,16 @@
     </div>
   </section>
 
-  <!-- LAB FULLSCREEN -->
-  <section class="win chaos-window" id="win-lab" aria-label="Lab" style="display:none;">
+  <!-- LAB -->
+  <section class="win chaos-window fullscreen-window" id="win-lab" aria-label="Lab" style="display:none;">
     <div class="chaos-desktop-bg"></div>
     <div id="lab-glitch-layer"></div>
 
-    <div class="win-titlebar" data-drag="win-lab">
+    <div class="win-titlebar">
       <span class="win-icon">🔬</span>
       <span class="win-title glitch">LAB.EXE — CHAOS VISUAL MODE</span>
       <div class="win-controls">
-        <button class="win-btn close" data-close="win-lab" type="button">✕</button>
+        <button class="win-btn close" data-close="win-lab" type="button">X</button>
       </div>
     </div>
 
@@ -1238,7 +1248,7 @@
         <span class="label">LAB / ACTIVE RESEARCH / CHAOS MODE</span>
         <h1>MATERIALI IN FORMAZIONE, FUTURI POSSIBILI</h1>
         <p>Questa è la vecchia anima del sito: più sporca, più sintetica, più game, più notturna, più instabile.</p>
-        <p>Non cambia pagina. È una finestra totale che copre la home XP e la mette momentaneamente in secondo piano.</p>
+        <p>Non cambia pagina. È una finestra totale che copre la home XP, ma lascia leggibili barra in alto e taskbar in basso.</p>
 
         <div style="margin-top:10px;display:flex;flex-wrap:wrap;">
           <span class="tag yellow">PACMAN</span>
@@ -1250,13 +1260,13 @@
         <div style="margin-top:18px;" class="field-card">
           <span class="label">FUTURE LAYER</span>
           <h3>RICERCA, AI, ARCHIVI INTELLIGENTI</h3>
-          <p>Qui possono vivere le reference più radicali: game design, interfacce assurde, città neon, viewer immagini, mondi nascosti.</p>
+          <p>Qui possono vivere viewer, segnali, file, mondi secondari, test visivi e sistemi più radicali.</p>
         </div>
 
         <div class="field-card">
           <span class="label">SYSTEM STATUS</span>
           <h3>LA HOME NON È SCOMPARSA</h3>
-          <p>È sotto. Questa finestra la copre completamente. Chiudi e torni esattamente alla XP home.</p>
+          <p>È sotto questa finestra. Chiudi e torni subito alla XP home.</p>
         </div>
 
         <div class="file-grid">
@@ -1326,7 +1336,6 @@
 
     const state = {
       topZ: 200,
-      popupShown: false,
       bootDone: false,
       selectedIcon: null,
       labChaosStarted: false
@@ -1426,12 +1435,11 @@
         win.dataset.minimized = '0';
       }
 
+      bringToFront(win);
+
       if (id === 'win-lab') {
-        bringToFront(win);
         document.getElementById('lives-disp').textContent = 'MODE: LAB';
         startLabChaos();
-      } else {
-        bringToFront(win);
       }
 
       updateTaskbar();
@@ -1513,7 +1521,7 @@
         btn.className = 'taskbar-btn';
 
         const title = $('.win-title', win)?.textContent?.trim() || win.id;
-        btn.textContent = title.slice(0, 20);
+        btn.textContent = title.slice(0, 22);
 
         if (win.dataset.minimized !== '1') {
           btn.classList.add('active');
@@ -1576,27 +1584,12 @@
       btn.addEventListener('click', () => maximizeWindow(btn.dataset.maximize));
     });
 
+    // ICONS CLICKABLE
     $$('.desktop-icon[data-win]').forEach(icon => {
-      let clicks = 0;
-      let timer = null;
-
       icon.addEventListener('click', () => {
         $$('.desktop-icon').forEach(i => i.classList.remove('is-selected'));
         icon.classList.add('is-selected');
         state.selectedIcon = icon;
-
-        clicks++;
-        clearTimeout(timer);
-
-        timer = setTimeout(() => {
-          if (clicks >= 2) openWindow(icon.dataset.win);
-          clicks = 0;
-        }, 260);
-      });
-
-      icon.addEventListener('dblclick', () => {
-        clearTimeout(timer);
-        clicks = 0;
         openWindow(icon.dataset.win);
       });
     });
@@ -1688,7 +1681,7 @@
     }
 
     function labModeMessage(){
-      alert('La home XP è sotto. Questa finestra la copre totalmente.');
+      alert('La home XP è sotto. Questa finestra la copre quasi totalmente.');
     }
 
     updateTaskbar();
