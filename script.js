@@ -1,172 +1,94 @@
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded", () => {
 
-/* =====================
+
+
+
+/* =========================
+BOOT
+========================= */
+
+const boot = document.getElementById("bootScreen")
+
+setTimeout(() => {
+
+boot.style.display = "none"
+
+}, 3000)
+
+
+
+
+/* =========================
 START MENU
-===================== */
+========================= */
 
-const startBtn = document.getElementById("startBtn")
 const startMenu = document.getElementById("startMenu")
 
-if(startBtn){
+window.toggleStart = function(){
 
-startBtn.onclick=()=>{
+if(startMenu.style.display === "block"){
 
-if(startMenu.style.display==="block"){
-
-startMenu.style.display="none"
+startMenu.style.display = "none"
 
 }else{
 
-startMenu.style.display="block"
+startMenu.style.display = "block"
 
 }
 
 }
 
-}
 
 
-/* =====================
+
+/* =========================
 WINDOW CONTROL
-===================== */
+========================= */
 
 window.openWindow = function(id){
 
-document.getElementById(id).style.display="block"
+const w = document.getElementById(id)
 
-startMenu.style.display="none"
+w.style.display = "block"
+
+startMenu.style.display = "none"
 
 }
 
 window.closeWindow = function(id){
 
-document.getElementById(id).style.display="none"
+const w = document.getElementById(id)
+
+w.style.display = "none"
 
 }
 
 
 
 
+/* =========================
+CLOCK
+========================= */
 
+const clock = document.getElementById("clock")
 
-/* =====================
-PLAYROOM MENU
-===================== */
+function updateClock(){
 
-window.showMenu = function(){
+const now = new Date()
 
-hideGames()
+let h = now.getHours()
+let m = now.getMinutes()
 
-document.getElementById("menu").style.display="block"
+if(m < 10) m = "0" + m
 
-}
-
-window.startGame = function(id){
-
-hideGames()
-
-document.getElementById("menu").style.display="none"
-
-document.getElementById(id).style.display="block"
+clock.innerText = h + ":" + m
 
 }
 
+setInterval(updateClock, 1000)
 
-function hideGames(){
+updateClock()
 
-const games=document.querySelectorAll(".game")
-
-games.forEach(g=>g.style.display="none")
-
-}
-
-
-
-/* =====================
-MARIO
-===================== */
-
-let player=document.getElementById("player")
-
-let x=100
-let y=0
-let vy=0
-
-let jumping=false
-
-
-document.addEventListener("keydown",e=>{
-
-const mario=document.getElementById("mario")
-
-if(mario.style.display==="block"){
-
-if(e.key==="ArrowRight"){
-
-x+=10
-
-}
-
-if(e.key==="ArrowLeft"){
-
-x-=10
-
-}
-
-if(e.key===" " && !jumping){
-
-vy=15
-jumping=true
-
-}
-
-player.style.left=x+"px"
-
-}
-
-})
-
-
-function loop(){
-
-if(jumping){
-
-y+=vy
-
-vy-=1
-
-if(y<=0){
-
-y=0
-jumping=false
-
-}
-
-player.style.bottom=(100+y)+"px"
-
-}
-
-requestAnimationFrame(loop)
-
-}
-
-loop()
-
-
-
-/* =====================
-COOKING
-===================== */
-
-let points=0
-
-window.cook=function(){
-
-points++
-
-document.getElementById("score").innerText=points
-
-}
 
 
 
