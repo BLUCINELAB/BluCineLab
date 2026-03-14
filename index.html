@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BLUCINELAB OS — Desktop</title>
+  <title>BLUCINELAB OS — XP HOME / LAB CHAOS</title>
   <meta
     name="description"
     content="BLUCINELAB — studio visivo indipendente tra immagine, spazio, direzione, ricerca e costruzione percettiva."
@@ -11,34 +11,45 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link
-    href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap"
     rel="stylesheet"
   />
 
   <style>
     :root{
-      --taskbar-h: 40px;
-      --scorebar-h: 26px;
+      --scorebar-h:30px;
+      --taskbar-h:46px;
 
-      --xp-blue-1:#245edb;
-      --xp-blue-2:#3a6ee8;
-      --xp-blue-3:#0c43b8;
-      --xp-green-1:#3c9c3c;
-      --xp-green-2:#2f7f2f;
-      --xp-gray-1:#f3f0e3;
-      --xp-gray-2:#dbd8c9;
-      --xp-gray-3:#c8c2b2;
-      --xp-dark:#1a1a1a;
-      --xp-border:#ffffff;
-      --xp-shadow:#5f5f5f;
+      --xp-sky-1:#69a4ff;
+      --xp-sky-2:#bfe3ff;
+      --xp-green-1:#4ab52f;
+      --xp-green-2:#7dd84b;
+      --xp-green-3:#2f8d1f;
 
-      --wallpaper-top:#89c8ff;
-      --wallpaper-mid:#5fb5ff;
-      --wallpaper-bottom:#3f8ad8;
+      --ui-white:#ffffff;
+      --ui-black:#000000;
+      --ui-gray:#d9d9d9;
+      --ui-gray-2:#bfbfbf;
+      --ui-gray-3:#767676;
+      --ui-blue:#245dff;
+      --ui-blue-dark:#1030a8;
+      --ui-green:#14a13a;
+      --ui-green-dark:#0a6b23;
+      --ui-red:#cc3535;
 
-      --desktop-icon-w: 82px;
-      --win-border: 1px solid #0831a1;
-      --win-shadow: 3px 3px 0 rgba(0,0,0,.45);
+      --chaos-bg:#000010;
+      --chaos-bg-2:#020013;
+      --chaos-bg-3:#14002a;
+      --chaos-win:#001008;
+      --chaos-win-2:#02160d;
+      --chaos-bar:#001eff;
+      --chaos-bar2:#00006b;
+      --chaos-yellow:#fff200;
+      --chaos-cyan:#00f6ff;
+      --chaos-magenta:#ff2dfb;
+      --chaos-green:#3cff6a;
+      --chaos-red:#ff2b4f;
+      --chaos-gray:#cfcfcf;
     }
 
     *{
@@ -50,63 +61,39 @@
     html,body{
       width:100%;
       min-height:100%;
-      overflow:hidden;
     }
 
     body{
-      position:relative;
-      font-family:Tahoma, Arial, sans-serif;
-      color:#111;
-      background:#4e91d9;
+      font-family:'Press Start 2P', monospace;
+      overflow:hidden;
+      background:#5ea0ff;
+      color:#fff;
       image-rendering:pixelated;
       -webkit-font-smoothing:none;
-      -moz-osx-font-smoothing:auto;
+      position:relative;
     }
 
     body.has-custom-cursor{
       cursor:none;
     }
 
-    /* CRT / sporco */
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:9990;
-      background:
-        repeating-linear-gradient(
-          to bottom,
-          rgba(255,255,255,.03) 0px,
-          rgba(255,255,255,.03) 1px,
-          rgba(0,0,0,.08) 2px,
-          rgba(0,0,0,.08) 4px
-        );
-      mix-blend-mode:multiply;
+    a{
+      color:inherit;
+      text-decoration:none;
     }
 
-    body::after{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:9991;
-      opacity:.08;
-      background-image:
-        radial-gradient(circle at 20% 30%, #fff 0.8px, transparent 1.2px),
-        radial-gradient(circle at 80% 50%, #fff 0.8px, transparent 1.2px),
-        radial-gradient(circle at 35% 80%, #fff 0.7px, transparent 1.1px),
-        radial-gradient(circle at 60% 20%, #fff 0.7px, transparent 1.1px);
-      background-size:8px 8px, 10px 10px, 12px 12px, 14px 14px;
-      mix-blend-mode:screen;
+    button{
+      border:none;
+      background:none;
+      font:inherit;
     }
 
     .cursor-outer{
       position:fixed;
-      width:18px;
-      height:18px;
+      width:24px;
+      height:24px;
       pointer-events:none;
-      z-index:10000;
+      z-index:99999;
       transform:translate(-50%,-50%);
       display:none;
     }
@@ -116,84 +103,118 @@
     }
 
     .cursor-outer::before{
-      content:"";
+      content:'';
       position:absolute;
       inset:0;
       width:0;
       height:0;
       border-top:0;
       border-right:0;
-      border-bottom:10px solid transparent;
-      border-left:10px solid #fff7a8;
+      border-bottom:13px solid transparent;
+      border-left:13px solid #fff200;
       filter:
-        drop-shadow(1px 1px 0 #000)
-        drop-shadow(0 0 2px rgba(255,255,255,.5));
+        drop-shadow(0 0 3px rgba(255,242,0,.9))
+        drop-shadow(2px 2px 0 #000);
     }
 
-    /* Desktop wallpaper */
+    /* BOOT */
+    #boot{
+      position:fixed;
+      inset:0;
+      z-index:99998;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:18px;
+      background:#000;
+    }
+
+    #boot-logo{
+      font-size:clamp(18px,4vw,34px);
+      color:#00ff66;
+      text-shadow:
+        0 0 12px rgba(0,255,102,.8),
+        0 0 32px rgba(0,255,102,.3);
+      letter-spacing:4px;
+    }
+
+    #boot-sub{
+      font-family:'VT323', monospace;
+      font-size:26px;
+      color:#8c8c8c;
+      letter-spacing:2px;
+    }
+
+    #boot-bar-wrap{
+      width:360px;
+      height:24px;
+      border:3px solid #00ff66;
+      background:#020202;
+      overflow:hidden;
+    }
+
+    #boot-bar{
+      width:0%;
+      height:100%;
+      background:linear-gradient(90deg,#00ff66,#00aa55);
+      transition:width .14s linear;
+    }
+
+    #boot-text{
+      width:380px;
+      height:84px;
+      overflow:hidden;
+      font-family:'VT323', monospace;
+      font-size:22px;
+      color:#00ff66;
+      white-space:pre-line;
+    }
+
+    /* XP DESKTOP */
     #desktop{
       position:fixed;
       inset:0;
       overflow:hidden;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(255,255,255,.40) 0%, rgba(255,255,255,0) 28%),
+        linear-gradient(to bottom, var(--xp-sky-2) 0%, var(--xp-sky-1) 52%, #72b7ff 100%);
       z-index:0;
-      background:
-        linear-gradient(to bottom,
-          var(--wallpaper-top) 0%,
-          var(--wallpaper-mid) 38%,
-          var(--wallpaper-bottom) 100%);
     }
 
-    /* cielo */
-    #desktop .sky-glow{
+    #desktop::before{
+      content:'';
       position:absolute;
-      inset:0 0 auto 0;
-      height:58%;
-      background:
-        radial-gradient(circle at 18% 24%, rgba(255,255,255,.35) 0%, transparent 18%),
-        radial-gradient(circle at 68% 14%, rgba(255,255,255,.22) 0%, transparent 15%),
-        linear-gradient(to bottom, rgba(255,255,255,.18), transparent 70%);
-      pointer-events:none;
-    }
-
-    /* colline */
-    #desktop .hill-back{
-      position:absolute;
-      left:-5%;
-      right:-5%;
-      bottom:13%;
-      height:34%;
-      background:#46a13f;
-      border-radius:50% 50% 0 0 / 100% 100% 0 0;
-      transform:rotate(-2deg);
-      filter:brightness(1.05);
-    }
-
-    #desktop .hill-front{
-      position:absolute;
-      left:-8%;
-      right:-3%;
+      left:-10%;
+      right:-10%;
       bottom:0;
-      height:38%;
-      background:#67b84a;
-      border-radius:55% 45% 0 0 / 100% 100% 0 0;
-      transform:rotate(-1deg);
-      box-shadow:inset 0 12px 24px rgba(255,255,255,.08);
+      height:42%;
+      background:
+        radial-gradient(ellipse at 50% 100%, rgba(255,255,255,.20) 0%, rgba(255,255,255,0) 40%),
+        linear-gradient(to bottom, var(--xp-green-2) 0%, var(--xp-green-1) 42%, var(--xp-green-3) 100%);
+      border-top-left-radius:55% 100%;
+      border-top-right-radius:55% 100%;
+      transform:scaleX(1.08);
     }
 
-    #desktop .hill-front::before{
-      content:"";
+    #desktop::after{
+      content:'';
       position:absolute;
-      right:14%;
-      bottom:22%;
-      width:42%;
-      height:28%;
-      background:rgba(255,255,255,.08);
-      border-radius:50%;
-      transform:rotate(-8deg);
-      filter:blur(1px);
+      inset:0;
+      pointer-events:none;
+      opacity:.06;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,.15) 0,
+          rgba(255,255,255,.15) 1px,
+          rgba(0,0,0,.08) 2px,
+          rgba(0,0,0,.08) 4px
+        );
+      mix-blend-mode:multiply;
     }
 
-    /* score strip sottile e strana */
+    /* TOP BAR */
     #score-bar{
       position:fixed;
       top:0;
@@ -203,54 +224,77 @@
       z-index:8000;
       display:flex;
       align-items:center;
-      gap:18px;
+      gap:16px;
       padding:0 10px;
-      background:linear-gradient(90deg, rgba(0,0,0,.86), rgba(0,0,0,.45));
-      border-bottom:1px solid rgba(255,255,255,.2);
-      color:#e8ffe1;
+      background:linear-gradient(90deg, rgba(0,0,0,.82) 0%, rgba(0,0,0,.58) 60%, rgba(0,0,0,.18) 100%);
+      border-bottom:1px solid rgba(255,255,255,.22);
       user-select:none;
-      font-family:'VT323', monospace;
-      font-size:18px;
-      letter-spacing:.5px;
-    }
-
-    #score-bar .sc{
-      color:#fff08a;
+      font-size:8px;
     }
 
     #score-bar .nm{
-      color:#7cff8a;
-      text-shadow:0 0 4px rgba(124,255,138,.3);
+      font-family:'VT323', monospace;
+      font-size:18px;
+      color:#d7f4ff;
+      letter-spacing:1px;
+    }
+
+    #score-bar .sc{
+      color:#fff58c;
+      text-shadow:0 0 6px rgba(255,245,140,.4);
     }
 
     #lives-disp{
-      color:#ff9aa8;
+      color:#ffd4d4;
     }
 
-    #egg-btn{
+    /* DESKTOP ICONS */
+    .desktop-icon{
       position:fixed;
-      top:4px;
-      right:8px;
-      z-index:8001;
-      padding:2px 6px;
-      font-family:'Press Start 2P', monospace;
-      font-size:6px;
-      color:#fff;
-      background:#23396a;
-      border:1px solid rgba(255,255,255,.35);
-      box-shadow:1px 1px 0 rgba(0,0,0,.45);
-      opacity:.8;
+      z-index:60;
+      width:92px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+      padding:4px;
+      background:transparent;
+      border:none;
     }
 
-    body.has-custom-cursor #egg-btn{
+    body.has-custom-cursor .desktop-icon{
       cursor:none;
     }
 
-    #egg-btn:hover{
-      opacity:1;
+    .desktop-icon .icon-img{
+      font-size:42px;
+      line-height:1;
+      filter:drop-shadow(2px 2px 0 rgba(0,0,0,.9));
+      transition:transform .08s steps(2,end);
     }
 
-    /* taskbar */
+    .desktop-icon .icon-label{
+      padding:4px 6px;
+      text-align:center;
+      line-height:1.55;
+      font-size:7px;
+      color:#fff;
+      text-shadow:1px 1px 0 #000;
+      background:transparent;
+    }
+
+    .desktop-icon:hover .icon-img,
+    .desktop-icon.is-selected .icon-img{
+      transform:translateY(-1px) scale(1.04);
+    }
+
+    .desktop-icon:hover .icon-label,
+    .desktop-icon.is-selected .icon-label{
+      background:#0d3aa8;
+      color:#fff;
+    }
+
+    /* TASKBAR */
     #taskbar{
       position:fixed;
       left:0;
@@ -261,29 +305,29 @@
       display:flex;
       align-items:center;
       gap:6px;
-      padding:0 6px;
-      background:linear-gradient(to bottom, #2b68df 0%, #1f57c8 42%, #1648af 100%);
-      border-top:1px solid rgba(255,255,255,.55);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.15);
+      padding:0 8px;
+      color:#000;
+      background:linear-gradient(to bottom,#3a84ff 0%, #1f63df 46%, #1749b5 100%);
+      border-top:2px solid rgba(255,255,255,.6);
+      box-shadow:0 -1px 0 rgba(0,0,0,.55);
       user-select:none;
     }
 
     #taskbar-start{
       display:flex;
       align-items:center;
-      gap:6px;
+      gap:8px;
       white-space:nowrap;
-      padding:5px 12px 5px 10px;
-      font-weight:bold;
-      font-size:13px;
+      padding:6px 12px;
+      font-size:8px;
       color:#fff;
-      background:linear-gradient(to bottom, #46b946 0%, #349b34 44%, #287a28 100%);
-      border:1px solid rgba(255,255,255,.45);
-      border-radius:0 10px 10px 0;
-      box-shadow:
-        inset 1px 1px 0 rgba(255,255,255,.35),
-        1px 1px 0 rgba(0,0,0,.35);
-      text-shadow:1px 1px 0 rgba(0,0,0,.45);
+      text-shadow:1px 1px 0 #000;
+      background:linear-gradient(135deg,var(--ui-green) 0%, var(--ui-green-dark) 100%);
+      border:3px solid #fff;
+      border-right-color:#000;
+      border-bottom-color:#000;
+      border-radius:8px;
+      box-shadow:inset 1px 1px 0 rgba(255,255,255,.35), inset -1px -1px 0 rgba(0,0,0,.55);
     }
 
     body.has-custom-cursor #taskbar-start{
@@ -291,35 +335,39 @@
     }
 
     #taskbar-start::before{
-      content:"⊞";
-      font-size:11px;
-      opacity:.95;
+      content:'⊞';
+      font-size:12px;
     }
 
     #taskbar-start:hover{
-      filter:brightness(1.05);
+      filter:brightness(1.08);
+    }
+
+    #taskbar-start:active{
+      border-color:#000 #fff #fff #000;
     }
 
     #taskbar-tasks{
       display:flex;
       align-items:center;
-      gap:4px;
+      gap:6px;
       min-width:0;
       flex:1;
       overflow:hidden;
     }
 
     .taskbar-btn{
-      max-width:170px;
+      max-width:160px;
       overflow:hidden;
       text-overflow:ellipsis;
       white-space:nowrap;
-      padding:5px 9px;
-      font-size:11px;
-      color:#fff;
-      background:linear-gradient(to bottom, rgba(255,255,255,.25), rgba(255,255,255,.1));
-      border:1px solid rgba(255,255,255,.35);
-      box-shadow:inset 1px 1px 0 rgba(255,255,255,.15);
+      padding:6px 10px;
+      font-size:7px;
+      color:#000;
+      background:linear-gradient(to bottom,#ececec 0%, #bebebe 100%);
+      border:2px solid #fff;
+      border-right-color:#707070;
+      border-bottom-color:#707070;
     }
 
     body.has-custom-cursor .taskbar-btn{
@@ -327,87 +375,73 @@
     }
 
     .taskbar-btn.active{
-      background:linear-gradient(to bottom, rgba(255,255,255,.12), rgba(0,0,0,.05));
-      box-shadow:inset 1px 1px 0 rgba(0,0,0,.2);
+      border-color:#707070 #fff #fff #707070;
     }
 
     #clock{
       margin-left:auto;
-      min-width:76px;
+      min-width:88px;
       text-align:center;
-      padding:3px 8px;
-      font-family:Tahoma, Arial, sans-serif;
-      font-size:12px;
-      color:#fff;
-      background:linear-gradient(to bottom, rgba(255,255,255,.2), rgba(0,0,0,.06));
-      border:1px solid rgba(255,255,255,.35);
+      padding:4px 8px;
+      font-family:'VT323', monospace;
+      font-size:22px;
+      color:#000;
+      background:#ececec;
+      border:2px inset #808080;
     }
 
-    /* start menu */
+    /* START MENU */
     #start-menu{
       position:fixed;
       left:0;
       bottom:var(--taskbar-h);
-      width:260px;
+      width:280px;
       z-index:9999;
       display:none;
-      background:#f3f0e3;
-      border:1px solid #0831a1;
-      box-shadow:3px 3px 0 rgba(0,0,0,.45);
-      overflow:hidden;
+      flex-direction:column;
+      background:linear-gradient(to right,#8b8b8b 0%, #d6d6d6 100%);
+      border:3px solid #fff;
+      border-bottom:none;
+      box-shadow:6px 6px 0 rgba(0,0,0,.82);
     }
 
     #start-menu.open{
       display:flex;
     }
 
-    .start-left{
-      width:42px;
-      background:linear-gradient(to bottom, #1e53c7, #0a3ca8);
+    .start-banner{
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:38px;
+      padding:10px 7px;
+      background:linear-gradient(to bottom,#1140c8 0%, #245dff 100%);
       color:#fff;
-      display:flex;
-      align-items:flex-end;
-      justify-content:center;
-      padding-bottom:10px;
-      font-family:'Press Start 2P', monospace;
-      font-size:8px;
+      font-size:9px;
       writing-mode:vertical-rl;
       transform:rotate(180deg);
-      letter-spacing:1px;
-      text-shadow:1px 1px 0 rgba(0,0,0,.45);
-    }
-
-    .start-right{
-      flex:1;
-      display:flex;
-      flex-direction:column;
-    }
-
-    .start-head{
-      padding:8px 10px;
-      background:linear-gradient(to right, #1f57c8, #3a6ee8);
-      color:#fff;
-      font-weight:bold;
-      font-size:13px;
+      letter-spacing:2px;
+      text-shadow:1px 1px 0 #000;
     }
 
     .start-items{
+      margin-left:38px;
       display:flex;
       flex-direction:column;
-      background:#f3f0e3;
     }
 
     .start-item{
       display:flex;
       align-items:center;
-      gap:8px;
-      padding:8px 10px;
+      gap:10px;
+      padding:10px 14px;
+      font-family:'VT323', monospace;
+      font-size:24px;
+      color:#000;
+      border-bottom:1px solid #9a9a9a;
       background:transparent;
-      border:none;
-      border-bottom:1px solid #ddd6c4;
       text-align:left;
-      font-size:13px;
-      color:#111;
     }
 
     body.has-custom-cursor .start-item{
@@ -415,147 +449,113 @@
     }
 
     .start-item:hover{
-      background:#316ac5;
+      background:#000080;
       color:#fff;
     }
 
     .start-item-icon{
-      width:18px;
-      text-align:center;
-      font-size:14px;
+      font-size:18px;
     }
 
-    /* desktop icons */
-    .desktop-icon{
-      position:fixed;
-      z-index:50;
-      width:var(--desktop-icon-w);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:4px;
-      padding:4px;
-      background:transparent;
-      border:none;
-      user-select:none;
-      touch-action:none;
-    }
-
-    body.has-custom-cursor .desktop-icon{
-      cursor:none;
-    }
-
-    .desktop-icon .icon-img{
-      width:34px;
-      height:34px;
-      display:grid;
-      place-items:center;
-      font-size:26px;
-      line-height:1;
-      filter:drop-shadow(1px 1px 0 rgba(0,0,0,.45));
-    }
-
-    .desktop-icon .icon-label{
-      padding:2px 4px;
-      text-align:center;
-      line-height:1.25;
-      font-size:11px;
-      color:#fff;
-      text-shadow:1px 1px 0 rgba(0,0,0,.65);
-      border:1px solid transparent;
-    }
-
-    .desktop-icon:hover .icon-label,
-    .desktop-icon.is-selected .icon-label{
-      background:rgba(49,106,197,.75);
-      border-color:rgba(255,255,255,.25);
-    }
-
-    /* windows */
+    /* XP WINDOWS */
     .win{
       position:fixed;
       z-index:100;
       display:flex;
       flex-direction:column;
-      min-width:300px;
+      min-width:320px;
       overflow:hidden;
-      background:var(--xp-window);
-      border:var(--win-border);
-      box-shadow:var(--win-shadow);
       resize:both;
-      animation:winPop .12s ease-out;
+      background:linear-gradient(to bottom,#f8f8f8 0%, #d8d8d8 100%);
+      border:3px solid #f4f4f4;
+      box-shadow:
+        6px 6px 0 rgba(0,0,0,.65),
+        0 0 0 1px rgba(255,255,255,.18);
+      animation:winPop .14s cubic-bezier(.17,.67,.24,1.44);
+      color:#000;
     }
 
     @keyframes winPop{
-      from{transform:scale(.98); opacity:.0;}
-      to{transform:scale(1); opacity:1;}
+      from{ transform:scale(.55); opacity:0; }
+      to{ transform:scale(1); opacity:1; }
     }
 
     .win-titlebar{
       display:flex;
       align-items:center;
-      gap:6px;
-      padding:4px 6px;
-      background:linear-gradient(to right, var(--xp-blue-3), var(--xp-blue-2));
-      color:#fff;
-      font-weight:bold;
-      font-size:12px;
+      gap:8px;
+      padding:7px 10px;
       cursor:move;
       user-select:none;
+      white-space:nowrap;
+      color:#fff;
+      font-size:9px;
+      background:linear-gradient(90deg,#1d57da 0%, #3b7cff 60%, #1643a5 100%);
+      text-shadow:1px 1px 0 rgba(0,0,0,.95);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.22);
     }
 
     .win-icon{
       font-size:13px;
+      filter:drop-shadow(1px 1px 0 #000);
     }
 
     .win-title{
       flex:1;
       overflow:hidden;
       text-overflow:ellipsis;
-      white-space:nowrap;
     }
 
     .win-controls{
       display:flex;
-      gap:2px;
+      gap:4px;
+      flex-shrink:0;
     }
 
     .win-btn{
-      width:19px;
-      height:19px;
-      display:grid;
-      place-items:center;
-      color:#111;
-      font-weight:bold;
-      font-size:11px;
-      background:linear-gradient(to bottom, #fefefe, #d9d4c8);
-      border:1px solid #fff;
-      box-shadow:inset -1px -1px 0 #8b8b8b;
+      width:18px;
+      height:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#000;
+      font-size:7px;
+      background:linear-gradient(to bottom,#f1f1f1 0%, #bcbcbc 100%);
+      border:2px solid #fff;
+      border-right-color:#000;
+      border-bottom-color:#000;
     }
 
     body.has-custom-cursor .win-btn{
       cursor:none;
     }
 
+    .win-btn:hover{
+      background:#fff;
+    }
+
     .win-btn.close:hover{
-      background:linear-gradient(to bottom, #ffb7b7, #ea6d6d);
+      color:#fff;
+      background:var(--ui-red);
     }
 
     .win-menubar{
       display:flex;
-      gap:12px;
+      gap:16px;
       padding:4px 8px;
-      background:#f3f0e3;
-      border-bottom:1px solid #d3ccb9;
-      font-size:12px;
+      font-family:'VT323', monospace;
+      font-size:20px;
+      color:#000;
+      background:#cfcfcf;
+      border-bottom:2px solid #707070;
     }
 
     .win-menubar span{
-      padding:0 2px;
+      padding:0 5px;
     }
 
     .win-menubar span:hover{
-      background:#316ac5;
+      background:#000080;
       color:#fff;
     }
 
@@ -563,72 +563,338 @@
       position:relative;
       flex:1;
       overflow:auto;
-      padding:14px;
-      font-family:Tahoma, Arial, sans-serif;
-      font-size:13px;
-      line-height:1.5;
-      color:#202020;
-      background:#fffefb;
+      padding:16px;
+      font-family:'VT323', monospace;
+      font-size:22px;
+      line-height:1.42;
+      color:#111;
+      background:#f4f4f4;
     }
 
     .win-body h1,
     .win-body h2{
-      margin:0 0 8px;
-      font-size:18px;
-      color:#0b2f83;
+      margin:0 0 10px;
+      font-size:14px;
+      line-height:1.7;
+      color:#113399;
     }
 
     .win-body h3{
-      margin:0 0 6px;
-      font-size:13px;
-      color:#1f57c8;
-      text-transform:uppercase;
-      letter-spacing:.4px;
+      margin:10px 0 6px;
+      font-size:10px;
+      line-height:1.6;
+      color:#1f63df;
     }
 
     .win-body p{
       margin-bottom:10px;
+      font-size:21px;
+      color:#111;
+    }
+
+    .field-card{
+      margin-bottom:12px;
+      padding:12px;
+      background:#fff;
+      border:2px solid #b5b5b5;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.3);
+    }
+
+    .field-card:hover{
+      border-color:#3b7cff;
     }
 
     .label{
       display:block;
-      margin-bottom:8px;
-      font-size:10px;
-      color:#5b5b5b;
-      text-transform:uppercase;
-      letter-spacing:.5px;
-    }
-
-    .field-card{
-      margin-bottom:10px;
-      padding:10px;
-      background:#f6f4eb;
-      border:1px solid #d9d1bf;
-    }
-
-    .field-card:hover{
-      background:#f1eedf;
+      margin-bottom:6px;
+      font-size:8px;
+      line-height:1.7;
+      color:#0f2ea8;
     }
 
     .tag{
       display:inline-block;
-      margin:2px;
-      padding:4px 6px;
-      font-size:10px;
-      border:1px solid #c3beaf;
-      background:#f3f0e3;
-      color:#20334f;
+      margin:3px;
+      padding:4px 8px;
+      font-size:7px;
+      border:2px solid currentColor;
+      background:#fff;
     }
 
-    .tag.yellow{background:#fff4b0;}
-    .tag.cyan{background:#d9f8ff;}
-    .tag.magenta{background:#ffe0fb;}
-    .tag.green{background:#def9d9;}
+    .tag.yellow{ color:#9f8a00; }
+    .tag.cyan{ color:#006f9a; }
+    .tag.magenta{ color:#8a007f; }
+    .tag.green{ color:#007a22; }
+
+    /* HOME */
+    #hero-win{
+      top:60px;
+      left:calc(50% - 320px);
+      width:640px;
+      min-height:300px;
+    }
+
+    /* CHAOS LAB FULLSCREEN WINDOW */
+    .chaos-window{
+      position:fixed !important;
+      inset:0 !important;
+      width:100vw !important;
+      height:100vh !important;
+      min-width:100vw !important;
+      min-height:100vh !important;
+      resize:none !important;
+      z-index:9500 !important;
+      border:none !important;
+      box-shadow:none !important;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,.04), rgba(255,255,255,0)),
+        linear-gradient(to bottom, var(--chaos-win) 0%, var(--chaos-win-2) 100%) !important;
+      color:#fff !important;
+    }
+
+    .chaos-window .win-titlebar{
+      background:
+        linear-gradient(90deg, var(--chaos-bar) 0%, #2d4cff 48%, var(--chaos-bar2) 100%) !important;
+      color:#fff !important;
+      font-size:9px;
+      text-shadow:
+        1px 1px 0 rgba(0,0,0,.95),
+        0 0 6px rgba(255,255,255,.08);
+    }
+
+    .chaos-window .win-menubar{
+      background:var(--chaos-gray) !important;
+      color:#000 !important;
+    }
+
+    .chaos-window .win-body{
+      background:
+        linear-gradient(to bottom, rgba(0,255,255,.025), rgba(255,255,255,0)),
+        linear-gradient(to bottom, rgba(0,0,0,.1), rgba(0,0,0,0)) !important;
+      color:var(--chaos-green) !important;
+      font-size:26px !important;
+      line-height:1.45 !important;
+      padding:18px 18px 20px !important;
+      position:relative;
+      overflow:auto;
+      text-shadow:none;
+    }
+
+    .chaos-window .win-body::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,.015) 0px,
+          rgba(255,255,255,.015) 1px,
+          rgba(0,0,0,.08) 2px,
+          rgba(0,0,0,.08) 4px
+        );
+      mix-blend-mode:screen;
+      opacity:.35;
+    }
+
+    .chaos-window .win-body h1,
+    .chaos-window .win-body h2{
+      color:var(--chaos-yellow) !important;
+      font-size:14px !important;
+      line-height:1.7 !important;
+      text-shadow:
+        0 0 10px rgba(255,242,0,.52),
+        2px 0 0 rgba(255,0,255,.18),
+        -2px 0 0 rgba(0,246,255,.18);
+    }
+
+    .chaos-window .win-body h3{
+      color:var(--chaos-cyan) !important;
+      font-size:10px !important;
+      line-height:1.7 !important;
+      text-shadow:
+        0 0 8px rgba(0,246,255,.42),
+        1px 0 0 rgba(255,0,255,.15);
+    }
+
+    .chaos-window .win-body p{
+      color:#90ffa1 !important;
+      font-size:23px !important;
+    }
+
+    .chaos-window .label{
+      color:var(--chaos-magenta) !important;
+      text-shadow:0 0 6px rgba(255,45,251,.52);
+    }
+
+    .chaos-window .field-card{
+      background:
+        linear-gradient(to bottom, rgba(60,255,106,.08), rgba(60,255,106,.03)),
+        rgba(255,255,255,.018) !important;
+      border:2px solid rgba(60,255,106,.35) !important;
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.04),
+        0 0 0 1px rgba(0,0,0,.45);
+    }
+
+    .chaos-window .field-card:hover{
+      border-color:rgba(60,255,106,.85) !important;
+    }
+
+    .chaos-window .tag{
+      background:rgba(255,255,255,.02) !important;
+    }
+
+    .chaos-window .tag.yellow{
+      color:var(--chaos-yellow);
+      border-color:rgba(255,242,0,.95);
+      box-shadow:0 0 8px rgba(255,242,0,.12);
+    }
+    .chaos-window .tag.cyan{
+      color:var(--chaos-cyan);
+      border-color:rgba(0,246,255,.95);
+      box-shadow:0 0 8px rgba(0,246,255,.12);
+    }
+    .chaos-window .tag.magenta{
+      color:var(--chaos-magenta);
+      border-color:rgba(255,45,251,.95);
+      box-shadow:0 0 8px rgba(255,45,251,.12);
+    }
+    .chaos-window .tag.green{
+      color:var(--chaos-green);
+      border-color:rgba(60,255,106,.95);
+      box-shadow:0 0 8px rgba(60,255,106,.12);
+    }
+
+    .chaos-desktop-bg{
+      position:absolute;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 18% 16%, rgba(0,120,255,.28) 0%, transparent 24%),
+        radial-gradient(circle at 82% 10%, rgba(255,0,255,.18) 0%, transparent 22%),
+        radial-gradient(circle at 52% 80%, rgba(0,255,170,.12) 0%, transparent 24%),
+        linear-gradient(to bottom, #040812 0%, #03030b 54%, #000000 100%);
+      animation:desktopHue 24s linear infinite;
+    }
+
+    .chaos-desktop-bg::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent 0,
+          transparent 22px,
+          rgba(60,255,106,.08) 22px,
+          rgba(60,255,106,.08) 24px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent 0,
+          transparent 22px,
+          rgba(0,246,255,.05) 22px,
+          rgba(0,246,255,.05) 24px
+        );
+    }
+
+    .chaos-desktop-bg::after{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,.015) 0,
+          rgba(255,255,255,.015) 1px,
+          rgba(0,0,0,.28) 2px,
+          rgba(0,0,0,.28) 4px
+        );
+      mix-blend-mode:multiply;
+    }
+
+    @keyframes desktopHue{
+      0%{filter:hue-rotate(0deg);}
+      50%{filter:hue-rotate(18deg);}
+      100%{filter:hue-rotate(0deg);}
+    }
+
+    #lab-glitch-layer{
+      position:absolute;
+      inset:0;
+      z-index:1;
+      pointer-events:none;
+      overflow:hidden;
+    }
+
+    .glitch-bar{
+      position:absolute;
+      left:0;
+      right:0;
+      height:8px;
+      opacity:0;
+      background:
+        linear-gradient(90deg,
+          rgba(255,0,255,.0) 0%,
+          rgba(255,0,255,.65) 15%,
+          rgba(0,255,255,.75) 45%,
+          rgba(255,255,0,.6) 72%,
+          rgba(255,0,255,0) 100%);
+      mix-blend-mode:screen;
+      transform:translateX(-100%);
+      animation:glitchBar 700ms linear forwards;
+    }
+
+    @keyframes glitchBar{
+      0%{opacity:.95; transform:translateX(-100%);}
+      100%{opacity:0; transform:translateX(100%);}
+    }
+
+    .noise-burst{
+      position:absolute;
+      inset:auto 0 auto 0;
+      height:40px;
+      opacity:0;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(255,255,255,.8) 0 2px,
+          rgba(0,0,0,.8) 2px 4px,
+          rgba(0,255,255,.8) 4px 6px,
+          rgba(255,0,255,.8) 6px 8px
+        );
+      mix-blend-mode:screen;
+      animation:noiseBurst .28s steps(4,end) forwards;
+    }
+
+    @keyframes noiseBurst{
+      0%{opacity:.8; transform:translateX(0);}
+      100%{opacity:0; transform:translateX(30px);}
+    }
+
+    .lab-content{
+      position:relative;
+      z-index:2;
+    }
+
+    .glitch{
+      position:relative;
+      animation:glitchText 3s infinite;
+    }
+
+    @keyframes glitchText{
+      0%,88%,100%{text-shadow:none; transform:translate(0,0);}
+      89%{text-shadow:3px 0 var(--chaos-red), -3px 0 var(--chaos-cyan); transform:translate(1px,0);}
+      91%{text-shadow:-3px 0 var(--chaos-magenta), 3px 0 var(--chaos-yellow); transform:translate(-1px,0);}
+      93%{text-shadow:2px 0 var(--chaos-cyan), -2px 0 var(--chaos-red); transform:translate(0,1px);}
+    }
 
     .file-grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(118px,1fr));
-      gap:10px;
+      grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+      gap:12px;
       margin-top:10px;
     }
 
@@ -636,222 +902,122 @@
       display:flex;
       flex-direction:column;
       align-items:flex-start;
-      gap:6px;
-      min-height:92px;
+      gap:8px;
+      min-height:96px;
       padding:10px;
-      background:#f7f4e9;
-      border:1px solid #d9d1bf;
+      color:#fff;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,.03), rgba(255,255,255,.01)),
+        rgba(0,0,0,.2);
+      border:2px solid rgba(0,246,255,.28);
       text-align:left;
-      color:#111;
     }
 
     .file-card:hover{
-      background:#eef4ff;
-      border-color:#93b2ec;
+      border-color:var(--chaos-cyan);
+      background:
+        linear-gradient(to bottom, rgba(0,246,255,.08), rgba(255,255,255,.02)),
+        rgba(0,0,0,.22);
+      box-shadow:0 0 12px rgba(0,246,255,.08);
     }
 
     .file-icon{
-      font-size:22px;
+      font-size:28px;
       line-height:1;
+      filter:drop-shadow(2px 2px 0 #000);
     }
 
     .file-name{
-      font-size:10px;
-      line-height:1.5;
-      font-family:'Press Start 2P', monospace;
-      color:#1d3d85;
+      font-size:7px;
+      line-height:1.7;
+      color:var(--chaos-yellow);
     }
 
     .file-meta{
-      font-size:12px;
-      color:#555;
+      font-size:18px;
+      color:#7bffb0;
+      font-family:'VT323', monospace;
     }
 
-    .viewer-image{
-      width:100%;
-      display:block;
-      border:1px solid #c9c3b2;
-      background:#fff;
-      image-rendering:pixelated;
+    .spinner{
+      display:inline-block;
+      font-size:24px;
+      animation:spin .6s steps(8) infinite;
+    }
+
+    @keyframes spin{
+      to{transform:rotate(360deg);}
     }
 
     .muted{
-      color:#666 !important;
-      font-size:12px !important;
+      color:#6f6f6f !important;
+      font-size:19px !important;
     }
 
-    .status-line{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      margin-top:10px;
-      font-size:12px;
-      color:#4f4f4f;
-    }
-
-    .xp-notice{
-      position:fixed;
-      right:12px;
-      bottom:calc(var(--taskbar-h) + 10px);
-      z-index:6000;
-      padding:8px 10px;
-      background:#fff7cf;
-      border:1px solid #d9c975;
-      box-shadow:2px 2px 0 rgba(0,0,0,.18);
-      font-size:12px;
-      color:#5a4e1d;
-      display:none;
-    }
-
-    .xp-notice.show{
-      display:block;
-    }
-
-    /* boot */
-    #boot{
-      position:fixed;
-      inset:0;
-      z-index:99998;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:14px;
-      background:#000;
-      color:var(--boot-green);
-    }
-
-    #boot-logo{
-      font-family:'Press Start 2P', monospace;
-      font-size:clamp(18px, 3vw, 34px);
-      letter-spacing:2px;
-      color:#e8ffe1;
-      text-shadow:0 0 8px rgba(232,255,225,.22);
-    }
-
-    #boot-sub{
-      font-family:'VT323', monospace;
-      font-size:22px;
-      color:#7eff9c;
-      letter-spacing:1px;
-    }
-
-    #boot-bar-wrap{
-      width:340px;
-      height:18px;
-      border:1px solid var(--boot-green);
-      background:#031108;
-      overflow:hidden;
-    }
-
-    #boot-bar{
-      width:0%;
-      height:100%;
-      background:linear-gradient(to right, #1dff68, #00b84a);
-      transition:width .1s linear;
-    }
-
-    #boot-text{
-      width:360px;
-      height:88px;
-      overflow:hidden;
-      text-align:left;
-      font-family:'VT323', monospace;
-      font-size:19px;
-      color:#71ff9d;
-      white-space:pre-line;
-    }
-
-    /* alert */
-    .win-alert{
-      min-width:300px;
-      max-width:400px;
-      resize:none;
-    }
-
-    .win-alert .win-body{
-      padding:14px;
-    }
-
-    .alert-row{
-      display:flex;
-      align-items:flex-start;
-      gap:10px;
-      margin-bottom:12px;
-    }
-
-    .alert-icon{
-      font-size:22px;
-      line-height:1;
-    }
-
-    .alert-msg{
-      font-size:13px;
-      color:#1d1d1d;
-      line-height:1.45;
-    }
-
-    .alert-btns{
-      display:flex;
-      gap:8px;
-    }
-
-    .alert-ok{
-      padding:5px 14px;
-      font-size:12px;
-      background:#f3f0e3;
-      border:1px solid #fff;
-      box-shadow:inset -1px -1px 0 #8b8b8b;
-      color:#111;
-    }
-
-    /* responsive */
-    @media (max-width: 900px){
+    @media (max-width:900px){
       #hero-win{
-        left:40px !important;
-        width:min(620px, calc(100vw - 60px)) !important;
+        left:32px;
+        width:min(640px, calc(100vw - 56px));
+      }
+    }
+
+    @media (max-width:600px){
+      #hero-win{
+        top:50px;
+        left:4px;
+        right:4px;
+        width:calc(100% - 8px);
       }
 
       .win{
-        min-width:260px;
+        min-width:220px;
+        max-width:calc(100vw - 8px);
+        resize:none;
       }
-    }
 
-    @media (max-width: 600px){
-      #taskbar-tasks{
-        display:none;
+      #taskbar{
+        gap:4px;
+        padding:0 4px;
+      }
+
+      #taskbar-start{
+        padding:5px 8px;
+        font-size:6px;
+      }
+
+      .taskbar-btn{
+        max-width:100px;
+      }
+
+      #clock{
+        min-width:70px;
+        font-size:18px;
+        padding:3px 6px;
       }
 
       #start-menu{
         width:220px;
       }
 
-      #hero-win,
-      #win-archive,
-      #win-studio,
-      #win-lab,
-      #win-contact,
-      #win-manifesto,
-      #win-gallery{
-        left:4px !important;
-        width:calc(100vw - 8px) !important;
+      .start-item{
+        font-size:20px;
       }
 
-      .win{
-        resize:none;
-        min-width:220px;
+      .chaos-window .win-body{
+        font-size:20px !important;
       }
 
-      .desktop-icon{
-        width:72px;
+      .chaos-window .win-body p{
+        font-size:19px !important;
       }
 
-      .desktop-icon .icon-img{
-        font-size:22px;
+      .chaos-window .win-body h1,
+      .chaos-window .win-body h2{
+        font-size:11px !important;
       }
 
-      .desktop-icon .icon-label{
-        font-size:10px;
+      .chaos-window .win-body h3{
+        font-size:8px !important;
       }
     }
 
@@ -865,16 +1031,6 @@
         display:none !important;
       }
     }
-
-    @media (prefers-reduced-motion:reduce){
-      *,
-      *::before,
-      *::after{
-        animation-duration:.01ms !important;
-        animation-iteration-count:1 !important;
-        transition-duration:.01ms !important;
-      }
-    }
   </style>
 </head>
 <body>
@@ -883,54 +1039,43 @@
   <div id="score-bar">
     <span class="nm">BLUCINELAB OS</span>
     <span class="sc">SCORE: <span id="score-num">0</span></span>
-    <span id="lives-disp">LIVES: ♥♥♥</span>
+    <span id="lives-disp">MODE: XP HOME</span>
   </div>
 
-  <button id="egg-btn" type="button" title="???">INSERT COIN</button>
+  <div id="desktop"></div>
 
-  <div id="desktop">
-    <div class="sky-glow"></div>
-    <div class="hill-back"></div>
-    <div class="hill-front"></div>
-  </div>
-
-  <button class="desktop-icon" id="icon-archive" data-win="win-archive" data-key="archive" type="button" style="top:56px;left:18px;">
+  <button class="desktop-icon" style="top:56px;left:16px" id="icon-archive" data-win="win-archive" type="button">
     <div class="icon-img">📁</div>
     <div class="icon-label">ARCHIVE</div>
   </button>
 
-  <button class="desktop-icon" id="icon-studio" data-win="win-studio" data-key="studio" type="button" style="top:148px;left:18px;">
+  <button class="desktop-icon" style="top:160px;left:18px" id="icon-studio" data-win="win-studio" type="button">
     <div class="icon-img">🎨</div>
     <div class="icon-label">STUDIO</div>
   </button>
 
-  <button class="desktop-icon" id="icon-lab" data-win="win-lab" data-key="lab" type="button" style="top:240px;left:18px;">
+  <button class="desktop-icon" style="top:264px;left:16px" id="icon-lab" data-win="win-lab" type="button">
     <div class="icon-img">🔬</div>
     <div class="icon-label">LAB.EXE</div>
   </button>
 
-  <button class="desktop-icon" id="icon-contact" data-win="win-contact" data-key="contact" type="button" style="top:332px;left:18px;">
+  <button class="desktop-icon" style="top:368px;left:18px" id="icon-contact" data-win="win-contact" type="button">
     <div class="icon-img">📧</div>
     <div class="icon-label">CONTACT</div>
   </button>
 
-  <button class="desktop-icon" id="icon-manifesto" data-win="win-manifesto" data-key="manifesto" type="button" style="top:424px;left:18px;">
+  <button class="desktop-icon" style="top:472px;left:16px" id="icon-manifesto" data-win="win-manifesto" type="button">
     <div class="icon-img">📜</div>
-    <div class="icon-label">MANIFESTO</div>
+    <div class="icon-label">MANIFEST</div>
   </button>
 
-  <button class="desktop-icon" id="icon-gallery" data-win="win-gallery" data-key="gallery" type="button" style="top:516px;left:18px;">
-    <div class="icon-img">🖼️</div>
-    <div class="icon-label">GALLERY</div>
-  </button>
-
-  <section class="win" id="hero-win" aria-label="Homepage" style="top:52px;left:calc(50% - 290px);width:580px;min-height:300px;">
+  <section class="win" id="hero-win" aria-label="Homepage">
     <div class="win-titlebar" data-drag="hero-win">
-      <span class="win-icon">🖥️</span>
-      <span class="win-title">BLUCINELAB — Desktop</span>
+      <span class="win-icon">🖥</span>
+      <span class="win-title">BLUCINELAB OS — WINDOWS XP HOME</span>
       <div class="win-controls">
-        <button class="win-btn" data-minimize="hero-win" type="button" aria-label="Minimizza">_</button>
-        <button class="win-btn" data-maximize="hero-win" type="button" aria-label="Massimizza">□</button>
+        <button class="win-btn" data-minimize="hero-win" type="button">_</button>
+        <button class="win-btn" data-maximize="hero-win" type="button">□</button>
       </div>
     </div>
 
@@ -941,138 +1086,104 @@
       <span>Help</span>
     </div>
 
-    <div class="win-body" style="min-height:210px;">
-      <span class="label">HOME / DESKTOP / BOLOGNA</span>
-      <h1>COSTRUIRE IMMAGINI CHE PENSANO</h1>
-      <p>BLUCINELAB è uno studio visivo indipendente che lavora tra immagine, spazio, direzione e ricerca.</p>
-      <p>La home adesso è il desktop base del sistema: più credibile, più lenta, più macchina reale. Da qui si entra nei mondi interni.</p>
+    <div class="win-body" style="min-height:260px;">
+      <span class="label">HOME / XP MODE / BOLOGNA</span>
+      <h1>BLUCINELAB</h1>
+      <p>Home principale in estetica Windows XP. Pulita, leggibile, familiare.</p>
+      <p>Da qui si entra nei diversi ambienti. Il LAB non cambia pagina: apre una finestra totale che copre tutto.</p>
 
-      <div style="margin-top:8px;display:flex;flex-wrap:wrap;">
+      <div style="margin-top:10px;display:flex;flex-wrap:wrap;">
         <span class="tag yellow">WEB DESIGN</span>
         <span class="tag cyan">VISUAL IDENTITY</span>
         <span class="tag magenta">EXHIBITION</span>
         <span class="tag green">IMAGE DIRECTION</span>
       </div>
 
-      <div class="field-card" style="margin-top:12px;">
-        <span class="label">SYSTEM STATUS</span>
-        <h3>DESKTOP BASE STABILE</h3>
-        <p>Apri le finestre, trascinale, sposta le icone. Il desktop resta il mondo di orientamento. Le altre sezioni cambieranno pelle.</p>
+      <div style="margin-top:18px;" class="field-card">
+        <span class="label">STATUS</span>
+        <h3>DEFAULT HOME ATTIVA</h3>
+        <p>Il LAB mantiene la vecchia estetica, ma ora vive come overlay fullscreen nello stesso sito.</p>
       </div>
 
-      <div class="status-line">
-        <span>●</span>
-        <span>Sistema caricato. Start attivo. Una piccola anomalia è già presente.</span>
+      <div style="margin-top:14px; font-size:20px; color:#111;">
+        <span class="spinner">◐</span>
+        &nbsp;DESKTOP CARICATO — APRI LE ICONE
       </div>
     </div>
   </section>
 
-  <section class="win" id="win-archive" aria-label="Archive" style="top:88px;left:180px;width:500px;display:none;">
+  <section class="win" id="win-archive" aria-label="Archive" style="top:94px;left:180px;width:520px;display:none;">
     <div class="win-titlebar" data-drag="win-archive">
       <span class="win-icon">📁</span>
-      <span class="win-title">Archive</span>
+      <span class="win-title">ARCHIVE — Lavori e processi</span>
       <div class="win-controls">
         <button class="win-btn" data-minimize="win-archive" type="button">_</button>
         <button class="win-btn close" data-close="win-archive" type="button">✕</button>
       </div>
     </div>
-    <div class="win-menubar"><span>File</span><span>Sort</span><span>View</span><span>Open</span></div>
-    <div class="win-body" style="min-height:270px;">
-      <span class="label">ARCHIVE / INDEX</span>
+    <div class="win-menubar">
+      <span>File</span>
+      <span>Sort</span>
+      <span>View</span>
+    </div>
+    <div class="win-body" style="min-height:280px;">
+      <span class="label">ARCHIVE / XP MODE</span>
       <h2>LAVORI E PROCESSI</h2>
       <div class="field-card">
         <span class="label">PUBLIC WORKS</span>
-        <h3>ENTRA NELL'ARCHIVIO</h3>
-        <p>Questa finestra resterà uno dei punti chiari e leggibili del sito, prima della trasformazione nel mondo BIOS/terminal.</p>
+        <h3>ARCHIVIO</h3>
+        <p>Case study, processi, materiali, stati di visibilità.</p>
       </div>
-
-      <div class="file-grid">
-        <button class="file-card" type="button" data-open="win-img-1">
-          <span class="file-icon">🖼️</span>
-          <span class="file-name">CITY_01.BMP</span>
-          <span class="file-meta">Apri immagine</span>
-        </button>
-        <button class="file-card" type="button" data-open="win-img-2">
-          <span class="file-icon">🖼️</span>
-          <span class="file-name">SIGNAL_02.PCX</span>
-          <span class="file-meta">Apri immagine</span>
-        </button>
-        <button class="file-card" type="button" data-open="win-img-3">
-          <span class="file-icon">🖼️</span>
-          <span class="file-name">ARCHIVE_03.GIF</span>
-          <span class="file-meta">Apri immagine</span>
-        </button>
-        <button class="file-card" type="button" data-open="win-gallery">
-          <span class="file-icon">📂</span>
-          <span class="file-name">OPEN_GALLERY</span>
-          <span class="file-meta">Cartella immagini</span>
-        </button>
-      </div>
+      <p>Questa finestra resta volutamente nella grammatica XP. Il salto visivo forte accade nel LAB.</p>
     </div>
   </section>
 
-  <section class="win" id="win-studio" aria-label="Studio" style="top:110px;left:220px;width:470px;display:none;">
+  <section class="win" id="win-studio" aria-label="Studio" style="top:120px;left:220px;width:500px;display:none;">
     <div class="win-titlebar" data-drag="win-studio">
       <span class="win-icon">🎨</span>
-      <span class="win-title">Studio</span>
+      <span class="win-title">STUDIO — Metodo e coerenza</span>
       <div class="win-controls">
         <button class="win-btn" data-minimize="win-studio" type="button">_</button>
         <button class="win-btn close" data-close="win-studio" type="button">✕</button>
       </div>
     </div>
-    <div class="win-menubar"><span>File</span><span>Method</span><span>Values</span></div>
-    <div class="win-body" style="min-height:230px;">
-      <span class="label">STUDIO / METHOD</span>
+    <div class="win-menubar">
+      <span>File</span>
+      <span>Method</span>
+      <span>Values</span>
+    </div>
+    <div class="win-body" style="min-height:260px;">
+      <span class="label">STUDIO / XP MODE</span>
       <h2>METODO, RIDUZIONE, COERENZA</h2>
       <div class="field-card">
         <span class="label">SELECTION</span>
         <h3>TOGLIERE CIÒ CHE INDEBOLISCE</h3>
-        <p>La prima mossa è spesso sottrattiva. Meno dispersione, più struttura, più tensione.</p>
+        <p>Meno dispersione, più struttura, più tensione.</p>
       </div>
       <div class="field-card">
-        <span class="label">ATMOSPHERE</span>
-        <h3>COSTRUIRE IL CAMPO PERCETTIVO</h3>
-        <p>Luce, tipo, immagine, spazio e ritmo lavorano come un unico sistema continuo.</p>
+        <span class="label">COHERENCE</span>
+        <h3>MANTENERE UN LINGUAGGIO INTERNO</h3>
+        <p>Il progetto deve restare riconoscibile tra pagina, ambiente, racconto e direzione.</p>
       </div>
     </div>
   </section>
 
-  <section class="win" id="win-lab" aria-label="Lab" style="top:132px;left:252px;width:460px;display:none;">
-    <div class="win-titlebar" data-drag="win-lab">
-      <span class="win-icon">🔬</span>
-      <span class="win-title">Lab.exe</span>
-      <div class="win-controls">
-        <button class="win-btn" data-minimize="win-lab" type="button">_</button>
-        <button class="win-btn close" data-close="win-lab" type="button">✕</button>
-      </div>
-    </div>
-    <div class="win-menubar"><span>File</span><span>Research</span><span>Future</span></div>
-    <div class="win-body" style="min-height:220px;">
-      <span class="label">LAB / ACTIVE RESEARCH</span>
-      <h2>MATERIALI IN FORMAZIONE</h2>
-      <p>Questa sezione sarà il passaggio verso il mondo chaos/neon del vecchio index. Qui ora resta solo come promessa di sistema.</p>
-      <div class="field-card">
-        <span class="label">FUTURE LAYER</span>
-        <h3>CHAOS MODE INTERNO</h3>
-        <p>L’estetica neon/glitch che avevi prima non sparisce: viene spostata qui come mondo autonomo.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="win" id="win-contact" aria-label="Contact" style="top:154px;left:212px;width:430px;display:none;">
+  <section class="win" id="win-contact" aria-label="Contact" style="top:160px;left:210px;width:460px;display:none;">
     <div class="win-titlebar" data-drag="win-contact">
       <span class="win-icon">📧</span>
-      <span class="win-title">Contact</span>
+      <span class="win-title">CONTACT — Apri una conversazione</span>
       <div class="win-controls">
         <button class="win-btn" data-minimize="win-contact" type="button">_</button>
         <button class="win-btn close" data-close="win-contact" type="button">✕</button>
       </div>
     </div>
-    <div class="win-menubar"><span>File</span><span>Send</span></div>
-    <div class="win-body" style="min-height:210px;">
-      <span class="label">CONTACT / EMAIL</span>
-      <h2>POCHI PROGETTI, FATTI BENE</h2>
-      <p>BLUCINELAB lavora meglio quando il contesto è chiaro, il progetto ha peso e la collaborazione richiede visione, rigore e qualità della relazione.</p>
+    <div class="win-menubar">
+      <span>File</span>
+      <span>Send</span>
+    </div>
+    <div class="win-body" style="min-height:220px;">
+      <span class="label">CONTACT / XP MODE</span>
+      <h2>CONTATTO</h2>
       <div class="field-card">
         <span class="label">ADDRESS</span>
         <h3><a href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a></h3>
@@ -1081,163 +1192,131 @@
     </div>
   </section>
 
-  <section class="win" id="win-manifesto" aria-label="Manifesto" style="top:176px;left:152px;width:520px;display:none;">
+  <section class="win" id="win-manifesto" aria-label="Manifesto" style="top:180px;left:150px;width:560px;display:none;">
     <div class="win-titlebar" data-drag="win-manifesto">
       <span class="win-icon">📜</span>
-      <span class="win-title">Manifesto</span>
+      <span class="win-title">MANIFESTO — Un laboratorio contemporaneo</span>
       <div class="win-controls">
         <button class="win-btn" data-minimize="win-manifesto" type="button">_</button>
         <button class="win-btn close" data-close="win-manifesto" type="button">✕</button>
       </div>
     </div>
-    <div class="win-menubar"><span>File</span><span>Print</span><span>Share</span></div>
-    <div class="win-body" style="min-height:220px;">
-      <span class="label">MANIFESTO</span>
+    <div class="win-menubar">
+      <span>File</span>
+      <span>Print</span>
+      <span>Share</span>
+    </div>
+    <div class="win-body" style="min-height:240px;">
+      <span class="label">MANIFESTO / XP MODE</span>
       <h2>UN LABORATORIO CONTEMPORANEO DELL'IMMAGINE</h2>
-      <p>BLUCINELAB nasce dall'idea che l'immagine non sia una superficie da riempire, ma una forma di lettura del mondo.</p>
-      <p>Ci interessano progetti capaci di generare presenza, esperienza, memoria, relazione.</p>
+      <p>La home resta qui. Il caos è conservato nel LAB. Due registri diversi, nello stesso sistema.</p>
     </div>
   </section>
 
-  <section class="win" id="win-gallery" aria-label="Gallery" style="top:108px;left:322px;width:500px;display:none;">
-    <div class="win-titlebar" data-drag="win-gallery">
-      <span class="win-icon">🖼️</span>
-      <span class="win-title">Gallery</span>
-      <div class="win-controls">
-        <button class="win-btn" data-minimize="win-gallery" type="button">_</button>
-        <button class="win-btn close" data-close="win-gallery" type="button">✕</button>
-      </div>
-    </div>
-    <div class="win-menubar"><span>File</span><span>Image</span><span>View</span></div>
-    <div class="win-body" style="min-height:260px;">
-      <span class="label">GALLERY / SIGNALS</span>
-      <h2>APRIRE IMMAGINI COME FINESTRE</h2>
-      <p>Questa cartella prepara il futuro mondo Mac / HyperCard / viewer.</p>
-      <div class="file-grid">
-        <button class="file-card" type="button" data-open="win-img-1">
-          <span class="file-icon">📸</span>
-          <span class="file-name">NEON_CITY.BMP</span>
-          <span class="file-meta">open viewer</span>
-        </button>
-        <button class="file-card" type="button" data-open="win-img-2">
-          <span class="file-icon">📸</span>
-          <span class="file-name">RADAR_SIGNAL.PCX</span>
-          <span class="file-meta">open viewer</span>
-        </button>
-        <button class="file-card" type="button" data-open="win-img-3">
-          <span class="file-icon">📸</span>
-          <span class="file-name">ARCHIVE_MEMORY.GIF</span>
-          <span class="file-meta">open viewer</span>
-        </button>
-      </div>
-    </div>
-  </section>
+  <!-- LAB FULLSCREEN -->
+  <section class="win chaos-window" id="win-lab" aria-label="Lab" style="display:none;">
+    <div class="chaos-desktop-bg"></div>
+    <div id="lab-glitch-layer"></div>
 
-  <section class="win" id="win-img-1" aria-label="Image 1" style="top:120px;left:380px;width:420px;display:none;">
-    <div class="win-titlebar" data-drag="win-img-1">
-      <span class="win-icon">🖼️</span>
-      <span class="win-title">VIEWER — NEON_CITY.BMP</span>
+    <div class="win-titlebar" data-drag="win-lab">
+      <span class="win-icon">🔬</span>
+      <span class="win-title glitch">LAB.EXE — CHAOS VISUAL MODE</span>
       <div class="win-controls">
-        <button class="win-btn" data-minimize="win-img-1" type="button">_</button>
-        <button class="win-btn close" data-close="win-img-1" type="button">✕</button>
+        <button class="win-btn close" data-close="win-lab" type="button">✕</button>
       </div>
     </div>
-    <div class="win-menubar"><span>File</span><span>Zoom</span><span>Close</span></div>
-    <div class="win-body" style="min-height:220px;">
-      <span class="label">VIEWER / BITMAP</span>
-      <img class="viewer-image" alt="Neon city"
-        src="data:image/svg+xml;utf8,
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
-          <rect width='800' height='520' fill='%23000b1f'/>
-          <rect y='370' width='800' height='150' fill='%23000814'/>
-          <circle cx='620' cy='120' r='64' fill='%23ff2dfb'/>
-          <rect x='80' y='210' width='80' height='160' fill='%23001352'/>
-          <rect x='180' y='180' width='110' height='190' fill='%23001980'/>
-          <rect x='320' y='150' width='90' height='220' fill='%23001d9e'/>
-          <rect x='438' y='120' width='130' height='250' fill='%230023c7'/>
-          <rect x='590' y='190' width='80' height='180' fill='%2300177f'/>
-          <rect x='690' y='160' width='60' height='210' fill='%230021aa'/>
-        </svg>"/>
-    </div>
-  </section>
 
-  <section class="win" id="win-img-2" aria-label="Image 2" style="top:146px;left:410px;width:420px;display:none;">
-    <div class="win-titlebar" data-drag="win-img-2">
-      <span class="win-icon">🖼️</span>
-      <span class="win-title">VIEWER — RADAR_SIGNAL.PCX</span>
-      <div class="win-controls">
-        <button class="win-btn" data-minimize="win-img-2" type="button">_</button>
-        <button class="win-btn close" data-close="win-img-2" type="button">✕</button>
-      </div>
+    <div class="win-menubar">
+      <span>File</span>
+      <span>Research</span>
+      <span>Future</span>
+      <span>Signal</span>
     </div>
-    <div class="win-menubar"><span>File</span><span>Signal</span><span>Close</span></div>
-    <div class="win-body" style="min-height:220px;">
-      <span class="label">VIEWER / SIGNAL</span>
-      <img class="viewer-image" alt="Radar"
-        src="data:image/svg+xml;utf8,
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
-          <rect width='800' height='520' fill='%2300040a'/>
-          <circle cx='400' cy='260' r='170' fill='none' stroke='%2300ff66' stroke-width='4'/>
-          <circle cx='400' cy='260' r='120' fill='none' stroke='%2300ff66' stroke-width='4'/>
-          <circle cx='400' cy='260' r='70' fill='none' stroke='%2300ff66' stroke-width='4'/>
-          <line x1='400' y1='90' x2='400' y2='430' stroke='%2300ff66' stroke-width='4'/>
-          <line x1='230' y1='260' x2='570' y2='260' stroke='%2300ff66' stroke-width='4'/>
-        </svg>"/>
-    </div>
-  </section>
 
-  <section class="win" id="win-img-3" aria-label="Image 3" style="top:172px;left:440px;width:440px;display:none;">
-    <div class="win-titlebar" data-drag="win-img-3">
-      <span class="win-icon">🖼️</span>
-      <span class="win-title">VIEWER — ARCHIVE_MEMORY.GIF</span>
-      <div class="win-controls">
-        <button class="win-btn" data-minimize="win-img-3" type="button">_</button>
-        <button class="win-btn close" data-close="win-img-3" type="button">✕</button>
+    <div class="win-body">
+      <div class="lab-content">
+        <span class="label">LAB / ACTIVE RESEARCH / CHAOS MODE</span>
+        <h1>MATERIALI IN FORMAZIONE, FUTURI POSSIBILI</h1>
+        <p>Questa è la vecchia anima del sito: più sporca, più sintetica, più game, più notturna, più instabile.</p>
+        <p>Non cambia pagina. È una finestra totale che copre la home XP e la mette momentaneamente in secondo piano.</p>
+
+        <div style="margin-top:10px;display:flex;flex-wrap:wrap;">
+          <span class="tag yellow">PACMAN</span>
+          <span class="tag cyan">ARCADE</span>
+          <span class="tag magenta">GLITCH</span>
+          <span class="tag green">ARCHIVE</span>
+        </div>
+
+        <div style="margin-top:18px;" class="field-card">
+          <span class="label">FUTURE LAYER</span>
+          <h3>RICERCA, AI, ARCHIVI INTELLIGENTI</h3>
+          <p>Qui possono vivere le reference più radicali: game design, interfacce assurde, città neon, viewer immagini, mondi nascosti.</p>
+        </div>
+
+        <div class="field-card">
+          <span class="label">SYSTEM STATUS</span>
+          <h3>LA HOME NON È SCOMPARSA</h3>
+          <p>È sotto. Questa finestra la copre completamente. Chiudi e torni esattamente alla XP home.</p>
+        </div>
+
+        <div class="file-grid">
+          <button class="file-card" type="button" onclick="labPulse()">
+            <span class="file-icon">📡</span>
+            <span class="file-name">SIGNAL.BIN</span>
+            <span class="file-meta">trigger glitch</span>
+          </button>
+
+          <button class="file-card" type="button" onclick="labBurst()">
+            <span class="file-icon">⚡</span>
+            <span class="file-name">BURST.EXE</span>
+            <span class="file-meta">noise burst</span>
+          </button>
+
+          <button class="file-card" type="button" onclick="labWarning()">
+            <span class="file-icon">⚠️</span>
+            <span class="file-name">WARNING.MSG</span>
+            <span class="file-meta">popup</span>
+          </button>
+
+          <button class="file-card" type="button" onclick="labModeMessage()">
+            <span class="file-icon">🧠</span>
+            <span class="file-name">MEMORY.LOG</span>
+            <span class="file-meta">system text</span>
+          </button>
+        </div>
+
+        <div style="margin-top:18px;font-size:20px;color:#b6ffb4;">
+          <span class="spinner">◐</span>
+          &nbsp;CHAOS MODE ATTIVO — QUALCOSA STA SUCCEDENDO
+        </div>
       </div>
-    </div>
-    <div class="win-menubar"><span>File</span><span>Memory</span><span>Close</span></div>
-    <div class="win-body" style="min-height:220px;">
-      <span class="label">VIEWER / MEMORY</span>
-      <img class="viewer-image" alt="Memory archive"
-        src="data:image/svg+xml;utf8,
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'>
-          <rect width='800' height='520' fill='%230a0018'/>
-          <rect x='60' y='80' width='680' height='360' fill='%2300122a' stroke='%2300f6ff' stroke-width='4'/>
-          <rect x='90' y='110' width='160' height='120' fill='%23ff2dfb' opacity='.8'/>
-          <rect x='500' y='110' width='190' height='120' fill='%2300ff66' opacity='.8'/>
-        </svg>"/>
     </div>
   </section>
 
   <div id="taskbar">
-    <button id="taskbar-start" type="button">Start</button>
+    <button id="taskbar-start" type="button">START</button>
     <div id="taskbar-tasks"></div>
-    <div id="clock">00:00</div>
+    <div id="clock">00:00:00</div>
   </div>
 
   <nav id="start-menu" aria-label="Start Menu">
-    <div class="start-left">BLUCINELAB</div>
-    <div class="start-right">
-      <div class="start-head">BLUCINELAB</div>
-      <div class="start-items">
-        <button class="start-item" data-open="win-archive" type="button"><span class="start-item-icon">📁</span> Archive</button>
-        <button class="start-item" data-open="win-studio" type="button"><span class="start-item-icon">🎨</span> Studio</button>
-        <button class="start-item" data-open="win-lab" type="button"><span class="start-item-icon">🔬</span> Lab</button>
-        <button class="start-item" data-open="win-contact" type="button"><span class="start-item-icon">📧</span> Contact</button>
-        <button class="start-item" data-open="win-manifesto" type="button"><span class="start-item-icon">📜</span> Manifesto</button>
-        <button class="start-item" data-open="win-gallery" type="button"><span class="start-item-icon">🖼️</span> Gallery</button>
-        <button class="start-item" id="sm-pacman" type="button"><span class="start-item-icon">👾</span> Pac-Man</button>
-        <button class="start-item" id="sm-shutdown" type="button"><span class="start-item-icon">🔴</span> Shut Down</button>
-      </div>
+    <div class="start-banner">BLUCINELAB</div>
+    <div class="start-items">
+      <button class="start-item" data-open="win-archive" type="button"><span class="start-item-icon">📁</span> Archive</button>
+      <button class="start-item" data-open="win-studio" type="button"><span class="start-item-icon">🎨</span> Studio</button>
+      <button class="start-item" data-open="win-lab" type="button"><span class="start-item-icon">🔬</span> Lab</button>
+      <button class="start-item" data-open="win-contact" type="button"><span class="start-item-icon">📧</span> Contact</button>
+      <button class="start-item" data-open="win-manifesto" type="button"><span class="start-item-icon">📜</span> Manifesto</button>
+      <button class="start-item" id="sm-shutdown" type="button"><span class="start-item-icon">🔴</span> Shut Down</button>
     </div>
   </nav>
-
-  <div class="xp-notice" id="xp-notice">Sistema stabile. Un segnale anomalo è stato registrato in background.</div>
 
   <div id="boot">
     <div id="boot-logo">BLUCINELAB</div>
     <div id="boot-sub">VISUAL STUDIO OS — BOLOGNA</div>
-    <div id="boot-bar-wrap"><div id="boot-bar"></div></div>
+    <div id="boot-bar-wrap">
+      <div id="boot-bar"></div>
+    </div>
     <div id="boot-text"></div>
   </div>
 
@@ -1250,10 +1329,10 @@
       popupShown: false,
       bootDone: false,
       selectedIcon: null,
-      pacEnabled: false
+      labChaosStarted: false
     };
 
-    /* cursor */
+    // cursor
     (function initCursor(){
       const cur = $('#cur');
       if (!cur) return;
@@ -1269,83 +1348,56 @@
       });
     })();
 
-    /* clock */
+    // clock
     function updateClock(){
       const now = new Date();
       const clock = $('#clock');
       if (!clock) return;
 
       clock.textContent =
-        String(now.getHours()).padStart(2, '0') + ':' +
-        String(now.getMinutes()).padStart(2, '0');
+        String(now.getHours()).padStart(2,'0') + ':' +
+        String(now.getMinutes()).padStart(2,'0') + ':' +
+        String(now.getSeconds()).padStart(2,'0');
     }
     setInterval(updateClock, 1000);
     updateClock();
 
-    /* boot 4 secondi circa */
+    // boot
     (function initBoot(){
       const boot = $('#boot');
       const bootBar = $('#boot-bar');
       const bootText = $('#boot-text');
+      if (!boot || !bootBar || !bootText) return;
 
-      if (!boot || !bootBar || !bootText) {
-        state.bootDone = true;
-        return;
-      }
-
-      const alreadyBooted = sessionStorage.getItem('blucinelab_booted_realhome');
-
-      if (alreadyBooted) {
-        boot.remove();
-        state.bootDone = true;
-        showWelcomePopupOnce();
-        showNoticeLater();
-        return;
-      }
-
-      const bootLines = [
+      const lines = [
         'BLUCINELAB OS — AVVIO SISTEMA',
-        'Caricamento shell desktop... OK',
-        'Montaggio icone utente... OK',
-        'Preparazione archivio... OK',
-        'Controllo ambiente visivo... OK',
+        'Caricamento desktop XP... OK',
+        'Montaggio finestre... OK',
+        'Preparazione layer LAB... OK',
         'SISTEMA PRONTO.'
       ];
 
-      const totalDuration = 4200;
-      const totalSteps = 100;
-      let progress = 0;
-      let lineIndex = 0;
-
-      const lineMoments = [6, 22, 40, 62, 84, 98];
-
-      const timer = setInterval(() => {
-        progress++;
-        bootBar.style.width = progress + '%';
-
-        if (lineIndex < bootLines.length && progress >= lineMoments[lineIndex]) {
-          bootText.textContent += bootLines[lineIndex] + '\n';
-          lineIndex++;
-        }
-
-        if (progress >= totalSteps) {
-          clearInterval(timer);
-          sessionStorage.setItem('blucinelab_booted_realhome', '1');
+      let i = 0;
+      function step(){
+        if (i < lines.length) {
+          bootText.textContent += lines[i] + '\n';
+          i++;
+          bootBar.style.width = Math.round((i / lines.length) * 100) + '%';
+          setTimeout(step, 260);
+        } else {
           setTimeout(() => {
-            boot.style.transition = 'opacity .5s ease';
+            boot.style.transition = 'opacity .45s ease';
             boot.style.opacity = '0';
             setTimeout(() => {
               boot.remove();
               state.bootDone = true;
-              showWelcomePopupOnce();
-              showNoticeLater();
-            }, 500);
-          }, 180);
+            }, 450);
+          }, 400);
         }
-      }, totalDuration / totalSteps);
+      }
+      setTimeout(step, 400);
     })();
 
-    /* windows */
     function bringToFront(win){
       if (!win) return;
       win.style.zIndex = ++state.topZ;
@@ -1374,7 +1426,14 @@
         win.dataset.minimized = '0';
       }
 
-      bringToFront(win);
+      if (id === 'win-lab') {
+        bringToFront(win);
+        document.getElementById('lives-disp').textContent = 'MODE: LAB';
+        startLabChaos();
+      } else {
+        bringToFront(win);
+      }
+
       updateTaskbar();
     }
 
@@ -1384,11 +1443,15 @@
 
       if (id === 'hero-win') {
         openWindow(id);
-        bringToFront(win);
         return;
       }
 
       win.style.display = 'none';
+
+      if (id === 'win-lab') {
+        document.getElementById('lives-disp').textContent = 'MODE: XP HOME';
+      }
+
       updateTaskbar();
     }
 
@@ -1413,7 +1476,7 @@
 
     function maximizeWindow(id){
       const win = document.getElementById(id);
-      if (!win) return;
+      if (!win || id === 'win-lab') return;
 
       if (win.dataset.maximized === '1') {
         win.style.top = win.dataset.prevTop || '';
@@ -1427,10 +1490,10 @@
         win.dataset.prevW = win.style.width;
         win.dataset.prevH = win.style.height;
 
-        win.style.top = '30px';
-        win.style.left = '10px';
-        win.style.width = (window.innerWidth - 20) + 'px';
-        win.style.height = (window.innerHeight - 76) + 'px';
+        win.style.top = '40px';
+        win.style.left = '16px';
+        win.style.width = (window.innerWidth - 32) + 'px';
+        win.style.height = (window.innerHeight - 86) + 'px';
         win.dataset.maximized = '1';
       }
 
@@ -1450,7 +1513,7 @@
         btn.className = 'taskbar-btn';
 
         const title = $('.win-title', win)?.textContent?.trim() || win.id;
-        btn.textContent = title.slice(0, 22);
+        btn.textContent = title.slice(0, 20);
 
         if (win.dataset.minimized !== '1') {
           btn.classList.add('active');
@@ -1467,11 +1530,10 @@
       });
     }
 
-    /* drag windows */
     function makeWindowDraggable(titlebar){
       const winId = titlebar.dataset.drag;
       const win = document.getElementById(winId);
-      if (!win) return;
+      if (!win || winId === 'win-lab') return;
 
       let dragging = false;
       let ox = 0;
@@ -1489,39 +1551,19 @@
 
       document.addEventListener('mousemove', e => {
         if (!dragging) return;
+
         const maxLeft = window.innerWidth - 120;
-        const maxTop = window.innerHeight - 80;
+        const maxTop = window.innerHeight - 60;
+
         win.style.left = Math.max(0, Math.min(maxLeft, e.clientX - ox)) + 'px';
         win.style.top = Math.max(28, Math.min(maxTop, e.clientY - oy)) + 'px';
       });
 
       document.addEventListener('mouseup', () => dragging = false);
-
-      titlebar.addEventListener('touchstart', e => {
-        if (e.target.closest('.win-btn')) return;
-        dragging = true;
-        const t = e.touches[0];
-        const rect = win.getBoundingClientRect();
-        ox = t.clientX - rect.left;
-        oy = t.clientY - rect.top;
-        bringToFront(win);
-      }, { passive:true });
-
-      document.addEventListener('touchmove', e => {
-        if (!dragging) return;
-        const t = e.touches[0];
-        const maxLeft = window.innerWidth - 120;
-        const maxTop = window.innerHeight - 80;
-        win.style.left = Math.max(0, Math.min(maxLeft, t.clientX - ox)) + 'px';
-        win.style.top = Math.max(28, Math.min(maxTop, t.clientY - oy)) + 'px';
-      }, { passive:true });
-
-      document.addEventListener('touchend', () => dragging = false);
     }
 
     $$('[data-drag]').forEach(makeWindowDraggable);
 
-    /* buttons */
     $$('[data-close]').forEach(btn => {
       btn.addEventListener('click', () => closeWindow(btn.dataset.close));
     });
@@ -1534,7 +1576,6 @@
       btn.addEventListener('click', () => maximizeWindow(btn.dataset.maximize));
     });
 
-    /* desktop icons double click */
     $$('.desktop-icon[data-win]').forEach(icon => {
       let clicks = 0;
       let timer = null;
@@ -1560,101 +1601,6 @@
       });
     });
 
-    /* icone trascinabili + salvataggio */
-    (function initDraggableIcons(){
-      const icons = $$('.desktop-icon');
-      const storageKey = 'blucinelab_desktop_icon_positions_v1';
-
-      function savePositions(){
-        const data = {};
-        icons.forEach(icon => {
-          data[icon.dataset.key] = {
-            top: icon.style.top,
-            left: icon.style.left
-          };
-        });
-        localStorage.setItem(storageKey, JSON.stringify(data));
-      }
-
-      function restorePositions(){
-        const raw = localStorage.getItem(storageKey);
-        if (!raw) return;
-        try{
-          const data = JSON.parse(raw);
-          icons.forEach(icon => {
-            const key = icon.dataset.key;
-            if (!data[key]) return;
-            if (data[key].top) icon.style.top = data[key].top;
-            if (data[key].left) icon.style.left = data[key].left;
-          });
-        }catch(err){}
-      }
-
-      restorePositions();
-
-      icons.forEach(icon => {
-        let dragging = false;
-        let moved = false;
-        let ox = 0;
-        let oy = 0;
-
-        icon.addEventListener('mousedown', e => {
-          dragging = true;
-          moved = false;
-          ox = e.clientX - icon.offsetLeft;
-          oy = e.clientY - icon.offsetTop;
-        });
-
-        document.addEventListener('mousemove', e => {
-          if (!dragging) return;
-          moved = true;
-          const left = Math.max(0, Math.min(window.innerWidth - icon.offsetWidth, e.clientX - ox));
-          const top = Math.max(28, Math.min(window.innerHeight - 60 - icon.offsetHeight, e.clientY - oy));
-          icon.style.left = left + 'px';
-          icon.style.top = top + 'px';
-        });
-
-        document.addEventListener('mouseup', () => {
-          if (!dragging) return;
-          dragging = false;
-          if (moved) savePositions();
-        });
-
-        icon.addEventListener('touchstart', e => {
-          const t = e.touches[0];
-          dragging = true;
-          moved = false;
-          ox = t.clientX - icon.offsetLeft;
-          oy = t.clientY - icon.offsetTop;
-        }, { passive:true });
-
-        document.addEventListener('touchmove', e => {
-          if (!dragging) return;
-          const t = e.touches[0];
-          moved = true;
-          const left = Math.max(0, Math.min(window.innerWidth - icon.offsetWidth, t.clientX - ox));
-          const top = Math.max(28, Math.min(window.innerHeight - 60 - icon.offsetHeight, t.clientY - oy));
-          icon.style.left = left + 'px';
-          icon.style.top = top + 'px';
-        }, { passive:true });
-
-        document.addEventListener('touchend', () => {
-          if (!dragging) return;
-          dragging = false;
-          if (moved) savePositions();
-        });
-      });
-    })();
-
-    /* generic open buttons */
-    $$('[data-open]').forEach(item => {
-      item.addEventListener('click', () => {
-        openWindow(item.dataset.open);
-        $('#start-menu')?.classList.remove('open');
-      });
-    });
-
-    /* start menu */
     const startMenu = $('#start-menu');
     const startButton = $('#taskbar-start');
 
@@ -1671,144 +1617,79 @@
       });
     }
 
+    $$('[data-open]').forEach(item => {
+      item.addEventListener('click', () => {
+        openWindow(item.dataset.open);
+        startMenu?.classList.remove('open');
+      });
+    });
+
     $('#sm-shutdown')?.addEventListener('click', () => {
       document.body.innerHTML = `
-        <div style="background:#000;color:#71ff9d;font-family:'Press Start 2P',monospace;font-size:14px;display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:20px;">
+        <div style="background:#000;color:#00ff66;font-family:'Press Start 2P',monospace;font-size:14px;display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:20px;">
           <div>È SICURO SPEGNERE IL COMPUTER</div>
           <div style="font-size:9px;color:#808080;">BLUCINELAB OS</div>
-          <button onclick="location.reload()" style="font-family:'Press Start 2P',monospace;font-size:8px;padding:10px 20px;background:#000;color:#71ff9d;border:2px solid #71ff9d;cursor:pointer;margin-top:20px;">
+          <button onclick="location.reload()" style="font-family:'Press Start 2P',monospace;font-size:8px;padding:10px 20px;background:#000;color:#00ff66;border:2px solid #00ff66;cursor:pointer;margin-top:20px;">
             ↺ RIAVVIA
           </button>
         </div>
       `;
     });
 
-    $('#sm-pacman')?.addEventListener('click', () => {
-      state.pacEnabled = !state.pacEnabled;
-      startMenu?.classList.remove('open');
-      showAlert(
-        state.pacEnabled ? 'PAC-MAN' : 'PAC-MAN',
-        state.pacEnabled
-          ? 'Layer arcade attivato.\nPer ora è solo un segnale del futuro mondo game.'
-          : 'Layer arcade disattivato.'
-      );
-    });
+    // LAB CHAOS
+    function labGlitchNow(){
+      const layer = $('#lab-glitch-layer');
+      const lab = $('#win-lab');
+      if (!layer || !lab || getComputedStyle(lab).display === 'none') return;
 
-    /* focus windows */
-    $$('.win').forEach(win => {
-      win.addEventListener('mousedown', () => bringToFront(win));
-    });
+      const bar = document.createElement('div');
+      bar.className = 'glitch-bar';
+      bar.style.top = Math.floor(Math.random() * (window.innerHeight - 20)) + 'px';
+      bar.style.height = (6 + Math.random() * 18) + 'px';
+      layer.appendChild(bar);
+      setTimeout(() => bar.remove(), 800);
 
-    /* alerts */
-    let alertZ = 9000;
-
-    function showAlert(title, msg, onOk = null){
-      const w = document.createElement('div');
-      w.className = 'win win-alert';
-      w.style.top = (110 + Math.random() * 60) + 'px';
-      w.style.left = (Math.max(20, window.innerWidth / 2 - 170 + Math.random() * 40)) + 'px';
-      w.style.zIndex = ++alertZ;
-
-      w.innerHTML = `
-        <div class="win-titlebar" style="background:linear-gradient(to right,#0c43b8,#3a6ee8)">
-          <span class="win-icon">⚠</span>
-          <span class="win-title">${title}</span>
-          <div class="win-controls">
-            <button class="win-btn close" type="button">✕</button>
-          </div>
-        </div>
-        <div class="win-body">
-          <div class="alert-row">
-            <span class="alert-icon">🔔</span>
-            <span class="alert-msg">${msg.replace(/\n/g, '<br>')}</span>
-          </div>
-          <div class="alert-btns">
-            <button class="alert-ok" type="button">OK</button>
-          </div>
-        </div>
-      `;
-
-      document.body.appendChild(w);
-      bringToFront(w);
-
-      const closeBtn = $('.close', w);
-      const okBtn = $('.alert-ok', w);
-      const titlebar = $('.win-titlebar', w);
-
-      let dragging = false;
-      let ox = 0;
-      let oy = 0;
-
-      titlebar.addEventListener('mousedown', e => {
-        if (e.target.closest('.win-btn')) return;
-        dragging = true;
-        const r = w.getBoundingClientRect();
-        ox = e.clientX - r.left;
-        oy = e.clientY - r.top;
-        e.preventDefault();
-      });
-
-      document.addEventListener('mousemove', e => {
-        if (!dragging) return;
-        w.style.left = Math.max(0, e.clientX - ox) + 'px';
-        w.style.top = Math.max(20, e.clientY - oy) + 'px';
-      });
-
-      document.addEventListener('mouseup', () => dragging = false);
-
-      const destroy = () => {
-        w.remove();
-        if (typeof onOk === 'function') onOk();
-      };
-
-      closeBtn?.addEventListener('click', () => w.remove());
-      okBtn?.addEventListener('click', destroy);
+      if (Math.random() > 0.5) {
+        const burst = document.createElement('div');
+        burst.className = 'noise-burst';
+        burst.style.top = Math.floor(Math.random() * (window.innerHeight - 40)) + 'px';
+        layer.appendChild(burst);
+        setTimeout(() => burst.remove(), 300);
+      }
     }
 
-    function showWelcomePopupOnce(){
-      if (state.popupShown) return;
-      state.popupShown = true;
+    function startLabChaos(){
+      if (state.labChaosStarted) return;
+      state.labChaosStarted = true;
 
-      setTimeout(() => {
-        showAlert(
-          'BENVENUTO',
-          'Esplora il desktop.\nApri Archive, Studio, Lab, Contact, Gallery e Manifesto.'
-        );
-      }, 700);
-    }
-
-    function showNoticeLater(){
-      const note = $('#xp-notice');
-      if (!note) return;
-      setTimeout(() => {
-        note.classList.add('show');
-      }, 2400);
-      setTimeout(() => {
-        note.classList.remove('show');
-      }, 8200);
-    }
-
-    $('#egg-btn')?.addEventListener('click', () => {
-      showAlert(
-        'SIGNAL',
-        'Questo desktop è stabile.\nIl vecchio chaos mode è stato spostato nel futuro mondo LAB.'
-      );
-    });
-
-    /* resize safety */
-    window.addEventListener('resize', () => {
-      $$('.win').forEach(win => {
-        const rect = win.getBoundingClientRect();
-
-        if (rect.right > window.innerWidth) {
-          win.style.left = Math.max(0, window.innerWidth - rect.width - 10) + 'px';
+      setInterval(() => {
+        if ($('#win-lab') && getComputedStyle($('#win-lab')).display !== 'none') {
+          if (Math.random() > 0.38) labGlitchNow();
         }
+      }, 2600);
+    }
 
-        if (rect.bottom > window.innerHeight - 30) {
-          win.style.top = Math.max(28, window.innerHeight - rect.height - 42) + 'px';
-        }
-      });
-    });
+    function labPulse(){
+      labGlitchNow();
+      document.getElementById('score-num').textContent =
+        String(Number(document.getElementById('score-num').textContent) + 25);
+    }
+
+    function labBurst(){
+      for (let i = 0; i < 4; i++) {
+        setTimeout(() => labGlitchNow(), i * 120);
+      }
+      document.getElementById('score-num').textContent =
+        String(Number(document.getElementById('score-num').textContent) + 50);
+    }
+
+    function labWarning(){
+      alert('WARNING: segnale visivo instabile.');
+    }
+
+    function labModeMessage(){
+      alert('La home XP è sotto. Questa finestra la copre totalmente.');
+    }
 
     updateTaskbar();
   </script>
