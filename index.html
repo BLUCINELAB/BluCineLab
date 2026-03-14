@@ -7,241 +7,105 @@
 
 <title>BLUCINELAB OS</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-
-<style>
-
-/* BASE */
-
-body{
-margin:0;
-overflow:hidden;
-font-family:Tahoma;
-}
-
-#desktop{
-position:fixed;
-inset:0;
-background:linear-gradient(#87b4ff,#5c93e8 40%,#4f8a2e 41%,#67b63b);
-}
-
-/* WINDOW */
-
-.win{
-position:fixed;
-background:#ece9d8;
-border:2px solid #0a246a;
-display:flex;
-flex-direction:column;
-}
-
-.win-titlebar{
-background:#245edb;
-color:white;
-padding:4px;
-}
-
-.win-body{
-flex:1;
-overflow:auto;
-padding:10px;
-}
-
-/* WORLD */
-
-.world{
-position:fixed;
-top:0;
-left:0;
-width:100vw;
-height:100vh;
-}
-
-/* RAIL */
-
-.rail{
-position:absolute;
-left:0;
-top:0;
-bottom:0;
-width:70px;
-background:black;
-color:white;
-display:flex;
-flex-direction:column;
-align-items:center;
-z-index:10;
-}
-
-/* NANO */
-
-.nano{
-position:absolute;
-bottom:10px;
-left:10px;
-font-size:40px;
-animation:walk 1s infinite;
-}
-
-@keyframes walk{
-0%{transform:translateX(0)}
-50%{transform:translateX(5px)}
-100%{transform:translateX(0)}
-}
-
-/* PLAYROOM */
-
-.playroom{
-background:linear-gradient(#ffffff,#ddeeff);
-}
-
-.wii-menu{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
-padding:100px;
-}
-
-.wii-btn{
-background:white;
-border-radius:20px;
-height:120px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:20px;
-box-shadow:0 4px 10px rgba(0,0,0,0.3);
-cursor:pointer;
-}
-
-/* GAME */
-
-.game{
-position:absolute;
-top:0;
-left:70px;
-right:0;
-bottom:0;
-display:none;
-}
-
-/* MARIO */
-
-#mario{
-background:#6bd3ff;
-}
-
-.mario-ground{
-position:absolute;
-bottom:0;
-height:100px;
-width:100%;
-background:#5ab43c;
-}
-
-.mario-player{
-position:absolute;
-bottom:100px;
-left:100px;
-font-size:40px;
-}
-
-/* COOKING */
-
-#cooking{
-background:pink;
-display:none;
-text-align:center;
-font-family:"Press Start 2P";
-}
-
-#food{
-font-size:50px;
-margin-top:100px;
-cursor:pointer;
-}
-
-#score{
-margin-top:20px;
-font-size:20px;
-}
-
-</style>
+<link rel="stylesheet" href="style.css">
 
 </head>
 <body>
 
-<div id="desktop"></div>
+<!-- DESKTOP -->
 
-<!-- HOME -->
+<div id="desktop">
 
-<div class="win" style="top:60px;left:100px;width:400px">
+<div class="icon" onclick="openWindow('playroom')">
+🎮 PLAYROOM
+</div>
 
-<div class="win-titlebar">HOME</div>
+<div class="icon" onclick="openWindow('lab')">
+🧪 LAB
+</div>
 
-<div class="win-body">
-
-XP HOME
-
-<div class="nano">🙂</div>
-
+<div class="icon" onclick="openWindow('archive')">
+📁 ARCHIVE
 </div>
 
 </div>
 
 
+<!-- TASKBAR -->
 
-<!-- PLAYROOM -->
+<div id="taskbar">
 
-<div class="world playroom" id="playroom">
-
-<div class="rail">
-
-<button onclick="closePlay()">X</button>
-<button onclick="showMenu()">MENU</button>
+<button id="startBtn" onclick="toggleStart()">
+START
+</button>
 
 </div>
 
 
-<!-- MENU -->
+<!-- START MENU -->
 
-<div class="wii-menu" id="menu">
+<div id="startMenu">
 
-<div class="wii-btn" onclick="startGame('mario')">
+<div onclick="openWindow('playroom')">
+Playroom
+</div>
+
+<div onclick="openWindow('lab')">
+Lab
+</div>
+
+<div onclick="openWindow('archive')">
+Archive
+</div>
+
+</div>
+
+
+<!-- WINDOW PLAYROOM -->
+
+<div class="window" id="playroom">
+
+<div class="sideBar">
+
+<button onclick="closeWindow('playroom')">
+X
+</button>
+
+<button onclick="showMenu()">
+MENU
+</button>
+
+</div>
+
+<div class="content playroom">
+
+<div id="menu">
+
+<button onclick="startGame('mario')">
 MARIO
-</div>
+</button>
 
-<div class="wii-btn" onclick="startGame('cooking')">
+<button onclick="startGame('cooking')">
 COOKING
-</div>
-
-<div class="wii-btn">
-INVADERS
-</div>
-
-<div class="wii-btn">
-TAMA
-</div>
+</button>
 
 </div>
 
-
-<!-- MARIO -->
 
 <div id="mario" class="game">
 
-<div id="player" class="mario-player">🙂</div>
+<div id="player">
+🙂
+</div>
 
-<div class="mario-ground"></div>
+<div class="ground"></div>
 
 </div>
 
 
-<!-- COOKING -->
-
 <div id="cooking" class="game">
 
-<h1>COOKING MAMA</h1>
+<h1>COOKING</h1>
 
 <div id="food" onclick="cook()">
 🍳
@@ -253,102 +117,66 @@ TAMA
 
 </div>
 
+<div class="nano">
+🧑
+</div>
 
-<div class="nano">🧑</div>
+</div>
 
 </div>
 
 
+<!-- WINDOW LAB -->
 
-<script>
+<div class="window" id="lab">
 
-/* MENU */
+<div class="sideBar">
 
-function closePlay(){
-document.getElementById("playroom").style.display="none"
-}
+<button onclick="closeWindow('lab')">
+X
+</button>
 
-function showMenu(){
-document.getElementById("menu").style.display="grid"
-hideGames()
-}
+</div>
 
-function startGame(id){
-document.getElementById("menu").style.display="none"
-hideGames()
-document.getElementById(id).style.display="block"
-}
+<div class="content lab">
 
-function hideGames(){
-document.querySelectorAll(".game").forEach(g=>g.style.display="none")
-}
+<h1>LAB WORLD</h1>
 
+<div class="nano">
+🤖
+</div>
 
+</div>
 
-/* MARIO */
-
-let player=document.getElementById("player")
-
-let x=100
-let y=0
-let vy=0
-let jumping=false
-
-document.addEventListener("keydown",e=>{
-
-if(document.getElementById("mario").style.display=="block"){
-
-if(e.key=="ArrowRight") x+=10
-if(e.key=="ArrowLeft") x-=10
-
-if(e.key==" " && !jumping){
-vy=15
-jumping=true
-}
-
-player.style.left=x+"px"
-
-}
-
-})
-
-function loop(){
-
-if(jumping){
-
-y+=vy
-vy-=1
-
-if(y<=0){
-y=0
-jumping=false
-}
-
-player.style.bottom=100+y+"px"
-
-}
-
-requestAnimationFrame(loop)
-
-}
-
-loop()
+</div>
 
 
+<!-- WINDOW ARCHIVE -->
 
-/* COOKING */
+<div class="window" id="archive">
 
-let points=0
+<div class="sideBar">
 
-function cook(){
+<button onclick="closeWindow('archive')">
+X
+</button>
 
-points++
+</div>
 
-document.getElementById("score").innerText=points
+<div class="content archive">
 
-}
+<h1>ARCHIVE WORLD</h1>
 
-</script>
+<div class="nano">
+👾
+</div>
+
+</div>
+
+</div>
+
+
+<script src="script.js"></script>
 
 </body>
-</html>
+</html></html>
