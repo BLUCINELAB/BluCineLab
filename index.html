@@ -3,688 +3,1008 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BLUCINELAB OS</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>BLUCINELAB — XP Desktop / GTA Archive</title>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; overflow: hidden; }
+    body {
+      font-family: Tahoma, Arial, sans-serif;
+      background: #245edb;
+      user-select: none;
+    }
+
+    :root{
+      --xp-blue-1:#245edb;
+      --xp-blue-2:#1f59d4;
+      --xp-blue-3:#1949b2;
+      --xp-taskbar:#2458c7;
+      --xp-taskbar-dark:#123b97;
+      --xp-green:#2ca94f;
+      --shadow: 0 18px 44px rgba(0,0,0,.45);
+    }
+
+    .hidden { display: none !important; }
+
+    /* DESKTOP */
+    #desktop {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(255,255,255,.17), transparent 28%),
+        linear-gradient(180deg, #66a9ff 0%, #3d83e0 26%, #2d69c8 55%, #1b4fa5 100%);
+    }
+
+    .desktop-wallpaper-hill {
+      position: absolute;
+      left: -10vw;
+      right: -10vw;
+      bottom: 28px;
+      height: 44vh;
+      background:
+        radial-gradient(110% 120% at 50% 100%, #66c64f 0 42%, transparent 43%),
+        radial-gradient(95% 90% at 58% 100%, #53b43f 0 37%, transparent 38%);
+      filter: saturate(1.05);
+    }
+
+    .desktop-icon {
+      position: absolute;
+      width: 88px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      color: white;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .desktop-icon .icon-art {
+      width: 46px;
+      height: 46px;
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg,#fff 0%,#d7ebff 100%);
+      border: 1px solid rgba(0,0,0,.18);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.8),
+        0 2px 5px rgba(0,0,0,.15);
+      position: relative;
+    }
+
+    .desktop-icon .icon-art::before,
+    .desktop-icon .icon-art::after{
+      content:"";
+      position:absolute;
+      background:#f3c316;
+      border:1px solid rgba(0,0,0,.16);
+    }
+
+    .desktop-icon.folder .icon-art::before{
+      width: 20px;
+      height: 8px;
+      left: 5px;
+      top: 7px;
+      border-bottom: none;
+      border-radius: 4px 4px 0 0;
+      background: #f8d667;
+    }
+
+    .desktop-icon.folder .icon-art::after{
+      width: 34px;
+      height: 22px;
+      left: 5px;
+      top: 14px;
+      border-radius: 4px;
+      background: linear-gradient(180deg,#f8da6d 0%, #e2b517 100%);
+    }
+
+    .desktop-icon span {
+      font-size: 12px;
+      line-height: 1.15;
+      text-shadow: 1px 1px 2px rgba(0,0,0,.65);
+      padding: 2px 4px;
+    }
+
+    .desktop-icon.active span {
+      background: rgba(10, 36, 106, .55);
+      outline: 1px dotted rgba(255,255,255,.75);
+    }
+
+    #icon-archive { top: 34px; left: 26px; }
+    #icon-shell   { top: 132px; left: 26px; }
+
+    /* TASKBAR */
+    #taskbar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 34px;
+      background:
+        linear-gradient(180deg,#3c78e6 0%, #2b63d2 45%, #2358c3 46%, #194aa8 100%);
+      border-top: 1px solid rgba(255,255,255,.35);
+      display: flex;
+      align-items: stretch;
+      z-index: 9999;
+    }
+
+    #start-button {
+      width: 108px;
+      border: none;
+      color: white;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 17px;
+      background:
+        linear-gradient(180deg, #41bb53 0%, #2f9a43 45%, #27893b 46%, #1f7431 100%);
+      border-right: 1px solid rgba(0,0,0,.25);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.35);
+      cursor: pointer;
+      border-radius: 0 10px 10px 0;
+    }
+
+    #taskbar-windows {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 8px;
+      overflow: auto;
+    }
+
+    .taskbar-item {
+      min-width: 160px;
+      max-width: 220px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      border-radius: 3px;
+      font-size: 12px;
+      color: #fff;
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.22);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .taskbar-item.active {
+      background: rgba(255,255,255,.28);
+    }
+
+    #taskbar-clock {
+      width: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 12px;
+      background:
+        linear-gradient(180deg,#1ea8de 0%, #168dc7 100%);
+      border-left: 1px solid rgba(255,255,255,.35);
+    }
+
+    /* START MENU */
+    #start-menu {
+      position: fixed;
+      left: 0;
+      bottom: 34px;
+      width: 360px;
+      height: 470px;
+      background: #f2f6fb;
+      border: 1px solid #0f3f91;
+      border-bottom: none;
+      box-shadow: 0 24px 40px rgba(0,0,0,.4);
+      z-index: 9998;
+      overflow: hidden;
+    }
+
+    #start-header {
+      height: 58px;
+      background:
+        linear-gradient(180deg,#2b66da 0%, #2156c2 100%);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      gap: 12px;
+      font-weight: 700;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 6px;
+      background: linear-gradient(180deg,#ffffff 0%, #d8ebff 100%);
+      border: 1px solid rgba(0,0,0,.2);
+    }
+
+    #start-body {
+      display: grid;
+      grid-template-columns: 1.2fr .9fr;
+      height: calc(100% - 58px);
+    }
+
+    .start-col.left {
+      background: #fff;
+      padding: 12px 0;
+    }
+
+    .start-col.right {
+      background: #dfe8f7;
+      padding: 12px 0;
+      border-left: 1px solid #b8c9e9;
+    }
+
+    .start-entry {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      font-size: 14px;
+      color: #112;
+      cursor: pointer;
+    }
+
+    .start-entry:hover {
+      background: #316ac5;
+      color: #fff;
+    }
+
+    .start-entry .mini {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      background: linear-gradient(180deg,#fff 0%,#d7ebff 100%);
+      border: 1px solid rgba(0,0,0,.15);
+      flex: none;
+    }
+
+    /* WINDOWS XP WINDOW */
+    .window {
+      position: fixed;
+      background: #ece9d8;
+      border: 1px solid #0f3f91;
+      border-radius: 8px 8px 0 0;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      min-width: 320px;
+      min-height: 180px;
+    }
+
+    .window-topbar {
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6px 0 8px;
+      color: white;
+      background:
+        linear-gradient(180deg,#2d69d6 0%, #2157c3 45%, #1c4db7 46%, #1845a5 100%);
+      cursor: move;
+    }
+
+    .window-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+
+    .window-actions {
+      display: flex;
+      gap: 4px;
+    }
+
+    .window-control {
+      width: 22px;
+      height: 20px;
+      border: 1px solid rgba(255,255,255,.55);
+      border-radius: 3px;
+      background: linear-gradient(180deg,#f8fafd 0%,#c8dbf7 100%);
+      color: #103a8f;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .window-control.close {
+      background: linear-gradient(180deg,#ff8f7f 0%, #df4e2f 100%);
+      color: #fff;
+    }
+
+    .window-body {
+      height: calc(100% - 30px);
+      background: #fff;
+      overflow: auto;
+      padding: 14px;
+    }
+
+    /* SHELL WINDOW */
+    #win-shell {
+      top: 92px;
+      left: 160px;
+      width: 480px;
+      height: 300px;
+      z-index: 10;
+    }
+
+    .shell-screen {
+      width: 100%;
+      height: 100%;
+      background: #000;
+      color: #8cff8c;
+      font-family: "Courier New", monospace;
+      font-size: 15px;
+      padding: 16px;
+      line-height: 1.55;
+    }
+
+    /* ARCHIVE WINDOW = GTA */
+    #win-archive {
+      top: 52px;
+      left: 120px;
+      width: min(1040px, 86vw);
+      height: min(720px, 82vh);
+      min-width: 720px;
+      min-height: 520px;
+      background: #000;
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 0;
+      box-shadow: 0 28px 70px rgba(0,0,0,.68);
+      resize: both;
+      overflow: hidden;
+      z-index: 20;
+    }
+
+    #win-archive .window-topbar {
+      height: 34px;
+      background:
+        linear-gradient(180deg,#2d69d6 0%, #2157c3 45%, #1c4db7 46%, #1845a5 100%);
+      border-bottom: 1px solid rgba(0,0,0,.28);
+      padding: 0 7px 0 10px;
+    }
+
+    #win-archive .window-title {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    #win-archive .window-body {
+      height: calc(100% - 34px);
+      padding: 0;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .vice-wrap {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    }
+
+    .vice-logo {
+      position: absolute;
+      top: 28px;
+      left: 44px;
+      z-index: 5;
+      font-size: clamp(32px, 4vw, 58px);
+      font-style: italic;
+      line-height: .88;
+      color: #ffd4e9;
+      text-transform: lowercase;
+      transform: rotate(-8deg);
+      letter-spacing: -.5px;
+      text-shadow:
+        -2px -2px 0 #ff9fd3,
+        2px -2px 0 #ff9fd3,
+        -2px 2px 0 #ff9fd3,
+        2px 2px 0 #ff9fd3,
+        0 0 14px rgba(255,122,190,.14);
+    }
+
+    .vice-logo::after {
+      content: "";
+      position: absolute;
+      left: 4%;
+      bottom: -10px;
+      width: 94%;
+      height: 6px;
+      background: #ff9fd3;
+      border-radius: 999px;
+      transform: skewX(-30deg);
+    }
+
+    .vice-title {
+      position: absolute;
+      top: 18px;
+      right: 44px;
+      z-index: 5;
+      font-size: clamp(42px, 4.9vw, 78px);
+      line-height: .95;
+      color: #ee95d0;
+      text-transform: lowercase;
+      text-shadow:
+        3px 3px 0 #a65382,
+        0 0 12px rgba(238,149,208,.12);
+      letter-spacing: .5px;
+    }
+
+    .vice-panel {
+      position: absolute;
+      left: 50%;
+      top: 15.5%;
+      width: min(66vw, 800px);
+      height: min(56vh, 500px);
+      transform: translateX(-50%) rotate(-2.7deg);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.04),
+        0 24px 48px rgba(0,0,0,.4);
+      background-color: #736d7c;
+      background-image:
+        radial-gradient(circle at 10% 18%, rgba(197,193,205,.45) 0 3.7%, transparent 4.2%),
+        radial-gradient(circle at 23% 34%, rgba(197,193,205,.32) 0 4.4%, transparent 4.9%),
+        radial-gradient(circle at 42% 21%, rgba(197,193,205,.42) 0 4.1%, transparent 4.8%),
+        radial-gradient(circle at 58% 16%, rgba(197,193,205,.3) 0 4.5%, transparent 5.2%),
+        radial-gradient(circle at 71% 29%, rgba(197,193,205,.42) 0 3.8%, transparent 4.5%),
+        radial-gradient(circle at 84% 16%, rgba(197,193,205,.38) 0 4.2%, transparent 4.9%),
+        radial-gradient(circle at 15% 58%, rgba(197,193,205,.36) 0 4.8%, transparent 5.5%),
+        radial-gradient(circle at 34% 49%, rgba(197,193,205,.28) 0 4.2%, transparent 4.9%),
+        radial-gradient(circle at 47% 62%, rgba(197,193,205,.42) 0 4.6%, transparent 5.3%),
+        radial-gradient(circle at 63% 55%, rgba(197,193,205,.28) 0 4.4%, transparent 5.1%),
+        radial-gradient(circle at 77% 60%, rgba(197,193,205,.4) 0 4.7%, transparent 5.4%),
+        radial-gradient(circle at 89% 49%, rgba(197,193,205,.28) 0 4%, transparent 4.8%),
+        radial-gradient(circle at 11% 84%, rgba(197,193,205,.42) 0 4.2%, transparent 5.1%),
+        radial-gradient(circle at 27% 75%, rgba(197,193,205,.3) 0 4.7%, transparent 5.4%),
+        radial-gradient(circle at 43% 85%, rgba(197,193,205,.44) 0 4.2%, transparent 5.1%),
+        radial-gradient(circle at 61% 81%, rgba(197,193,205,.3) 0 4.6%, transparent 5.5%),
+        radial-gradient(circle at 76% 87%, rgba(197,193,205,.4) 0 4%, transparent 4.9%),
+        radial-gradient(circle at 91% 79%, rgba(197,193,205,.32) 0 4.2%, transparent 5.1%);
+      background-size: 100% 100%;
+    }
+
+    .vice-menu {
+      position: absolute;
+      top: 74px;
+      left: 50%;
+      transform: translateX(-50%) rotate(2.7deg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+      z-index: 4;
+    }
+
+    .vice-item {
+      border: none;
+      background: transparent;
+      color: #ef95d1;
+      font-family: inherit;
+      font-size: clamp(27px, 2.8vw, 44px);
+      line-height: 1.03;
+      text-transform: lowercase;
+      padding: 2px 16px;
+      cursor: pointer;
+      text-shadow: 2px 2px 0 #87486d;
+      letter-spacing: .35px;
+    }
+
+    .vice-item.is-active {
+      background: #16b36c;
+      color: #f8cbe4;
+      text-shadow: none;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.15),
+        0 0 0 2px rgba(0,0,0,.08);
+    }
+
+    .archive-content {
+      position: absolute;
+      left: 50%;
+      bottom: 28px;
+      transform: translateX(-50%);
+      width: min(74vw, 900px);
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 22px;
+      z-index: 6;
+    }
+
+    .archive-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .archive-card {
+      border: none;
+      background: rgba(239,149,209,.96);
+      color: #250f1d;
+      text-align: left;
+      padding: 10px 14px;
+      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      font-size: 24px;
+      line-height: 1;
+      text-transform: lowercase;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 rgba(0,0,0,.36);
+    }
+
+    .archive-card.active {
+      background: #16b36c;
+      color: #fff;
+    }
+
+    .archive-folder-view {
+      min-height: 230px;
+      background: rgba(0,0,0,.78);
+      border: 1px solid rgba(255,255,255,.08);
+      padding: 16px 18px;
+      color: white;
+      overflow: auto;
+    }
+
+    .archive-folder-title {
+      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      font-size: 34px;
+      line-height: 1;
+      color: #ef95d1;
+      text-transform: lowercase;
+      margin-bottom: 14px;
+      text-shadow: 2px 2px 0 #87486d;
+    }
+
+    .archive-folder-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .archive-link {
+      color: rgba(255,255,255,.92);
+      text-decoration: none;
+      font-family: Tahoma, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.32;
+    }
+
+    .archive-link:hover {
+      color: #16b36c;
+    }
+
+    @media (max-width: 980px) {
+      #win-archive {
+        width: 94vw;
+        height: 82vh;
+        min-width: unset;
+        min-height: unset;
+        left: 3vw;
+        top: 6vh;
+        resize: none;
+      }
+
+      .vice-logo {
+        top: 22px;
+        left: 20px;
+      }
+
+      .vice-title {
+        top: 20px;
+        right: 20px;
+      }
+
+      .vice-panel {
+        width: 78vw;
+        height: 40vh;
+        top: 15%;
+      }
+
+      .vice-menu {
+        top: 56px;
+      }
+
+      .archive-content {
+        width: 87vw;
+        grid-template-columns: 1fr;
+        gap: 14px;
+        bottom: 18px;
+      }
+
+      .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .desktop-icon {
+        transform: scale(.95);
+        transform-origin: top left;
+      }
+
+      #start-menu {
+        width: 94vw;
+        height: 70vh;
+      }
+
+      .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .archive-card {
+        font-size: 20px;
+      }
+
+      .archive-folder-title {
+        font-size: 28px;
+      }
+
+      .archive-link {
+        font-size: 14px;
+      }
+
+      .vice-item {
+        font-size: 22px;
+      }
+
+      .vice-panel {
+        width: 84vw;
+        height: 34vh;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div id="desktop">
+    <div class="desktop-wallpaper-hill"></div>
 
-  <!-- BOOT -->
-  <div id="boot-screen">
-    <div class="boot-logo">BLUCINELAB OS</div>
-    <div class="boot-sub">Starting visual shell...</div>
-    <div class="boot-bar">
-      <div class="boot-bar-fill"></div>
+    <div class="desktop-icon folder active" id="icon-archive" data-open="win-archive">
+      <div class="icon-art"></div>
+      <span>Archivio</span>
     </div>
-    <div class="boot-lines">
-      Booting XP desktop...
-      Mounting Archive...
-      Mounting Lab...
-      Mounting Playroom...
-      System ready...
+
+    <div class="desktop-icon folder" id="icon-shell" data-open="win-shell">
+      <div class="icon-art"></div>
+      <span>Terminale</span>
     </div>
   </div>
 
-  <!-- TOP BAR -->
-  <div id="top-status">
-    <span>BLUCINELAB OS</span>
-    <span>DESKTOP MODE</span>
-    <span>VISUAL SYSTEM READY</span>
+  <!-- START MENU -->
+  <div id="start-menu" class="hidden">
+    <div id="start-header">
+      <div class="avatar"></div>
+      <div>BLUCINELAB</div>
+    </div>
+
+    <div id="start-body">
+      <div class="start-col left">
+        <div class="start-entry" data-open="win-archive"><div class="mini"></div><span>Archivio</span></div>
+        <div class="start-entry" data-open="win-shell"><div class="mini"></div><span>Terminale</span></div>
+        <div class="start-entry"><div class="mini"></div><span>Internet</span></div>
+        <div class="start-entry"><div class="mini"></div><span>Documents</span></div>
+      </div>
+
+      <div class="start-col right">
+        <div class="start-entry"><div class="mini"></div><span>My Computer</span></div>
+        <div class="start-entry"><div class="mini"></div><span>Control Panel</span></div>
+        <div class="start-entry"><div class="mini"></div><span>Search</span></div>
+        <div class="start-entry"><div class="mini"></div><span>Run...</span></div>
+      </div>
+    </div>
   </div>
 
-  <!-- DESKTOP -->
-  <main id="desktop">
-
-    <button class="desktop-icon" data-open="win-shell" style="top:56px;left:18px;">
-      <span class="icon-art monitor"></span>
-      <span class="icon-label">BLUCINELAB</span>
-    </button>
-
-    <button class="desktop-icon" data-open="win-archive" style="top:156px;left:18px;">
-      <span class="icon-art folder"></span>
-      <span class="icon-label">Archive</span>
-    </button>
-
-    <button class="desktop-icon" data-open="win-lab" style="top:256px;left:18px;">
-      <span class="icon-art monitor"></span>
-      <span class="icon-label">Lab</span>
-    </button>
-
-    <button class="desktop-icon" data-open="win-playroom" style="top:356px;left:18px;">
-      <span class="icon-art gamepad"></span>
-      <span class="icon-label">Playroom</span>
-    </button>
-
-    <button class="desktop-icon" data-open="win-studio" style="top:456px;left:18px;">
-      <span class="icon-art image"></span>
-      <span class="icon-label">Studio</span>
-    </button>
-
-    <button class="desktop-icon" data-open="win-manifesto" style="top:556px;left:18px;">
-      <span class="icon-art doc"></span>
-      <span class="icon-label">Manifesto</span>
-    </button>
-
-    <button class="desktop-icon" data-open="win-contact" style="top:656px;left:18px;">
-      <span class="icon-art mail"></span>
-      <span class="icon-label">Contact</span>
-    </button>
-
-    <button class="desktop-icon" style="top:756px;left:18px;">
-      <span class="icon-art trash"></span>
-      <span class="icon-label">Recycle Bin</span>
-    </button>
-  </main>
-
-  <!-- SHELL WINDOW -->
-  <section
-    class="xp-window"
-    id="win-shell"
-    data-window-title="BLUCINELAB"
-    style="display:none; top:82px; left:150px; width:760px; height:470px;"
-  >
-    <div class="xp-titlebar" data-drag-handle>
-      <div class="xp-title-left">
-        <span class="xp-mini-icon monitor"></span>
-        <span class="xp-title-text">BLUCINELAB</span>
-      </div>
-      <div class="xp-title-controls">
-        <button class="xp-control" data-minimize="win-shell">_</button>
-        <button class="xp-control" data-maximize="win-shell">□</button>
-        <button class="xp-control close" data-close="win-shell">×</button>
+  <!-- SHELL -->
+  <section class="window hidden" id="win-shell">
+    <div class="window-topbar" data-drag-handle>
+      <div class="window-title">Terminale</div>
+      <div class="window-actions">
+        <button class="window-control" data-minimize="win-shell">—</button>
+        <button class="window-control close" data-close="win-shell">✕</button>
       </div>
     </div>
-
-    <div class="xp-menubar">
-      <span>File</span>
-      <span>Edit</span>
-      <span>View</span>
-      <span>Help</span>
-    </div>
-
-    <div class="shell-body">
-      <div class="shell-hero">
-        <div>
-          <div class="shell-kicker">system / home / active</div>
-          <h1>BLUCINELAB</h1>
-          <p>
-            Studio visivo indipendente che lavora tra immagine, spazio, direzione,
-            identità, ambienti digitali e costruzione percettiva.
-          </p>
-        </div>
-        <div class="shell-guide">
-          <div class="shell-bubble">apri i mondi</div>
-          <div class="shell-character"></div>
-        </div>
-      </div>
-
-      <div class="shell-grid">
-        <button class="shell-card" data-open="win-archive">
-          <span class="shell-card-icon folder"></span>
-          <strong>Archive</strong>
-          <span>Lavori, dossier, file pubblici, nodi protetti.</span>
-        </button>
-
-        <button class="shell-card" data-open="win-lab">
-          <span class="shell-card-icon monitor"></span>
-          <strong>Lab</strong>
-          <span>Segnali, memoria, test, ricerca e diagnostica.</span>
-        </button>
-
-        <button class="shell-card" data-open="win-playroom">
-          <span class="shell-card-icon gamepad"></span>
-          <strong>Playroom</strong>
-          <span>Console-site con canali e moduli interattivi.</span>
-        </button>
-
-        <button class="shell-card" data-open="win-studio">
-          <span class="shell-card-icon image"></span>
-          <strong>Studio</strong>
-          <span>Metodo, riduzione, coerenza, costruzione atmosferica.</span>
-        </button>
-
-        <button class="shell-card" data-open="win-manifesto">
-          <span class="shell-card-icon doc"></span>
-          <strong>Manifesto</strong>
-          <span>Forma come orientamento, non decorazione.</span>
-        </button>
-
-        <button class="shell-card" data-open="win-contact">
-          <span class="shell-card-icon mail"></span>
-          <strong>Contact</strong>
-          <span>Commissioni, collaborazioni, sistemi visivi e digitali.</span>
-        </button>
+    <div class="window-body">
+      <div class="shell-screen">
+        C:\BLUCINE&gt; dir<br>
+        archive.exe<br>
+        projects\<br>
+        worlds\<br>
+        services\<br><br>
+        C:\BLUCINE&gt; _
       </div>
     </div>
   </section>
 
-  <!-- ARCHIVE / GTA -->
-  <section
-    class="xp-window world-window archive-world"
-    id="win-archive"
-    data-window-title="Archive"
-    style="display:none;"
-  >
-    <div class="xp-titlebar" data-drag-handle>
-      <div class="xp-title-left">
-        <span class="xp-mini-icon folder"></span>
-        <span class="xp-title-text">Archive</span>
-      </div>
-      <div class="xp-title-controls">
-        <button class="xp-control" data-minimize="win-archive">_</button>
-        <button class="xp-control close" data-close="win-archive">×</button>
+  <!-- ARCHIVE GTA WINDOW -->
+  <section class="window hidden" id="win-archive">
+    <div class="window-topbar" data-drag-handle>
+      <div class="window-title">ARCHIVE.exe</div>
+      <div class="window-actions">
+        <button class="window-control" data-minimize="win-archive">—</button>
+        <button class="window-control close" data-close="win-archive">✕</button>
       </div>
     </div>
 
-    <div class="world-shell archive-layout">
-      <aside class="world-rail archive-rail">
-        <button class="world-rail-btn" data-close="win-archive">×</button>
-        <button class="world-rail-btn" data-open="win-shell">⌂</button>
-        <div class="world-rail-label">ARCHIVE</div>
-        <div class="world-rail-help">return / close / dossier</div>
-      </aside>
+    <div class="window-body">
+      <div class="vice-wrap">
+        <div class="vice-logo">Vice city</div>
+        <div class="vice-title">pause menu</div>
 
-      <div class="archive-main">
+        <div class="vice-panel"></div>
 
-        <div class="gta-scene">
-          <div class="gta-sun"></div>
-          <div class="gta-palm p1"></div>
-          <div class="gta-palm p2"></div>
-          <div class="gta-palm p3"></div>
-          <div class="gta-road"></div>
-          <div class="gta-building b1"></div>
-          <div class="gta-building b2"></div>
-          <div class="gta-building b3"></div>
-          <div class="gta-car c1"></div>
-          <div class="gta-car c2"></div>
-          <div class="gta-character"></div>
+        <nav class="vice-menu">
+          <button class="vice-item">resume</button>
+          <button class="vice-item">start new game</button>
+          <button class="vice-item">map</button>
+          <button class="vice-item is-active">archive</button>
+          <button class="vice-item">brief</button>
+          <button class="vice-item">options</button>
+          <button class="vice-item">quit game</button>
+        </nav>
 
-          <div class="gta-hud-top">
-            <div class="gta-hud-time">22:08</div>
-            <div class="gta-hud-money">$500000000</div>
-            <div class="gta-hud-health">♥ 100</div>
-            <div class="gta-hud-stars">★ ★ ★ ★ ★ ★</div>
+        <div class="archive-content">
+          <div class="archive-grid">
+            <button class="archive-card active" data-folder="projects">projects</button>
+            <button class="archive-card" data-folder="services">services</button>
+            <button class="archive-card" data-folder="research">research</button>
+            <button class="archive-card" data-folder="worlds">worlds</button>
+            <button class="archive-card" data-folder="contacts">contacts</button>
+            <button class="archive-card" data-folder="extras">extras</button>
           </div>
 
-          <div class="gta-minimap">
-            <div class="map-grid"></div>
-            <div class="map-path"></div>
-            <div class="map-dot"></div>
-          </div>
-        </div>
-
-        <div class="archive-overlay">
-          <div class="archive-title-panel">
-            <div class="archive-kicker">vice city / mission archive / visual records</div>
-            <h2>ARCHIVE</h2>
-            <p>
-              Questa non è una cartella neutra. È un archivio-missione:
-              dossier di progetto, identità, ambienti digitali, mostre,
-              processi, file visibili, file protetti, record parziali.
-            </p>
-          </div>
-
-          <div class="archive-side-stats">
-            <div class="archive-stat"><span>Status</span><strong>Online</strong></div>
-            <div class="archive-stat"><span>Public Files</span><strong>12</strong></div>
-            <div class="archive-stat"><span>Restricted</span><strong>07</strong></div>
-            <div class="archive-stat"><span>Visual Integrity</span><strong>High</strong></div>
-            <div class="archive-stat"><span>Noise</span><strong>Low</strong></div>
-          </div>
-
-          <div class="archive-cards">
-            <article class="archive-card">
-              <span class="archive-tag">MISSION 01</span>
-              <h3>EXHIBITION / SPACE</h3>
-              <p>Allestimenti, relazione tra immagine e spazio, ambienti narrativi, presenza fisica.</p>
-            </article>
-
-            <article class="archive-card">
-              <span class="archive-tag">MISSION 02</span>
-              <h3>IDENTITY / LANGUAGE</h3>
-              <p>Sistemi visivi, gerarchia tipografica, presenza, ritmo editoriale, riconoscibilità.</p>
-            </article>
-
-            <article class="archive-card">
-              <span class="archive-tag">MISSION 03</span>
-              <h3>WEB / DIGITAL ENVIRONMENTS</h3>
-              <p>Interfacce, ambienti online, presenza, desiderabilità, orientamento percettivo.</p>
-            </article>
-
-            <article class="archive-card">
-              <span class="archive-tag">MISSION 04</span>
-              <h3>PROCESS / TRACE FILES</h3>
-              <p>Bozze, layer, appunti, materiali instabili, passaggi di trasformazione.</p>
-            </article>
-          </div>
+          <div class="archive-folder-view" id="archive-folder-view"></div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- LAB -->
-  <section
-    class="xp-window world-window lab-world"
-    id="win-lab"
-    data-window-title="Lab"
-    style="display:none;"
-  >
-    <div class="xp-titlebar" data-drag-handle>
-      <div class="xp-title-left">
-        <span class="xp-mini-icon monitor"></span>
-        <span class="xp-title-text">Lab</span>
-      </div>
-      <div class="xp-title-controls">
-        <button class="xp-control" data-minimize="win-lab">_</button>
-        <button class="xp-control close" data-close="win-lab">×</button>
-      </div>
-    </div>
-
-    <div class="world-shell lab-layout">
-      <aside class="world-rail lab-rail">
-        <button class="world-rail-btn" data-close="win-lab">×</button>
-        <button class="world-rail-btn" data-open="win-shell">⌂</button>
-        <div class="world-rail-label">LAB</div>
-      </aside>
-
-      <div class="lab-main">
-        <div class="lab-topline">
-          <span>MR BIOS (TM) BLUCINELAB INTERNAL SYSTEM</span>
-          <span>VER 1.03 / STATUS ACTIVE</span>
-        </div>
-
-        <div class="lab-grid">
-          <div class="lab-box">
-<pre>AWARD MODULAR BIOS V6.00PG
-
-[00] STANDARD CMOS FEATURES
-[01] ADVANCED BIOS FEATURES
-[02] SIGNAL TEST
-[03] VISUAL MEMORY BANK
-[04] ARCHIVE TRACE
-[05] PROCESS STACK
-[06] EXIT
-
-> SELECTED: [04] ARCHIVE TRACE
-> STATUS: SIGNAL PRESENT
-> TRACE.LOG LOADED</pre>
-          </div>
-
-          <div class="lab-box">
-<pre>@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@ SIGNAL READY @@@@@@@
-@@@@@@ TRACE ONLINE @@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@</pre>
-          </div>
-
-          <div class="lab-box">
-<pre>BANK 1
-
-BLUCINELAB usa il laboratorio
-come forma di osservazione.
-
-- test
-- segnali
-- appunti
-- errori fertili</pre>
-          </div>
-
-          <div class="lab-box">
-<pre>BANK 2
-
-THE LAB DOES NOT HIDE.
-THE LAB EXPOSES.
-
-PART OF THE VALUE IS IN
-SHOWING THE SYSTEM THINKING.</pre>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PLAYROOM -->
-  <section
-    class="xp-window world-window playroom-world"
-    id="win-playroom"
-    data-window-title="Playroom"
-    style="display:none;"
-  >
-    <div class="xp-titlebar" data-drag-handle>
-      <div class="xp-title-left">
-        <span class="xp-mini-icon gamepad"></span>
-        <span class="xp-title-text">Playroom</span>
-      </div>
-      <div class="xp-title-controls">
-        <button class="xp-control" data-minimize="win-playroom">_</button>
-        <button class="xp-control close" data-close="win-playroom">×</button>
-      </div>
-    </div>
-
-    <div class="world-shell playroom-layout">
-      <aside class="world-rail playroom-rail">
-        <button class="world-rail-btn" data-close="win-playroom">×</button>
-        <button class="world-rail-btn" data-open="win-shell">⌂</button>
-        <div class="world-rail-label">PLAY</div>
-      </aside>
-
-      <div class="playroom-main">
-        <div class="playroom-header">
-          <h2>PLAYROOM</h2>
-          <p>Wii channel menu / playable modules</p>
-        </div>
-
-        <div class="playroom-tabs">
-          <button class="play-tab is-active" data-play-view="hub">Hub</button>
-          <button class="play-tab" data-play-view="mario">Mario</button>
-          <button class="play-tab" data-play-view="cooking">Cooking</button>
-        </div>
-
-        <!-- HUB -->
-        <div class="play-panel show" id="play-hub">
-          <div class="wii-grid">
-            <button class="wii-tile playable" data-play-view="mario">
-              <span class="wii-title">Mario</span>
-              <span class="wii-sub">run / jump / collect</span>
-            </button>
-
-            <button class="wii-tile playable pink" data-play-view="cooking">
-              <span class="wii-title">Cooking Mama</span>
-              <span class="wii-sub">click / timer / rounds</span>
-            </button>
-
-            <div class="wii-tile locked">
-              <span class="wii-title">Pac-Man</span>
-              <span class="wii-sub">future channel</span>
-            </div>
-
-            <div class="wii-tile locked">
-              <span class="wii-title">The Sims</span>
-              <span class="wii-sub">future channel</span>
-            </div>
-
-            <div class="wii-tile locked">
-              <span class="wii-title">GTA</span>
-              <span class="wii-sub">archive logic</span>
-            </div>
-
-            <div class="wii-tile locked">
-              <span class="wii-title">Invaders</span>
-              <span class="wii-sub">future channel</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- MARIO -->
-        <div class="play-panel" id="play-mario">
-          <div class="play-inner-panel">
-            <div class="panel-head">
-              <h3>MARIO MINI GAME</h3>
-              <p>← → per muoverti. Spazio per saltare. Raccogli tutte le monete.</p>
-            </div>
-
-            <div class="mario-wrap">
-              <div class="mario-hud">
-                <div>Coins: <strong id="mario-coins">0</strong></div>
-                <div>Score: <strong id="mario-score">0</strong></div>
-                <div>Status: <strong id="mario-status">READY</strong></div>
-              </div>
-
-              <div class="mario-stage" id="mario-stage">
-                <div class="mario-cloud c1"></div>
-                <div class="mario-cloud c2"></div>
-
-                <div class="mario-brick" style="left:180px; bottom:150px;"></div>
-                <div class="mario-brick" style="left:360px; bottom:190px;"></div>
-                <div class="mario-brick" style="left:560px; bottom:140px;"></div>
-
-                <div class="mario-coin" data-coin style="left:190px; bottom:208px;"></div>
-                <div class="mario-coin" data-coin style="left:370px; bottom:248px;"></div>
-                <div class="mario-coin" data-coin style="left:570px; bottom:198px;"></div>
-                <div class="mario-coin" data-coin style="left:720px; bottom:110px;"></div>
-
-                <div class="mario-player" id="mario-player">
-                  <div class="hat"></div>
-                  <div class="head"></div>
-                  <div class="body"></div>
-                  <div class="arm a1"></div>
-                  <div class="arm a2"></div>
-                  <div class="leg l1"></div>
-                  <div class="leg l2"></div>
-                </div>
-
-                <div class="mario-ground"></div>
-              </div>
-
-              <div class="mario-controls">
-                Controlli: ← → per muoverti, spazio per saltare.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- COOKING -->
-        <div class="play-panel" id="play-cooking">
-          <div class="play-inner-panel">
-            <div class="panel-head">
-              <h3>COOKING MAMA MINI GAME</h3>
-              <p>Clicca l’ingrediente più volte possibile entro il tempo.</p>
-            </div>
-
-            <div class="cook-wrap">
-              <div class="cook-hud">
-                <div>Round: <strong id="cook-round">1</strong></div>
-                <div>Time: <strong id="cook-time">10</strong></div>
-                <div>Score: <strong id="cook-score">0</strong></div>
-                <div>Status: <strong id="cook-status">READY</strong></div>
-              </div>
-
-              <div class="cook-board">
-                <div class="cook-stage">
-                  <div id="cook-target">🍅</div>
-                  <p id="cook-instruction">Clicca l’ingrediente per cucinare.</p>
-                </div>
-
-                <div class="cook-side">
-                  <h4>Kitchen Log</h4>
-                  <div class="cook-list">
-                    <div>• Click rapidi = più punteggio</div>
-                    <div>• Ogni round dura 10 secondi</div>
-                    <div>• Dopo ogni round cambia ingrediente</div>
-                    <div>• Restart per ripartire</div>
-                  </div>
-
-                  <button class="cook-btn" id="cook-restart" type="button">Restart Game</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- STUDIO -->
-  <section
-    class="xp-window world-window studio-world"
-    id="win-studio"
-    data-window-title="Studio"
-    style="display:none;"
-  >
-    <div class="xp-titlebar" data-drag-handle>
-      <div class="xp-title-left">
-        <span class="xp-mini-icon image"></span>
-        <span class="xp-title-text">Studio</span>
-      </div>
-      <div class="xp-title-controls">
-        <button class="xp-control" data-minimize="win-studio">_</button>
-        <button class="xp-control close" data-close="win-studio">×</button>
-      </div>
-    </div>
-
-    <div class="world-shell studio-layout">
-      <aside class="world-rail studio-rail">
-        <button class="world-rail-btn" data-close="win-studio">×</button>
-        <button class="world-rail-btn" data-open="win-shell">⌂</button>
-        <div class="world-rail-label">STUDIO</div>
-      </aside>
-
-      <div class="studio-main">
-        <div class="studio-header">
-          <div class="studio-mainbox">
-            <div class="studio-kicker">simulation / method / visual order</div>
-            <h2>STUDIO</h2>
-            <p>
-              Il progetto è una stanza da costruire. Atmosfera, ritmo, margini,
-              composizione, gerarchia e presenza vengono trattati come parametri.
-            </p>
-          </div>
-
-          <div class="studio-statbox">
-            <div class="sim-stat"><span>Coherence</span><strong>94</strong></div>
-            <div class="sim-stat"><span>Atmosphere</span><strong>87</strong></div>
-            <div class="sim-stat"><span>Selection</span><strong>91</strong></div>
-            <div class="sim-stat"><span>Noise</span><strong>Low</strong></div>
-          </div>
-        </div>
-
-        <div class="studio-grid">
-          <article class="studio-card">
-            <h3>Atmosfera</h3>
-            <p>Luce, materiale, profondità, tensione tra superfici e forme.</p>
-          </article>
-
-          <article class="studio-card">
-            <h3>Riduzione</h3>
-            <p>Togliere ciò che indebolisce per dare più chiarezza al sistema.</p>
-          </article>
-
-          <article class="studio-card">
-            <h3>Direzione</h3>
-            <p>Ogni progetto deve avere un centro leggibile e un asse percettivo.</p>
-          </article>
-
-          <article class="studio-card">
-            <h3>Coerenza</h3>
-            <p>Un linguaggio deve restare riconoscibile tra web, spazio e stampa.</p>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- MANIFESTO -->
-  <section
-    class="xp-window"
-    id="win-manifesto"
-    data-window-title="Manifesto"
-    style="display:none; top:110px; left:190px; width:760px; height:500px;"
-  >
-    <div class="xp-titlebar" data-drag-handle>
-      <div class="xp-title-left">
-        <span class="xp-mini-icon doc"></span>
-        <span class="xp-title-text">Manifesto</span>
-      </div>
-      <div class="xp-title-controls">
-        <button class="xp-control" data-minimize="win-manifesto">_</button>
-        <button class="xp-control" data-maximize="win-manifesto">□</button>
-        <button class="xp-control close" data-close="win-manifesto">×</button>
-      </div>
-    </div>
-
-    <div class="xp-menubar">
-      <span>File</span>
-      <span>Read</span>
-      <span>View</span>
-    </div>
-
-    <div class="manifesto-body">
-      <h2>MANIFESTO</h2>
-      <p>BLUCINELAB non usa la forma come decorazione. La usa come orientamento.</p>
-      <p>Ogni progetto è una stanza mentale, un dispositivo di immagine, una superficie che organizza attenzione.</p>
-      <p>L’obiettivo non è riempire ma costruire presenza, tono, gerarchia e memoria.</p>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section
-    class="xp-window"
-    id="win-contact"
-    data-window-title="Contact"
-    style="display:none; top:130px; left:230px; width:520px; height:330px;"
-  >
-    <div class="xp-titlebar" data-drag-handle>
-      <div class="xp-title-left">
-        <span class="xp-mini-icon mail"></span>
-        <span class="xp-title-text">Contact</span>
-      </div>
-      <div class="xp-title-controls">
-        <button class="xp-control" data-minimize="win-contact">_</button>
-        <button class="xp-control" data-maximize="win-contact">□</button>
-        <button class="xp-control close" data-close="win-contact">×</button>
-      </div>
-    </div>
-
-    <div class="xp-menubar">
-      <span>File</span>
-      <span>Send</span>
-      <span>Help</span>
-    </div>
-
-    <div class="contact-body">
-      <div class="contact-kicker">email / direct</div>
-      <h2>CONTACT</h2>
-      <p>Commissioni, collaborazioni, identità visiva, ambienti digitali, allestimenti.</p>
-      <a href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a>
     </div>
   </section>
 
   <!-- TASKBAR -->
-  <footer id="taskbar">
-    <button id="start-button">
-      <span class="start-orb"></span>
-      <span>start</span>
-    </button>
-
+  <div id="taskbar">
+    <button id="start-button">start</button>
     <div id="taskbar-windows"></div>
+    <div id="taskbar-clock"></div>
+  </div>
 
-    <div id="taskbar-tray">
-      <span class="tray-dot"></span>
-      <span id="taskbar-clock">00:00</span>
-    </div>
-  </footer>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const $ = (sel, ctx = document) => ctx.querySelector(sel);
+      const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
-  <!-- START MENU -->
-  <nav id="start-menu">
-    <div class="start-top">
-      <div class="start-user-pic"></div>
-      <div class="start-user-name">BLUCINELAB</div>
-    </div>
+      const startButton = $("#start-button");
+      const startMenu = $("#start-menu");
+      const taskbarWindows = $("#taskbar-windows");
+      const clock = $("#taskbar-clock");
 
-    <div class="start-body">
-      <div class="start-left">
-        <button class="start-link" data-open="win-shell"><span class="start-link-art monitor"></span><span>Home</span></button>
-        <button class="start-link" data-open="win-archive"><span class="start-link-art folder"></span><span>Archive</span></button>
-        <button class="start-link" data-open="win-lab"><span class="start-link-art monitor"></span><span>Lab</span></button>
-        <button class="start-link" data-open="win-playroom"><span class="start-link-art gamepad"></span><span>Playroom</span></button>
-        <button class="start-link" data-open="win-studio"><span class="start-link-art image"></span><span>Studio</span></button>
-        <button class="start-link" data-open="win-manifesto"><span class="start-link-art doc"></span><span>Manifesto</span></button>
-        <button class="start-link" data-open="win-contact"><span class="start-link-art mail"></span><span>Contact</span></button>
-      </div>
+      const windows = $$(".window");
+      const desktopIcons = $$(".desktop-icon");
+      let topZ = 50;
 
-      <div class="start-right">
-        <div class="start-item">Projects</div>
-        <div class="start-item">Visual Systems</div>
-        <div class="start-item">Research</div>
-        <div class="start-item">Support</div>
-      </div>
-    </div>
+      const archiveWindow = $("#win-archive");
+      const shellWindow = $("#win-shell");
+      const folderButtons = $$(".archive-card");
+      const folderView = $("#archive-folder-view");
 
-    <div class="start-bottom">
-      <button id="shutdown-button">Turn Off Computer</button>
-    </div>
-  </nav>
+      const archiveData = {
+        projects: [
+          "palazzo vassé",
+          "blucinelab identity",
+          "orsetto d’abruzzo",
+          "vista mare",
+          "stand-up comedy bologna",
+          "editorial / catalogue"
+        ],
+        services: [
+          "creative direction",
+          "production design",
+          "set design",
+          "visual identity",
+          "web design",
+          "art research"
+        ],
+        research: [
+          "image studies",
+          "cinematic atmospheres",
+          "materials / textures",
+          "spatial narration",
+          "editorial references",
+          "visual archive"
+        ],
+        worlds: [
+          "night systems",
+          "blue environments",
+          "ritual spaces",
+          "coastal imagery",
+          "urban melancholy",
+          "fiction interfaces"
+        ],
+        contacts: [
+          "blucinelab@gmail.com",
+          "instagram / blucinelab",
+          "bologna / italy",
+          "client deck on request"
+        ],
+        extras: [
+          "downloads",
+          "working notes",
+          "future archive",
+          "unreleased material"
+        ]
+      };
 
-  <script src="script.js"></script>
+      function updateClock() {
+        const now = new Date();
+        const hh = String(now.getHours()).padStart(2, "0");
+        const mm = String(now.getMinutes()).padStart(2, "0");
+        clock.textContent = `${hh}:${mm}`;
+      }
+
+      function getWindowTitle(win) {
+        return $(".window-title", win)?.textContent || "Window";
+      }
+
+      function ensureTaskbarItem(win) {
+        let item = $(`.taskbar-item[data-window="${win.id}"]`);
+        if (!item) {
+          item = document.createElement("button");
+          item.className = "taskbar-item";
+          item.dataset.window = win.id;
+          item.textContent = getWindowTitle(win);
+          taskbarWindows.appendChild(item);
+
+          item.addEventListener("click", () => {
+            if (win.classList.contains("hidden")) {
+              openWindow(win.id);
+            } else {
+              win.classList.add("hidden");
+              item.classList.remove("active");
+            }
+          });
+        }
+        return item;
+      }
+
+      function setActiveTaskbar(win) {
+        $$(".taskbar-item").forEach(el => el.classList.remove("active"));
+        const item = ensureTaskbarItem(win);
+        item.classList.add("active");
+      }
+
+      function openWindow(id) {
+        const win = document.getElementById(id);
+        if (!win) return;
+        win.classList.remove("hidden");
+        topZ += 1;
+        win.style.zIndex = topZ;
+        setActiveTaskbar(win);
+        startMenu.classList.add("hidden");
+      }
+
+      function closeWindow(id) {
+        const win = document.getElementById(id);
+        if (!win) return;
+        win.classList.add("hidden");
+        const taskItem = $(`.taskbar-item[data-window="${id}"]`);
+        if (taskItem) taskItem.classList.remove("active");
+      }
+
+      function renderFolder(name) {
+        const items = archiveData[name] || [];
+        folderView.innerHTML = `
+          <div class="archive-folder-title">${name}</div>
+          <div class="archive-folder-list">
+            ${items.map(item => `<a href="#" class="archive-link">${item}</a>`).join("")}
+          </div>
+        `;
+      }
+
+      startButton.addEventListener("click", (e) => {
+        e.stopPropagation();
+        startMenu.classList.toggle("hidden");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!startMenu.contains(e.target) && e.target !== startButton) {
+          startMenu.classList.add("hidden");
+        }
+      });
+
+      $$("[data-open]").forEach(el => {
+        el.addEventListener("click", (e) => {
+          e.stopPropagation();
+          openWindow(el.dataset.open);
+        });
+      });
+
+      $$("[data-close]").forEach(el => {
+        el.addEventListener("click", (e) => {
+          e.stopPropagation();
+          closeWindow(el.dataset.close);
+        });
+      });
+
+      $$("[data-minimize]").forEach(el => {
+        el.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const id = el.dataset.minimize;
+          const win = document.getElementById(id);
+          if (!win) return;
+          win.classList.add("hidden");
+          const item = $(`.taskbar-item[data-window="${id}"]`);
+          if (item) item.classList.remove("active");
+        });
+      });
+
+      windows.forEach(win => {
+        ensureTaskbarItem(win);
+
+        win.addEventListener("mousedown", () => {
+          topZ += 1;
+          win.style.zIndex = topZ;
+          setActiveTaskbar(win);
+        });
+
+        const handle = $("[data-drag-handle]", win);
+        if (!handle) return;
+
+        let isDragging = false;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        handle.addEventListener("mousedown", (e) => {
+          isDragging = true;
+          topZ += 1;
+          win.style.zIndex = topZ;
+          setActiveTaskbar(win);
+
+          const rect = win.getBoundingClientRect();
+          offsetX = e.clientX - rect.left;
+          offsetY = e.clientY - rect.top;
+          document.body.style.userSelect = "none";
+        });
+
+        document.addEventListener("mousemove", (e) => {
+          if (!isDragging) return;
+
+          const x = e.clientX - offsetX;
+          const y = e.clientY - offsetY;
+
+          win.style.left = `${Math.max(0, x)}px`;
+          win.style.top = `${Math.max(0, y)}px`;
+        });
+
+        document.addEventListener("mouseup", () => {
+          isDragging = false;
+          document.body.style.userSelect = "";
+        });
+      });
+
+      folderButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          folderButtons.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          renderFolder(btn.dataset.folder);
+        });
+      });
+
+      desktopIcons.forEach(icon => {
+        icon.addEventListener("click", () => {
+          desktopIcons.forEach(i => i.classList.remove("active"));
+          icon.classList.add("active");
+        });
+
+        icon.addEventListener("dblclick", () => {
+          const target = icon.dataset.open;
+          if (target) openWindow(target);
+        });
+      });
+
+      renderFolder("projects");
+      updateClock();
+      setInterval(updateClock, 1000);
+    });
+  </script>
 </body>
 </html>
