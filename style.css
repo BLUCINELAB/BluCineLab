@@ -1,13 +1,71 @@
+/* ========================
+BASE
+======================== */
+
 body{
 margin:0;
-font-family:Tahoma;
+font-family:Tahoma, Arial;
 overflow:hidden;
+background:black;
 }
 
 
-/* =====================
-DESKTOP
-===================== */
+
+/* ========================
+BOOT
+======================== */
+
+#bootScreen{
+
+position:fixed;
+width:100%;
+height:100%;
+
+background:black;
+color:#00ff00;
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+
+z-index:9999;
+
+font-family:monospace;
+
+}
+
+.bar{
+
+width:300px;
+height:20px;
+border:2px solid #00ff00;
+margin-top:20px;
+
+}
+
+#bootBar{
+
+width:0%;
+height:100%;
+background:#00ff00;
+
+animation:boot 3s linear forwards;
+
+}
+
+@keyframes boot{
+
+from{width:0%}
+to{width:100%}
+
+}
+
+
+
+/* ========================
+DESKTOP XP FAKE
+======================== */
 
 #desktop{
 
@@ -15,41 +73,50 @@ position:fixed;
 width:100%;
 height:100%;
 
-background:linear-gradient(
-#87b4ff 0%,
-#5c93e8 40%,
-#4f8a2e 41%,
-#67b63b 100%
-);
+/* colline fake */
+
+background:
+
+linear-gradient(#87b4ff 0%, #5c93e8 40%, #4f8a2e 41%, #67b63b 100%);
 
 padding:20px;
 
 }
 
 
-/* =====================
-ICONE
-===================== */
+
+/* ========================
+ICON
+======================== */
 
 .icon{
 
 color:white;
+
+width:100px;
+
 margin:10px;
+
 cursor:pointer;
-width:120px;
+
+font-size:14px;
+
+text-shadow:1px 1px black;
 
 }
 
 
-/* =====================
+
+/* ========================
 TASKBAR
-===================== */
+======================== */
 
 #taskbar{
 
 position:fixed;
 bottom:0;
 left:0;
+
 width:100%;
 height:40px;
 
@@ -57,20 +124,41 @@ background:#0044aa;
 
 display:flex;
 align-items:center;
+justify-content:space-between;
+
+color:white;
 
 }
+
 
 
 #startBtn{
 
-margin-left:5px;
-padding:5px 10px;
 background:#00aa00;
-color:white;
+
+padding:5px 10px;
+
 cursor:pointer;
+
+margin-left:5px;
+
+font-weight:bold;
 
 }
 
+
+
+#clock{
+
+margin-right:10px;
+
+}
+
+
+
+/* ========================
+START MENU
+======================== */
 
 #startMenu{
 
@@ -78,40 +166,63 @@ position:fixed;
 bottom:40px;
 left:0;
 
-background:#ddd;
+background:#dddddd;
 
 display:none;
 
 padding:10px;
 
+border:2px solid black;
+
+}
+
+#startMenu div{
+
+padding:5px;
+cursor:pointer;
+
+}
+
+#startMenu div:hover{
+
+background:#999;
+
 }
 
 
-/* =====================
+
+/* ========================
 WINDOW
-===================== */
+======================== */
 
 .window{
 
 position:fixed;
-top:0;
-left:0;
 
-width:100%;
-height:100%;
+top:80px;
+left:120px;
+
+width:600px;
+height:400px;
+
+background:#c0c0c0;
+
+border:3px solid #808080;
 
 display:none;
 
 }
 
 
-/* =====================
+
+/* ========================
 SIDEBAR
-===================== */
+======================== */
 
 .sideBar{
 
 position:absolute;
+
 left:0;
 top:0;
 
@@ -119,13 +230,11 @@ width:60px;
 height:100%;
 
 background:#111;
-color:white;
 
 display:flex;
 flex-direction:column;
 
 }
-
 
 .sideBar button{
 
@@ -134,36 +243,41 @@ margin:10px;
 }
 
 
-/* =====================
+
+/* ========================
 CONTENT
-===================== */
+======================== */
 
 .content{
 
 margin-left:60px;
+
 height:100%;
+
+padding:10px;
+
 overflow:auto;
-padding:20px;
 
 }
 
 
-/* =====================
+
+/* ========================
 NANO
-===================== */
+======================== */
 
 .nano{
 
 position:absolute;
-bottom:20px;
-right:20px;
+
+bottom:10px;
+right:10px;
 
 font-size:40px;
 
 animation:walk 3s infinite;
 
 }
-
 
 @keyframes walk{
 
@@ -174,20 +288,17 @@ animation:walk 3s infinite;
 }
 
 
-/* =====================
-PLAYROOM
-===================== */
 
-.playroom{
+/* ========================
+WORLDS
+======================== */
 
-background:#ffffff;
+.archive{
+
+background:#220000;
+color:orange;
 
 }
-
-
-/* =====================
-LAB
-===================== */
 
 .lab{
 
@@ -197,88 +308,21 @@ font-family:monospace;
 
 }
 
+.playroom{
 
-/* =====================
-ARCHIVE
-===================== */
-
-.archive{
-
-background:#220000;
-color:orange;
+background:#222;
+color:yellow;
 
 }
 
+.studio{
 
-/* =====================
-GAME
-===================== */
-
-.game{
-
-display:none;
-position:relative;
-
-height:100%;
+background:#ddeeff;
 
 }
 
+.manifesto{
 
-/* =====================
-MARIO
-===================== */
-
-#mario{
-
-background:#6bd3ff;
-
-}
-
-
-#player{
-
-position:absolute;
-bottom:100px;
-left:100px;
-font-size:40px;
-
-}
-
-
-.ground{
-
-position:absolute;
-bottom:0;
-height:100px;
-width:100%;
-background:#5ab43c;
-
-}
-
-
-/* =====================
-COOKING
-===================== */
-
-#cooking{
-
-background:pink;
-text-align:center;
-
-}
-
-
-#food{
-
-font-size:50px;
-cursor:pointer;
-margin-top:100px;
-
-}
-
-
-#score{
-
-font-size:20px;
+background:#ffffcc;
 
 }
