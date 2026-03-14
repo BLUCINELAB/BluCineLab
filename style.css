@@ -1,6 +1,6 @@
-/* ========================
+/* =====================
 BASE
-======================== */
+===================== */
 
 body{
 margin:0;
@@ -11,9 +11,9 @@ background:black;
 
 
 
-/* ========================
+/* =====================
 BOOT
-======================== */
+===================== */
 
 #bootScreen{
 
@@ -29,9 +29,8 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 
-z-index:9999;
-
 font-family:monospace;
+z-index:9999;
 
 }
 
@@ -39,7 +38,9 @@ font-family:monospace;
 
 width:300px;
 height:20px;
+
 border:2px solid #00ff00;
+
 margin-top:20px;
 
 }
@@ -48,6 +49,7 @@ margin-top:20px;
 
 width:0%;
 height:100%;
+
 background:#00ff00;
 
 animation:boot 3s linear forwards;
@@ -63,9 +65,9 @@ to{width:100%}
 
 
 
-/* ========================
-DESKTOP XP FAKE
-======================== */
+/* =====================
+DESKTOP XP LUNA
+===================== */
 
 #desktop{
 
@@ -74,7 +76,7 @@ width:100%;
 height:100%;
 
 background:
-linear-gradient(#87b4ff 0%, #5c93e8 40%, #4f8a2e 41%, #67b63b 100%);
+linear-gradient(#6aa9ff 0%, #4a87e2 40%, #3c8d2f 41%, #4fc441 100%);
 
 padding:20px;
 
@@ -82,26 +84,33 @@ padding:20px;
 
 
 
-/* ========================
-ICON
-======================== */
+/* =====================
+ICON XP
+===================== */
 
 .icon{
 
 color:white;
-width:100px;
+
+width:80px;
+
 margin:10px;
+
+text-align:center;
+
 cursor:pointer;
-font-size:14px;
-text-shadow:1px 1px black;
+
+font-size:13px;
+
+text-shadow:1px 1px 2px black;
 
 }
 
 
 
-/* ========================
-TASKBAR
-======================== */
+/* =====================
+TASKBAR XP
+===================== */
 
 #taskbar{
 
@@ -112,7 +121,7 @@ left:0;
 width:100%;
 height:40px;
 
-background:#0044aa;
+background:linear-gradient(#3a6ea5,#245edb);
 
 display:flex;
 align-items:center;
@@ -120,19 +129,35 @@ justify-content:space-between;
 
 color:white;
 
+border-top:2px solid #1c3f91;
+
 }
 
+
+
+/* START BUTTON */
 
 #startBtn{
 
-background:#00aa00;
-padding:5px 10px;
-cursor:pointer;
+background:linear-gradient(#4ee44e,#1f8f1f);
+
+padding:5px 12px;
+
 margin-left:5px;
+
+border-radius:5px;
+
 font-weight:bold;
+
+cursor:pointer;
+
+border:1px solid #0a5f0a;
 
 }
 
+
+
+/* CLOCK */
 
 #clock{
 
@@ -142,9 +167,9 @@ margin-right:10px;
 
 
 
-/* ========================
-START MENU
-======================== */
+/* =====================
+START MENU XP
+===================== */
 
 #startMenu{
 
@@ -152,60 +177,66 @@ position:fixed;
 bottom:40px;
 left:0;
 
-background:#dddddd;
+width:200px;
+
+background:#e4e4e4;
+
+border:2px solid #245edb;
 
 display:none;
 
-padding:10px;
-
-border:2px solid black;
+box-shadow:4px 4px 0 black;
 
 }
 
 #startMenu div{
 
-padding:5px;
+padding:8px;
+
 cursor:pointer;
 
 }
 
 #startMenu div:hover{
 
-background:#999;
+background:#245edb;
+color:white;
 
 }
 
 
 
-/* ========================
-WINDOW
-======================== */
+/* =====================
+WINDOW XP
+===================== */
 
 .window{
 
 position:fixed;
 
-top:80px;
-left:120px;
+top:120px;
+left:160px;
 
 width:600px;
 height:400px;
 
-background:#c0c0c0;
+background:#ece9d8;
 
-border:3px solid #808080;
+border:2px solid #245edb;
+
+box-shadow:4px 4px 0 black;
 
 display:none;
 
-box-shadow:4px 4px 0 #000;
+border-radius:6px;
 
 }
 
 
 
-/* ========================
+/* =====================
 SIDEBAR
-======================== */
+===================== */
 
 .sideBar{
 
@@ -217,7 +248,7 @@ top:0;
 width:60px;
 height:100%;
 
-background:#111;
+background:#245edb;
 
 display:flex;
 flex-direction:column;
@@ -232,28 +263,32 @@ margin:10px;
 
 
 
-/* ========================
+/* =====================
 CONTENT
-======================== */
+===================== */
 
 .content{
 
 margin-left:60px;
+
 height:100%;
+
 padding:10px;
+
 overflow:auto;
 
 }
 
 
 
-/* ========================
+/* =====================
 NANO
-======================== */
+===================== */
 
 .nano{
 
 position:absolute;
+
 bottom:10px;
 right:10px;
 
@@ -273,84 +308,39 @@ animation:walk 3s infinite;
 
 
 
-/* ========================
-ARCHIVE — GTA STYLE
-======================== */
+/* =====================
+WORLDS
+===================== */
 
 .archive{
 
 background:#111;
 color:#ff66cc;
 
-font-family:Verdana;
-
-border:4px solid #ff00aa;
-
 }
-
-
-
-/* ========================
-LAB — TERMINAL
-======================== */
 
 .lab{
 
 background:black;
 color:#00ff66;
-
 font-family:monospace;
 
-text-shadow:0 0 4px #00ff66;
-
 }
-
-
-
-/* ========================
-PLAYROOM — WII STYLE
-======================== */
 
 .playroom{
 
 background:linear-gradient(#ffffff,#ddeeff);
 
-font-family:sans-serif;
-
-color:#222;
-
-border-radius:10px;
-
 }
-
-
-
-/* ========================
-STUDIO — SIMS STYLE
-======================== */
 
 .studio{
 
-background:#cfe8ff;
-
-font-family:Arial;
-
-color:#003366;
+background:#d0e7ff;
 
 }
-
-
-
-/* ========================
-MANIFESTO — OLD EDITOR
-======================== */
 
 .manifesto{
 
 background:#ffffcc;
-
-font-family:Courier;
-
-color:#000;
 
 }
