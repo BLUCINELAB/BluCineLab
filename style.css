@@ -1,111 +1,56 @@
-/* =====================
+/* =========================
 BASE
-===================== */
+========================= */
 
 body{
 margin:0;
-font-family:Tahoma, Arial;
+font-family:Tahoma, Arial, sans-serif;
 overflow:hidden;
 background:black;
 }
 
 
 
-/* =====================
-BOOT
-===================== */
-
-#bootScreen{
-
-position:fixed;
-width:100%;
-height:100%;
-
-background:black;
-color:#00ff00;
-
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-
-font-family:monospace;
-z-index:9999;
-
-}
-
-.bar{
-
-width:300px;
-height:20px;
-
-border:2px solid #00ff00;
-
-margin-top:20px;
-
-}
-
-#bootBar{
-
-width:0%;
-height:100%;
-
-background:#00ff00;
-
-animation:boot 3s linear forwards;
-
-}
-
-@keyframes boot{
-
-from{width:0%}
-to{width:100%}
-
-}
-
-
-
-/* =====================
-DESKTOP XP
-===================== */
+/* =========================
+DESKTOP XP REAL
+========================= */
 
 #desktop{
 
 position:fixed;
-width:100%;
-height:100%;
+inset:0;
+
+/* colline XP fake */
 
 background:
-linear-gradient(#6aa9ff 0%, #4a87e2 40%, #3c8d2f 41%, #4fc441 100%);
+radial-gradient(circle at 50% 120%, #4fc441 0%, #3b8e2f 40%, #2f6f22 70%, #1e4f15 100%),
+linear-gradient(#7ec0ff 0%, #5fa8ff 30%, #4a90e2 60%, #3a7bd5 100%);
 
 display:flex;
 flex-wrap:wrap;
 
 align-content:flex-start;
 
-padding:10px;
+padding:20px;
 
 }
 
 
 
-/* =====================
+/* =========================
 ICON XP
-===================== */
+========================= */
 
 .icon{
 
-width:80px;
-height:80px;
+width:90px;
 
-margin:10px;
+margin:8px;
 
 display:flex;
 flex-direction:column;
 
 align-items:center;
-
-justify-content:flex-start;
 
 cursor:pointer;
 
@@ -113,11 +58,15 @@ color:white;
 
 text-shadow:1px 1px 2px black;
 
+font-size:12px;
+
 }
 
 .iconImg{
 
-font-size:40px;
+font-size:42px;
+
+margin-bottom:4px;
 
 }
 
@@ -125,28 +74,29 @@ font-size:40px;
 
 font-size:12px;
 
-margin-top:4px;
-
 text-align:center;
 
 }
 
 
 
-/* =====================
-TASKBAR
-===================== */
+/* =========================
+TASKBAR XP LUNA
+========================= */
 
 #taskbar{
 
 position:fixed;
+
 bottom:0;
 left:0;
 
 width:100%;
-height:40px;
+height:42px;
 
 background:linear-gradient(#3a6ea5,#245edb);
+
+border-top:2px solid #1c3f91;
 
 display:flex;
 align-items:center;
@@ -154,29 +104,31 @@ justify-content:space-between;
 
 color:white;
 
-border-top:2px solid #1c3f91;
+box-shadow:0 -2px 4px rgba(0,0,0,0.5);
 
 }
 
 
 
-/* START */
+/* START BUTTON */
 
 #startBtn{
 
-background:linear-gradient(#4ee44e,#1f8f1f);
+margin-left:5px;
 
 padding:5px 12px;
 
-margin-left:5px;
+background:linear-gradient(#4ee44e,#1f8f1f);
 
-border-radius:5px;
+border:1px solid #0a5f0a;
+
+border-radius:6px;
 
 font-weight:bold;
 
 cursor:pointer;
 
-border:1px solid #0a5f0a;
+box-shadow:inset 0 1px 0 #8fff8f;
 
 }
 
@@ -188,21 +140,24 @@ border:1px solid #0a5f0a;
 
 margin-right:10px;
 
+font-size:12px;
+
 }
 
 
 
-/* =====================
-START MENU
-===================== */
+/* =========================
+START MENU XP
+========================= */
 
 #startMenu{
 
 position:fixed;
-bottom:40px;
+
+bottom:42px;
 left:0;
 
-width:200px;
+width:220px;
 
 background:#e4e4e4;
 
@@ -231,47 +186,86 @@ color:white;
 
 
 
-/* =====================
-WINDOW XP
-===================== */
+/* =========================
+WINDOW XP REAL
+========================= */
 
 .window{
 
-position:fixed;
+position:absolute;
 
-top:120px;
-left:160px;
-
-width:600px;
-height:400px;
+width:640px;
+height:420px;
 
 background:#ece9d8;
 
 border:2px solid #245edb;
 
-box-shadow:4px 4px 0 black;
+box-shadow:6px 6px 0 black;
 
 display:none;
 
-border-radius:6px;
+border-radius:4px;
 
 }
 
 
 
-/* =====================
-SIDEBAR
-===================== */
+/* TITLEBAR XP */
+
+.titlebar{
+
+height:26px;
+
+background:linear-gradient(#3a6ea5,#245edb);
+
+color:white;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:0 6px;
+
+cursor:move;
+
+font-size:13px;
+
+}
+
+
+
+/* CLOSE */
+
+.closeBtn{
+
+background:red;
+
+color:white;
+
+padding:0 6px;
+
+cursor:pointer;
+
+border-radius:2px;
+
+}
+
+
+
+/* SIDEBAR */
 
 .sideBar{
 
 position:absolute;
 
 left:0;
-top:0;
+top:26px;
 
 width:60px;
-height:100%;
+height:calc(100% - 26px);
 
 background:#245edb;
 
@@ -288,17 +282,15 @@ margin:10px;
 
 
 
-/* =====================
-CONTENT
-===================== */
+/* CONTENT */
 
 .content{
 
 margin-left:60px;
 
-height:100%;
-
 padding:10px;
+
+height:calc(100% - 26px);
 
 overflow:auto;
 
@@ -306,9 +298,9 @@ overflow:auto;
 
 
 
-/* =====================
+/* =========================
 NANO
-===================== */
+========================= */
 
 .nano{
 
@@ -317,7 +309,7 @@ position:absolute;
 bottom:10px;
 right:10px;
 
-font-size:40px;
+font-size:42px;
 
 animation:walk 3s infinite;
 
@@ -326,16 +318,16 @@ animation:walk 3s infinite;
 @keyframes walk{
 
 0%{transform:translateX(0)}
-50%{transform:translateX(-20px)}
+50%{transform:translateX(-25px)}
 100%{transform:translateX(0)}
 
 }
 
 
 
-/* =====================
-WORLDS
-===================== */
+/* =========================
+WORLD COLORS
+========================= */
 
 .archive{
 
