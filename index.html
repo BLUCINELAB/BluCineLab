@@ -15,32 +15,25 @@
     }
 
     :root{
-      --xp-blue-1:#245edb;
-      --xp-blue-2:#1f59d4;
-      --xp-blue-3:#1949b2;
-      --xp-green:#2ca94f;
       --shadow: 0 18px 44px rgba(0,0,0,.45);
+      --xp-dark:#1845a5;
+      --xp-mid:#2157c3;
+      --xp-light:#2d69d6;
     }
 
     .hidden { display: none !important; }
 
-    /* =========================
-       BOOT SCREEN
-       ========================= */
+    /* =========================================
+       BOOT SCREEN / TELETEXT HARD PIXEL
+       ========================================= */
     #boot-screen {
       position: fixed;
       inset: 0;
-      z-index: 30000;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(40,70,255,.08), transparent 30%),
-        radial-gradient(circle at 80% 80%, rgba(255,40,120,.06), transparent 30%),
-        #040507;
-      color: #d8ecff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: "Courier New", monospace;
+      z-index: 50000;
+      background: #000;
       overflow: hidden;
+      image-rendering: pixelated;
+      font-family: "Courier New", monospace;
     }
 
     #boot-screen::before {
@@ -50,129 +43,285 @@
       background:
         repeating-linear-gradient(
           180deg,
-          rgba(255,255,255,.03) 0px,
-          rgba(255,255,255,.03) 1px,
-          transparent 1px,
-          transparent 3px
+          rgba(255,255,255,.035) 0px,
+          rgba(255,255,255,.035) 2px,
+          transparent 2px,
+          transparent 4px
         );
-      mix-blend-mode: screen;
+      pointer-events: none;
+      opacity: .65;
+    }
+
+    #boot-screen::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 12% 24%, rgba(255,255,255,.06) 0 1px, transparent 2px),
+        radial-gradient(circle at 80% 18%, rgba(255,255,255,.06) 0 1px, transparent 2px),
+        radial-gradient(circle at 62% 84%, rgba(255,255,255,.06) 0 1px, transparent 2px),
+        radial-gradient(circle at 28% 66%, rgba(255,255,255,.06) 0 1px, transparent 2px);
+      background-size: 140px 140px;
       pointer-events: none;
       opacity: .35;
     }
 
-    .boot-noise {
+    .boot-wrap {
       position: absolute;
       inset: 0;
-      opacity: .08;
-      background:
-        radial-gradient(circle at 12% 18%, #fff 0 1px, transparent 2px),
-        radial-gradient(circle at 74% 23%, #fff 0 1px, transparent 2px),
-        radial-gradient(circle at 31% 81%, #fff 0 1px, transparent 2px),
-        radial-gradient(circle at 85% 67%, #fff 0 1px, transparent 2px),
-        radial-gradient(circle at 52% 51%, #fff 0 1px, transparent 2px);
-      pointer-events: none;
+      display: grid;
+      place-items: center;
+      padding: 18px;
     }
 
-    .boot-wrap {
-      width: min(760px, 90vw);
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 18px;
-    }
-
-    .boot-brand {
-      font-family: "Courier New", monospace;
-      font-size: clamp(34px, 5vw, 64px);
-      line-height: .92;
-      color: #eef6ff;
-      text-shadow:
-        0 0 2px rgba(255,255,255,.5),
-        0 0 14px rgba(65,130,255,.18);
-      letter-spacing: 1px;
-      white-space: pre;
-    }
-
-    .boot-sub {
-      color: rgba(210,230,255,.72);
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    .boot-bar-shell {
-      width: 100%;
-      height: 24px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.14);
+    .boot-tv {
+      width: min(700px, 92vw);
+      border: 4px solid #3d3d3d;
       box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,.04),
-        0 0 24px rgba(0,0,0,.35);
-      padding: 4px;
-      overflow: hidden;
-    }
-
-    .boot-bar {
-      height: 100%;
-      width: 0%;
-      background:
-        linear-gradient(90deg,
-          #48ffb1 0%,
-          #7dfc79 16%,
-          #fff36a 34%,
-          #ffbf48 52%,
-          #ff7f59 72%,
-          #ff58ae 88%,
-          #70a3ff 100%
-        );
-      box-shadow:
-        0 0 12px rgba(130,255,190,.3),
-        inset 0 0 8px rgba(255,255,255,.24);
+        0 0 0 2px #0d0d0d,
+        0 0 0 8px #000,
+        0 18px 60px rgba(0,0,0,.85);
+      background: #000;
       image-rendering: pixelated;
+      transform: scale(1);
     }
 
-    .boot-log {
-      width: 100%;
-      min-height: 180px;
-      max-height: 240px;
-      overflow: hidden;
+    .tv-topbar {
+      height: 30px;
+      display: grid;
+      grid-template-columns: 102px 1fr 122px;
+      gap: 0;
+      align-items: center;
+      background: linear-gradient(180deg, #4a4a4a 0%, #111 100%);
+      border-bottom: 2px solid #000;
+      padding: 0 6px;
+    }
+
+    .tv-topbar div {
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
       background: rgba(255,255,255,.03);
-      border: 1px solid rgba(255,255,255,.08);
-      padding: 14px;
-      color: #9dd8ff;
-      font-size: 12px;
-      line-height: 1.4;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
     }
 
-    .boot-line {
+    .tv-headline-1 {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 10px;
+      background: #000;
+      color: #32ff32;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .tv-headline-2 {
+      min-height: 66px;
+      background: #0a26ff;
+      color: #ffe500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      font-size: clamp(38px, 5.2vw, 70px);
+      font-weight: 900;
+      line-height: .9;
+      letter-spacing: -3px;
+      border-top: 3px solid #000;
+      border-bottom: 3px solid #000;
+      text-shadow:
+        3px 0 0 #ffe500,
+        -3px 0 0 #ffe500;
+    }
+
+    .tv-green-banner {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      min-height: 56px;
+      border-bottom: 3px solid #000;
+    }
+
+    .tv-rai {
+      display: grid;
+      place-items: center;
+      background: #0a26ff;
+      color: #fff;
+      border-right: 3px solid #000;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .tv-green-text {
+      background: #35ff00;
+      color: #000;
+      font-size: 14px;
+      line-height: 1.05;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 8px 12px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+    }
+
+    .tv-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 234px;
+      border-bottom: 3px solid #000;
+    }
+
+    .tv-left {
+      background: #000;
+      color: #35ff00;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 10px 12px;
+      line-height: 1.18;
+    }
+
+    .tv-right {
+      background: #fff;
+      color: #243bff;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 10px 12px;
+      line-height: 1.18;
+    }
+
+    .tv-row {
+      display: grid;
+      white-space: nowrap;
+      align-items: center;
+    }
+
+    .tv-left .tv-row {
+      grid-template-columns: 54px 1fr;
+      gap: 8px;
+    }
+
+    .tv-right .tv-row {
+      grid-template-columns: 48px 1fr 12px;
+      gap: 8px;
+    }
+
+    .tv-row + .tv-row { margin-top: 2px; }
+
+    .yellow-chip {
+      display: inline-block;
+      background: #fff200;
+      color: #000;
+      padding: 1px 5px;
+    }
+
+    .blue-chip {
+      display: inline-block;
+      background: #fff;
+      color: #0a26ff;
+      padding: 1px 5px;
+    }
+
+    .red-code { color: #ff2d2d; }
+    .tv-arrow { color: #000; }
+
+    .tv-mid-banner {
+      min-height: 40px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background: #35ff00;
+      color: #000;
+      border-bottom: 3px solid #000;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      line-height: 1.05;
+    }
+
+    .tv-progress-wrap {
+      background: #0a26ff;
+      border-bottom: 3px solid #000;
+      padding: 8px 12px 10px;
+    }
+
+    .tv-progress-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .tv-progress-bar {
+      height: 20px;
+      background: #fff;
+      border: 2px solid #000;
+      overflow: hidden;
+    }
+
+    .tv-progress-fill {
+      width: 0%;
+      height: 100%;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          #ffe500 0 14px,
+          #ff8c00 14px 28px,
+          #ff2d2d 28px 42px,
+          #35ff00 42px 56px,
+          #00d5ff 56px 70px
+        );
+    }
+
+    .tv-bottom {
+      min-height: 112px;
+      max-height: 140px;
+      overflow: hidden;
+      background: #000;
+      color: #35ff00;
+      padding: 10px 12px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .tv-log-line {
       white-space: nowrap;
       opacity: 0;
-      transform: translateY(4px);
-      animation: bootLineIn .12s linear forwards;
+      animation: tvLineIn .06s linear forwards;
     }
 
-    .boot-line.warn { color: #ffd67a; }
-    .boot-line.err  { color: #ff8181; }
-    .boot-line.ok   { color: #8effa0; }
+    .tv-log-line.warn { color: #ffe500; }
+    .tv-log-line.err  { color: #ff5151; }
+    .tv-log-line.cyan { color: #00d5ff; }
+    .tv-log-line.info { color: #35ff00; }
 
-    @keyframes bootLineIn {
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes tvLineIn {
+      to { opacity: 1; }
     }
 
     .boot-fade-out {
-      animation: bootFade .28s ease forwards;
+      animation: bootFade .2s linear forwards;
     }
 
     @keyframes bootFade {
       to { opacity: 0; visibility: hidden; }
     }
 
-    /* =========================
+    /* =========================================
        DESKTOP
-       ========================= */
+       ========================================= */
     #desktop {
       position: fixed;
       inset: 0;
@@ -325,6 +474,28 @@
         radial-gradient(circle at 16px 3px, #444 0 2px, transparent 2.2px);
     }
 
+    .desktop-icon.note .icon-art::before{
+      content:"";
+      position:absolute;
+      inset: 6px 8px 8px 8px;
+      background:
+        repeating-linear-gradient(180deg, #fff 0 4px, #d7e7ff 4px 5px);
+      border:1px solid rgba(0,0,0,.16);
+    }
+
+    .desktop-icon.note .icon-art::after{
+      content:"";
+      position:absolute;
+      right: 8px;
+      top: 6px;
+      width: 8px;
+      height: 8px;
+      background:#f4f4f4;
+      border-left:1px solid rgba(0,0,0,.12);
+      border-bottom:1px solid rgba(0,0,0,.12);
+      transform: skew(-16deg,-16deg);
+    }
+
     #icon-archive   { top: 26px; left: 24px; }
     #icon-terminal  { top: 122px; left: 24px; }
     #icon-projects  { top: 218px; left: 24px; }
@@ -335,10 +506,11 @@
     #icon-pc        { top: 122px; left: 132px; }
     #icon-bin       { top: 218px; left: 132px; }
     #icon-gta       { top: 314px; left: 132px; }
+    #icon-info      { top: 410px; left: 132px; }
 
-    /* =========================
+    /* =========================================
        TASKBAR
-       ========================= */
+       ========================================= */
     #taskbar {
       position: fixed;
       left: 0;
@@ -393,9 +565,7 @@
       white-space: nowrap;
     }
 
-    .taskbar-item.active {
-      background: rgba(255,255,255,.28);
-    }
+    .taskbar-item.active { background: rgba(255,255,255,.28); }
 
     #taskbar-clock {
       width: 78px;
@@ -408,15 +578,15 @@
       border-left: 1px solid rgba(255,255,255,.35);
     }
 
-    /* =========================
+    /* =========================================
        START MENU
-       ========================= */
+       ========================================= */
     #start-menu {
       position: fixed;
       left: 0;
       bottom: 34px;
-      width: 380px;
-      height: 500px;
+      width: 390px;
+      height: 510px;
       background: #f2f6fb;
       border: 1px solid #0f3f91;
       border-bottom: none;
@@ -450,11 +620,7 @@
       height: calc(100% - 58px);
     }
 
-    .start-col.left {
-      background: #fff;
-      padding: 12px 0;
-    }
-
+    .start-col.left { background: #fff; padding: 12px 0; }
     .start-col.right {
       background: #dfe8f7;
       padding: 12px 0;
@@ -492,9 +658,9 @@
       margin: 8px 12px;
     }
 
-    /* =========================
+    /* =========================================
        WINDOWS
-       ========================= */
+       ========================================= */
     .window {
       position: fixed;
       background: #ece9d8;
@@ -513,7 +679,7 @@
       justify-content: space-between;
       padding: 0 6px 0 8px;
       color: white;
-      background: linear-gradient(180deg,#2d69d6 0%, #2157c3 45%, #1c4db7 46%, #1845a5 100%);
+      background: linear-gradient(180deg,var(--xp-light) 0%, var(--xp-mid) 45%, #1c4db7 46%, var(--xp-dark) 100%);
       cursor: move;
     }
 
@@ -553,28 +719,6 @@
       padding: 14px;
     }
 
-    .xp-list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .xp-list a,
-    .xp-list button {
-      border: 1px solid #c8d3e6;
-      background: #f6f8fc;
-      color: #173768;
-      padding: 10px 12px;
-      text-align: left;
-      cursor: pointer;
-      font: inherit;
-      text-decoration: none;
-    }
-
-    .xp-list a:hover,
-    .xp-list button:hover {
-      background: #e7f0ff;
-    }
-
     .xp-title {
       font-size: 22px;
       color: #15407f;
@@ -588,12 +732,60 @@
       color: #223;
     }
 
+    .xp-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .xp-list button,
+    .xp-list a {
+      border: 1px solid #c8d3e6;
+      background: #f6f8fc;
+      color: #173768;
+      padding: 10px 12px;
+      text-align: left;
+      cursor: pointer;
+      font: inherit;
+      text-decoration: none;
+    }
+
+    .xp-list button:hover,
+    .xp-list a:hover {
+      background: #e7f0ff;
+    }
+
+    .xp-panel {
+      border: 1px solid #c8d3e6;
+      background: #f7fbff;
+      padding: 12px;
+    }
+
+    .xp-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .xp-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      background: #e4efff;
+      border: 1px solid #c8d3e6;
+      color: #15407f;
+      font-size: 12px;
+      margin: 0 6px 6px 0;
+    }
+
     #win-shell    { top: 92px;  left: 200px; width: 500px; height: 310px; z-index: 10; }
     #win-about    { top: 120px; left: 250px; width: 460px; height: 280px; z-index: 11; }
-    #win-projects { top: 80px;  left: 300px; width: 520px; height: 380px; z-index: 12; }
+    #win-projects { top: 80px;  left: 300px; width: 520px; height: 390px; z-index: 12; }
     #win-services { top: 100px; left: 340px; width: 500px; height: 360px; z-index: 13; }
-    #win-games    { top: 110px; left: 380px; width: 460px; height: 340px; z-index: 14; }
-    #win-pc       { top: 90px;  left: 220px; width: 540px; height: 360px; z-index: 15; }
+    #win-games    { top: 110px; left: 380px; width: 500px; height: 370px; z-index: 14; }
+    #win-pc       { top: 90px;  left: 220px; width: 560px; height: 380px; z-index: 15; }
+    #win-info     { top: 130px; left: 420px; width: 420px; height: 290px; z-index: 16; }
+    #win-hack     { top: 150px; left: 450px; width: 420px; height: 270px; z-index: 17; }
+    #win-snake    { top: 80px;  left: 420px; width: 380px; height: 470px; z-index: 18; }
+    #win-mines    { top: 90px;  left: 460px; width: 360px; height: 430px; z-index: 19; }
 
     .shell-screen {
       width: 100%;
@@ -606,9 +798,17 @@
       line-height: 1.55;
     }
 
-    /* =========================
-       ARCHIVE WINDOW = GTA
-       ========================= */
+    .blink {
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* =========================================
+       GTA ARCHIVE
+       ========================================= */
     #win-archive {
       top: 52px;
       left: 120px;
@@ -627,7 +827,7 @@
 
     #win-archive .window-topbar {
       height: 34px;
-      background: linear-gradient(180deg,#2d69d6 0%, #2157c3 45%, #1c4db7 46%, #1845a5 100%);
+      background: linear-gradient(180deg,var(--xp-light) 0%, var(--xp-mid) 45%, #1c4db7 46%, var(--xp-dark) 100%);
       border-bottom: 1px solid rgba(0,0,0,.28);
       padding: 0 7px 0 10px;
     }
@@ -838,9 +1038,80 @@
       line-height: 1.32;
     }
 
-    .archive-link:hover {
-      color: #16b36c;
+    .archive-link:hover { color: #16b36c; }
+
+    /* =========================================
+       MINI GAMES
+       ========================================= */
+    .snake-ui {
+      display: grid;
+      gap: 10px;
     }
+
+    .snake-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 13px;
+      color: #173768;
+      font-weight: 700;
+    }
+
+    #snake-canvas {
+      width: 100%;
+      max-width: 320px;
+      height: 320px;
+      background: #dcefd0;
+      border: 2px solid #7f9b74;
+      image-rendering: pixelated;
+    }
+
+    .snake-controls {
+      display: grid;
+      grid-template-columns: repeat(3, 58px);
+      gap: 6px;
+      justify-content: center;
+    }
+
+    .snake-controls button {
+      height: 38px;
+      border: 1px solid #c8d3e6;
+      background: #f6f8fc;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .mines-ui {
+      display: grid;
+      gap: 10px;
+    }
+
+    .mines-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 700;
+      color: #173768;
+    }
+
+    .mines-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 34px);
+      gap: 3px;
+      justify-content: start;
+    }
+
+    .mine-cell {
+      width: 34px;
+      height: 34px;
+      border: 1px solid #97a9c9;
+      background: #dbe6f8;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .mine-cell.open { background: #f4f6fb; }
+    .mine-cell.bomb { background: #ffb4b4; }
 
     @media (max-width: 980px) {
       #win-archive {
@@ -865,9 +1136,9 @@
         bottom: 18px;
       }
 
-      .archive-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .archive-grid { grid-template-columns: repeat(2, 1fr); }
+      .tv-main { grid-template-columns: 1fr; }
+      .tv-right { min-height: 150px; }
     }
 
     @media (max-width: 640px) {
@@ -879,31 +1150,89 @@
       .archive-link { font-size: 14px; }
       .vice-item { font-size: 22px; }
       .vice-panel { width: 84vw; height: 34vh; }
-      .boot-log { min-height: 160px; }
+      .tv-headline-2 { font-size: 34px; }
+      .tv-left, .tv-right, .tv-bottom, .tv-green-text { font-size: 12px; }
+      .mines-grid { grid-template-columns: repeat(8, 28px); }
+      .mine-cell { width: 28px; height: 28px; }
     }
   </style>
 </head>
 <body>
-  <!-- BOOT SCREEN -->
+  <!-- BOOT / TELETEXT -->
   <div id="boot-screen">
-    <div class="boot-noise"></div>
     <div class="boot-wrap">
-      <div class="boot-brand" id="boot-brand">
-██████╗ ██╗     ██╗   ██╗ ██████╗██╗███╗   ██╗███████╗
-██╔══██╗██║     ██║   ██║██╔════╝██║████╗  ██║██╔════╝
-██████╔╝██║     ██║   ██║██║     ██║██╔██╗ ██║█████╗
-██╔══██╗██║     ██║   ██║██║     ██║██║╚██╗██║██╔══╝
-██████╔╝███████╗╚██████╔╝╚██████╗██║██║ ╚████║███████╗
-╚═════╝ ╚══════╝ ╚═════╝  ╚═════╝╚═╝╚═╝  ╚═══╝╚══════╝
+      <div class="boot-tv">
+        <div class="tv-topbar">
+          <div>HOME</div>
+          <div>100.1 ➜</div>
+          <div>Regionale</div>
+        </div>
+
+        <div class="tv-headline-1">
+          <div>100.01</div>
+          <div>www.blucine.boot/televideo</div>
+        </div>
+
+        <div class="tv-headline-2">TELEVIDEO</div>
+
+        <div class="tv-green-banner">
+          <div class="tv-rai">Rai</div>
+          <div class="tv-green-text">
+            televideo e' anche sul digitale<br>
+            avvio sistema compatibile
+          </div>
+        </div>
+
+        <div class="tv-main">
+          <div class="tv-left">
+            <div class="tv-row"><span>101</span><span class="yellow-chip">ULTIM'ORA</span></div>
+            <div class="tv-row"><span>103</span><span class="blue-chip">PRIMA</span></div>
+            <div class="tv-row"><span>200</span><span>SPORT</span></div>
+            <div class="tv-row"><span>300</span><span>BORSA-FONDI</span></div>
+            <div class="tv-row"><span>400</span><span>ISTITUZIONI</span></div>
+            <div class="tv-row"><span>420</span><span>SOCIETA'</span></div>
+            <div class="tv-row"><span>500</span><span>TV-MAGAZINE</span></div>
+            <div class="tv-row"><span>590</span><span>LOTTO-LOTTERIE</span></div>
+            <div class="tv-row"><span>690</span><span>METEO-IMMAGINI</span></div>
+            <div class="tv-row"><span>770</span><span>SOTTOTITOLI</span></div>
+            <div class="tv-row"><span>800</span><span>OGGI-FLASH</span></div>
+            <div class="tv-row"><span>480</span><span>COMMERCIALE</span></div>
+          </div>
+
+          <div class="tv-right">
+            <div class="tv-row"><span class="red-code">102</span><span>Errore buffer</span><span class="tv-arrow">▶</span></div>
+            <div class="tv-row"><span class="red-code">116</span><span>Prima linea</span><span></span></div>
+            <div class="tv-row"><span class="red-code">120</span><span>Politica I/O</span><span></span></div>
+            <div class="tv-row"><span class="red-code">130</span><span>Economia RAM</span><span></span></div>
+            <div class="tv-row"><span class="red-code">140</span><span>Dall'archivio</span><span></span></div>
+            <div class="tv-row"><span class="red-code">150</span><span>Dal mondo</span><span></span></div>
+            <div class="tv-row"><span class="red-code">160</span><span>Culture.exe</span><span></span></div>
+            <div class="tv-row"><span class="red-code">170</span><span>Cittadini.sys</span><span></span></div>
+            <div class="tv-row"><span class="red-code">180</span><span>Speciale boot</span><span></span></div>
+            <div class="tv-row"><span class="red-code">810</span><span>Motori ui</span><span></span></div>
+          </div>
+        </div>
+
+        <div class="tv-mid-banner">
+          nuova numerazione canali digitali rai / caricamento sessione blucine
+        </div>
+
+        <div class="tv-progress-wrap">
+          <div class="tv-progress-label">
+            <span>caricamento dati</span>
+            <span id="boot-percent">000%</span>
+          </div>
+          <div class="tv-progress-bar">
+            <div class="tv-progress-fill" id="boot-bar"></div>
+          </div>
+        </div>
+
+        <div class="tv-bottom" id="boot-log"></div>
       </div>
-      <div class="boot-sub">booting unstable visual system</div>
-      <div class="boot-bar-shell">
-        <div class="boot-bar" id="boot-bar"></div>
-      </div>
-      <div class="boot-log" id="boot-log"></div>
     </div>
   </div>
 
+  <!-- DESKTOP -->
   <div id="desktop">
     <div class="desktop-overlay"></div>
 
@@ -951,6 +1280,11 @@
       <div class="icon-art"></div>
       <span>GTA.exe</span>
     </div>
+
+    <div class="desktop-icon note" id="icon-info" data-open="win-info">
+      <div class="icon-art"></div>
+      <span>Info.txt</span>
+    </div>
   </div>
 
   <!-- START MENU -->
@@ -968,25 +1302,26 @@
         <div class="start-entry" data-open="win-about"><div class="mini"></div><span>About</span></div>
         <div class="start-divider"></div>
         <div class="start-entry" data-open="win-games"><div class="mini"></div><span>Games</span></div>
+        <div class="start-entry" data-open="win-snake"><div class="mini"></div><span>Snake</span></div>
+        <div class="start-entry" data-open="win-mines"><div class="mini"></div><span>Mines</span></div>
         <div class="start-entry" data-open="win-shell"><div class="mini"></div><span>Terminale</span></div>
-        <div class="start-entry" data-open="win-pc"><div class="mini"></div><span>My Computer</span></div>
       </div>
 
       <div class="start-col right">
+        <div class="start-entry" data-open="win-pc"><div class="mini"></div><span>My Computer</span></div>
+        <div class="start-entry" data-open="win-info"><div class="mini"></div><span>Info.txt</span></div>
+        <div class="start-entry" data-open="win-hack"><div class="mini"></div><span>System Warning</span></div>
         <div class="start-entry"><div class="mini"></div><span>Documents</span></div>
         <div class="start-entry"><div class="mini"></div><span>Pictures</span></div>
-        <div class="start-entry"><div class="mini"></div><span>Music</span></div>
         <div class="start-entry"><div class="mini"></div><span>Control Panel</span></div>
-        <div class="start-entry"><div class="mini"></div><span>Search</span></div>
         <div class="start-entry"><div class="mini"></div><span>Run...</span></div>
         <div class="start-divider"></div>
-        <div class="start-entry"><div class="mini"></div><span>Log Off</span></div>
         <div class="start-entry"><div class="mini"></div><span>Turn Off Computer</span></div>
       </div>
     </div>
   </div>
 
-  <!-- TERMINAL -->
+  <!-- WINDOWS -->
   <section class="window hidden" id="win-shell">
     <div class="window-topbar" data-drag-handle>
       <div class="window-title">Terminale</div>
@@ -996,21 +1331,23 @@
       </div>
     </div>
     <div class="window-body">
-      <div class="shell-screen">
+      <div class="shell-screen" id="shell-screen">
         C:\BLUCINE&gt; dir<br>
         archive.exe<br>
         projects\<br>
         services\<br>
         games\<br>
         worlds\<br><br>
-        C:\BLUCINE&gt; open archive.exe<br>
-        loading...<br><br>
-        C:\BLUCINE&gt; _
+        C:\BLUCINE&gt; help<br>
+        open archive.exe<br>
+        open snake.exe<br>
+        open mines.exe<br>
+        run info.txt<br><br>
+        C:\BLUCINE&gt; _<span class="blink">█</span>
       </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
   <section class="window hidden" id="win-about">
     <div class="window-topbar" data-drag-handle>
       <div class="window-title">About</div>
@@ -1025,10 +1362,15 @@
         Studio visivo indipendente tra immagine, spazio, ricerca, web design,
         identità visiva, set design e direzione creativa.
       </div>
+      <div style="margin-top:14px;">
+        <span class="xp-badge">visual systems</span>
+        <span class="xp-badge">web design</span>
+        <span class="xp-badge">research</span>
+        <span class="xp-badge">direction</span>
+      </div>
     </div>
   </section>
 
-  <!-- PROJECTS -->
   <section class="window hidden" id="win-projects">
     <div class="window-topbar" data-drag-handle>
       <div class="window-title">Projects</div>
@@ -1046,11 +1388,11 @@
         <button>draft sequence</button>
         <button>image system beta</button>
         <button>unreleased material</button>
+        <button data-open="win-info">open dossier</button>
       </div>
     </div>
   </section>
 
-  <!-- SERVICES -->
   <section class="window hidden" id="win-services">
     <div class="window-topbar" data-drag-handle>
       <div class="window-title">Services</div>
@@ -1072,7 +1414,6 @@
     </div>
   </section>
 
-  <!-- GAMES -->
   <section class="window hidden" id="win-games">
     <div class="window-topbar" data-drag-handle>
       <div class="window-title">Games</div>
@@ -1083,16 +1424,27 @@
     </div>
     <div class="window-body">
       <div class="xp-title">Games</div>
-      <div class="xp-list">
-        <button>Snake</button>
-        <button>Minesweeper</button>
-        <button>Solitaire</button>
-        <button data-open="win-archive">GTA.exe</button>
+      <div class="xp-grid-2">
+        <div class="xp-panel">
+          <div class="xp-text" style="margin-bottom:10px;"><strong>Playable</strong></div>
+          <div class="xp-list">
+            <button data-open="win-snake">Snake</button>
+            <button data-open="win-mines">Mines</button>
+            <button data-open="win-archive">GTA.exe</button>
+          </div>
+        </div>
+        <div class="xp-panel">
+          <div class="xp-text" style="margin-bottom:10px;"><strong>Other</strong></div>
+          <div class="xp-list">
+            <button data-open="win-hack">System Warning</button>
+            <button data-open="win-info">Info.txt</button>
+            <button id="random-popup-btn">Random popup</button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- MY COMPUTER -->
   <section class="window hidden" id="win-pc">
     <div class="window-topbar" data-drag-handle>
       <div class="window-title">My Computer</div>
@@ -1103,17 +1455,113 @@
     </div>
     <div class="window-body">
       <div class="xp-title">My Computer</div>
-      <div class="xp-list">
-        <button>Local Disk (C:)</button>
-        <button>Shared Files</button>
-        <button>Image Archive</button>
-        <button>Network Places</button>
-        <button>Control Panel</button>
+      <div class="xp-grid-2">
+        <div class="xp-list">
+          <button>Local Disk (C:)</button>
+          <button>Shared Files</button>
+          <button>Image Archive</button>
+          <button>Network Places</button>
+        </div>
+        <div class="xp-list">
+          <button data-open="win-shell">Open terminal</button>
+          <button data-open="win-info">Read info</button>
+          <button data-open="win-games">Open games</button>
+          <button data-open="win-archive">Run archive.exe</button>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ARCHIVE GTA WINDOW -->
+  <section class="window hidden" id="win-info">
+    <div class="window-topbar" data-drag-handle>
+      <div class="window-title">Info.txt</div>
+      <div class="window-actions">
+        <button class="window-control" data-minimize="win-info">—</button>
+        <button class="window-control close" data-close="win-info">✕</button>
+      </div>
+    </div>
+    <div class="window-body">
+      <div class="xp-title">Info.txt</div>
+      <div class="xp-text">
+        Questo desktop non deve solo sembrare un desktop.<br><br>
+        Deve dare l'impressione di essere un sistema un po' sbagliato, un po' trovato,
+        un po' manipolato. Per questo dentro ci sono cartelle, giochi, warning, finte
+        utilita' e piccoli comportamenti inattesi.
+      </div>
+    </div>
+  </section>
+
+  <section class="window hidden" id="win-hack">
+    <div class="window-topbar" data-drag-handle>
+      <div class="window-title">System Warning</div>
+      <div class="window-actions">
+        <button class="window-control" data-minimize="win-hack">—</button>
+        <button class="window-control close" data-close="win-hack">✕</button>
+      </div>
+    </div>
+    <div class="window-body">
+      <div class="xp-title">Warning</div>
+      <div class="xp-text" id="hack-message">
+        Unstable shell activity detected.<br><br>
+        Some archive sectors may respond with delayed interfaces.
+      </div>
+      <div class="xp-list" style="margin-top:14px;">
+        <button id="hack-refresh-btn">refresh warning</button>
+        <button data-open="win-shell">open terminal</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="window hidden" id="win-snake">
+    <div class="window-topbar" data-drag-handle>
+      <div class="window-title">Snake</div>
+      <div class="window-actions">
+        <button class="window-control" data-minimize="win-snake">—</button>
+        <button class="window-control close" data-close="win-snake">✕</button>
+      </div>
+    </div>
+    <div class="window-body">
+      <div class="snake-ui">
+        <div class="snake-top">
+          <span>Score: <span id="snake-score">0</span></span>
+          <span>Status: <span id="snake-status">ready</span></span>
+        </div>
+        <canvas id="snake-canvas" width="320" height="320"></canvas>
+        <div class="snake-controls">
+          <div></div>
+          <button id="snake-up">↑</button>
+          <div></div>
+          <button id="snake-left">←</button>
+          <button id="snake-down">↓</button>
+          <button id="snake-right">→</button>
+        </div>
+        <div class="xp-text">WASD o frecce.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="window hidden" id="win-mines">
+    <div class="window-topbar" data-drag-handle>
+      <div class="window-title">Mines</div>
+      <div class="window-actions">
+        <button class="window-control" data-minimize="win-mines">—</button>
+        <button class="window-control close" data-close="win-mines">✕</button>
+      </div>
+    </div>
+    <div class="window-body">
+      <div class="mines-ui">
+        <div class="mines-top">
+          <span>Mines: <span id="mine-count">10</span></span>
+          <span id="mines-status">running</span>
+        </div>
+        <div class="mines-grid" id="mines-grid"></div>
+        <div class="xp-list">
+          <button id="mines-reset">reset</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="window hidden" id="win-archive">
     <div class="window-topbar" data-drag-handle>
       <div class="window-title">ARCHIVE.exe</div>
@@ -1156,7 +1604,6 @@
     </div>
   </section>
 
-  <!-- TASKBAR -->
   <div id="taskbar">
     <button id="start-button">start</button>
     <div id="taskbar-windows"></div>
@@ -1182,6 +1629,7 @@
 
       const bootScreen = $("#boot-screen");
       const bootBar = $("#boot-bar");
+      const bootPercent = $("#boot-percent");
       const bootLog = $("#boot-log");
 
       const archiveData = {
@@ -1231,26 +1679,19 @@
         ]
       };
 
-      const bootLines = [
-        "[INIT] loading kernel fragment 0xA4F1::visual shell",
-        "[SYNC] handshaking external render driver...",
-        "[WARN] font atlas mismatch / fallback chain damaged",
-        "[SCAN] indexing orphan nodes in /archive/.cache",
-        "[ERR ] ui registry pointer lost > remapping window matrix",
-        "[INIT] rebuilding icon memory table",
-        "[WARN] start menu state checksum unstable",
-        "[SCAN] reading ghost sector 19 / 44 / 91",
-        "[ERR ] unexpected packet from local display bus",
-        "[SYNC] compensating with deprecated xp wrapper",
-        "[INIT] boot flag BLUCINE_SAFE_MODE = false",
-        "[WARN] non-critical shell jitter detected",
-        "[SCAN] parsing synthetic folders...",
-        "[ERR ] unresolved asset alias: vice_panel_internal",
-        "[SYNC] rerouting menu hooks through legacy system",
-        "[INIT] taskbar instance mounted",
-        "[WARN] archive surface may appear corrupted",
-        "[OK  ] desktop image stream restored",
-        "[OK  ] unstable visual system online"
+      const televideoLines = [
+        { text: "100.02  inizializzazione shell video...", type: "info" },
+        { text: "100.03  sincronizzazione xp compatibile", type: "cyan" },
+        { text: "100.04  warning cluster grafico instabile", type: "warn" },
+        { text: "100.05  errore settore 19 ignorato", type: "err" },
+        { text: "100.06  ricostruzione icone desktop", type: "info" },
+        { text: "100.07  scansione cartelle archivio", type: "cyan" },
+        { text: "100.08  overlay vice city attivo", type: "warn" },
+        { text: "100.09  rerouting hooks legacy", type: "info" },
+        { text: "100.10  shell visuale online", type: "cyan" },
+        { text: "100.11  errore minore non bloccante", type: "err" },
+        { text: "100.12  taskbar disponibile", type: "info" },
+        { text: "100.13  desktop stream restored", type: "cyan" }
       ];
 
       function updateClock() {
@@ -1319,62 +1760,54 @@
         `;
       }
 
-      function addBootLine(text, type = "") {
+      function addTvLine(text, type = "info") {
         const line = document.createElement("div");
-        line.className = `boot-line ${type}`.trim();
+        line.className = `tv-log-line ${type}`;
         line.textContent = text;
         bootLog.appendChild(line);
         bootLog.scrollTop = bootLog.scrollHeight;
       }
 
       function runBootSequence() {
-        const totalDuration = 3000;
         const steps = [
-          { p: 4,   t: 80  },
-          { p: 11,  t: 250 },
-          { p: 19,  t: 420 },
-          { p: 18,  t: 520 },
-          { p: 31,  t: 760 },
-          { p: 29,  t: 900 },
-          { p: 46,  t: 1220 },
-          { p: 44,  t: 1320 },
-          { p: 58,  t: 1650 },
-          { p: 57,  t: 1740 },
-          { p: 74,  t: 2110 },
-          { p: 72,  t: 2200 },
-          { p: 87,  t: 2530 },
-          { p: 92,  t: 2720 },
+          { p: 4, t: 90 },
+          { p: 10, t: 240 },
+          { p: 16, t: 420 },
+          { p: 15, t: 520 },
+          { p: 28, t: 760 },
+          { p: 27, t: 860 },
+          { p: 41, t: 1130 },
+          { p: 39, t: 1240 },
+          { p: 56, t: 1580 },
+          { p: 55, t: 1660 },
+          { p: 73, t: 2080 },
+          { p: 71, t: 2170 },
+          { p: 89, t: 2560 },
           { p: 100, t: 2920 }
         ];
 
         steps.forEach(step => {
           setTimeout(() => {
-            bootBar.style.width = step.p + "%";
+            bootBar.style.width = `${step.p}%`;
+            bootPercent.textContent = `${String(step.p).padStart(3, "0")}%`;
           }, step.t);
         });
 
-        bootLines.forEach((line, i) => {
-          const t = 120 + i * 135 + (i % 3 === 0 ? 20 : 0);
-          setTimeout(() => {
-            let type = "";
-            if (line.includes("[WARN]")) type = "warn";
-            if (line.includes("[ERR ]")) type = "err";
-            if (line.includes("[OK")) type = "ok";
-            addBootLine(line, type);
-          }, t);
+        televideoLines.forEach((line, i) => {
+          setTimeout(() => addTvLine(line.text, line.type), 120 + i * 175);
         });
 
         setTimeout(() => {
-          addBootLine("[KERNEL] :: residual fault ignored / continuing boot", "warn");
-        }, 2460);
+          addTvLine("100.14  avvio completato / passaggio al desktop", "warn");
+        }, 2690);
 
         setTimeout(() => {
           bootScreen.classList.add("boot-fade-out");
-        }, totalDuration);
+        }, 3000);
 
         setTimeout(() => {
           bootScreen.remove();
-        }, totalDuration + 320);
+        }, 3220);
       }
 
       startButton.addEventListener("click", (e) => {
@@ -1444,12 +1877,8 @@
 
         document.addEventListener("mousemove", (e) => {
           if (!isDragging) return;
-
-          const x = e.clientX - offsetX;
-          const y = e.clientY - offsetY;
-
-          win.style.left = `${Math.max(0, x)}px`;
-          win.style.top = `${Math.max(0, y)}px`;
+          win.style.left = `${Math.max(0, e.clientX - offsetX)}px`;
+          win.style.top = `${Math.max(0, e.clientY - offsetY)}px`;
         });
 
         document.addEventListener("mouseup", () => {
@@ -1477,6 +1906,208 @@
           if (target) openWindow(target);
         });
       });
+
+      const hackMessages = [
+        "Residual shell jitter detected.<br><br>Some windows may respond with legacy behaviour.",
+        "Video memory remap completed.<br><br>Archive overlay remains partially unstable.",
+        "User interface checksum mismatch.<br><br>Continuing in compatibility mode."
+      ];
+
+      $("#hack-refresh-btn")?.addEventListener("click", () => {
+        $("#hack-message").innerHTML = hackMessages[Math.floor(Math.random() * hackMessages.length)];
+      });
+
+      $("#random-popup-btn")?.addEventListener("click", () => {
+        openWindow("win-hack");
+        $("#hack-message").innerHTML = hackMessages[Math.floor(Math.random() * hackMessages.length)];
+      });
+
+      $("#shell-screen")?.addEventListener("dblclick", () => {
+        openWindow("win-hack");
+      });
+
+      /* SNAKE */
+      const snakeCanvas = $("#snake-canvas");
+      const snakeScoreEl = $("#snake-score");
+      const snakeStatusEl = $("#snake-status");
+      const sctx = snakeCanvas.getContext("2d");
+
+      const gridSize = 16;
+      const tileCount = 20;
+      let snake = [{x:10,y:10}];
+      let food = {x:5,y:5};
+      let dx = 1;
+      let dy = 0;
+      let snakeScore = 0;
+      let snakeRunning = true;
+
+      function resetSnake() {
+        snake = [{x:10,y:10}];
+        food = {x:5,y:5};
+        dx = 1; dy = 0;
+        snakeScore = 0;
+        snakeRunning = true;
+        snakeScoreEl.textContent = "0";
+        snakeStatusEl.textContent = "ready";
+      }
+
+      function placeFood() {
+        food = {
+          x: Math.floor(Math.random() * tileCount),
+          y: Math.floor(Math.random() * tileCount)
+        };
+      }
+
+      function drawSnake() {
+        sctx.fillStyle = "#dcefd0";
+        sctx.fillRect(0,0,snakeCanvas.width,snakeCanvas.height);
+
+        sctx.fillStyle = "#9f2b2b";
+        sctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize, gridSize);
+
+        sctx.fillStyle = "#2b5f2b";
+        snake.forEach(seg => {
+          sctx.fillRect(seg.x * gridSize, seg.y * gridSize, gridSize - 1, gridSize - 1);
+        });
+      }
+
+      function updateSnake() {
+        if (!snakeRunning) return;
+
+        const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+
+        if (head.x < 0 || head.y < 0 || head.x >= tileCount || head.y >= tileCount) {
+          snakeRunning = false;
+          snakeStatusEl.textContent = "game over";
+          return;
+        }
+
+        if (snake.some(seg => seg.x === head.x && seg.y === head.y)) {
+          snakeRunning = false;
+          snakeStatusEl.textContent = "game over";
+          return;
+        }
+
+        snake.unshift(head);
+
+        if (head.x === food.x && head.y === food.y) {
+          snakeScore++;
+          snakeScoreEl.textContent = snakeScore;
+          snakeStatusEl.textContent = "running";
+          placeFood();
+        } else {
+          snake.pop();
+        }
+      }
+
+      setInterval(() => {
+        updateSnake();
+        drawSnake();
+      }, 130);
+
+      function setSnakeDir(nx, ny) {
+        if (nx === -dx && ny === -dy) return;
+        dx = nx; dy = ny;
+        snakeStatusEl.textContent = "running";
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowUp" || e.key === "w") setSnakeDir(0,-1);
+        if (e.key === "ArrowDown" || e.key === "s") setSnakeDir(0,1);
+        if (e.key === "ArrowLeft" || e.key === "a") setSnakeDir(-1,0);
+        if (e.key === "ArrowRight" || e.key === "d") setSnakeDir(1,0);
+      });
+
+      $("#snake-up")?.addEventListener("click", () => setSnakeDir(0,-1));
+      $("#snake-down")?.addEventListener("click", () => setSnakeDir(0,1));
+      $("#snake-left")?.addEventListener("click", () => setSnakeDir(-1,0));
+      $("#snake-right")?.addEventListener("click", () => setSnakeDir(1,0));
+
+      resetSnake();
+      drawSnake();
+
+      /* MINES */
+      const minesGrid = $("#mines-grid");
+      const minesStatus = $("#mines-status");
+      const mineCountEl = $("#mine-count");
+      let mineBoard = [];
+      const mineSize = 8;
+      const mineBombs = 10;
+
+      function resetMines() {
+        mineBoard = Array.from({length: mineSize * mineSize}, (_, i) => ({
+          bomb: false,
+          open: false,
+          index: i
+        }));
+
+        let bombsPlaced = 0;
+        while (bombsPlaced < mineBombs) {
+          const idx = Math.floor(Math.random() * mineBoard.length);
+          if (!mineBoard[idx].bomb) {
+            mineBoard[idx].bomb = true;
+            bombsPlaced++;
+          }
+        }
+
+        minesGrid.innerHTML = "";
+        mineBoard.forEach((cell, index) => {
+          const btn = document.createElement("button");
+          btn.className = "mine-cell";
+          btn.dataset.index = index;
+          minesGrid.appendChild(btn);
+          btn.addEventListener("click", () => openMine(index, btn));
+        });
+
+        mineCountEl.textContent = mineBombs;
+        minesStatus.textContent = "running";
+      }
+
+      function getNeighbors(index) {
+        const row = Math.floor(index / mineSize);
+        const col = index % mineSize;
+        const result = [];
+
+        for (let r = row - 1; r <= row + 1; r++) {
+          for (let c = col - 1; c <= col + 1; c++) {
+            if (r === row && c === col) continue;
+            if (r >= 0 && c >= 0 && r < mineSize && c < mineSize) {
+              result.push(r * mineSize + c);
+            }
+          }
+        }
+        return result;
+      }
+
+      function countNeighborBombs(index) {
+        return getNeighbors(index).filter(i => mineBoard[i].bomb).length;
+      }
+
+      function openMine(index, btn) {
+        const cell = mineBoard[index];
+        if (cell.open) return;
+        cell.open = true;
+        btn.classList.add("open");
+
+        if (cell.bomb) {
+          btn.classList.add("bomb");
+          btn.textContent = "✹";
+          minesStatus.textContent = "game over";
+          $$(".mine-cell").forEach((el, i) => {
+            if (mineBoard[i].bomb) {
+              el.textContent = "✹";
+              el.classList.add("bomb");
+            }
+          });
+          return;
+        }
+
+        const count = countNeighborBombs(index);
+        btn.textContent = count ? count : "";
+      }
+
+      $("#mines-reset")?.addEventListener("click", resetMines);
+      resetMines();
 
       renderFolder("projects");
       updateClock();
