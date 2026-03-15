@@ -17,7 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!bootScreen) return;
     setTimeout(() => {
       bootScreen.style.display = "none";
-    }, 4200);
+      document.body.classList.remove("booting");
+      document.body.classList.add("system-live");
+    }, 3000);
   }
 
   runBoot();
