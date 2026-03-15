@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
     shutdownButton.addEventListener("click", () => {
       document.body.innerHTML = `
         <div style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#000;color:#00ff66;font-family:'Courier New',monospace;gap:16px;">
-          <div style="font-size:28px;letter-spacing:1px;">BLUCINE OS</div>
+          <div style="font-size:28px;letter-spacing:1px;">BLUCINELAB OS</div>
           <div style="font-size:18px;">It is now safe to turn off your computer.</div>
           <button onclick="location.reload()" style="padding:10px 18px;border:1px solid #00ff66;background:#001c0d;color:#00ff66;cursor:pointer;">Restart</button>
         </div>
@@ -376,8 +376,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       playButtons.forEach((btn) => {
-        btn.classList.toggle("active", btn.dataset.playView === name);
-        btn.classList.toggle("is-active", btn.dataset.playView === name);
+        const active = btn.dataset.playView === name;
+        btn.classList.toggle("active", active);
+        btn.classList.toggle("is-active", active);
       });
 
       if (name === "mario") resetMario();
@@ -627,20 +628,24 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      INITIAL STATE
   ========================= */
-  if (shellWindow) {
-    shellWindow.dataset.minimized = "0";
+  function initAll() {
+    if (shellWindow) {
+      shellWindow.dataset.minimized = "0";
+    }
+
+    initPlayroomViews();
+
+    if (marioReady()) {
+      resetMario();
+      startMarioLoop();
+    }
+
+    if (cookingReady()) {
+      resetCooking();
+    }
+
+    updateTaskbar();
   }
 
-  initPlayroomViews();
-
-  if (marioReady()) {
-    resetMario();
-    startMarioLoop();
-  }
-
-  if (cookingReady()) {
-    resetCooking();
-  }
-
-  updateTaskbar();
+  initAll();
 });
