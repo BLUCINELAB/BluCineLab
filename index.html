@@ -1,651 +1,706 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const $ = (sel, ctx = document) => ctx.querySelector(sel);
-  const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BLUCINELAB OS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-  const bootScreen = $("#boot-screen");
-  const startButton = $("#start-button");
-  const startMenu = $("#start-menu");
-  const taskbarWindows = $("#taskbar-windows");
-  const clock = $("#taskbar-clock");
-  const shutdownButton = $("#shutdown-button");
-  const shellWindow = $("#win-shell");
+  <div id="boot-screen">
+    <div class="boot-logo">BLUCINELAB OS</div>
+    <div class="boot-sub">Starting visual shell...</div>
+    <div class="boot-bar">
+      <div class="boot-bar-fill"></div>
+    </div>
+    <div class="boot-lines">
+      Booting XP desktop...
+      Mounting Archive...
+      Mounting Lab...
+      Mounting Playroom...
+      System ready...
+    </div>
+  </div>
 
-  let topZ = 100;
-  const maximizedState = new Map();
+  <div id="top-status">
+    <span>BLUCINELAB OS</span>
+    <span>DESKTOP MODE</span>
+    <span>VISUAL SYSTEM READY</span>
+  </div>
 
-  /* =========================
-     BOOT
-  ========================= */
-  function runBoot() {
-    if (!bootScreen) return;
-    setTimeout(() => {
-      bootScreen.style.display = "none";
-    }, 4200);
-  }
+  <main id="desktop">
+    <button class="desktop-icon" data-open="win-shell" style="top:56px;left:18px;">
+      <span class="icon-art monitor"></span>
+      <span class="icon-label">BLUCINELAB</span>
+    </button>
 
-  runBoot();
+    <button class="desktop-icon" data-open="win-archive" style="top:156px;left:18px;">
+      <span class="icon-art folder"></span>
+      <span class="icon-label">Archive</span>
+    </button>
 
-  /* =========================
-     CLOCK
-  ========================= */
-  function updateClock() {
-    if (!clock) return;
-    const now = new Date();
-    const hh = String(now.getHours()).padStart(2, "0");
-    const mm = String(now.getMinutes()).padStart(2, "0");
-    clock.textContent = `${hh}:${mm}`;
-  }
+    <button class="desktop-icon" data-open="win-lab" style="top:256px;left:18px;">
+      <span class="icon-art monitor"></span>
+      <span class="icon-label">Lab</span>
+    </button>
 
-  updateClock();
-  setInterval(updateClock, 1000);
+    <button class="desktop-icon" data-open="win-playroom" style="top:356px;left:18px;">
+      <span class="icon-art gamepad"></span>
+      <span class="icon-label">Playroom</span>
+    </button>
 
-  /* =========================
-     HELPERS
-  ========================= */
-  function getWindowTitle(win) {
-    return (
-      win?.dataset.windowTitle ||
-      $(".xp-title-text", win)?.textContent?.trim() ||
-      "Window"
-    );
-  }
+    <button class="desktop-icon" data-open="win-studio" style="top:456px;left:18px;">
+      <span class="icon-art image"></span>
+      <span class="icon-label">Studio</span>
+    </button>
 
-  function isVisible(win) {
-    return !!win && getComputedStyle(win).display !== "none";
-  }
+    <button class="desktop-icon" data-open="win-manifesto" style="top:556px;left:18px;">
+      <span class="icon-art doc"></span>
+      <span class="icon-label">Manifesto</span>
+    </button>
 
-  function bringToFront(win) {
-    if (!win) return;
-    topZ += 1;
-    win.style.zIndex = String(topZ);
-    updateTaskbar();
-  }
+    <button class="desktop-icon" data-open="win-contact" style="top:656px;left:18px;">
+      <span class="icon-art mail"></span>
+      <span class="icon-label">Contact</span>
+    </button>
 
-  function showWindow(win) {
-    if (!win) return;
-    win.style.display = "flex";
-    win.dataset.minimized = "0";
-    bringToFront(win);
-  }
+    <button class="desktop-icon" style="top:756px;left:18px;">
+      <span class="icon-art trash"></span>
+      <span class="icon-label">Recycle Bin</span>
+    </button>
+  </main>
 
-  function hideWindow(win) {
-    if (!win) return;
-    win.style.display = "none";
-    updateTaskbar();
-  }
+  <!-- HOME -->
+  <section
+    class="xp-window"
+    id="win-shell"
+    data-window-title="BLUCINELAB"
+    style="display:none; top:82px; left:150px; width:760px; height:470px;"
+  >
+    <div class="xp-titlebar" data-drag-handle>
+      <div class="xp-title-left">
+        <span class="xp-mini-icon monitor"></span>
+        <span class="xp-title-text">BLUCINELAB</span>
+      </div>
+      <div class="xp-title-controls">
+        <button class="xp-control" data-minimize="win-shell">_</button>
+        <button class="xp-control" data-maximize="win-shell">□</button>
+        <button class="xp-control close" data-close="win-shell">×</button>
+      </div>
+    </div>
 
-  function restoreWindow(win) {
-    if (!win) return;
-    win.style.display = "flex";
-    win.dataset.minimized = "0";
-    bringToFront(win);
-  }
+    <div class="xp-menubar">
+      <span>File</span>
+      <span>Edit</span>
+      <span>View</span>
+      <span>Help</span>
+    </div>
 
-  function minimizeWindow(win) {
-    if (!win) return;
-    win.dataset.minimized = "1";
-    win.style.display = "none";
-    updateTaskbar();
-  }
-
-  function closeWindowById(id) {
-    const win = document.getElementById(id);
-    if (!win) return;
-    hideWindow(win);
-  }
-
-  function openWindowById(id) {
-    const win = document.getElementById(id);
-    if (!win) return;
-    showWindow(win);
-    closeStartMenu();
-  }
-
-  function closeStartMenu() {
-    if (startMenu) startMenu.classList.remove("open");
-  }
-
-  function toggleStartMenu() {
-    if (!startMenu) return;
-    startMenu.classList.toggle("open");
-  }
-
-  function safeText(el, value) {
-    if (el) el.textContent = String(value);
-  }
-
-  /* =========================
-     TASKBAR
-  ========================= */
-  function updateTaskbar() {
-    if (!taskbarWindows) return;
-    taskbarWindows.innerHTML = "";
-
-    const windows = $$(".xp-window").filter(
-      (win) => isVisible(win) || win.dataset.minimized === "1"
-    );
-
-    windows.forEach((win) => {
-      const item = document.createElement("button");
-      item.type = "button";
-      item.className = "taskbar-item";
-      item.textContent = getWindowTitle(win);
-
-      if (isVisible(win)) item.classList.add("active");
-
-      item.addEventListener("click", () => {
-        if (win.dataset.minimized === "1" || !isVisible(win)) {
-          restoreWindow(win);
-        } else {
-          bringToFront(win);
-        }
-      });
-
-      taskbarWindows.appendChild(item);
-    });
-  }
-
-  /* =========================
-     START MENU
-  ========================= */
-  if (startButton) {
-    startButton.addEventListener("click", (e) => {
-      e.stopPropagation();
-      toggleStartMenu();
-    });
-  }
-
-  document.addEventListener("click", (e) => {
-    if (!startMenu) return;
-    if (
-      !startMenu.contains(e.target) &&
-      e.target !== startButton &&
-      !startButton?.contains(e.target)
-    ) {
-      closeStartMenu();
-    }
-  });
-
-  if (shutdownButton) {
-    shutdownButton.addEventListener("click", () => {
-      document.body.innerHTML = `
-        <div style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#000;color:#00ff66;font-family:'Courier New',monospace;gap:16px;">
-          <div style="font-size:28px;letter-spacing:1px;">BLUCINELAB OS</div>
-          <div style="font-size:18px;">It is now safe to turn off your computer.</div>
-          <button onclick="location.reload()" style="padding:10px 18px;border:1px solid #00ff66;background:#001c0d;color:#00ff66;cursor:pointer;">Restart</button>
+    <div class="shell-body">
+      <div class="shell-hero">
+        <div>
+          <div class="shell-kicker">system / home / active</div>
+          <h1>BLUCINELAB</h1>
+          <p>
+            BLUCINELAB è uno studio visivo indipendente che lavora tra immagine,
+            spazio, identità, ambienti digitali e costruzione percettiva.
+            Ogni progetto viene trattato come un sistema: non solo un output grafico,
+            ma una relazione precisa tra atmosfera, funzione, linguaggio e presenza.
+          </p>
         </div>
-      `;
-    });
-  }
-
-  /* =========================
-     OPEN / CLOSE
-  ========================= */
-  $$("[data-open]").forEach((el) => {
-    el.addEventListener("click", (e) => {
-      const id = el.dataset.open;
-      if (!id) return;
-      e.preventDefault();
-      openWindowById(id);
-    });
-  });
-
-  $$("[data-close]").forEach((el) => {
-    el.addEventListener("click", (e) => {
-      const id = el.dataset.close;
-      if (!id) return;
-      e.preventDefault();
-      closeWindowById(id);
-    });
-  });
-
-  /* =========================
-     WINDOW CONTROLS
-  ========================= */
-  $$("[data-minimize]").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      const id = btn.dataset.minimize;
-      const win = document.getElementById(id);
-      if (!win) return;
-      e.preventDefault();
-      minimizeWindow(win);
-    });
-  });
-
-  $$("[data-maximize]").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      const id = btn.dataset.maximize;
-      const win = document.getElementById(id);
-      if (!win) return;
-      e.preventDefault();
-
-      if (!maximizedState.has(id)) {
-        maximizedState.set(id, {
-          top: win.style.top || `${win.offsetTop}px`,
-          left: win.style.left || `${win.offsetLeft}px`,
-          width: win.style.width || `${win.offsetWidth}px`,
-          height: win.style.height || `${win.offsetHeight}px`,
-        });
-
-        win.style.top = "12px";
-        win.style.left = "12px";
-        win.style.width = `${window.innerWidth - 24}px`;
-        win.style.height = `${window.innerHeight - 24 - 40}px`;
-        win.dataset.maximized = "1";
-      } else {
-        const prev = maximizedState.get(id);
-        win.style.top = prev.top;
-        win.style.left = prev.left;
-        win.style.width = prev.width;
-        win.style.height = prev.height;
-        win.dataset.maximized = "0";
-        maximizedState.delete(id);
-      }
-
-      bringToFront(win);
-    });
-  });
-
-  /* =========================
-     DRAG WINDOWS
-  ========================= */
-  $$(".xp-window").forEach((win) => {
-    if (win.classList.contains("world-window")) return;
-
-    const handle = $("[data-drag-handle]", win);
-    if (!handle) return;
-
-    let dragging = false;
-    let offsetX = 0;
-    let offsetY = 0;
-
-    handle.addEventListener("mousedown", (e) => {
-      if (e.target.closest(".xp-control")) return;
-      if (win.dataset.maximized === "1") return;
-
-      dragging = true;
-      bringToFront(win);
-
-      const rect = win.getBoundingClientRect();
-      offsetX = e.clientX - rect.left;
-      offsetY = e.clientY - rect.top;
-
-      e.preventDefault();
-    });
-
-    document.addEventListener("mousemove", (e) => {
-      if (!dragging) return;
-
-      const maxLeft = window.innerWidth - 160;
-      const maxTop = window.innerHeight - 120;
-
-      const nextLeft = Math.max(0, Math.min(maxLeft, e.clientX - offsetX));
-      const nextTop = Math.max(0, Math.min(maxTop, e.clientY - offsetY));
-
-      win.style.left = `${nextLeft}px`;
-      win.style.top = `${nextTop}px`;
-    });
-
-    document.addEventListener("mouseup", () => {
-      dragging = false;
-    });
-
-    handle.addEventListener(
-      "touchstart",
-      (e) => {
-        if (e.target.closest(".xp-control")) return;
-        if (win.dataset.maximized === "1") return;
-
-        const t = e.touches[0];
-        const rect = win.getBoundingClientRect();
-
-        dragging = true;
-        bringToFront(win);
-
-        offsetX = t.clientX - rect.left;
-        offsetY = t.clientY - rect.top;
-      },
-      { passive: true }
-    );
-
-    document.addEventListener(
-      "touchmove",
-      (e) => {
-        if (!dragging) return;
-        const t = e.touches[0];
-
-        const maxLeft = window.innerWidth - 160;
-        const maxTop = window.innerHeight - 120;
-
-        const nextLeft = Math.max(0, Math.min(maxLeft, t.clientX - offsetX));
-        const nextTop = Math.max(0, Math.min(maxTop, t.clientY - offsetY));
-
-        win.style.left = `${nextLeft}px`;
-        win.style.top = `${nextTop}px`;
-      },
-      { passive: true }
-    );
-
-    document.addEventListener("touchend", () => {
-      dragging = false;
-    });
-  });
-
-  /* =========================
-     FOCUS
-  ========================= */
-  $$(".xp-window").forEach((win) => {
-    win.addEventListener("mousedown", () => bringToFront(win));
-  });
-
-  /* =========================
-     RESIZE GUARD
-  ========================= */
-  window.addEventListener("resize", () => {
-    $$(".xp-window").forEach((win) => {
-      if (!isVisible(win)) return;
-      if (win.classList.contains("world-window")) return;
-
-      const rect = win.getBoundingClientRect();
-      if (rect.right > window.innerWidth) {
-        win.style.left = `${Math.max(0, window.innerWidth - rect.width - 10)}px`;
-      }
-      if (rect.bottom > window.innerHeight - 40) {
-        win.style.top = `${Math.max(0, window.innerHeight - rect.height - 50)}px`;
-      }
-    });
-  });
-
-  /* =========================
-     PLAYROOM ROUTER
-  ========================= */
-  function initPlayroomViews() {
-    const playButtons = $$("[data-play-view]");
-    if (!playButtons.length) return;
-
-    const panels = {
-      hub: $("#play-hub"),
-      mario: $("#play-mario"),
-      cooking: $("#play-cooking"),
-    };
-
-    function showPlayView(name) {
-      Object.entries(panels).forEach(([key, panel]) => {
-        if (!panel) return;
-        panel.classList.toggle("show", key === name);
-      });
-
-      playButtons.forEach((btn) => {
-        const active = btn.dataset.playView === name;
-        btn.classList.toggle("active", active);
-        btn.classList.toggle("is-active", active);
-      });
-
-      if (name === "mario") resetMario();
-      if (name === "cooking") resetCooking();
-    }
-
-    playButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const target = btn.dataset.playView;
-        if (!target) return;
-        showPlayView(target);
-      });
-    });
-
-    showPlayView("hub");
-  }
-
-  /* =========================
-     MARIO GAME
-  ========================= */
-  const marioStage = $("#mario-stage");
-  const marioPlayer = $("#mario-player");
-  const marioCoinsDisp = $("#mario-coins");
-  const marioScoreDisp = $("#mario-score");
-  const marioStatusDisp = $("#mario-status");
-
-  const mario = {
-    x: 40,
-    y: 0,
-    vx: 0,
-    vy: 0,
-    speed: 4.5,
-    jump: 13.5,
-    gravity: 0.7,
-    ground: 82,
-    keys: { left: false, right: false },
-    score: 0,
-    coins: 0,
-    raf: null,
-  };
-
-  function marioReady() {
-    return !!marioStage && !!marioPlayer;
-  }
-
-  function showMarioCoins() {
-    if (!marioReady()) return;
-    $$(".mario-coin", marioStage).forEach((coin) => {
-      coin.dataset.active = "1";
-      coin.style.display = "block";
-    });
-  }
-
-  function renderMario() {
-    if (!marioReady()) return;
-    marioPlayer.style.left = `${mario.x}px`;
-    marioPlayer.style.bottom = `${mario.ground + mario.y}px`;
-  }
-
-  function resetMario() {
-    if (!marioReady()) return;
-    mario.x = 40;
-    mario.y = 0;
-    mario.vx = 0;
-    mario.vy = 0;
-    mario.keys.left = false;
-    mario.keys.right = false;
-    mario.score = 0;
-    mario.coins = 0;
-    safeText(marioCoinsDisp, 0);
-    safeText(marioScoreDisp, 0);
-    safeText(marioStatusDisp, "READY");
-    showMarioCoins();
-    renderMario();
-  }
-
-  function collectMarioCoins() {
-    if (!marioReady()) return;
-
-    $$(".mario-coin", marioStage).forEach((coin) => {
-      if (coin.dataset.active !== "1") return;
-
-      const coinLeft = parseFloat(coin.style.left);
-      const coinBottom = parseFloat(coin.style.bottom);
-
-      const px = mario.x + 15;
-      const py = mario.ground + mario.y + 22;
-
-      const dx = px - (coinLeft + 11);
-      const dy = py - (coinBottom + 11);
-      const dist = Math.sqrt(dx * dx + dy * dy);
-
-      if (dist < 30) {
-        coin.dataset.active = "0";
-        coin.style.display = "none";
-        mario.coins += 1;
-        mario.score += 100;
-        safeText(marioCoinsDisp, mario.coins);
-        safeText(marioScoreDisp, mario.score);
-        safeText(marioStatusDisp, mario.coins >= 4 ? "WIN" : "COIN");
-      }
-    });
-  }
-
-  function marioLoop() {
-    if (!marioReady()) return;
-    const stageWidth = marioStage.clientWidth;
-
-    mario.vx = 0;
-    if (mario.keys.left) mario.vx = -mario.speed;
-    if (mario.keys.right) mario.vx = mario.speed;
-
-    mario.x += mario.vx;
-    if (mario.x < 0) mario.x = 0;
-    if (mario.x > stageWidth - 34) mario.x = stageWidth - 34;
-
-    mario.vy -= mario.gravity;
-    mario.y += mario.vy;
-
-    if (mario.y <= 0) {
-      mario.y = 0;
-      mario.vy = 0;
-    }
-
-    collectMarioCoins();
-    renderMario();
-    mario.raf = requestAnimationFrame(marioLoop);
-  }
-
-  function startMarioLoop() {
-    if (!marioReady()) return;
-    cancelAnimationFrame(mario.raf);
-    marioLoop();
-  }
-
-  document.addEventListener("keydown", (e) => {
-    if (!$("#play-mario")?.classList.contains("show")) return;
-
-    if (e.key === "ArrowLeft") mario.keys.left = true;
-    if (e.key === "ArrowRight") mario.keys.right = true;
-
-    if ((e.key === " " || e.code === "Space") && mario.y === 0) {
-      mario.vy = mario.jump;
-      safeText(marioStatusDisp, "JUMP");
-      e.preventDefault();
-    }
-  });
-
-  document.addEventListener("keyup", (e) => {
-    if (e.key === "ArrowLeft") mario.keys.left = false;
-    if (e.key === "ArrowRight") mario.keys.right = false;
-  });
-
-  /* =========================
-     COOKING GAME
-  ========================= */
-  const cookTarget = $("#cook-target");
-  const cookInstruction = $("#cook-instruction");
-  const cookRoundDisp = $("#cook-round");
-  const cookTimeDisp = $("#cook-time");
-  const cookScoreDisp = $("#cook-score");
-  const cookStatusDisp = $("#cook-status");
-  const cookRestart = $("#cook-restart");
-
-  const cookItems = ["🍅", "🥕", "🍳", "🍓", "🥔", "🧅", "🫑", "🍄"];
-  const cook = {
-    round: 1,
-    time: 10,
-    score: 0,
-    current: "🍅",
-    timer: null,
-  };
-
-  function cookingReady() {
-    return !!cookTarget;
-  }
-
-  function applyCookState() {
-    if (!cookingReady()) return;
-    cookTarget.textContent = cook.current;
-    safeText(cookRoundDisp, cook.round);
-    safeText(cookTimeDisp, cook.time);
-    safeText(cookScoreDisp, cook.score);
-  }
-
-  function nextCookItem() {
-    cook.current = cookItems[Math.floor(Math.random() * cookItems.length)];
-    if (cookInstruction) {
-      cookInstruction.textContent = "Clicca l’ingrediente il più possibile.";
-    }
-    applyCookState();
-  }
-
-  function stopCookingTimer() {
-    if (cook.timer) clearInterval(cook.timer);
-    cook.timer = null;
-  }
-
-  function startCookingTimer() {
-    stopCookingTimer();
-    safeText(cookStatusDisp, "COOKING");
-
-    cook.timer = setInterval(() => {
-      cook.time -= 1;
-      safeText(cookTimeDisp, cook.time);
-
-      if (cook.time <= 0) {
-        stopCookingTimer();
-        safeText(cookStatusDisp, "ROUND END");
-        cook.round += 1;
-        cook.time = 10;
-        nextCookItem();
-      }
-    }, 1000);
-  }
-
-  function resetCooking() {
-    if (!cookingReady()) return;
-    stopCookingTimer();
-    cook.round = 1;
-    cook.time = 10;
-    cook.score = 0;
-    cook.current = "🍅";
-    safeText(cookStatusDisp, "READY");
-    if (cookInstruction) {
-      cookInstruction.textContent = "Clicca l’ingrediente per cucinare.";
-    }
-    applyCookState();
-  }
-
-  if (cookTarget) {
-    cookTarget.addEventListener("click", () => {
-      if (!$("#play-cooking")?.classList.contains("show")) return;
-      if (!cook.timer) startCookingTimer();
-      cook.score += 1;
-      safeText(cookScoreDisp, cook.score);
-      safeText(cookStatusDisp, "GOOD");
-    });
-  }
-
-  if (cookRestart) {
-    cookRestart.addEventListener("click", () => {
-      resetCooking();
-    });
-  }
-
-  /* =========================
-     INITIAL STATE
-  ========================= */
-  function initAll() {
-    if (shellWindow) {
-      shellWindow.dataset.minimized = "0";
-    }
-
-    initPlayroomViews();
-
-    if (marioReady()) {
-      resetMario();
-      startMarioLoop();
-    }
-
-    if (cookingReady()) {
-      resetCooking();
-    }
-
-    updateTaskbar();
-  }
-
-  initAll();
-});
+        <div class="shell-guide">
+          <div class="shell-bubble">apri i mondi</div>
+          <div class="shell-character"></div>
+        </div>
+      </div>
+
+      <div class="shell-grid">
+        <button class="shell-card" data-open="win-archive">
+          <span class="shell-card-icon folder"></span>
+          <strong>Archive</strong>
+          <span>Mappa dei territori operativi: identità, ambienti, sistemi digitali, allestimenti e sviluppo visivo.</span>
+        </button>
+
+        <button class="shell-card" data-open="win-lab">
+          <span class="shell-card-icon monitor"></span>
+          <strong>Lab</strong>
+          <span>Zona di ricerca, test, segnali, riferimenti, prototipi e materiali ancora in trasformazione.</span>
+        </button>
+
+        <button class="shell-card" data-open="win-playroom">
+          <span class="shell-card-icon gamepad"></span>
+          <strong>Playroom</strong>
+          <span>Lato sperimentale del progetto: interfacce, immaginari pop, moduli interattivi e micro-esperienze.</span>
+        </button>
+
+        <button class="shell-card" data-open="win-studio">
+          <span class="shell-card-icon image"></span>
+          <strong>Studio</strong>
+          <span>Metodo operativo: composizione, margini, gerarchia, ordine, atmosfera e coerenza tra gli elementi.</span>
+        </button>
+
+        <button class="shell-card" data-open="win-manifesto">
+          <span class="shell-card-icon doc"></span>
+          <strong>Manifesto</strong>
+          <span>Posizione culturale e visiva: la forma come orientamento, non come decorazione accessoria.</span>
+        </button>
+
+        <button class="shell-card" data-open="win-contact">
+          <span class="shell-card-icon mail"></span>
+          <strong>Contact</strong>
+          <span>Quando ha senso scrivere a BLUCINELAB e quali contesti progettuali sono più adatti.</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHIVE -->
+  <section
+    class="xp-window world-window archive-world"
+    id="win-archive"
+    data-window-title="Archive"
+    style="display:none;"
+  >
+    <div class="xp-titlebar">
+      <div class="xp-title-left">
+        <span class="xp-mini-icon folder"></span>
+        <span class="xp-title-text">Archive</span>
+      </div>
+      <div class="xp-title-controls">
+        <button class="xp-control" data-minimize="win-archive">_</button>
+        <button class="xp-control close" data-close="win-archive">×</button>
+      </div>
+    </div>
+
+    <div class="world-shell archive-layout">
+      <aside class="world-rail archive-rail">
+        <button class="world-rail-btn" data-close="win-archive">×</button>
+        <button class="world-rail-btn" data-open="win-shell">⌂</button>
+        <div class="world-rail-label">ARCHIVE</div>
+        <div class="world-rail-help">return / close / dossier</div>
+      </aside>
+
+      <div class="archive-main">
+        <div class="gta-scene">
+          <div class="gta-sun"></div>
+          <div class="gta-palm p1"></div>
+          <div class="gta-palm p2"></div>
+          <div class="gta-palm p3"></div>
+          <div class="gta-road"></div>
+          <div class="gta-building b1"></div>
+          <div class="gta-building b2"></div>
+          <div class="gta-building b3"></div>
+          <div class="gta-car c1"></div>
+          <div class="gta-car c2"></div>
+          <div class="gta-character"></div>
+
+          <div class="gta-hud-top">
+            <div class="gta-hud-time">22:08</div>
+            <div class="gta-hud-money">$500000000</div>
+            <div class="gta-hud-health">♥ 100</div>
+            <div class="gta-hud-stars">★ ★ ★ ★ ★ ★</div>
+          </div>
+
+          <div class="gta-minimap">
+            <div class="map-grid"></div>
+            <div class="map-path"></div>
+            <div class="map-dot"></div>
+          </div>
+        </div>
+
+        <div class="archive-overlay">
+          <div class="archive-title-panel">
+            <div class="archive-kicker">vice city / mission archive / visual records</div>
+            <h2>ARCHIVE</h2>
+            <p>
+              L’archivio raccoglie i territori operativi di BLUCINELAB.
+              Non è una lista neutra di servizi, ma una mappa dei formati
+              in cui lo studio lavora: identità, ambienti, sistemi digitali,
+              allestimenti, direzione visiva e sviluppo progressivo dei progetti.
+            </p>
+          </div>
+
+          <div class="archive-side-stats">
+            <div class="archive-stat"><span>Projects</span><strong>Identity / Web / Space</strong></div>
+            <div class="archive-stat"><span>Format</span><strong>Digital / Editorial / Spatial</strong></div>
+            <div class="archive-stat"><span>Approach</span><strong>Autoriale + Funzionale</strong></div>
+            <div class="archive-stat"><span>Focus</span><strong>Cultural / Visual / Hybrid</strong></div>
+            <div class="archive-stat"><span>Status</span><strong>Online</strong></div>
+          </div>
+
+          <div class="archive-cards">
+            <article class="archive-card">
+              <span class="archive-tag">MISSION 01</span>
+              <h3>EXHIBITION / SPACE</h3>
+              <p>Progettazione di allestimenti, dispositivi spaziali, ambienti atmosferici e relazioni tra immagine, corpo e architettura.</p>
+            </article>
+
+            <article class="archive-card">
+              <span class="archive-tag">MISSION 02</span>
+              <h3>IDENTITY / LANGUAGE</h3>
+              <p>Costruzione di identità visive, sistemi grafici, tono tipografico, impaginazione e coerenza tra supporti diversi.</p>
+            </article>
+
+            <article class="archive-card">
+              <span class="archive-tag">MISSION 03</span>
+              <h3>WEB / DIGITAL ENVIRONMENTS</h3>
+              <p>Siti, ambienti online, interfacce narrative e pagine-esperienza costruite con forte controllo visivo e strutturale.</p>
+            </article>
+
+            <article class="archive-card">
+              <span class="archive-tag">MISSION 04</span>
+              <h3>PROCESS / VISUAL DEVELOPMENT</h3>
+              <p>Ricerca, moodboard, test, bozzetti, archivi di riferimento e sviluppo progressivo di una direzione visiva leggibile.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAB -->
+  <section
+    class="xp-window world-window lab-world"
+    id="win-lab"
+    data-window-title="Lab"
+    style="display:none;"
+  >
+    <div class="xp-titlebar">
+      <div class="xp-title-left">
+        <span class="xp-mini-icon monitor"></span>
+        <span class="xp-title-text">Lab</span>
+      </div>
+      <div class="xp-title-controls">
+        <button class="xp-control" data-minimize="win-lab">_</button>
+        <button class="xp-control close" data-close="win-lab">×</button>
+      </div>
+    </div>
+
+    <div class="world-shell lab-layout">
+      <aside class="world-rail lab-rail">
+        <button class="world-rail-btn" data-close="win-lab">×</button>
+        <button class="world-rail-btn" data-open="win-shell">⌂</button>
+        <div class="world-rail-label">LAB</div>
+      </aside>
+
+      <div class="lab-main">
+        <div class="lab-topline">
+          <span>MR BIOS (TM) BLUCINELAB INTERNAL SYSTEM</span>
+          <span>VER 1.03 / STATUS ACTIVE</span>
+        </div>
+
+        <div class="lab-grid">
+          <div class="lab-box">
+<pre>AWARD MODULAR BIOS V6.00PG
+
+[00] STANDARD CMOS FEATURES
+[01] ADVANCED BIOS FEATURES
+[02] SIGNAL TEST
+[03] VISUAL MEMORY BANK
+[04] ARCHIVE TRACE
+[05] PROCESS STACK
+[06] EXIT
+
+> SELECTED: [04] ARCHIVE TRACE
+> STATUS: SIGNAL PRESENT
+> TRACE.LOG LOADED</pre>
+          </div>
+
+          <div class="lab-box">
+<pre>@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@ SIGNAL READY @@@@@@@
+@@@@@@ TRACE ONLINE @@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@</pre>
+          </div>
+
+          <div class="lab-box">
+<pre>BANK 1
+
+Il laboratorio è il luogo in cui
+BLUCINELAB sviluppa riferimenti,
+confronta linguaggi, accumula segnali
+e costruisce direzioni.
+
+È la parte meno rifinita
+ma più strategica del sistema.</pre>
+          </div>
+
+          <div class="lab-box">
+<pre>BANK 2
+
+Qui entrano immagini trovate,
+errori utili, frammenti, test,
+atmosfere, materiali,
+interfacce e strutture in fase
+di definizione.
+
+La ricerca serve a chiarire il tono,
+ridurre il rumore e orientare
+la forma finale.</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAYROOM -->
+  <section
+    class="xp-window world-window playroom-world"
+    id="win-playroom"
+    data-window-title="Playroom"
+    style="display:none;"
+  >
+    <div class="xp-titlebar">
+      <div class="xp-title-left">
+        <span class="xp-mini-icon gamepad"></span>
+        <span class="xp-title-text">Playroom</span>
+      </div>
+      <div class="xp-title-controls">
+        <button class="xp-control" data-minimize="win-playroom">_</button>
+        <button class="xp-control close" data-close="win-playroom">×</button>
+      </div>
+    </div>
+
+    <div class="world-shell playroom-layout">
+      <aside class="world-rail playroom-rail">
+        <button class="world-rail-btn" data-close="win-playroom">×</button>
+        <button class="world-rail-btn" data-open="win-shell">⌂</button>
+        <div class="world-rail-label">PLAY</div>
+      </aside>
+
+      <div class="playroom-main">
+        <div class="playroom-header">
+          <h2>PLAYROOM</h2>
+          <p>Wii channel menu / playful digital experiments</p>
+        </div>
+
+        <div class="playroom-tabs">
+          <button class="play-tab is-active" data-play-view="hub">Hub</button>
+          <button class="play-tab" data-play-view="mario">Mario</button>
+          <button class="play-tab" data-play-view="cooking">Cooking</button>
+        </div>
+
+        <div class="play-panel show" id="play-hub">
+          <div class="wii-grid">
+            <button class="wii-tile playable" data-play-view="mario">
+              <span class="wii-title">Mario</span>
+              <span class="wii-sub">Modulo di test sul movimento, sulla leggibilità e sulla traduzione ludica dell’interfaccia.</span>
+            </button>
+
+            <button class="wii-tile playable pink" data-play-view="cooking">
+              <span class="wii-title">Cooking Mama</span>
+              <span class="wii-sub">Micro-esperimento su ritmo, gesto, feedback e interazione semplice.</span>
+            </button>
+
+            <div class="wii-tile locked">
+              <span class="wii-title">Pac-Man</span>
+              <span class="wii-sub">Future channel</span>
+            </div>
+
+            <div class="wii-tile locked">
+              <span class="wii-title">The Sims</span>
+              <span class="wii-sub">Future channel</span>
+            </div>
+
+            <div class="wii-tile locked">
+              <span class="wii-title">GTA</span>
+              <span class="wii-sub">Archive logic</span>
+            </div>
+
+            <div class="wii-tile locked">
+              <span class="wii-title">Invaders</span>
+              <span class="wii-sub">Future channel</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="play-panel" id="play-mario">
+          <div class="play-inner-panel">
+            <div class="panel-head">
+              <h3>MARIO MINI GAME</h3>
+              <p>← → per muoverti. Spazio per saltare. Raccogli tutte le monete.</p>
+            </div>
+
+            <div class="mario-wrap">
+              <div class="mario-hud">
+                <div>Coins: <strong id="mario-coins">0</strong></div>
+                <div>Score: <strong id="mario-score">0</strong></div>
+                <div>Status: <strong id="mario-status">READY</strong></div>
+              </div>
+
+              <div class="mario-stage" id="mario-stage">
+                <div class="mario-cloud c1"></div>
+                <div class="mario-cloud c2"></div>
+
+                <div class="mario-brick" style="left:180px; bottom:150px;"></div>
+                <div class="mario-brick" style="left:360px; bottom:190px;"></div>
+                <div class="mario-brick" style="left:560px; bottom:140px;"></div>
+
+                <div class="mario-coin" style="left:190px; bottom:208px;"></div>
+                <div class="mario-coin" style="left:370px; bottom:248px;"></div>
+                <div class="mario-coin" style="left:570px; bottom:198px;"></div>
+                <div class="mario-coin" style="left:720px; bottom:110px;"></div>
+
+                <div class="mario-player" id="mario-player">
+                  <div class="hat"></div>
+                  <div class="head"></div>
+                  <div class="body"></div>
+                  <div class="arm a1"></div>
+                  <div class="arm a2"></div>
+                  <div class="leg l1"></div>
+                  <div class="leg l2"></div>
+                </div>
+
+                <div class="mario-ground"></div>
+              </div>
+
+              <div class="mario-controls">
+                Controlli: ← → per muoverti, spazio per saltare.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="play-panel" id="play-cooking">
+          <div class="play-inner-panel">
+            <div class="panel-head">
+              <h3>COOKING MAMA MINI GAME</h3>
+              <p>Clicca l’ingrediente più volte possibile entro il tempo.</p>
+            </div>
+
+            <div class="cook-wrap">
+              <div class="cook-hud">
+                <div>Round: <strong id="cook-round">1</strong></div>
+                <div>Time: <strong id="cook-time">10</strong></div>
+                <div>Score: <strong id="cook-score">0</strong></div>
+                <div>Status: <strong id="cook-status">READY</strong></div>
+              </div>
+
+              <div class="cook-board">
+                <div class="cook-stage">
+                  <div id="cook-target">🍅</div>
+                  <p id="cook-instruction">Clicca l’ingrediente per cucinare.</p>
+                </div>
+
+                <div class="cook-side">
+                  <h4>Kitchen Log</h4>
+                  <div class="cook-list">
+                    <div>• Click rapidi = più punteggio</div>
+                    <div>• Ogni round dura 10 secondi</div>
+                    <div>• Dopo ogni round cambia ingrediente</div>
+                    <div>• Restart per ripartire</div>
+                  </div>
+
+                  <button class="cook-btn" id="cook-restart" type="button">Restart Game</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDIO -->
+  <section
+    class="xp-window world-window studio-world"
+    id="win-studio"
+    data-window-title="Studio"
+    style="display:none;"
+  >
+    <div class="xp-titlebar">
+      <div class="xp-title-left">
+        <span class="xp-mini-icon image"></span>
+        <span class="xp-title-text">Studio</span>
+      </div>
+      <div class="xp-title-controls">
+        <button class="xp-control" data-minimize="win-studio">_</button>
+        <button class="xp-control close" data-close="win-studio">×</button>
+      </div>
+    </div>
+
+    <div class="world-shell studio-layout">
+      <aside class="world-rail studio-rail">
+        <button class="world-rail-btn" data-close="win-studio">×</button>
+        <button class="world-rail-btn" data-open="win-shell">⌂</button>
+        <div class="world-rail-label">STUDIO</div>
+      </aside>
+
+      <div class="studio-main">
+        <div class="studio-header">
+          <div class="studio-mainbox">
+            <div class="studio-kicker">simulation / method / visual order</div>
+            <h2>STUDIO</h2>
+            <p>
+              Lo studio è il luogo in cui i progetti vengono ordinati.
+              Qui BLUCINELAB definisce struttura, gerarchia, margini, ritmo,
+              materiali e coerenza tra gli elementi.
+            </p>
+          </div>
+
+          <div class="studio-statbox">
+            <div class="sim-stat"><span>Coherence</span><strong>94</strong></div>
+            <div class="sim-stat"><span>Atmosphere</span><strong>87</strong></div>
+            <div class="sim-stat"><span>Selection</span><strong>91</strong></div>
+            <div class="sim-stat"><span>Noise</span><strong>Low</strong></div>
+          </div>
+        </div>
+
+        <div class="studio-grid">
+          <article class="studio-card">
+            <h3>ATMOSPHERE</h3>
+            <p>Ogni progetto deve avere un clima leggibile: non solo colori, ma temperatura, densità e presenza.</p>
+          </article>
+
+          <article class="studio-card">
+            <h3>REDUCTION</h3>
+            <p>La qualità non nasce dall’accumulo. Nasce dalla capacità di togliere ciò che indebolisce.</p>
+          </article>
+
+          <article class="studio-card">
+            <h3>DIRECTION</h3>
+            <p>Ogni sistema visivo deve avere un asse: un centro di gravità, una voce e una priorità.</p>
+          </article>
+
+          <article class="studio-card">
+            <h3>COHERENCE</h3>
+            <p>Il progetto deve restare riconoscibile passando da stampa a spazio, da web a immagine, da interfaccia a racconto.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section
+    class="xp-window"
+    id="win-manifesto"
+    data-window-title="Manifesto"
+    style="display:none; top:110px; left:190px; width:760px; height:500px;"
+  >
+    <div class="xp-titlebar" data-drag-handle>
+      <div class="xp-title-left">
+        <span class="xp-mini-icon doc"></span>
+        <span class="xp-title-text">Manifesto</span>
+      </div>
+      <div class="xp-title-controls">
+        <button class="xp-control" data-minimize="win-manifesto">_</button>
+        <button class="xp-control" data-maximize="win-manifesto">□</button>
+        <button class="xp-control close" data-close="win-manifesto">×</button>
+      </div>
+    </div>
+
+    <div class="xp-menubar">
+      <span>File</span>
+      <span>Read</span>
+      <span>View</span>
+    </div>
+
+    <div class="manifesto-body">
+      <h2>MANIFESTO</h2>
+      <p>
+        BLUCINELAB considera l’immagine come una struttura di orientamento.
+        La forma non serve a decorare, ma a rendere leggibile una posizione,
+        una relazione, un tono.
+      </p>
+      <p>
+        Lo studio lavora su progetti in cui identità, spazio, immagine e interfaccia
+        non vengono trattati come campi separati, ma come parti dello stesso ecosistema visivo.
+      </p>
+      <p>
+        L’obiettivo non è produrre semplicemente elementi belli, ma costruire presenza,
+        ritmo, chiarezza e memoria.
+      </p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section
+    class="xp-window"
+    id="win-contact"
+    data-window-title="Contact"
+    style="display:none; top:130px; left:230px; width:520px; height:330px;"
+  >
+    <div class="xp-titlebar" data-drag-handle>
+      <div class="xp-title-left">
+        <span class="xp-mini-icon mail"></span>
+        <span class="xp-title-text">Contact</span>
+      </div>
+      <div class="xp-title-controls">
+        <button class="xp-control" data-minimize="win-contact">_</button>
+        <button class="xp-control" data-maximize="win-contact">□</button>
+        <button class="xp-control close" data-close="win-contact">×</button>
+      </div>
+    </div>
+
+    <div class="xp-menubar">
+      <span>File</span>
+      <span>Send</span>
+      <span>Help</span>
+    </div>
+
+    <div class="contact-body">
+      <div class="contact-kicker">email / direct</div>
+      <h2>CONTACT</h2>
+      <p>
+        BLUCINELAB lavora meglio quando il progetto richiede una direzione visiva chiara,
+        una forte identità percettiva o una costruzione coerente tra più linguaggi.
+      </p>
+      <p>
+        È il contesto giusto per identità visive, siti e ambienti digitali,
+        allestimenti, progetti culturali, editoriali o sistemi visivi ibridi.
+      </p>
+      <p>Quando scrivi, indica obiettivo, contesto, materiali già esistenti e tempistiche.</p>
+      <a href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a>
+    </div>
+  </section>
+
+  <footer id="taskbar">
+    <button id="start-button">
+      <span class="start-orb"></span>
+      <span>start</span>
+    </button>
+
+    <div id="taskbar-windows"></div>
+
+    <div id="taskbar-tray">
+      <span class="tray-dot"></span>
+      <span id="taskbar-clock">00:00</span>
+    </div>
+  </footer>
+
+  <nav id="start-menu">
+    <div class="start-top">
+      <div class="start-user-pic"></div>
+      <div class="start-user-name">BLUCINELAB</div>
+    </div>
+
+    <div class="start-body">
+      <div class="start-left">
+        <button class="start-link" data-open="win-shell"><span class="start-link-art monitor"></span><span>Home</span></button>
+        <button class="start-link" data-open="win-archive"><span class="start-link-art folder"></span><span>Archive</span></button>
+        <button class="start-link" data-open="win-lab"><span class="start-link-art monitor"></span><span>Lab</span></button>
+        <button class="start-link" data-open="win-playroom"><span class="start-link-art gamepad"></span><span>Playroom</span></button>
+        <button class="start-link" data-open="win-studio"><span class="start-link-art image"></span><span>Studio</span></button>
+        <button class="start-link" data-open="win-manifesto"><span class="start-link-art doc"></span><span>Manifesto</span></button>
+        <button class="start-link" data-open="win-contact"><span class="start-link-art mail"></span><span>Contact</span></button>
+      </div>
+
+      <div class="start-right">
+        <div class="start-item">Projects</div>
+        <div class="start-item">Visual Systems</div>
+        <div class="start-item">Research</div>
+        <div class="start-item">Support</div>
+      </div>
+    </div>
+
+    <div class="start-bottom">
+      <button id="shutdown-button">Turn Off Computer</button>
+    </div>
+  </nav>
+
+  <script src="script.js"></script>
+</body>
+</html>
