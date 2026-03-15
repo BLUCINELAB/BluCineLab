@@ -13,9 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let topZ = 100;
   const maximizedState = new Map();
 
-  /* =========================
-     BOOT
-  ========================= */
   function runBoot() {
     if (!bootScreen) return;
     setTimeout(() => {
@@ -25,9 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   runBoot();
 
-  /* =========================
-     CLOCK
-  ========================= */
   function updateClock() {
     if (!clock) return;
     const now = new Date();
@@ -39,9 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
   updateClock();
   setInterval(updateClock, 1000);
 
-  /* =========================
-     HELPERS
-  ========================= */
   function getWindowTitle(win) {
     return (
       win?.dataset.windowTitle ||
@@ -114,9 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (el) el.textContent = String(value);
   }
 
-  /* =========================
-     TASKBAR
-  ========================= */
   function updateTaskbar() {
     if (!taskbarWindows) return;
     taskbarWindows.innerHTML = "";
@@ -145,9 +133,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* =========================
-     START MENU
-  ========================= */
   if (startButton) {
     startButton.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -160,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (
       !startMenu.contains(e.target) &&
       e.target !== startButton &&
-      !startButton?.contains(e.target)
+      !startButton.contains(e.target)
     ) {
       closeStartMenu();
     }
@@ -178,9 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* =========================
-     OPEN / CLOSE
-  ========================= */
   $$("[data-open]").forEach((el) => {
     el.addEventListener("click", (e) => {
       const id = el.dataset.open;
@@ -199,9 +181,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  /* =========================
-     WINDOW CONTROLS
-  ========================= */
   $$("[data-minimize]").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       const id = btn.dataset.minimize;
@@ -246,9 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  /* =========================
-     DRAG WINDOWS
-  ========================= */
   $$(".xp-window").forEach((win) => {
     if (win.classList.contains("world-window")) return;
 
@@ -331,16 +307,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  /* =========================
-     FOCUS
-  ========================= */
   $$(".xp-window").forEach((win) => {
     win.addEventListener("mousedown", () => bringToFront(win));
   });
 
-  /* =========================
-     RESIZE GUARD
-  ========================= */
   window.addEventListener("resize", () => {
     $$(".xp-window").forEach((win) => {
       if (!isVisible(win)) return;
@@ -356,9 +326,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  /* =========================
-     PLAYROOM ROUTER
-  ========================= */
   function initPlayroomViews() {
     const playButtons = $$("[data-play-view]");
     if (!playButtons.length) return;
@@ -396,9 +363,6 @@ document.addEventListener("DOMContentLoaded", () => {
     showPlayView("hub");
   }
 
-  /* =========================
-     MARIO GAME
-  ========================= */
   const marioStage = $("#mario-stage");
   const marioPlayer = $("#mario-player");
   const marioCoinsDisp = $("#mario-coins");
@@ -532,9 +496,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "ArrowRight") mario.keys.right = false;
   });
 
-  /* =========================
-     COOKING GAME
-  ========================= */
   const cookTarget = $("#cook-target");
   const cookInstruction = $("#cook-instruction");
   const cookRoundDisp = $("#cook-round");
@@ -625,9 +586,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* =========================
-     INITIAL STATE
-  ========================= */
   function initAll() {
     if (shellWindow) {
       shellWindow.dataset.minimized = "0";
