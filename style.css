@@ -6,6 +6,8 @@
   --xp-blue-3:#1c4fb6;
   --xp-border:#0a246a;
   --rail-w:76px;
+  --xp-cursor-default:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='22' viewBox='0 0 18 22'><path d='M1 1 L1 18 L5 14 L8 20 L10 19 L7 13 L13 13 Z' fill='white' stroke='black' stroke-width='1'/></svg>") 1 1, auto;
+  --xp-cursor-hand:url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='20' viewBox='0 0 18 20'><path d='M6 1 C6 1 6 10 6 10 C6 10 5 7 3.8 7 C2.7 7 2.4 8.2 2.8 9.1 C3.3 10.1 4 11.1 4.3 12.4 C4.6 13.6 5.1 18 8.4 18 L12.3 18 C14.5 18 15.5 16.8 15.8 14.7 C16.1 12.8 16 7.2 16 6.4 C16 5.4 15.4 4.8 14.5 4.8 C13.7 4.8 13.2 5.3 13.2 6.1 L13.2 8 L12.2 8 L12.2 4.8 C12.2 3.9 11.6 3.2 10.7 3.2 C9.8 3.2 9.2 3.9 9.2 4.8 L9.2 8 L8.2 8 L8.2 2.9 C8.2 1.9 7.5 1 6.6 1 Z' fill='white' stroke='black' stroke-width='1' stroke-linejoin='round'/></svg>") 6 1, pointer;
 }
 
 *{
@@ -26,18 +28,44 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 
+body.booting{
+  cursor:none;
+}
+
+body.system-live{
+  cursor:var(--xp-cursor-default);
+}
+
+body.system-live button,
+body.system-live a,
+body.system-live .desktop-icon,
+body.system-live .shell-card,
+body.system-live .start-link,
+body.system-live .world-rail-btn,
+body.system-live .play-tab,
+body.system-live .wii-tile.playable,
+body.system-live .cook-btn,
+body.system-live #cook-target,
+body.system-live .xp-control,
+body.system-live #start-button,
+body.system-live #shutdown-button,
+body.system-live .taskbar-item{
+  cursor:var(--xp-cursor-hand);
+}
+
 button{
   font:inherit;
   border:none;
   background:none;
   padding:0;
   margin:0;
-  cursor:pointer;
+  cursor:inherit;
 }
 
 a{
   color:inherit;
   text-decoration:none;
+  cursor:inherit;
 }
 
 /* =========================
@@ -48,14 +76,15 @@ a{
   inset:0;
   z-index:99999;
   background:#000;
-  color:#00ff66;
+  color:#e7e7e7;
   display:flex;
   align-items:center;
   justify-content:center;
   flex-direction:column;
-  gap:18px;
+  gap:16px;
   font-family:"Courier New", monospace;
   overflow:hidden;
+  image-rendering:pixelated;
 }
 
 #boot-screen::before{
@@ -65,36 +94,53 @@ a{
   background:
     repeating-linear-gradient(
       to bottom,
-      rgba(255,255,255,.05) 0px,
-      rgba(255,255,255,.05) 1px,
+      rgba(255,255,255,.08) 0px,
+      rgba(255,255,255,.08) 1px,
       transparent 1px,
-      transparent 3px
+      transparent 4px
     );
-  opacity:.45;
+  opacity:.55;
+  pointer-events:none;
+}
+
+#boot-screen::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,.06), transparent 60%);
   pointer-events:none;
 }
 
 .boot-logo{
-  font-size:30px;
-  letter-spacing:2px;
-  text-shadow:0 0 10px rgba(0,255,102,.35);
   position:relative;
+  font-size:34px;
+  letter-spacing:4px;
+  color:#ffffff;
+  text-transform:uppercase;
+  text-shadow:
+    0 0 0 #fff,
+    2px 0 0 rgba(255,255,255,.15),
+    -2px 0 0 rgba(255,255,255,.1);
 }
 
 .boot-sub{
-  font-size:15px;
-  letter-spacing:1px;
-  opacity:.88;
   position:relative;
+  font-size:13px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#cfcfcf;
+  opacity:.9;
 }
 
 .boot-bar{
-  width:min(440px,84vw);
-  height:24px;
-  border:2px solid #00ff66;
-  background:#00140a;
-  overflow:hidden;
   position:relative;
+  width:min(460px,84vw);
+  height:18px;
+  border:2px solid #d9d9d9;
+  background:#111;
+  overflow:hidden;
+  box-shadow:inset 0 0 0 1px #000;
 }
 
 .boot-bar-fill{
@@ -103,10 +149,10 @@ a{
   background:
     repeating-linear-gradient(
       90deg,
-      #00ff66 0 10px,
-      #00d453 10px 20px
+      #f2f2f2 0 14px,
+      #bcbcbc 14px 28px
     );
-  animation:bootFill 4.2s linear forwards;
+  animation:bootFill 3s steps(18, end) forwards;
 }
 
 @keyframes bootFill{
@@ -115,13 +161,15 @@ a{
 }
 
 .boot-lines{
-  white-space:pre-line;
-  font-size:15px;
-  line-height:1.45;
-  opacity:.92;
-  text-align:left;
-  width:min(520px,86vw);
   position:relative;
+  width:min(520px,86vw);
+  white-space:pre-line;
+  font-size:14px;
+  line-height:1.45;
+  text-align:left;
+  color:#f1f1f1;
+  letter-spacing:1px;
+  text-transform:uppercase;
 }
 
 /* =========================
@@ -1410,7 +1458,7 @@ a{
 }
 
 .wii-tile.playable{
-  cursor:pointer;
+  cursor:var(--xp-cursor-hand);
 }
 
 .wii-tile.pink{
