@@ -1854,7 +1854,6 @@ a{
 ========================= */
 @media (max-width:1150px){
   .archive-overlay,
-  .archive-hero,
   .studio-header,
   .cook-board{
     grid-template-columns:1fr;
