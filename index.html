@@ -3,37 +3,101 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BLUCINELAB OS</title>
+  <title>BLUCINE OS</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="booting">
 
+  <!-- =========================
+       BOOT SCREEN / TELETEXT
+  ========================= -->
   <div id="boot-screen">
-    <div class="boot-logo">BLUCINE</div>
-    <div class="boot-sub">visual system loading</div>
-    <div class="boot-bar">
-      <div class="boot-bar-fill"></div>
-    </div>
-    <div class="boot-lines">
-      BLUCINE OS V1.0
-      INITIALIZING DESKTOP
-      MOUNTING ARCHIVE
-      MOUNTING LAB
-      MOUNTING PLAYROOM
-      STARTING VISUAL SHELL
+    <div class="teletext-shell">
+      <div class="teletext-topbar">
+        <span>HOME</span>
+        <span>100.1</span>
+        <span>→</span>
+        <span>Regionale</span>
+      </div>
+
+      <div class="teletext-url">www.blucine.ai.it</div>
+
+      <div class="teletext-title-band">
+        <div class="teletext-title">BLUCINE</div>
+      </div>
+
+      <div class="teletext-brand-row">
+        <div class="teletext-brand-box">BC</div>
+        <div class="teletext-green-box">
+          BLUCINE E' ANCHE<br />
+          SUL DIGITALE
+        </div>
+      </div>
+
+      <div class="teletext-grid">
+        <div class="teletext-leftcol">
+          <div><span>101</span> ULTIM'ORA</div>
+          <div><span>103</span> PRIMA</div>
+          <div><span>200</span> SPORT</div>
+          <div><span>300</span> DOSSIER</div>
+          <div><span>400</span> ARCHIVE</div>
+          <div><span>420</span> SOCIAL</div>
+          <div><span>500</span> LAB</div>
+          <div><span>590</span> PLAYROOM</div>
+          <div><span>600</span> STUDIO</div>
+          <div><span>700</span> SYSTEM</div>
+          <div><span>800</span> CONTACT</div>
+          <div><span>900</span> MANIFESTO</div>
+        </div>
+
+        <div class="teletext-rightcol">
+          <div><span>102</span> Visual update</div>
+          <div><span>110</span> Prime signal</div>
+          <div><span>120</span> Projects</div>
+          <div><span>130</span> Digital world</div>
+          <div><span>140</span> Ambienti</div>
+          <div><span>150</span> Spatial</div>
+          <div><span>160</span> Cultura</div>
+          <div><span>170</span> Cittadini</div>
+          <div><span>180</span> Speciale</div>
+          <div><span>810</span> Motori</div>
+        </div>
+      </div>
+
+      <div class="teletext-green-footer">
+        Nuova mappa visiva canali digitali Rai<br />
+        a pagina 463
+      </div>
+
+      <div class="teletext-loader-wrap">
+        <div class="teletext-loader-label">1002</div>
+        <div class="teletext-loader">
+          <div class="teletext-loader-fill"></div>
+        </div>
+      </div>
+
+      <div class="teletext-bottom-news">
+        ULTIM'ORA: BLUCINE visual shell loading...
+      </div>
     </div>
   </div>
 
+  <!-- =========================
+       TOP STATUS
+  ========================= -->
   <div id="top-status">
-    <span>BLUCINELAB OS</span>
+    <span>BLUCINE OS</span>
     <span>DESKTOP MODE</span>
     <span>VISUAL SYSTEM READY</span>
   </div>
 
+  <!-- =========================
+       DESKTOP XP
+  ========================= -->
   <main id="desktop">
     <button class="desktop-icon" data-open="win-shell" style="top:56px;left:18px;">
       <span class="icon-art monitor"></span>
-      <span class="icon-label">BLUCINELAB</span>
+      <span class="icon-label">BLUCINE</span>
     </button>
 
     <button class="desktop-icon" data-open="win-archive" style="top:156px;left:18px;">
@@ -72,16 +136,19 @@
     </button>
   </main>
 
+  <!-- =========================
+       HOME WINDOW
+  ========================= -->
   <section
     class="xp-window"
     id="win-shell"
-    data-window-title="BLUCINELAB"
+    data-window-title="BLUCINE"
     style="display:none; top:82px; left:150px; width:760px; height:470px;"
   >
     <div class="xp-titlebar" data-drag-handle>
       <div class="xp-title-left">
         <span class="xp-mini-icon monitor"></span>
-        <span class="xp-title-text">BLUCINELAB</span>
+        <span class="xp-title-text">BLUCINE</span>
       </div>
       <div class="xp-title-controls">
         <button class="xp-control" data-minimize="win-shell">_</button>
@@ -101,9 +168,9 @@
       <div class="shell-hero">
         <div>
           <div class="shell-kicker">system / home / active</div>
-          <h1>BLUCINELAB</h1>
+          <h1>BLUCINE</h1>
           <p>
-            BLUCINELAB è uno studio visivo indipendente che lavora tra immagine,
+            BLUCINE è uno studio visivo indipendente che lavora tra immagine,
             spazio, identità, ambienti digitali e costruzione percettiva.
             Ogni progetto viene trattato come un sistema: non solo un output grafico,
             ma una relazione precisa tra atmosfera, funzione, linguaggio e presenza.
@@ -149,12 +216,15 @@
         <button class="shell-card" data-open="win-contact">
           <span class="shell-card-icon mail"></span>
           <strong>Contact</strong>
-          <span>Quando ha senso scrivere a BLUCINELAB e quali contesti progettuali sono più adatti.</span>
+          <span>Quando ha senso scrivere a BLUCINE e quali contesti progettuali sono più adatti.</span>
         </button>
       </div>
     </div>
   </section>
 
+  <!-- =========================
+       ARCHIVE / GTA
+  ========================= -->
   <section
     class="xp-window world-window archive-world"
     id="win-archive"
@@ -213,7 +283,7 @@
             <div class="archive-kicker">vice city / mission archive / visual records</div>
             <h2>ARCHIVE</h2>
             <p>
-              L’archivio raccoglie i territori operativi di BLUCINELAB.
+              L’archivio raccoglie i territori operativi di BLUCINE.
               Non è una lista neutra di servizi, ma una mappa dei formati
               in cui lo studio lavora: identità, ambienti, sistemi digitali,
               allestimenti, direzione visiva e sviluppo progressivo dei progetti.
@@ -258,6 +328,9 @@
     </div>
   </section>
 
+  <!-- =========================
+       LAB
+  ========================= -->
   <section
     class="xp-window world-window lab-world"
     id="win-lab"
@@ -284,7 +357,7 @@
 
       <div class="lab-main">
         <div class="lab-topline">
-          <span>MR BIOS (TM) BLUCINELAB INTERNAL SYSTEM</span>
+          <span>MR BIOS (TM) BLUCINE INTERNAL SYSTEM</span>
           <span>VER 1.03 / STATUS ACTIVE</span>
         </div>
 
@@ -316,7 +389,7 @@
 <pre>BANK 1
 
 Il laboratorio è il luogo in cui
-BLUCINELAB sviluppa riferimenti,
+BLUCINE sviluppa riferimenti,
 confronta linguaggi, accumula segnali
 e costruisce direzioni.
 
@@ -342,6 +415,9 @@ la forma finale.</pre>
     </div>
   </section>
 
+  <!-- =========================
+       PLAYROOM
+  ========================= -->
   <section
     class="xp-window world-window playroom-world"
     id="win-playroom"
@@ -500,6 +576,9 @@ la forma finale.</pre>
     </div>
   </section>
 
+  <!-- =========================
+       STUDIO
+  ========================= -->
   <section
     class="xp-window world-window studio-world"
     id="win-studio"
@@ -531,7 +610,7 @@ la forma finale.</pre>
             <h2>STUDIO</h2>
             <p>
               Lo studio è il luogo in cui i progetti vengono ordinati.
-              Qui BLUCINELAB definisce struttura, gerarchia, margini, ritmo,
+              Qui BLUCINE definisce struttura, gerarchia, margini, ritmo,
               materiali e coerenza tra gli elementi.
             </p>
           </div>
@@ -569,6 +648,9 @@ la forma finale.</pre>
     </div>
   </section>
 
+  <!-- =========================
+       MANIFESTO
+  ========================= -->
   <section
     class="xp-window"
     id="win-manifesto"
@@ -596,7 +678,7 @@ la forma finale.</pre>
     <div class="manifesto-body">
       <h2>MANIFESTO</h2>
       <p>
-        BLUCINELAB considera l’immagine come una struttura di orientamento.
+        BLUCINE considera l’immagine come una struttura di orientamento.
         La forma non serve a decorare, ma a rendere leggibile una posizione,
         una relazione, un tono.
       </p>
@@ -611,6 +693,9 @@ la forma finale.</pre>
     </div>
   </section>
 
+  <!-- =========================
+       CONTACT
+  ========================= -->
   <section
     class="xp-window"
     id="win-contact"
@@ -639,7 +724,7 @@ la forma finale.</pre>
       <div class="contact-kicker">email / direct</div>
       <h2>CONTACT</h2>
       <p>
-        BLUCINELAB lavora meglio quando il progetto richiede una direzione visiva chiara,
+        BLUCINE lavora meglio quando il progetto richiede una direzione visiva chiara,
         una forte identità percettiva o una costruzione coerente tra più linguaggi.
       </p>
       <p>
@@ -651,6 +736,9 @@ la forma finale.</pre>
     </div>
   </section>
 
+  <!-- =========================
+       TASKBAR
+  ========================= -->
   <footer id="taskbar">
     <button id="start-button">
       <span class="start-orb"></span>
@@ -665,10 +753,13 @@ la forma finale.</pre>
     </div>
   </footer>
 
+  <!-- =========================
+       START MENU
+  ========================= -->
   <nav id="start-menu">
     <div class="start-top">
       <div class="start-user-pic"></div>
-      <div class="start-user-name">BLUCINELAB</div>
+      <div class="start-user-name">BLUCINE</div>
     </div>
 
     <div class="start-body">
