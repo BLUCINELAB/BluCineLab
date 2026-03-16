@@ -10,6 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const shutdownButton = $("#shutdown-button");
   const shellWindow = $("#win-shell");
 
+  const lightbox = $("#lightbox");
+  const lightboxImage = $("#lightbox-image");
+  const lightboxCaption = $("#lightbox-caption");
+  const lightboxClose = $("#lightbox-close");
+
   let topZ = 100;
   const maximizedState = new Map();
 
@@ -19,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
       bootScreen.style.display = "none";
       document.body.classList.remove("booting");
       document.body.classList.add("system-live");
-    }, 3000);
+    }, 2800);
   }
 
   runBoot();
@@ -588,12 +593,61 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function openLightbox(src, caption = "") {
+    if (!lightbox || !lightboxImage) return;
+    lightboxImage.src = src;
+    lightboxImage.alt = caption || "Reference image";
+    if (lightboxCaption) {
+      lightboxCaption.textContent = caption;
+    }
+    lightbox.classList.add("open");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.classList.add("lightbox-open");
+  }
+
+  function closeLightbox() {
+    if (!lightbox || !lightboxImage) return;
+    lightbox.classList.remove("open");
+    lightbox.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("lightbox-open");
+    setTimeout(() => {
+      lightboxImage.src = "";
+      lightboxImage.alt = "";
+      if (lightboxCaption) lightboxCaption.textContent = "";
+    }, 180);
+  }
+
+  function initLightbox() {
+    $$("[data-lightbox-src]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        openLightbox(btn.dataset.lightboxSrc, btn.dataset.lightboxCaption || "");
+      });
+    });
+
+    if (lightboxClose) {
+      lightboxClose.addEventListener("click", closeLightbox);
+    }
+
+    if (lightbox) {
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && lightbox?.classList.contains("open")) {
+        closeLightbox();
+      }
+    });
+  }
+
   function initAll() {
     if (shellWindow) {
       shellWindow.dataset.minimized = "0";
     }
 
     initPlayroomViews();
+    initLightbox();
 
     if (marioReady()) {
       resetMario();
