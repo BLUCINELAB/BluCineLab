@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NØMA — BluCineLab</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- CRT overlay -->
+  <div class="crt-overlay"></div>
+  <div class="scanlines"></div>
+  <div class="vignette"></div>
+
+  <!-- Boot screen -->
+  <div id="boot-screen">
+    <div class="boot-content">
+      <div class="boot-logo">BLUCINELAB SYSTEM</div>
+      <div class="boot-sub">v0.9.1 — ENCRYPTED CHANNEL</div>
+      <div class="boot-bar">
+        <div class="boot-progress" id="boot-progress"></div>
+      </div>
+      <div class="boot-status" id="boot-status">INITIALIZING...</div>
+    </div>
+  </div>
+
+  <!-- Main terminal -->
+  <div id="main" class="hidden">
+
+    <!-- Header -->
+    <header>
+      <div class="header-left">
+        <span class="header-dot"></span>
+        <span class="header-label">BLUCINELAB</span>
+      </div>
+      <div class="header-center">
+        <div class="noma-title" id="noma-title">NØMA</div>
+      </div>
+      <div class="header-right">
+        <span class="header-status" id="header-status">ONLINE</span>
+        <span class="header-dot green"></span>
+      </div>
+    </header>
+
+    <!-- Terminal window -->
+    <div class="terminal-wrapper">
+      <div class="terminal-bar">
+        <span class="tb-dot red"></span>
+        <span class="tb-dot yellow"></span>
+        <span class="tb-dot green"></span>
+        <span class="tb-title">noma_shell — bash — 80×24</span>
+      </div>
+
+      <div class="terminal" id="terminal">
+        <div id="output"></div>
+        <div class="input-line" id="input-line">
+          <span class="prompt">visitor@noma:~$&nbsp;</span>
+          <span id="input-display"></span>
+          <span class="cursor" id="cursor">█</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <span>NØMA © BLUCINELAB — ENTITÀ DIGITALE — SIMULAZIONE COSCIENZA v0.9.1</span>
+      <span id="visit-counter"></span>
+    </footer>
+
+  </div>
+
+  <script src="noma.js"></script>
+</body>
+</html>
