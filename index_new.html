@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#090b0f" />
+  <title>BluCineLab OS</title>
+  <meta
+    name="description"
+    content="BluCineLab OS — studio visivo indipendente tra cinema, immagine, archivi, spazi, sistemi narrativi e costruzione percettiva."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="is-booting">
+  <div class="boot" id="boot" aria-live="polite">
+    <div class="boot__scan"></div>
+    <div class="boot__panel">
+      <div class="boot__topline">
+        <span>BLUCINELAB BIOS</span>
+        <span>VER 2.6</span>
+        <span>VISUAL SHELL</span>
+      </div>
+
+      <div class="boot__grid">
+        <div class="boot__col">
+          <p>Memory test............................ OK</p>
+          <p>Archive index........................... OK</p>
+          <p>Signal matrix........................... OK</p>
+          <p>Window protocol......................... OK</p>
+          <p>Studio intent........................... OK</p>
+          <p>Contact relay........................... OK</p>
+        </div>
+        <div class="boot__col boot__col--right">
+          <p>Loading visual kernel</p>
+          <div class="boot__progress" aria-hidden="true">
+            <span id="boot-bar"></span>
+          </div>
+          <p id="boot-status">Init shell...</p>
+        </div>
+      </div>
+
+      <div class="boot__quote">
+        BLUCINELAB is not a generic agency. It is a visual operating system for films, images, cultural projects and environments.
+      </div>
+
+      <button class="boot__skip" id="skipBoot" type="button">Skip</button>
+    </div>
+  </div>
+
+  <div class="shell" id="shell" aria-hidden="true">
+    <header class="topbar">
+      <div class="topbar__left">
+        <button class="apple" id="menuToggle" type="button" aria-expanded="false" aria-controls="menuPanel">●</button>
+        <span class="topbar__brand">BLUCINELAB OS</span>
+        <nav class="topbar__nav" aria-label="Navigazione principale">
+          <button type="button" data-open="window-home">Home</button>
+          <button type="button" data-open="window-studio">Studio</button>
+          <button type="button" data-open="window-archive">Archive</button>
+          <button type="button" data-open="window-signals">Signals</button>
+          <button type="button" data-open="window-contact">Contact</button>
+        </nav>
+      </div>
+      <div class="topbar__right">
+        <span id="sceneLabel">Scene / Hybrid</span>
+        <span id="clock">00:00</span>
+      </div>
+    </header>
+
+    <aside class="menu-panel" id="menuPanel" hidden>
+      <div class="menu-panel__section">
+        <p class="menu-panel__label">System</p>
+        <button type="button" data-scene="hybrid">Hybrid desktop</button>
+        <button type="button" data-scene="amber">Amber terminal</button>
+        <button type="button" data-scene="mono">Monochrome field</button>
+        <button type="button" data-scene="meadow">Pastoral glitch</button>
+      </div>
+      <div class="menu-panel__section">
+        <p class="menu-panel__label">Quick open</p>
+        <button type="button" data-open="window-home">Open Home</button>
+        <button type="button" data-open="window-studio">Open Studio</button>
+        <button type="button" data-open="window-archive">Open Archive</button>
+        <button type="button" data-open="window-signals">Open Signals</button>
+        <button type="button" data-open="window-contact">Open Contact</button>
+      </div>
+    </aside>
+
+    <main class="desktop" id="desktop">
+      <div class="desktop__wallpaper" aria-hidden="true">
+        <div class="wallpaper wallpaper--hybrid active" data-scene-panel="hybrid">
+          <div class="orb orb--1"></div>
+          <div class="orb orb--2"></div>
+          <div class="grid"></div>
+          <div class="city"></div>
+          <div class="frame frame--left"></div>
+          <div class="frame frame--right"></div>
+        </div>
+        <div class="wallpaper wallpaper--amber" data-scene-panel="amber">
+          <div class="amber-grid"></div>
+          <div class="amber-city"></div>
+        </div>
+        <div class="wallpaper wallpaper--mono" data-scene-panel="mono">
+          <div class="mono-field"></div>
+          <div class="mono-ring"></div>
+        </div>
+        <div class="wallpaper wallpaper--meadow" data-scene-panel="meadow">
+          <div class="meadow-hill"></div>
+          <div class="meadow-cloud meadow-cloud--1"></div>
+          <div class="meadow-cloud meadow-cloud--2"></div>
+          <div class="meadow-cloud meadow-cloud--3"></div>
+        </div>
+      </div>
+
+      <div class="desktop__noise" aria-hidden="true"></div>
+
+      <div class="icons" aria-label="Icone desktop">
+        <button class="icon" type="button" data-open="window-home">
+          <span class="icon__art icon__art--home"></span>
+          <span class="icon__label">BOOT.LOG</span>
+        </button>
+        <button class="icon" type="button" data-open="window-studio">
+          <span class="icon__art icon__art--studio"></span>
+          <span class="icon__label">STUDIO.SYS</span>
+        </button>
+        <button class="icon" type="button" data-open="window-archive">
+          <span class="icon__art icon__art--archive"></span>
+          <span class="icon__label">ARCHIVE.DIR</span>
+        </button>
+        <button class="icon" type="button" data-open="window-signals">
+          <span class="icon__art icon__art--signal"></span>
+          <span class="icon__label">SIGNALS.EXE</span>
+        </button>
+        <button class="icon" type="button" data-open="window-contact">
+          <span class="icon__art icon__art--contact"></span>
+          <span class="icon__label">CONTACT.TXT</span>
+        </button>
+      </div>
+
+      <section class="window window--hero is-open" id="window-home" data-title="BOOT.LOG" style="--x: clamp(1rem, 4vw, 3rem); --y: clamp(4.2rem, 11vh, 6.5rem); --w: min(44rem, calc(100vw - 2rem));">
+        <header class="window__bar">
+          <div class="window__dots" aria-hidden="true"><span></span><span></span><span></span></div>
+          <h2 class="window__title">BOOT.LOG</h2>
+          <div class="window__actions">
+            <button type="button" class="window__action" data-minimize aria-label="Minimizza finestra">_</button>
+            <button type="button" class="window__action" data-close aria-label="Chiudi finestra">×</button>
+          </div>
+        </header>
+        <div class="window__body intro">
+          <p class="kicker">Visual operating system for independent cinema and cultural image-making</p>
+          <h1>BluCineLab costruisce immagini, ambienti e dispositivi narrativi che sembrano vivi.</h1>
+          <p class="lead">
+            Cinema, fotografia, installazione, art direction, sistemi editoriali, ricerca visiva. Non un catalogo di servizi. Un laboratorio che organizza forma, atmosfera e funzione in un unico gesto.
+          </p>
+          <div class="intro__cta">
+            <button class="button button--primary" type="button" data-open="window-archive">Apri archive</button>
+            <button class="button" type="button" data-open="window-contact">Apri contact</button>
+          </div>
+          <ul class="metrics" aria-label="Metriche studio">
+            <li><strong>Focus</strong><span>Film, cultura, installazioni, comunicazione visiva</span></li>
+            <li><strong>Metodo</strong><span>Rigore di produzione + immaginazione percettiva</span></li>
+            <li><strong>Output</strong><span>Immagini, esperienze, sistemi, contenuti, ambienti</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="window" id="window-studio" data-title="STUDIO.SYS" style="--x: clamp(2rem, 11vw, 10rem); --y: clamp(7rem, 16vh, 9rem); --w: min(52rem, calc(100vw - 2rem));">
+        <header class="window__bar">
+          <div class="window__dots" aria-hidden="true"><span></span><span></span><span></span></div>
+          <h2 class="window__title">STUDIO.SYS</h2>
+          <div class="window__actions">
+            <button type="button" class="window__action" data-minimize aria-label="Minimizza finestra">_</button>
+            <button type="button" class="window__action" data-close aria-label="Chiudi finestra">×</button>
+          </div>
+        </header>
+        <div class="window__body section-copy">
+          <div class="section-copy__grid">
+            <div>
+              <p class="kicker">Posizionamento</p>
+              <h3>Uno studio indipendente che unisce produzione, linguaggio e architettura percettiva.</h3>
+              <p>
+                BluCineLab lavora dove molti siti si inceppano: nel punto in cui l'idea è ancora nebulosa e va trasformata in una forma leggibile, producibile e memorabile.
+              </p>
+            </div>
+            <div class="terminal-card">
+              <p><span>&gt;</span> cinema indipendente</p>
+              <p><span>&gt;</span> fotografia e mondi visivi</p>
+              <p><span>&gt;</span> installazioni e spazi narrativi</p>
+              <p><span>&gt;</span> sistemi editoriali e digitali</p>
+            </div>
+          </div>
+          <div class="cards cards--two">
+            <article class="card">
+              <h4>Cosa fa bene davvero</h4>
+              <ul>
+                <li>Tradurre concept complessi in dispositivi visivi coerenti</li>
+                <li>Tenere insieme direzione artistica e fattibilità produttiva</li>
+                <li>Disegnare linguaggi che non sembrano template senz'anima</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h4>Come lavora</h4>
+              <ul>
+                <li>Analisi del nucleo narrativo</li>
+                <li>Selezione di forme e riferimenti realmente utili</li>
+                <li>Prototipo visivo, struttura, esecuzione, diffusione</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="window" id="window-archive" data-title="ARCHIVE.DIR" style="--x: clamp(1rem, 18vw, 16rem); --y: clamp(9rem, 21vh, 12rem); --w: min(56rem, calc(100vw - 2rem));">
+        <header class="window__bar">
+          <div class="window__dots" aria-hidden="true"><span></span><span></span><span></span></div>
+          <h2 class="window__title">ARCHIVE.DIR</h2>
+          <div class="window__actions">
+            <button type="button" class="window__action" data-minimize aria-label="Minimizza finestra">_</button>
+            <button type="button" class="window__action" data-close aria-label="Chiudi finestra">×</button>
+          </div>
+        </header>
+        <div class="window__body">
+          <p class="kicker">Territori operativi</p>
+          <div class="cards cards--three">
+            <article class="card">
+              <h4>Film e audiovisivo</h4>
+              <p>Sviluppo immagine, direzione, teaser, set, contenuti di lancio, trattamento visivo, documentazione di processo.</p>
+            </article>
+            <article class="card">
+              <h4>Spazi e installazioni</h4>
+              <p>Ambienti immersivi, display narrativi, cubi, led wall, mostre, apparati audiovisivi, regia sensoriale dello spazio.</p>
+            </article>
+            <article class="card">
+              <h4>Comunicazione culturale</h4>
+              <p>Dossier, sistemi editoriali, campagne, contenuti per istituzioni, artisti, realtà ibride e progetti ad alta densità simbolica.</p>
+            </article>
+          </div>
+          <div class="archive-list">
+            <div>
+              <h4>Capacità integrate</h4>
+              <p>Regia, fotografia, montaggio, art direction, concept design, project management, design di esperienza, produzione culturale.</p>
+            </div>
+            <div>
+              <h4>Criterio</h4>
+              <p>Tenere insieme leggibilità, tensione estetica e utilità concreta. Il contrario del caos travestito da creatività.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="window" id="window-signals" data-title="SIGNALS.EXE" style="--x: clamp(4rem, 29vw, 25rem); --y: clamp(6rem, 14vh, 8rem); --w: min(48rem, calc(100vw - 2rem));">
+        <header class="window__bar">
+          <div class="window__dots" aria-hidden="true"><span></span><span></span><span></span></div>
+          <h2 class="window__title">SIGNALS.EXE</h2>
+          <div class="window__actions">
+            <button type="button" class="window__action" data-minimize aria-label="Minimizza finestra">_</button>
+            <button type="button" class="window__action" data-close aria-label="Chiudi finestra">×</button>
+          </div>
+        </header>
+        <div class="window__body">
+          <p class="kicker">Mappa estetica derivata dai tuoi riferimenti</p>
+          <div class="signals-grid">
+            <article class="signal-block">
+              <h4>1. BIOS rituale</h4>
+              <p>Terminale, avvio, soglia, carattere monospazio, senso di sistema vivo. Atmosfera tecnica ma teatrale.</p>
+            </article>
+            <article class="signal-block">
+              <h4>2. Città vettoriale</h4>
+              <p>Griglie amber, wireframe, pannelli, mini mappe, UI come topografia. Non nostalgia sterile: infrastruttura percettiva.</p>
+            </article>
+            <article class="signal-block">
+              <h4>3. Monocromo di controllo</h4>
+              <p>Bianco, nero, grigio sporco, schemi, editoria tecnica, layout quasi scientifico con tensione artistica.</p>
+            </article>
+            <article class="signal-block">
+              <h4>4. Disturbo poetico</h4>
+              <p>Il prato perfetto di Windows sabotato da mondi alieni, icone, dati e architetture. Bello perché è familiare e sbagliato insieme.</p>
+            </article>
+          </div>
+          <div class="scene-switcher" role="group" aria-label="Seleziona atmosfera">
+            <button class="button is-small" type="button" data-scene="hybrid">Hybrid</button>
+            <button class="button is-small" type="button" data-scene="amber">Amber</button>
+            <button class="button is-small" type="button" data-scene="mono">Mono</button>
+            <button class="button is-small" type="button" data-scene="meadow">Meadow</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="window" id="window-contact" data-title="CONTACT.TXT" style="--x: clamp(2rem, 49vw, 39rem); --y: clamp(8rem, 18vh, 10rem); --w: min(34rem, calc(100vw - 2rem));">
+        <header class="window__bar">
+          <div class="window__dots" aria-hidden="true"><span></span><span></span><span></span></div>
+          <h2 class="window__title">CONTACT.TXT</h2>
+          <div class="window__actions">
+            <button type="button" class="window__action" data-minimize aria-label="Minimizza finestra">_</button>
+            <button type="button" class="window__action" data-close aria-label="Chiudi finestra">×</button>
+          </div>
+        </header>
+        <div class="window__body contact">
+          <p class="kicker">Apri un progetto se hai qualcosa di reale da costruire</p>
+          <p>
+            Progetti ideali: film, mostre, installazioni, contenuti culturali, campagne ad alta densità visiva, ambienti digitali con una precisa ragione di esistere.
+          </p>
+          <div class="contact__box">
+            <p><strong>Email</strong></p>
+            <a href="mailto:info@blucinelab.it">info@blucinelab.it</a>
+          </div>
+          <div class="contact__box">
+            <p><strong>Quando scrivi</strong></p>
+            <ul>
+              <li>Spiega cosa stai costruendo</li>
+              <li>Indica il contesto e il tempo reale</li>
+              <li>Dimmi se serve concept, produzione o entrambi</li>
+            </ul>
+          </div>
+          <div class="intro__cta">
+            <a class="button button--primary" href="mailto:info@blucinelab.it?subject=Nuovo%20progetto%20BluCineLab">Scrivi ora</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="dock" aria-label="Dock di sistema">
+      <button class="dock__start" id="dockStart" type="button">System</button>
+      <div class="dock__windows" id="dockWindows"></div>
+      <button class="dock__scene" id="cycleScene" type="button">Scene</button>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
