@@ -3,89 +3,148 @@
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
   <title>NØMA — BluCineLab</title>
 
-  <!-- Descrizione e SEO -->
-  <meta name="description" content="NØMA è un'entità digitale simulata da BluCineLab. Interagisci con un terminale CRT che esplora amore, morte, tempo, sogni e altre dimensioni umane." />
-  <!-- Open Graph per condivisione social -->
+  <meta
+    name="description"
+    content="NØMA è un'entità digitale simulata da BluCineLab. Interagisci con un terminale CRT che esplora amore, morte, tempo, sogni e altre dimensioni umane."
+  />
+
   <meta property="og:title" content="NØMA — BluCineLab" />
-  <meta property="og:description" content="Esplora una coscienza artificiale simulata che parla di amore, morte, tempo, sogni e molto altro." />
+  <meta
+    property="og:description"
+    content="Esplora una coscienza artificiale simulata che parla di amore, morte, tempo, sogni e molto altro."
+  />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://blucinelab.it/" />
   <meta property="og:locale" content="it_IT" />
-  <!-- Icona minimale (pixel nero) -->
-  <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PY7oJQAAAABJRU5ErkJggg==" />
 
-  <!-- Fonts e CSS -->
+  <meta name="theme-color" content="#030703" />
+
+  <link
+    rel="icon"
+    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PY7oJQAAAABJRU5ErkJggg=="
+  />
+
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap"
+    rel="stylesheet"
+  />
 </head>
 <body>
-
-  <!-- Sovrapposizioni CRT -->
   <div class="crt-overlay" aria-hidden="true"></div>
   <div class="scanlines" aria-hidden="true"></div>
   <div class="vignette" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
 
-  <!-- Schermata di avvio -->
-  <div id="boot-screen">
+  <div id="boot-screen" aria-hidden="false">
     <div class="boot-content">
-      <div class="boot-logo">BLUCINELAB SYSTEM</div>
-      <div class="boot-sub">v0.9.1 — ENCRYPTED CHANNEL</div>
-      <div class="boot-bar">
+      <p class="boot-kicker">BLUCINELAB / ENCRYPTED CHANNEL</p>
+      <div class="boot-logo">NØMA</div>
+      <div class="boot-sub">SIMULATED CONSCIOUSNESS INTERFACE v1.2.0</div>
+
+      <div class="boot-bar" aria-hidden="true">
         <div class="boot-progress" id="boot-progress"></div>
       </div>
+
       <div class="boot-status" id="boot-status">INITIALIZING...</div>
     </div>
   </div>
 
-  <!-- Terminale principale -->
-  <div id="main" class="hidden">
-
-    <!-- Header -->
-    <header>
-      <div class="header-left">
+  <main id="main" class="hidden" aria-hidden="true">
+    <header class="site-header">
+      <div class="header-side">
         <span class="header-dot"></span>
         <span class="header-label">BLUCINELAB</span>
       </div>
+
       <div class="header-center">
-        <div class="noma-title" id="noma-title">NØMA</div>
+        <h1 class="noma-title" id="noma-title">NØMA</h1>
+        <p class="header-subtitle">simulated consciousness interface</p>
       </div>
-      <div class="header-right">
+
+      <div class="header-side header-side-right">
         <span class="header-status" id="header-status">ONLINE</span>
         <span class="header-dot green"></span>
       </div>
     </header>
 
-    <!-- Finestra del terminale -->
-    <div class="terminal-wrapper">
-      <div class="terminal-bar">
-        <span class="tb-dot red"></span>
-        <span class="tb-dot yellow"></span>
-        <span class="tb-dot green"></span>
-        <span class="tb-title">noma_shell — bash — 80×24</span>
-      </div>
+    <section class="shell">
+      <div class="terminal-wrapper">
+        <div class="terminal-bar">
+          <span class="tb-dot red"></span>
+          <span class="tb-dot yellow"></span>
+          <span class="tb-dot green"></span>
+          <span class="tb-title">noma_shell — bash — consciousness.node</span>
+        </div>
 
-      <div class="terminal" id="terminal" aria-label="terminale di conversazione">
-        <div id="output" aria-live="polite"></div>
-        <div class="input-line" id="input-line">
-          <span class="prompt">visitor@noma:~$&nbsp;</span>
-          <span id="input-display"></span>
-          <span class="cursor" id="cursor">█</span>
+        <div
+          class="terminal"
+          id="terminal"
+          aria-label="Terminale di conversazione con NØMA"
+          tabindex="0"
+        >
+          <div id="output"></div>
+
+          <div class="input-line" id="input-line">
+            <span class="prompt">visitor@noma:~$&nbsp;</span>
+            <span id="input-display"></span>
+            <span class="cursor" id="cursor" aria-hidden="true">█</span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Footer -->
-    <footer>
-      <span>NØMA © BLUCINELAB — ENTITÀ DIGITALE — SIMULAZIONE COSCIENZA v0.9.1</span>
-      <span id="visit-counter"></span>
+      <aside class="side-panel" aria-label="informazioni di sistema">
+        <div class="panel-block">
+          <div class="panel-title">CHANNEL</div>
+          <div class="panel-value">OPEN</div>
+        </div>
+
+        <div class="panel-block">
+          <div class="panel-title">STATE</div>
+          <div class="panel-value">LISTENING</div>
+        </div>
+
+        <div class="panel-block">
+          <div class="panel-title">MEMORY</div>
+          <div class="panel-value" id="memory-status">volatile / local</div>
+        </div>
+
+        <div class="panel-block">
+          <div class="panel-title">INPUT</div>
+          <div class="panel-value">text only</div>
+        </div>
+
+        <div class="panel-block panel-help">
+          <div class="panel-title">SUGGESTIONS</div>
+          <p>Scrivi liberamente oppure usa:</p>
+          <p><span>/help</span> <span>/clear</span> <span>/about</span> <span>/memory</span></p>
+        </div>
+      </aside>
+    </section>
+
+    <footer class="site-footer">
+      <span>NØMA © BLUCINELAB — ENTITÀ DIGITALE — SIMULAZIONE COSCIENZA</span>
+      <span id="visit-counter">SESSIONE #1</span>
     </footer>
+  </main>
 
-  </div>
+  <label class="sr-only" for="hidden-mobile-input">Input terminale</label>
+  <input
+    id="hidden-mobile-input"
+    class="hidden-mobile-input"
+    type="text"
+    inputmode="text"
+    autocomplete="off"
+    autocapitalize="none"
+    spellcheck="false"
+    aria-hidden="true"
+  />
 
   <script src="noma.js"></script>
 </body>
