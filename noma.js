@@ -800,3 +800,21 @@ function openBlucineOS() {
 
 }
 window.openBlucineOS = openBlucineOS;
+// =====================================================
+// MOBILE INPUT FIX
+// =====================================================
+
+const terminalEl = document.getElementById("terminal");
+const mobileInput = document.getElementById("hidden-mobile-input");
+
+if (terminalEl && mobileInput) {
+
+  terminalEl.addEventListener("click", () => {
+    mobileInput.focus();
+  });
+
+  terminalEl.addEventListener("touchstart", () => {
+    mobileInput.focus();
+  });
+
+}
