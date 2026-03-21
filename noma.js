@@ -901,3 +901,16 @@ if (outputEl) {
   });
 
 }
+// =====================================================
+// OS WINDOW
+// =====================================================
+
+function openWindow(id) {
+
+  const el = document.getElementById(id);
+
+  if (!el) return;
+
+  el.style.display = "block";
+
+}
