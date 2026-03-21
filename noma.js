@@ -832,3 +832,24 @@ mobileInput.addEventListener("input", (e) => {
   mobileInput.value = "";
 
 });
+// =====================================================
+// AUTO ACCESS AFTER SOME MESSAGES
+// =====================================================
+
+let nomaMessageCount = 0;
+
+function nomaRegisterMessage() {
+
+  nomaMessageCount++;
+
+  if (nomaMessageCount === 6) {
+
+    setTimeout(() => {
+
+      openBlucineOS();
+
+    }, 1200);
+
+  }
+
+}
