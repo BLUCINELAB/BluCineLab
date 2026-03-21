@@ -161,26 +161,102 @@
   ====================================================== -->
   <div id="os-layer" hidden aria-hidden="true">
     <div id="desktop">
+      <div class="desktop-wallpaper"></div>
 
-      <div
+      <button
         class="desktop-icon"
         style="top:40px; left:40px"
-        onclick="openWindow('win1')"
+        onclick="openWindow('win-archive')"
         aria-label="Apri Archive"
       >
         <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png" alt="" />
         <span>Archive</span>
-      </div>
+      </button>
 
-      <div class="window" id="win1" aria-label="Finestra Archive">
-        <div class="window-header">Archive</div>
+      <button
+        class="desktop-icon"
+        style="top:140px; left:40px"
+        onclick="openWindow('win-lab')"
+        aria-label="Apri Lab"
+      >
+        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="" />
+        <span>Lab</span>
+      </button>
+
+      <button
+        class="desktop-icon"
+        style="top:240px; left:40px"
+        onclick="openWindow('win-studio')"
+        aria-label="Apri Studio"
+      >
+        <img src="https://cdn-icons-png.flaticon.com/512/1829/1829586.png" alt="" />
+        <span>Studio</span>
+      </button>
+
+      <button
+        class="desktop-icon"
+        style="top:340px; left:40px"
+        onclick="openWindow('win-contact')"
+        aria-label="Apri Contact"
+      >
+        <img src="https://cdn-icons-png.flaticon.com/512/561/561127.png" alt="" />
+        <span>Contact</span>
+      </button>
+
+      <div class="window" id="win-archive" aria-label="Finestra Archive">
+        <div class="window-header">
+          <span>Archive</span>
+          <button class="window-close" onclick="closeWindow('win-archive')">×</button>
+        </div>
         <div class="window-body">
-          BLUCINE ARCHIVE READY
+          <h2>ARCHIVE</h2>
+          <p>Qui entreranno lavori, immagini, frame, progetti e mondi visivi di BLUCINE.</p>
         </div>
       </div>
 
+      <div class="window" id="win-lab" aria-label="Finestra Lab">
+        <div class="window-header">
+          <span>Lab</span>
+          <button class="window-close" onclick="closeWindow('win-lab')">×</button>
+        </div>
+        <div class="window-body">
+          <h2>LAB</h2>
+          <p>Spazio per test, prove, materiali in divenire, appunti visivi e ricerca.</p>
+        </div>
+      </div>
+
+      <div class="window" id="win-studio" aria-label="Finestra Studio">
+        <div class="window-header">
+          <span>Studio</span>
+          <button class="window-close" onclick="closeWindow('win-studio')">×</button>
+        </div>
+        <div class="window-body">
+          <h2>STUDIO</h2>
+          <p>Metodo, identità, persone, struttura e direzione progettuale di BLUCINE.</p>
+        </div>
+      </div>
+
+      <div class="window" id="win-contact" aria-label="Finestra Contact">
+        <div class="window-header">
+          <span>Contact</span>
+          <button class="window-close" onclick="closeWindow('win-contact')">×</button>
+        </div>
+        <div class="window-body">
+          <h2>CONTACT</h2>
+          <p>blucinelab@gmail.com</p>
+        </div>
+      </div>
+
+      <div id="start-menu-os" hidden>
+        <button onclick="openWindow('win-archive')">Archive</button>
+        <button onclick="openWindow('win-lab')">Lab</button>
+        <button onclick="openWindow('win-studio')">Studio</button>
+        <button onclick="openWindow('win-contact')">Contact</button>
+      </div>
+
       <div id="taskbar">
-        <div id="start-btn">START</div>
+        <button id="start-btn" onclick="toggleStartMenu()">START</button>
+        <div id="taskbar-items"></div>
       </div>
     </div>
   </div>
