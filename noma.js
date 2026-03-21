@@ -735,3 +735,68 @@ document.addEventListener('visibilitychange', () => {
 window.addEventListener('DOMContentLoaded', () => {
   runBoot();
 });
+// =====================================================
+// BLUCINE OS TRANSITION
+// =====================================================
+
+function openBlucineOS() {
+
+  const nomaLayer = document.getElementById("noma-layer");
+  const transitionLayer = document.getElementById("transition-layer");
+  const osLayer = document.getElementById("os-layer");
+
+  if (!nomaLayer || !transitionLayer || !osLayer) {
+    console.log("OS layers not found");
+    return;
+  }
+
+  // Nasconde NØMA
+  nomaLayer.style.display = "none";
+
+  // Mostra transition
+  transitionLayer.hidden = false;
+  transitionLayer.style.display = "flex";
+
+  let progress = 0;
+
+  const bar = document.getElementById("system-progress");
+  const status = document.getElementById("system-status");
+
+  const steps = [
+    "LOADING VISUAL SYSTEM...",
+    "INITIALIZING DESKTOP...",
+    "MOUNTING ARCHIVE...",
+    "STARTING INTERFACE...",
+    "ACCESS READY"
+  ];
+
+  let stepIndex = 0;
+
+  const interval = setInterval(() => {
+
+    progress += 5;
+
+    if (bar) {
+      bar.style.width = progress + "%";
+    }
+
+    if (progress % 20 === 0 && steps[stepIndex]) {
+      status.textContent = steps[stepIndex];
+      stepIndex++;
+    }
+
+    if (progress >= 100) {
+
+      clearInterval(interval);
+
+      transitionLayer.style.display = "none";
+
+      osLayer.hidden = false;
+      osLayer.style.display = "block";
+
+    }
+
+  }, 60);
+
+}
+window.openBlucineOS = openBlucineOS;
