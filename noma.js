@@ -1,10 +1,3 @@
-/* ═══════════════════════════════════════════════════
-   NØMA — BluCineLab
-   noma.js
-   Versione 1.2
-   Client-side only
-   ═══════════════════════════════════════════════════ */
-
 'use strict';
 
 /* ──────────────────────────────────────────────────
@@ -51,13 +44,6 @@ const Memory = {
     arr.push(value);
     if (arr.length > max) arr.shift();
     this.set(key, arr);
-  },
-  clearConversation() {
-    try {
-      localStorage.removeItem('noma_concepts');
-      localStorage.removeItem('noma_words');
-      localStorage.removeItem('noma_last_topics');
-    } catch {}
   }
 };
 
@@ -553,11 +539,6 @@ async function handleSilence() {
 /* ──────────────────────────────────────────────────
    Spontaneous
 ────────────────────────────────────────────────── */
-function clearTimers() {
-  clearTimeout(spontaneousTimer);
-  clearTimeout(rareTimer);
-}
-
 function scheduleSpontaneous() {
   clearTimeout(spontaneousTimer);
   const delay = randInt(50000, 115000);
@@ -730,31 +711,19 @@ document.addEventListener('visibilitychange', () => {
 });
 
 /* ──────────────────────────────────────────────────
-   Start
+   BLUCINE OS TRANSITION
 ────────────────────────────────────────────────── */
-window.addEventListener('DOMContentLoaded', () => {
-  runBoot();
-});
-// =====================================================
-// BLUCINE OS TRANSITION
-// =====================================================
-
 function openBlucineOS() {
-
   const nomaLayer = document.getElementById("noma-layer");
   const transitionLayer = document.getElementById("transition-layer");
   const osLayer = document.getElementById("os-layer");
 
-  if (!nomaLayer || !transitionLayer || !osLayer) {
-    console.log("OS layers not found");
-    return;
-  }
+  if (!nomaLayer || !transitionLayer || !osLayer) return;
 
-  // Nasconde NØMA
   nomaLayer.style.display = "none";
 
-  // Mostra transition
   transitionLayer.hidden = false;
+  transitionLayer.setAttribute("aria-hidden", "false");
   transitionLayer.style.display = "flex";
 
   let progress = 0;
@@ -773,12 +742,9 @@ function openBlucineOS() {
   let stepIndex = 0;
 
   const interval = setInterval(() => {
-
     progress += 5;
 
-    if (bar) {
-      bar.style.width = progress + "%";
-    }
+    if (bar) bar.style.width = progress + "%";
 
     if (progress % 20 === 0 && steps[stepIndex]) {
       status.textContent = steps[stepIndex];
@@ -786,131 +752,72 @@ function openBlucineOS() {
     }
 
     if (progress >= 100) {
-
       clearInterval(interval);
 
       transitionLayer.style.display = "none";
+      transitionLayer.hidden = true;
+      transitionLayer.setAttribute("aria-hidden", "true");
 
       osLayer.hidden = false;
+      osLayer.setAttribute("aria-hidden", "false");
       osLayer.style.display = "block";
-
     }
-
   }, 60);
-
 }
+
 window.openBlucineOS = openBlucineOS;
-// =====================================================
-// MOBILE INPUT FIX
-// =====================================================
 
-const terminalEl = document.getElementById("terminal");
-const mobileInput = document.getElementById("hidden-mobile-input");
-
-if (terminalEl && mobileInput) {
-
-  terminalEl.addEventListener("click", () => {
-    mobileInput.focus();
-  });
-
-  terminalEl.addEventListener("touchstart", () => {
-    mobileInput.focus();
-  });
-
-}
-mobileInput.addEventListener("input", (e) => {
-
-  const value = e.target.value;
-
-  if (!value) return;
-
-  // manda i caratteri al sistema NØMA
-  if (typeof handleUserInput === "function") {
-    handleUserInput(value);
-  }
-
-  mobileInput.value = "";
-
-});
-// =====================================================
-// AUTO ACCESS AFTER SOME MESSAGES
-// =====================================================
-
-let nomaMessageCount = 0;
-
-function nomaRegisterMessage() {
-
-  nomaMessageCount++;
-
-  if (nomaMessageCount === 6) {
-
-    setTimeout(() => {
-
-      openBlucineOS();
-
-    }, 1200);
-
-  }
-
-}
-// =====================================================
-// AUTO ACCESS HOOK (safe)
-// =====================================================
-
+/* ──────────────────────────────────────────────────
+   AUTO ACCESS HOOK
+────────────────────────────────────────────────── */
 let nomaMessageCount = 0;
 let nomaAccessTriggered = false;
 
 function nomaRegisterMessageSafe() {
-
   if (nomaAccessTriggered) return;
-
   nomaMessageCount++;
 
   if (nomaMessageCount >= 6) {
-
     nomaAccessTriggered = true;
 
     setTimeout(() => {
-
       if (typeof openBlucineOS === "function") {
         openBlucineOS();
       }
-
     }, 1200);
-
   }
-
 }
-// =====================================================
-// OBSERVE TERMINAL OUTPUT
-// =====================================================
 
+/* ──────────────────────────────────────────────────
+   OBSERVE TERMINAL OUTPUT
+────────────────────────────────────────────────── */
 const outputEl = document.getElementById("output");
 
 if (outputEl) {
-
   const observer = new MutationObserver(() => {
-
     nomaRegisterMessageSafe();
-
   });
 
   observer.observe(outputEl, {
     childList: true,
     subtree: true
   });
-
 }
-// =====================================================
-// OS WINDOW
-// =====================================================
 
+/* ──────────────────────────────────────────────────
+   OS WINDOW
+────────────────────────────────────────────────── */
 function openWindow(id) {
-
   const el = document.getElementById(id);
-
   if (!el) return;
-
   el.style.display = "block";
-
 }
+
+window.openWindow = openWindow;
+
+/* ──────────────────────────────────────────────────
+   Start
+────────────────────────────────────────────────── */
+window.addEventListener('DOMContentLoaded', () => {
+  runBoot();
+});
