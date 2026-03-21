@@ -651,3 +651,107 @@ body {
     scroll-behavior: auto !important;
   }
 }
+/* =====================================================
+   BLUCINE OS
+===================================================== */
+
+#os-layer {
+  position: fixed;
+  inset: 0;
+  background: #0a0f1a;
+  color: white;
+  font-family: sans-serif;
+}
+
+#desktop {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    #0b1020,
+    #05070f
+  );
+  overflow: hidden;
+}
+
+/* Desktop icons */
+
+.desktop-icon {
+  position: absolute;
+  width: 80px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.desktop-icon img {
+  width: 48px;
+  height: 48px;
+}
+
+.desktop-icon span {
+  display: block;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+
+/* Taskbar */
+
+#taskbar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+
+  background: linear-gradient(
+    #1c2a4a,
+    #0f1830
+  );
+
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
+
+#start-btn {
+  width: 80px;
+  height: 28px;
+  background: #2e5cff;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+
+/* Window */
+
+.window {
+  position: absolute;
+  width: 420px;
+  height: 300px;
+
+  background: #1b1f2c;
+  border: 2px solid #3a4a7a;
+
+  top: 80px;
+  left: 120px;
+
+  display: none;
+}
+
+.window-header {
+  height: 30px;
+  background: #2f4cff;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  font-size: 14px;
+}
+
+.window-body {
+  padding: 10px;
+}
