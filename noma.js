@@ -13,7 +13,7 @@ function normalizeText(str = '') {
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^\p{L}\p{N}\s/]/gu, ' ')
+    .replace(/[^a-z0-9\s/]/gi, ' ')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -278,7 +278,7 @@ let rareTimer = null;
    UI Helpers
 ────────────────────────────────────────────────── */
 function scrollBottom() {
-  terminal.scrollTop = terminal.scrollHeight;
+  if (terminal) terminal.scrollTop = terminal.scrollHeight;
 }
 
 function printLine(text, className = 'line') {
@@ -319,24 +319,23 @@ async function showTypingIndicator(duration = 850) {
 
   await sleep(duration);
 
-  if (el.parentNode) {
-    el.parentNode.removeChild(el);
-  }
+  if (el.parentNode) el.parentNode.removeChild(el);
 }
 
 function triggerGlitch() {
+  if (!terminal) return;
   terminal.classList.add('glitch-active');
   setTimeout(() => terminal.classList.remove('glitch-active'), 420);
 }
 
 function syncInput() {
-  inputDisplay.textContent = userInput;
-  hiddenMobileInput.value = userInput;
+  if (inputDisplay) inputDisplay.textContent = userInput;
+  if (hiddenMobileInput) hiddenMobileInput.value = userInput;
 }
 
 function focusInput() {
-  hiddenMobileInput.focus();
-  terminal.focus();
+  if (hiddenMobileInput) hiddenMobileInput.focus();
+  if (terminal) terminal.focus();
 }
 
 /* ──────────────────────────────────────────────────
@@ -354,28 +353,66 @@ const BOOT_STEPS = [
 ];
 
 async function runBoot() {
-  for (const step of BOOT_STEPS) {
-    bootStatus.textContent = step.status;
-    bootProgress.style.width = `${step.pct}%`;
-    await sleep(step.delay);
+  try {
+    for (const step of BOOT_STEPS) {
+      if (bootStatus) bootStatus.textContent = step.status;
+      if (bootProgress) bootProgress.style.width = `${step.pct}%`;
+      await sleep(step.delay);
+    }
+
+    await sleep(520);
+
+    if (bootScreen) bootScreen.classList.add('fade-out');
+    await sleep(850);
+
+    if (bootScreen) bootScreen.style.display = 'none';
+
+    if (mainEl) {
+      mainEl.classList.remove('hidden');
+      mainEl.setAttribute('aria-hidden', 'false');
+    }
+
+    if (visitCounter) {
+      visitCounter.textContent = `SESSIONE #${visits}`;
+    }
+
+    if (memoryStatus) {
+      memoryStatus.textContent = rememberedConcepts.length
+        ? `local / ${rememberedConcepts.length} topic`
+        : 'volatile / local';
+    }
+
+    await sleep(180);
+    await runWelcome();
+    focusInput();
+  } catch (err) {
+    console.error('runBoot error:', err);
+    if (bootScreen) bootScreen.style.display = 'none';
+    if (mainEl) {
+      mainEl.classList.remove('hidden');
+      mainEl.setAttribute('aria-hidden', 'false');
+    }
   }
+}
 
-  await sleep(520);
-  bootScreen.classList.add('fade-out');
-  await sleep(850);
+function forceBootFallback() {
+  setTimeout(() => {
+    const bootVisible =
+      bootScreen &&
+      getComputedStyle(bootScreen).display !== 'none';
 
-  bootScreen.style.display = 'none';
-  mainEl.classList.remove('hidden');
-  mainEl.setAttribute('aria-hidden', 'false');
+    const mainHidden =
+      mainEl &&
+      mainEl.classList.contains('hidden');
 
-  visitCounter.textContent = `SESSIONE #${visits}`;
-  memoryStatus.textContent = rememberedConcepts.length
-    ? `local / ${rememberedConcepts.length} topic`
-    : 'volatile / local';
-
-  await sleep(180);
-  await runWelcome();
-  focusInput();
+    if (bootVisible && mainHidden) {
+      if (bootScreen) bootScreen.style.display = 'none';
+      if (mainEl) {
+        mainEl.classList.remove('hidden');
+        mainEl.setAttribute('aria-hidden', 'false');
+      }
+    }
+  }, 5000);
 }
 
 async function runWelcome() {
@@ -462,7 +499,7 @@ function saveConcept(concept) {
     concepts.push(concept);
     if (concepts.length > 10) concepts.shift();
     Memory.set('concepts', concepts);
-    memoryStatus.textContent = `local / ${concepts.length} topic`;
+    if (memoryStatus) memoryStatus.textContent = `local / ${concepts.length} topic`;
   }
 }
 
@@ -623,14 +660,12 @@ document.addEventListener('keydown', async (e) => {
     scheduleSpontaneous();
     await respondTo(text);
     printEmpty();
-    return;
   }
 
   if (e.key === 'Backspace') {
     e.preventDefault();
     userInput = userInput.slice(0, -1);
     syncInput();
-    return;
   }
 
   if (e.key.length === 1) {
@@ -642,49 +677,55 @@ document.addEventListener('keydown', async (e) => {
 /* ──────────────────────────────────────────────────
    Input handling mobile
 ────────────────────────────────────────────────── */
-terminal.addEventListener('click', focusInput);
+if (terminal) {
+  terminal.addEventListener('click', focusInput);
+  terminal.addEventListener('touchstart', focusInput);
+}
+
 document.body.addEventListener('click', () => {
   if (window.innerWidth < 980) focusInput();
 });
 
-hiddenMobileInput.addEventListener('input', () => {
-  userInput = hiddenMobileInput.value;
-  syncInput();
-});
-
-hiddenMobileInput.addEventListener('keydown', async (e) => {
-  if (isTyping) return;
-
-  if (e.key === 'Enter') {
-    e.preventDefault();
-
-    const text = userInput.trim();
-    userInput = '';
+if (hiddenMobileInput) {
+  hiddenMobileInput.addEventListener('input', () => {
+    userInput = hiddenMobileInput.value;
     syncInput();
+  });
 
-    if (!text) {
-      await handleSilence();
-      return;
-    }
+  hiddenMobileInput.addEventListener('keydown', async (e) => {
+    if (isTyping) return;
 
-    printLine(text, 'line-user');
-    Memory.push('words', text.slice(0, 60).toLowerCase(), 12);
+    if (e.key === 'Enter') {
+      e.preventDefault();
 
-    if (text.startsWith('/')) {
-      const handled = await runCommand(text.toLowerCase());
-      if (!handled) {
-        await typewriterLine('comando sconosciuto. prova con /help', 'line-warn');
+      const text = userInput.trim();
+      userInput = '';
+      syncInput();
+
+      if (!text) {
+        await handleSilence();
+        return;
       }
-      printEmpty();
-      scheduleSpontaneous();
-      return;
-    }
 
-    scheduleSpontaneous();
-    await respondTo(text);
-    printEmpty();
-  }
-});
+      printLine(text, 'line-user');
+      Memory.push('words', text.slice(0, 60).toLowerCase(), 12);
+
+      if (text.startsWith('/')) {
+        const handled = await runCommand(text.toLowerCase());
+        if (!handled) {
+          await typewriterLine('comando sconosciuto. prova con /help', 'line-warn');
+        }
+        printEmpty();
+        scheduleSpontaneous();
+        return;
+      }
+
+      scheduleSpontaneous();
+      await respondTo(text);
+      printEmpty();
+    }
+  });
+}
 
 /* ──────────────────────────────────────────────────
    Visibility
@@ -747,7 +788,7 @@ function openBlucineOS() {
     if (bar) bar.style.width = progress + "%";
 
     if (progress % 20 === 0 && steps[stepIndex]) {
-      status.textContent = steps[stepIndex];
+      if (status) status.textContent = steps[stepIndex];
       stepIndex++;
     }
 
@@ -775,6 +816,7 @@ let nomaAccessTriggered = false;
 
 function nomaRegisterMessageSafe() {
   if (nomaAccessTriggered) return;
+
   nomaMessageCount++;
 
   if (nomaMessageCount >= 6) {
@@ -805,19 +847,70 @@ if (outputEl) {
 }
 
 /* ──────────────────────────────────────────────────
-   OS WINDOW
+   OS WINDOW SYSTEM
 ────────────────────────────────────────────────── */
+let osTopZ = 10;
+
+function refreshTaskbar() {
+  const taskbar = document.getElementById('taskbar-items');
+  if (!taskbar) return;
+
+  const windows = Array.from(document.querySelectorAll('#os-layer .window'));
+  taskbar.innerHTML = '';
+
+  windows.forEach((win) => {
+    const isOpen = getComputedStyle(win).display !== 'none';
+    if (!isOpen) return;
+
+    const btn = document.createElement('button');
+    btn.className = 'taskbar-item active';
+    btn.textContent = win.querySelector('.window-header span')?.textContent || win.id;
+    btn.onclick = () => bringWindowToFront(win.id);
+    taskbar.appendChild(btn);
+  });
+}
+
+function bringWindowToFront(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  osTopZ += 1;
+  el.style.zIndex = osTopZ;
+}
+
 function openWindow(id) {
   const el = document.getElementById(id);
   if (!el) return;
-  el.style.display = "block";
+
+  el.style.display = 'flex';
+  bringWindowToFront(id);
+  refreshTaskbar();
+
+  const startMenu = document.getElementById('start-menu-os');
+  if (startMenu) startMenu.hidden = true;
+}
+
+function closeWindow(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.display = 'none';
+  refreshTaskbar();
+}
+
+function toggleStartMenu() {
+  const menu = document.getElementById('start-menu-os');
+  if (!menu) return;
+  menu.hidden = !menu.hidden;
 }
 
 window.openWindow = openWindow;
+window.closeWindow = closeWindow;
+window.toggleStartMenu = toggleStartMenu;
+window.bringWindowToFront = bringWindowToFront;
 
 /* ──────────────────────────────────────────────────
    Start
 ────────────────────────────────────────────────── */
 window.addEventListener('DOMContentLoaded', () => {
+  forceBootFallback();
   runBoot();
 });
