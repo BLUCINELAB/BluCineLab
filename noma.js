@@ -818,3 +818,17 @@ if (terminalEl && mobileInput) {
   });
 
 }
+mobileInput.addEventListener("input", (e) => {
+
+  const value = e.target.value;
+
+  if (!value) return;
+
+  // manda i caratteri al sistema NØMA
+  if (typeof handleUserInput === "function") {
+    handleUserInput(value);
+  }
+
+  mobileInput.value = "";
+
+});
