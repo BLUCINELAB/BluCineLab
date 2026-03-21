@@ -42,97 +42,136 @@
   <div class="vignette" aria-hidden="true"></div>
   <div class="noise" aria-hidden="true"></div>
 
-  <div id="boot-screen" aria-hidden="false">
+  <!-- =====================================================
+       NØMA LAYER
+  ====================================================== -->
+  <div id="noma-layer">
+    <div id="boot-screen" aria-hidden="false">
+      <div class="boot-content">
+        <p class="boot-kicker">BLUCINELAB / ENCRYPTED CHANNEL</p>
+        <div class="boot-logo">NØMA</div>
+        <div class="boot-sub">SIMULATED CONSCIOUSNESS INTERFACE v1.2.0</div>
+
+        <div class="boot-bar" aria-hidden="true">
+          <div class="boot-progress" id="boot-progress"></div>
+        </div>
+
+        <div class="boot-status" id="boot-status">INITIALIZING...</div>
+      </div>
+    </div>
+
+    <main id="main" class="hidden" aria-hidden="true">
+      <header class="site-header">
+        <div class="header-side">
+          <span class="header-dot"></span>
+          <span class="header-label">BLUCINELAB</span>
+        </div>
+
+        <div class="header-center">
+          <h1 class="noma-title" id="noma-title">NØMA</h1>
+          <p class="header-subtitle">simulated consciousness interface</p>
+        </div>
+
+        <div class="header-side header-side-right">
+          <span class="header-status" id="header-status">ONLINE</span>
+          <span class="header-dot green"></span>
+        </div>
+      </header>
+
+      <section class="shell">
+        <div class="terminal-wrapper">
+          <div class="terminal-bar">
+            <span class="tb-dot red"></span>
+            <span class="tb-dot yellow"></span>
+            <span class="tb-dot green"></span>
+            <span class="tb-title">noma_shell — bash — consciousness.node</span>
+          </div>
+
+          <div
+            class="terminal"
+            id="terminal"
+            aria-label="Terminale di conversazione con NØMA"
+            tabindex="0"
+          >
+            <div id="output"></div>
+
+            <div class="input-line" id="input-line">
+              <span class="prompt">visitor@noma:~$&nbsp;</span>
+              <span id="input-display"></span>
+              <span class="cursor" id="cursor" aria-hidden="true">█</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="side-panel" aria-label="informazioni di sistema">
+          <div class="panel-block">
+            <div class="panel-title">CHANNEL</div>
+            <div class="panel-value">OPEN</div>
+          </div>
+
+          <div class="panel-block">
+            <div class="panel-title">STATE</div>
+            <div class="panel-value">LISTENING</div>
+          </div>
+
+          <div class="panel-block">
+            <div class="panel-title">MEMORY</div>
+            <div class="panel-value" id="memory-status">volatile / local</div>
+          </div>
+
+          <div class="panel-block">
+            <div class="panel-title">INPUT</div>
+            <div class="panel-value">text only</div>
+          </div>
+
+          <div class="panel-block panel-help">
+            <div class="panel-title">SUGGESTIONS</div>
+            <p>Scrivi liberamente oppure usa:</p>
+            <p><span>/help</span> <span>/clear</span> <span>/about</span> <span>/memory</span></p>
+          </div>
+        </aside>
+      </section>
+
+      <footer class="site-footer">
+        <span>NØMA © BLUCINELAB — ENTITÀ DIGITALE — SIMULAZIONE COSCIENZA</span>
+        <span id="visit-counter">SESSIONE #1</span>
+      </footer>
+    </main>
+  </div>
+
+  <!-- =====================================================
+       TRANSITION LAYER
+  ====================================================== -->
+  <div id="transition-layer" hidden aria-hidden="true">
     <div class="boot-content">
-      <p class="boot-kicker">BLUCINELAB / ENCRYPTED CHANNEL</p>
-      <div class="boot-logo">NØMA</div>
-      <div class="boot-sub">SIMULATED CONSCIOUSNESS INTERFACE v1.2.0</div>
+      <p class="boot-kicker">BLUCINELAB / ACCESS PROTOCOL</p>
+      <div class="boot-logo">ACCESS GRANTED</div>
+      <div class="boot-sub">OPENING VISUAL SYSTEM...</div>
 
       <div class="boot-bar" aria-hidden="true">
-        <div class="boot-progress" id="boot-progress"></div>
+        <div class="boot-progress" id="system-progress" style="width: 0%"></div>
       </div>
 
-      <div class="boot-status" id="boot-status">INITIALIZING...</div>
+      <div class="boot-status" id="system-status">PREPARING ENVIRONMENT...</div>
     </div>
   </div>
 
-  <main id="main" class="hidden" aria-hidden="true">
-    <header class="site-header">
-      <div class="header-side">
-        <span class="header-dot"></span>
-        <span class="header-label">BLUCINELAB</span>
-      </div>
+  <!-- =====================================================
+       OS LAYER
+  ====================================================== -->
+  <div id="os-layer" hidden aria-hidden="true">
+    <div id="desktop-placeholder" aria-label="Desktop BLUCINE OS in preparazione">
+      <div class="boot-content">
+        <p class="boot-kicker">BLUCINELAB / VISUAL SYSTEM</p>
+        <div class="boot-logo">BLUCINE OS</div>
+        <div class="boot-sub">DESKTOP LAYER READY FOR INTEGRATION</div>
 
-      <div class="header-center">
-        <h1 class="noma-title" id="noma-title">NØMA</h1>
-        <p class="header-subtitle">simulated consciousness interface</p>
-      </div>
-
-      <div class="header-side header-side-right">
-        <span class="header-status" id="header-status">ONLINE</span>
-        <span class="header-dot green"></span>
-      </div>
-    </header>
-
-    <section class="shell">
-      <div class="terminal-wrapper">
-        <div class="terminal-bar">
-          <span class="tb-dot red"></span>
-          <span class="tb-dot yellow"></span>
-          <span class="tb-dot green"></span>
-          <span class="tb-title">noma_shell — bash — consciousness.node</span>
-        </div>
-
-        <div
-          class="terminal"
-          id="terminal"
-          aria-label="Terminale di conversazione con NØMA"
-          tabindex="0"
-        >
-          <div id="output"></div>
-
-          <div class="input-line" id="input-line">
-            <span class="prompt">visitor@noma:~$&nbsp;</span>
-            <span id="input-display"></span>
-            <span class="cursor" id="cursor" aria-hidden="true">█</span>
-          </div>
+        <div class="boot-status" id="os-placeholder-status">
+          SYSTEM PLACEHOLDER ACTIVE
         </div>
       </div>
-
-      <aside class="side-panel" aria-label="informazioni di sistema">
-        <div class="panel-block">
-          <div class="panel-title">CHANNEL</div>
-          <div class="panel-value">OPEN</div>
-        </div>
-
-        <div class="panel-block">
-          <div class="panel-title">STATE</div>
-          <div class="panel-value">LISTENING</div>
-        </div>
-
-        <div class="panel-block">
-          <div class="panel-title">MEMORY</div>
-          <div class="panel-value" id="memory-status">volatile / local</div>
-        </div>
-
-        <div class="panel-block">
-          <div class="panel-title">INPUT</div>
-          <div class="panel-value">text only</div>
-        </div>
-
-        <div class="panel-block panel-help">
-          <div class="panel-title">SUGGESTIONS</div>
-          <p>Scrivi liberamente oppure usa:</p>
-          <p><span>/help</span> <span>/clear</span> <span>/about</span> <span>/memory</span></p>
-        </div>
-      </aside>
-    </section>
-
-    <footer class="site-footer">
-      <span>NØMA © BLUCINELAB — ENTITÀ DIGITALE — SIMULAZIONE COSCIENZA</span>
-      <span id="visit-counter">SESSIONE #1</span>
-    </footer>
-  </main>
+    </div>
+  </div>
 
   <label class="sr-only" for="hidden-mobile-input">Input terminale</label>
   <input
