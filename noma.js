@@ -853,3 +853,51 @@ function nomaRegisterMessage() {
   }
 
 }
+// =====================================================
+// AUTO ACCESS HOOK (safe)
+// =====================================================
+
+let nomaMessageCount = 0;
+let nomaAccessTriggered = false;
+
+function nomaRegisterMessageSafe() {
+
+  if (nomaAccessTriggered) return;
+
+  nomaMessageCount++;
+
+  if (nomaMessageCount >= 6) {
+
+    nomaAccessTriggered = true;
+
+    setTimeout(() => {
+
+      if (typeof openBlucineOS === "function") {
+        openBlucineOS();
+      }
+
+    }, 1200);
+
+  }
+
+}
+// =====================================================
+// OBSERVE TERMINAL OUTPUT
+// =====================================================
+
+const outputEl = document.getElementById("output");
+
+if (outputEl) {
+
+  const observer = new MutationObserver(() => {
+
+    nomaRegisterMessageSafe();
+
+  });
+
+  observer.observe(outputEl, {
+    childList: true,
+    subtree: true
+  });
+
+}
