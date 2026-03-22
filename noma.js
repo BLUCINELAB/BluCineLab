@@ -914,3 +914,250 @@ window.addEventListener('DOMContentLoaded', () => {
   forceBootFallback();
   runBoot();
 });
+/* =====================================================
+   BLUCINE OS ENHANCED WINDOW SYSTEM
+===================================================== */
+
+(function () {
+  let dragState = null;
+  let osTopZEnhanced = 100;
+
+  function getOsWindows() {
+    return Array.from(document.querySelectorAll('#os-layer .window'));
+  }
+
+  function setActiveWindow(id) {
+    const windows = getOsWindows();
+
+    windows.forEach((win) => {
+      win.classList.remove('active');
+    });
+
+    const active = document.getElementById(id);
+    if (!active) return;
+
+    active.classList.add('active');
+    osTopZEnhanced += 1;
+    active.style.zIndex = String(osTopZEnhanced);
+  }
+
+  function refreshTaskbarEnhanced() {
+    const taskbar = document.getElementById('taskbar-items');
+    if (!taskbar) return;
+
+    taskbar.innerHTML = '';
+
+    getOsWindows().forEach((win) => {
+      const isOpen = getComputedStyle(win).display !== 'none';
+      if (!isOpen) return;
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'taskbar-item';
+
+      if (win.classList.contains('active')) {
+        btn.classList.add('active');
+      }
+
+      btn.textContent =
+        win.querySelector('.window-header span')?.textContent || win.id;
+
+      btn.onclick = () => {
+        const visible = getComputedStyle(win).display !== 'none';
+        if (!visible) {
+          win.style.display = 'flex';
+        }
+        setActiveWindow(win.id);
+        refreshTaskbarEnhanced();
+      };
+
+      taskbar.appendChild(btn);
+    });
+  }
+
+  function placeWindowIfNeeded(win) {
+    if (!win || win.dataset.positioned === '1') return;
+
+    const openCount = getOsWindows().filter(
+      (w) => getComputedStyle(w).display !== 'none'
+    ).length;
+
+    const left = 120 + openCount * 26;
+    const top = 70 + openCount * 22;
+
+    win.style.left = `${left}px`;
+    win.style.top = `${top}px`;
+    win.dataset.positioned = '1';
+  }
+
+  function openWindowEnhanced(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    placeWindowIfNeeded(el);
+    el.style.display = 'flex';
+    setActiveWindow(id);
+    refreshTaskbarEnhanced();
+
+    const startMenu = document.getElementById('start-menu-os');
+    if (startMenu) startMenu.hidden = true;
+  }
+
+  function closeWindowEnhanced(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    el.style.display = 'none';
+    el.classList.remove('active');
+    refreshTaskbarEnhanced();
+  }
+
+  function toggleStartMenuEnhanced() {
+    const menu = document.getElementById('start-menu-os');
+    if (!menu) return;
+    menu.hidden = !menu.hidden;
+  }
+
+  function beginDrag(win, clientX, clientY) {
+    if (!win) return;
+
+    const rect = win.getBoundingClientRect();
+
+    dragState = {
+      win,
+      startX: clientX,
+      startY: clientY,
+      offsetX: clientX - rect.left,
+      offsetY: clientY - rect.top
+    };
+
+    win.classList.add('dragging');
+    setActiveWindow(win.id);
+    refreshTaskbarEnhanced();
+  }
+
+  function moveDrag(clientX, clientY) {
+    if (!dragState) return;
+
+    const win = dragState.win;
+    const desktop = document.getElementById('desktop');
+    const taskbar = document.getElementById('taskbar');
+
+    if (!desktop || !taskbar) return;
+
+    const desktopRect = desktop.getBoundingClientRect();
+    const taskbarRect = taskbar.getBoundingClientRect();
+
+    const maxLeft = desktopRect.width - win.offsetWidth - 10;
+    const maxTop = taskbarRect.top - desktopRect.top - win.offsetHeight - 10;
+
+    let left = clientX - desktopRect.left - dragState.offsetX;
+    let top = clientY - desktopRect.top - dragState.offsetY;
+
+    left = Math.max(10, Math.min(left, maxLeft));
+    top = Math.max(10, Math.min(top, maxTop));
+
+    win.style.left = `${left}px`;
+    win.style.top = `${top}px`;
+  }
+
+  function endDrag() {
+    if (!dragState) return;
+    dragState.win.classList.remove('dragging');
+    dragState = null;
+  }
+
+  function bindWindowEnhancements() {
+    getOsWindows().forEach((win) => {
+      const header = win.querySelector('.window-header');
+      if (!header || win.dataset.enhanced === '1') return;
+
+      win.dataset.enhanced = '1';
+
+      win.addEventListener('mousedown', () => {
+        setActiveWindow(win.id);
+        refreshTaskbarEnhanced();
+      });
+
+      header.addEventListener('mousedown', (e) => {
+        if (e.target.closest('.window-close')) return;
+        beginDrag(win, e.clientX, e.clientY);
+      });
+
+      header.addEventListener(
+        'touchstart',
+        (e) => {
+          if (e.target.closest('.window-close')) return;
+          const t = e.touches[0];
+          beginDrag(win, t.clientX, t.clientY);
+        },
+        { passive: true }
+      );
+    });
+  }
+
+  document.addEventListener('mousemove', (e) => {
+    moveDrag(e.clientX, e.clientY);
+  });
+
+  document.addEventListener('mouseup', endDrag);
+
+  document.addEventListener(
+    'touchmove',
+    (e) => {
+      if (!dragState) return;
+      const t = e.touches[0];
+      moveDrag(t.clientX, t.clientY);
+    },
+    { passive: true }
+  );
+
+  document.addEventListener('touchend', endDrag);
+  document.addEventListener('touchcancel', endDrag);
+
+  document.addEventListener('click', (e) => {
+    const startBtn = document.getElementById('start-btn');
+    const startMenu = document.getElementById('start-menu-os');
+
+    if (
+      startMenu &&
+      !startMenu.hidden &&
+      startBtn &&
+      !startMenu.contains(e.target) &&
+      e.target !== startBtn
+    ) {
+      startMenu.hidden = true;
+    }
+  });
+
+  const originalOpenBlucineOS = window.openBlucineOS;
+
+  window.openBlucineOS = function () {
+    if (typeof originalOpenBlucineOS === 'function') {
+      originalOpenBlucineOS();
+    }
+
+    setTimeout(() => {
+      bindWindowEnhancements();
+      refreshTaskbarEnhanced();
+    }, 100);
+  };
+
+  window.openWindow = function (id) {
+    bindWindowEnhancements();
+    openWindowEnhanced(id);
+  };
+
+  window.closeWindow = function (id) {
+    closeWindowEnhanced(id);
+  };
+
+  window.toggleStartMenu = function () {
+    toggleStartMenuEnhanced();
+  };
+
+  window.bringWindowToFront = function (id) {
+    setActiveWindow(id);
+    refreshTaskbarEnhanced();
+  };
+})();
