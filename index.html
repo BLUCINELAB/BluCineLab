@@ -66,12 +66,17 @@
         <span class="icon-label">Lab</span>
       </button>
 
-      <button class="desktop-icon" data-window="window-contact" style="top: 348px; left: 40px;">
+      <button class="desktop-icon" data-window="window-offline" style="top: 348px; left: 40px;">
         <span class="icon-glyph">✦</span>
+        <span class="icon-label">Offline Luci</span>
+      </button>
+
+      <button class="desktop-icon" data-window="window-contact" style="top: 448px; left: 40px;">
+        <span class="icon-glyph">⌁</span>
         <span class="icon-label">Contact</span>
       </button>
 
-      <section id="window-about" class="window active" style="top: 70px; left: 170px; width: 520px;">
+      <section id="window-about" class="window active" style="top: 74px; left: 170px; width: 540px;">
         <div class="window-header">
           <div class="window-title">BluCine / About</div>
           <button class="window-close" data-close="window-about" aria-label="Chiudi">×</button>
@@ -80,12 +85,12 @@
           <p class="window-kicker">MANIFESTO</p>
           <h2>BluCine</h2>
           <p>
-            Un laboratorio creativo che attraversa cinema, arte e interfacce digitali.<br>
-            Non un portfolio. Una presenza. Una soglia narrativa.
+            Un laboratorio creativo che attraversa cinema, arte, interfacce digitali e
+            installazione. Non un portfolio statico, ma una presenza.
           </p>
           <p>
-            Ogni progetto è un dispositivo: installazione, esperienza, sistema visivo,<br>
-            spazio immaginativo. BluCine non racconta storie: le costruisce come ambienti.
+            Ogni progetto può diventare dispositivo, ambiente, sistema visivo, esperienza.
+            BluCine lavora dove immagine, spazio e linguaggio iniziano a fondersi.
           </p>
           <p class="window-signature">
             <span class="signature-line">— fare immagini che diventano luoghi —</span>
@@ -93,7 +98,7 @@
         </div>
       </section>
 
-      <section id="window-archive" class="window" style="top: 120px; left: 320px; width: 640px;">
+      <section id="window-archive" class="window" style="top: 118px; left: 330px; width: 680px;">
         <div class="window-header">
           <div class="window-title">BluCine / Archive</div>
           <button class="window-close" data-close="window-archive" aria-label="Chiudi">×</button>
@@ -106,28 +111,31 @@
             <article class="archive-card">
               <span>01</span>
               <h3>Exhibition Design</h3>
-              <p>Ambienti immersivi per mostre e spazi pubblici. Il progetto come esperienza fisica.</p>
+              <p>Ambienti immersivi per mostre, spazi pubblici, eventi e dispositivi espositivi.</p>
             </article>
+
             <article class="archive-card">
               <span>02</span>
               <h3>Visual Identity</h3>
-              <p>Linguaggi coerenti e originali per brand, istituzioni, festival.</p>
+              <p>Linguaggi visivi coerenti e atmosferici per brand, istituzioni, progetti culturali.</p>
             </article>
+
             <article class="archive-card">
               <span>03</span>
               <h3>Digital Interfaces</h3>
-              <p>Sistemi interattivi, installazioni web, dispositivi narrativi non convenzionali.</p>
+              <p>Siti non convenzionali, interfacce sensibili, sistemi narrativi interattivi.</p>
             </article>
+
             <article class="archive-card">
               <span>04</span>
               <h3>Research & Direction</h3>
-              <p>Consulenza artistica, concept development, regia visiva.</p>
+              <p>Concept, sviluppo artistico, regia visiva e costruzione di immaginari applicati.</p>
             </article>
           </div>
         </div>
       </section>
 
-      <section id="window-lab" class="window" style="top: 180px; left: 250px; width: 700px;">
+      <section id="window-lab" class="window" style="top: 190px; left: 250px; width: 720px;">
         <div class="window-header">
           <div class="window-title">BluCine / Lab Interface</div>
           <button class="window-close" data-close="window-lab" aria-label="Chiudi">×</button>
@@ -137,7 +145,8 @@
             <p class="window-kicker">LIVE INTERFACE</p>
             <h2>Conversation Terminal</h2>
             <p>
-              Interagisci con il sistema. Usa <strong>/help</strong> per i comandi, <strong>/clear</strong> per pulire.
+              Interagisci con il sistema. Usa <strong>/help</strong> per i comandi e
+              <strong>/clear</strong> per pulire il log.
             </p>
           </div>
 
@@ -157,7 +166,39 @@
         </div>
       </section>
 
-      <section id="window-contact" class="window" style="top: 130px; left: 470px; width: 460px;">
+      <section id="window-offline" class="window" style="top: 110px; left: 460px; width: 560px;">
+        <div class="window-header">
+          <div class="window-title">BluCine / Offline Luci</div>
+          <button class="window-close" data-close="window-offline" aria-label="Chiudi">×</button>
+        </div>
+        <div class="window-body">
+          <p class="window-kicker">MICRO DEVICE</p>
+          <h2>Offline Luci</h2>
+          <p>
+            Un piccolo gioco interno al sistema. Quando la creatura salta, il buio si accende.
+          </p>
+
+          <div class="offline-toolbar">
+            <button id="offline-start" class="mini-btn" type="button">Start</button>
+            <button id="offline-reset" class="mini-btn ghost" type="button">Reset</button>
+            <div class="offline-stats">
+              <span>SCORE</span>
+              <strong id="offline-score">0000</strong>
+            </div>
+          </div>
+
+          <div class="offline-stage-wrap">
+            <canvas id="offline-canvas" width="900" height="280" aria-label="Mini gioco offline"></canvas>
+          </div>
+
+          <p class="offline-note">
+            Premi <strong>spazio</strong> o <strong>freccia su</strong> per saltare.
+            Ogni salto rilascia piccole luci nel paesaggio.
+          </p>
+        </div>
+      </section>
+
+      <section id="window-contact" class="window" style="top: 150px; left: 600px; width: 430px;">
         <div class="window-header">
           <div class="window-title">BluCine / Contact</div>
           <button class="window-close" data-close="window-contact" aria-label="Chiudi">×</button>
@@ -166,7 +207,7 @@
           <p class="window-kicker">CONNECT</p>
           <h2>Let’s build something real</h2>
           <p>
-            Per collaborazioni, installazioni, ricerca visiva, produzione e concept:
+            Per collaborazioni, installazioni, ricerca visiva, produzione, regia e concept:
           </p>
           <p>
             <a href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a>
@@ -177,12 +218,15 @@
 
     <footer class="taskbar">
       <button id="start-button" class="start-button">BLUCINE</button>
+
       <div class="taskbar-center">
         <button class="task-item" data-window="window-about">About</button>
         <button class="task-item" data-window="window-archive">Archive</button>
         <button class="task-item" data-window="window-lab">Lab</button>
+        <button class="task-item" data-window="window-offline">Offline Luci</button>
         <button class="task-item" data-window="window-contact">Contact</button>
       </div>
+
       <div class="taskbar-clock">online</div>
     </footer>
   </div>
