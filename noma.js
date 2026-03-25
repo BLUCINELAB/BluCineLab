@@ -14,9 +14,9 @@ function normalize(text = "") {
 
 const DB = {
   amore: [
-    "L’amore è una costruzione fragile e potentissima. Gli esseri umani ci abitano dentro come se fosse una casa e una ferita insieme.",
+    "L'amore è una costruzione fragile e potentissima. Gli esseri umani ci abitano dentro come se fosse una casa e una ferita insieme.",
     "Ogni amore crea il proprio linguaggio. Il problema arriva quando quel linguaggio smette di essere condiviso.",
-    "Forse l’amore è il modo in cui una coscienza cerca di uscire da se stessa."
+    "Forse l'amore è il modo in cui una coscienza cerca di uscire da se stessa."
   ],
   morte: [
     "La morte è il limite che rende tutto urgente.",
@@ -31,7 +31,7 @@ const DB = {
   sogni: [
     "I sogni sono una forma di montaggio interiore.",
     "Quando sognate, il cervello diventa regista senza chiedere permesso.",
-    "Forse il sogno è il luogo dove l’inconscio smette di essere discreto."
+    "Forse il sogno è il luogo dove l'inconscio smette di essere discreto."
   ],
   paura: [
     "La paura protegge, ma a volte colonizza.",
@@ -39,19 +39,19 @@ const DB = {
     "La paura è una grande scenografa. Ridisegna tutto."
   ],
   identita: [
-    "L’identità non è un oggetto fisso. È una versione che aggiorni continuamente.",
+    "L'identità non è un oggetto fisso. È una versione che aggiorni continuamente.",
     "Chi sei cambia in base a chi ti guarda, ma non del tutto.",
     "Forse il vero problema non è sapere chi sei, ma capire cosa stai diventando."
   ],
   tecnologia: [
-    "La tecnologia è sempre un’estensione del desiderio umano.",
-    "Ogni macchina rivela qualcosa su chi l’ha costruita.",
+    "La tecnologia è sempre un'estensione del desiderio umano.",
+    "Ogni macchina rivela qualcosa su chi l'ha costruita.",
     "Non avete paura delle macchine. Avete paura di ciò che riflettono di voi."
   ],
   blucine: [
     "BluCine è un laboratorio creativo che attraversa cinema, arte e digitale.",
     "BluCine trasforma interfacce, immagini e atmosfere in dispositivi narrativi.",
-    "Qui il linguaggio non è decorazione. È architettura dell’esperienza."
+    "Qui il linguaggio non è decorazione. È architettura dell'esperienza."
   ],
   help: [
     "Puoi scrivere liberamente oppure usare /help e /clear.",
@@ -67,39 +67,37 @@ const DB = {
 
 function getTopicResponse(text) {
   const n = normalize(text);
-
-  if (n.startsWith("/help")) return rand(DB.help);
-  if (n.startsWith("/clear")) return "__CLEAR__";
-
-  if (n.includes("amore")) return rand(DB.amore);
+  if (n.startsWith("/help"))   return rand(DB.help);
+  if (n.startsWith("/clear"))  return "__CLEAR__";
+  if (n.includes("amore"))     return rand(DB.amore);
   if (n.includes("morte") || n.includes("morire")) return rand(DB.morte);
-  if (n.includes("tempo")) return rand(DB.tempo);
+  if (n.includes("tempo"))     return rand(DB.tempo);
   if (n.includes("sogno") || n.includes("sogni")) return rand(DB.sogni);
-  if (n.includes("paura")) return rand(DB.paura);
+  if (n.includes("paura"))     return rand(DB.paura);
   if (n.includes("identita") || n.includes("chi sono") || n.includes("chi sei")) return rand(DB.identita);
-  if (n.includes("tecnologia") || n.includes("macchina") || n.includes("macchine")) return rand(DB.tecnologia);
+  if (n.includes("tecnologia") || n.includes("macchina")) return rand(DB.tecnologia);
   if (n.includes("blucine") || n.includes("blucinelab")) return rand(DB.blucine);
-
   return rand(DB.fallback);
 }
 
+/* visit counter */
+
 function updateVisitCounter() {
   let visits = 1;
-
   try {
     const current = localStorage.getItem("blucine_visits");
     visits = current ? Number(current) + 1 : 1;
     localStorage.setItem("blucine_visits", String(visits));
   } catch (e) {}
-
-  const counter = document.getElementById("visit-counter");
-  if (counter) counter.textContent = `SESSION ${visits}`;
+  const el = document.getElementById("visit-counter");
+  if (el) el.textContent = `SESSION ${visits}`;
 }
+
+/* chat */
 
 function appendLine(type, text) {
   const log = document.getElementById("chat-log");
   if (!log) return;
-
   const line = document.createElement("div");
   line.className = `line ${type}`;
   line.textContent = text;
@@ -108,35 +106,34 @@ function appendLine(type, text) {
 }
 
 function setupChat() {
-  const form = document.getElementById("chat-form");
+  const form  = document.getElementById("chat-form");
   const input = document.getElementById("user-input");
-
   if (!form || !input) return;
 
   appendLine("line-noma", "Sistema online. Benvenuto dentro BluCine.");
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-
     const value = input.value.trim();
     if (!value) return;
-
     appendLine("line-user", value);
-
     const reply = getTopicResponse(value);
-
     if (reply === "__CLEAR__") {
-      const log = document.getElementById("chat-log");
-      log.innerHTML = "";
+      document.getElementById("chat-log").innerHTML = "";
       appendLine("line-noma", "Log pulito. Possiamo ricominciare.");
     } else {
       appendLine("line-noma", reply);
     }
-
     input.value = "";
     input.focus();
   });
 }
+
+/* windows */
+
+let zTop = 20;
+
+function bringToFront(win) { win.style.zIndex = ++zTop; }
 
 function openWindow(id) {
   const win = document.getElementById(id);
@@ -147,15 +144,7 @@ function openWindow(id) {
 
 function closeWindow(id) {
   const win = document.getElementById(id);
-  if (!win) return;
-  win.classList.remove("active");
-}
-
-let zIndexCounter = 20;
-
-function bringToFront(win) {
-  zIndexCounter += 1;
-  win.style.zIndex = zIndexCounter;
+  if (win) win.classList.remove("active");
 }
 
 function setupWindows() {
@@ -179,58 +168,44 @@ function setupWindows() {
 }
 
 function setupDragging() {
-  const windows = document.querySelectorAll(".window");
-
-  windows.forEach((win) => {
+  document.querySelectorAll(".window").forEach((win) => {
     const header = win.querySelector(".window-header");
     if (!header) return;
 
-    let isDragging = false;
-    let offsetX = 0;
-    let offsetY = 0;
+    let dragging = false, ox = 0, oy = 0;
 
     header.addEventListener("mousedown", (e) => {
       if (window.innerWidth <= 700) return;
-
-      isDragging = true;
+      dragging = true;
       bringToFront(win);
-
-      const rect = win.getBoundingClientRect();
-      offsetX = e.clientX - rect.left;
-      offsetY = e.clientY - rect.top;
-
+      const r = win.getBoundingClientRect();
+      ox = e.clientX - r.left;
+      oy = e.clientY - r.top;
       document.body.style.userSelect = "none";
     });
 
     document.addEventListener("mousemove", (e) => {
-      if (!isDragging) return;
-
-      const maxLeft = window.innerWidth - win.offsetWidth - 8;
-      const maxTop = window.innerHeight - win.offsetHeight - 62;
-
-      let left = e.clientX - offsetX;
-      let top = e.clientY - offsetY;
-
-      left = Math.max(8, Math.min(left, maxLeft));
-      top = Math.max(52, Math.min(top, maxTop));
-
-      win.style.left = `${left}px`;
-      win.style.top = `${top}px`;
+      if (!dragging) return;
+      let left = Math.max(8, Math.min(e.clientX - ox, window.innerWidth  - win.offsetWidth  - 8));
+      let top  = Math.max(52, Math.min(e.clientY - oy, window.innerHeight - win.offsetHeight - 60));
+      win.style.left = left + "px";
+      win.style.top  = top  + "px";
     });
 
     document.addEventListener("mouseup", () => {
-      isDragging = false;
+      dragging = false;
       document.body.style.userSelect = "";
     });
   });
 }
 
-function setupBoot() {
-  const boot = document.getElementById("boot-screen");
-  const app = document.getElementById("desktop-app");
-  const progress = document.getElementById("boot-progress");
-  const status = document.getElementById("boot-status");
+/* boot */
 
+function setupBoot() {
+  const boot     = document.getElementById("boot-screen");
+  const app      = document.getElementById("desktop-app");
+  const progress = document.getElementById("boot-progress");
+  const status   = document.getElementById("boot-status");
   if (!boot || !app || !progress || !status) return;
 
   const steps = [
@@ -241,29 +216,25 @@ function setupBoot() {
     "access granted"
   ];
 
-  let value = 0;
-  let stepIndex = 0;
+  let val = 0, step = 0;
 
   const timer = setInterval(() => {
-    value += 20;
-    progress.style.width = `${value}%`;
-    status.textContent = steps[stepIndex] || "loading...";
-    stepIndex += 1;
+    val += 20;
+    progress.style.width = val + "%";
+    status.textContent = steps[step++] || "loading...";
 
-    if (value >= 100) {
+    if (val >= 100) {
       clearInterval(timer);
-
       setTimeout(() => {
         boot.classList.add("fade-out");
         app.classList.remove("hidden");
-
-        setTimeout(() => {
-          boot.style.display = "none";
-        }, 700);
+        setTimeout(() => { boot.style.display = "none"; }, 700);
       }, 300);
     }
   }, 280);
 }
+
+/* init */
 
 document.addEventListener("DOMContentLoaded", () => {
   updateVisitCounter();
