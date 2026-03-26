@@ -45,6 +45,10 @@
       <span class="wave wave-3"></span>
     </div>
 
+    <div class="scroll-progress" aria-hidden="true">
+      <span id="scrollProgressBar"></span>
+    </div>
+
     <header class="site-header">
       <a href="#top" class="brand" aria-label="BluCineLab home">BLUCINELAB</a>
 
@@ -70,27 +74,62 @@
 
     <main id="top">
       <section class="hero section reveal">
-        <div class="eyebrow-row">
-          <span class="eyebrow">COSMOPROF 2026 / TEMPORARY PROJECT PAGE</span>
+        <div class="hero-grid">
+          <div class="hero-main">
+            <div class="eyebrow-row">
+              <span class="eyebrow">COSMOPROF 2026 / TEMPORARY PROJECT PAGE</span>
 
-          <button class="status-badge" id="statusBadge" type="button" aria-label="Change status">
-            currently:
-            <strong id="statusWord">online</strong>
-          </button>
-        </div>
+              <button class="status-badge" id="statusBadge" type="button" aria-label="Change status">
+                currently:
+                <strong id="statusWord">online</strong>
+              </button>
+            </div>
 
-        <h1 class="hero-title">
-          Spatial image systems for exhibition, cinema and live environments.
-        </h1>
+            <h1 class="hero-title">
+              Spatial image systems for exhibition, cinema and live environments.
+            </h1>
 
-        <p class="hero-text">
-          BluCineLab develops visual structures where image, space, sound and perception
-          are treated as one system.
-        </p>
+            <p class="hero-text">
+              BluCineLab develops visual structures where image, space, sound and perception
+              are treated as one system.
+            </p>
 
-        <div class="hero-actions">
-          <a class="button button-primary" href="#activation">Current activation</a>
-          <a class="button button-secondary" href="#contact">Start a conversation</a>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#activation">Current activation</a>
+              <a class="button button-secondary" href="#contact">Start a conversation</a>
+            </div>
+          </div>
+
+          <aside class="hero-side">
+            <div class="hero-note card-soft">
+              <p class="hero-note-label">Current state</p>
+              <p class="hero-note-text">
+                Temporary project page built for live presentation, contact sharing and immediate project visibility.
+              </p>
+            </div>
+
+            <div class="hero-mini-grid">
+              <div class="hero-mini card-soft">
+                <span class="hero-mini-label">Format</span>
+                <strong class="hero-mini-value">Installation</strong>
+              </div>
+
+              <div class="hero-mini card-soft">
+                <span class="hero-mini-label">Core</span>
+                <strong class="hero-mini-value">Cube system</strong>
+              </div>
+
+              <div class="hero-mini card-soft">
+                <span class="hero-mini-label">Field</span>
+                <strong class="hero-mini-value">Mediterranean set</strong>
+              </div>
+
+              <div class="hero-mini card-soft">
+                <span class="hero-mini-label">Material</span>
+                <strong class="hero-mini-value">Image / Sound</strong>
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
 
@@ -117,9 +156,14 @@
       </section>
 
       <section id="activation" class="section reveal">
-        <div class="section-head">
-          <p class="section-label">Current activation</p>
-          <h2 class="section-title">Cosmoprof 2026 / Cube system</h2>
+        <div class="section-head section-head-wide">
+          <div>
+            <p class="section-label">Current activation</p>
+            <h2 class="section-title">Cosmoprof 2026 / Cube system</h2>
+          </div>
+          <p class="section-kicker">
+            A live installation built through spatial contrast, internal projection and layered sound.
+          </p>
         </div>
 
         <div class="activation-card">
@@ -151,6 +195,11 @@
             </div>
 
             <div class="metric">
+              <span class="metric-label">Sound logic</span>
+              <strong class="metric-value">Internal / external layering</strong>
+            </div>
+
+            <div class="metric">
               <span class="metric-label">Focus</span>
               <strong class="metric-value">Image / Sound / Perception</strong>
             </div>
@@ -164,30 +213,36 @@
           <h2 class="section-title">Object, environment, material.</h2>
         </div>
 
-        <div class="activation-card">
-          <div class="activation-metrics">
-            <div class="metric">
-              <span class="metric-label">Object</span>
-              <strong class="metric-value">Gold cube / projection chamber</strong>
-            </div>
+        <div class="project-note-grid">
+          <article class="project-card">
+            <span class="project-card-label">Object</span>
+            <h3>Gold cube</h3>
+            <p>Projection chamber conceived as the perceptual and spatial core of the installation.</p>
+          </article>
 
-            <div class="metric">
-              <span class="metric-label">Environment</span>
-              <strong class="metric-value">Mediterranean scenic field</strong>
-            </div>
+          <article class="project-card">
+            <span class="project-card-label">Environment</span>
+            <h3>Mediterranean field</h3>
+            <p>Scenic condition built through atmosphere, texture, contrast and symbolic context.</p>
+          </article>
 
-            <div class="metric">
-              <span class="metric-label">Material</span>
-              <strong class="metric-value">Photography / sound / spatial contrast</strong>
-            </div>
-          </div>
+          <article class="project-card">
+            <span class="project-card-label">Material</span>
+            <h3>Image / sound / contrast</h3>
+            <p>Photography, ambient layering and inside / outside tension organized as one system.</p>
+          </article>
         </div>
       </section>
 
       <section id="credits" class="section reveal">
-        <div class="section-head">
-          <p class="section-label">Credits</p>
-          <h2 class="section-title">People, roles, structure.</h2>
+        <div class="section-head section-head-wide">
+          <div>
+            <p class="section-label">Credits</p>
+            <h2 class="section-title">People, roles, structure.</h2>
+          </div>
+          <p class="section-kicker">
+            Core contributors, collaborators and project context.
+          </p>
         </div>
 
         <div class="credits-stack">
@@ -299,9 +354,20 @@
           </p>
 
           <div class="contact-links">
-            <a class="contact-link" href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a>
-            <a class="contact-link" href="https://www.instagram.com/blucinelab?igsh=MTMwbGpvdHMyaWo0Yw==" target="_blank" rel="noopener noreferrer">@blucinelab</a>
-            <a class="contact-link" href="https://blucinelab.it" target="_blank" rel="noopener noreferrer">blucinelab.it</a>
+            <a class="contact-link" href="mailto:blucinelab@gmail.com">
+              <span class="contact-link-label">Email</span>
+              <span class="contact-link-value">blucinelab@gmail.com</span>
+            </a>
+
+            <a class="contact-link" href="https://www.instagram.com/blucinelab?igsh=MTMwbGpvdHMyaWo0Yw==" target="_blank" rel="noopener noreferrer">
+              <span class="contact-link-label">Instagram</span>
+              <span class="contact-link-value">@blucinelab</span>
+            </a>
+
+            <a class="contact-link" href="https://blucinelab.it" target="_blank" rel="noopener noreferrer">
+              <span class="contact-link-label">Website</span>
+              <span class="contact-link-value">blucinelab.it</span>
+            </a>
           </div>
         </div>
       </section>
