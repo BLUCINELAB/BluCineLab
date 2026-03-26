@@ -10,6 +10,8 @@ const bgWaves = document.querySelector(".bg-waves");
 const progressBar = document.getElementById("scrollProgressBar");
 const navLinks = document.querySelectorAll('.site-nav a[href^="#"]');
 const sections = [...document.querySelectorAll("main section[id]")];
+const siteShell = document.getElementById("siteShell");
+const interactiveCards = document.querySelectorAll(".interactive-card");
 
 if (footerYear) {
   footerYear.textContent = new Date().getFullYear();
@@ -95,12 +97,50 @@ function updateActiveSection() {
   });
 }
 
-window.addEventListener("scroll", () => {
-  updateProgressAndWaves();
-  updateActiveSection();
-}, { passive: true });
+window.addEventListener(
+  "scroll",
+  () => {
+    updateProgressAndWaves();
+    updateActiveSection();
+  },
+  { passive: true }
+);
 
 window.addEventListener("load", () => {
   updateProgressAndWaves();
   updateActiveSection();
 });
+
+/* ambient light follows pointer */
+if (siteShell && window.matchMedia("(pointer:fine)").matches) {
+  siteShell.addEventListener("pointermove", (e) => {
+    const x = `${(e.clientX / window.innerWidth) * 100}%`;
+    const y = `${(e.clientY / window.innerHeight) * 100}%`;
+    document.documentElement.style.setProperty("--mx", x);
+    document.documentElement.style.setProperty("--my", y);
+  });
+}
+
+/* 3D tilt cards */
+if (window.matchMedia("(pointer:fine)").matches) {
+  interactiveCards.forEach((card) => {
+    card.addEventListener("pointermove", (e) => {
+      const rect = card.getBoundingClientRect();
+      const px = ((e.clientX - rect.left) / rect.width) * 100;
+      const py = ((e.clientY - rect.top) / rect.height) * 100;
+
+      const rotateY = ((px - 50) / 50) * 4.5;
+      const rotateX = -((py - 50) / 50) * 4.5;
+
+      card.style.setProperty("--px", `${px}%`);
+      card.style.setProperty("--py", `${py}%`);
+      card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-3px)`;
+      card.classList.add("is-tilting");
+    });
+
+    card.addEventListener("pointerleave", () => {
+      card.style.transform = "";
+      card.classList.remove("is-tilting");
+    });
+  });
+}
