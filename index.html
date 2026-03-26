@@ -36,8 +36,10 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="site-shell">
+  <div class="site-shell" id="siteShell">
     <div class="bg-noise" aria-hidden="true"></div>
+
+    <div class="ambient-light" aria-hidden="true"></div>
 
     <div class="bg-waves" aria-hidden="true">
       <span class="wave wave-1"></span>
@@ -73,13 +75,13 @@
     </header>
 
     <main id="top">
-      <section class="hero section reveal">
+      <section class="hero section reveal reveal-delay-0">
         <div class="hero-grid">
           <div class="hero-main">
             <div class="eyebrow-row">
               <span class="eyebrow">COSMOPROF 2026 / TEMPORARY PROJECT PAGE</span>
 
-              <button class="status-badge" id="statusBadge" type="button" aria-label="Change status">
+              <button class="status-badge interactive-card" id="statusBadge" type="button" aria-label="Change status">
                 currently:
                 <strong id="statusWord">online</strong>
               </button>
@@ -101,7 +103,7 @@
           </div>
 
           <aside class="hero-side">
-            <div class="hero-note card-soft">
+            <div class="hero-note card-soft interactive-card reveal reveal-delay-1">
               <p class="hero-note-label">Current state</p>
               <p class="hero-note-text">
                 Temporary project page built for live presentation, contact sharing and immediate project visibility.
@@ -109,22 +111,22 @@
             </div>
 
             <div class="hero-mini-grid">
-              <div class="hero-mini card-soft">
+              <div class="hero-mini card-soft interactive-card reveal reveal-delay-2">
                 <span class="hero-mini-label">Format</span>
                 <strong class="hero-mini-value">Installation</strong>
               </div>
 
-              <div class="hero-mini card-soft">
+              <div class="hero-mini card-soft interactive-card reveal reveal-delay-3">
                 <span class="hero-mini-label">Core</span>
                 <strong class="hero-mini-value">Cube system</strong>
               </div>
 
-              <div class="hero-mini card-soft">
+              <div class="hero-mini card-soft interactive-card reveal reveal-delay-4">
                 <span class="hero-mini-label">Field</span>
                 <strong class="hero-mini-value">Mediterranean set</strong>
               </div>
 
-              <div class="hero-mini card-soft">
+              <div class="hero-mini card-soft interactive-card reveal reveal-delay-5">
                 <span class="hero-mini-label">Material</span>
                 <strong class="hero-mini-value">Image / Sound</strong>
               </div>
@@ -133,7 +135,7 @@
         </div>
       </section>
 
-      <section id="about" class="section section-grid reveal">
+      <section id="about" class="section section-grid reveal reveal-delay-1">
         <div class="section-head">
           <p class="section-label">About</p>
           <h2 class="section-title">Not an agency. A constructed visual structure.</h2>
@@ -155,7 +157,7 @@
         </div>
       </section>
 
-      <section id="activation" class="section reveal">
+      <section id="activation" class="section reveal reveal-delay-1">
         <div class="section-head section-head-wide">
           <div>
             <p class="section-label">Current activation</p>
@@ -166,7 +168,7 @@
           </p>
         </div>
 
-        <div class="activation-card">
+        <div class="activation-card interactive-card">
           <p class="activation-copy">
             A golden cube placed within a Mediterranean scenic environment, with internal
             projections of Marco Glaviano’s imagery and a layered sound structure unfolding
@@ -174,32 +176,32 @@
           </p>
 
           <div class="activation-metrics">
-            <div class="metric">
+            <div class="metric interactive-card">
               <span class="metric-label">Format</span>
               <strong class="metric-value">Immersive installation</strong>
             </div>
 
-            <div class="metric">
+            <div class="metric interactive-card">
               <span class="metric-label">Spatial core</span>
               <strong class="metric-value">Golden cube</strong>
             </div>
 
-            <div class="metric">
+            <div class="metric interactive-card">
               <span class="metric-label">Environment</span>
               <strong class="metric-value">Mediterranean scenography</strong>
             </div>
 
-            <div class="metric">
+            <div class="metric interactive-card">
               <span class="metric-label">Image material</span>
               <strong class="metric-value">Marco Glaviano projections</strong>
             </div>
 
-            <div class="metric">
+            <div class="metric interactive-card">
               <span class="metric-label">Sound logic</span>
               <strong class="metric-value">Internal / external layering</strong>
             </div>
 
-            <div class="metric">
+            <div class="metric interactive-card">
               <span class="metric-label">Focus</span>
               <strong class="metric-value">Image / Sound / Perception</strong>
             </div>
@@ -207,26 +209,26 @@
         </div>
       </section>
 
-      <section id="project-note" class="section reveal">
+      <section id="project-note" class="section reveal reveal-delay-1">
         <div class="section-head">
           <p class="section-label">Project note</p>
           <h2 class="section-title">Object, environment, material.</h2>
         </div>
 
         <div class="project-note-grid">
-          <article class="project-card">
+          <article class="project-card interactive-card">
             <span class="project-card-label">Object</span>
             <h3>Gold cube</h3>
             <p>Projection chamber conceived as the perceptual and spatial core of the installation.</p>
           </article>
 
-          <article class="project-card">
+          <article class="project-card interactive-card">
             <span class="project-card-label">Environment</span>
             <h3>Mediterranean field</h3>
             <p>Scenic condition built through atmosphere, texture, contrast and symbolic context.</p>
           </article>
 
-          <article class="project-card">
+          <article class="project-card interactive-card">
             <span class="project-card-label">Material</span>
             <h3>Image / sound / contrast</h3>
             <p>Photography, ambient layering and inside / outside tension organized as one system.</p>
@@ -234,7 +236,7 @@
         </div>
       </section>
 
-      <section id="credits" class="section reveal">
+      <section id="credits" class="section reveal reveal-delay-1">
         <div class="section-head section-head-wide">
           <div>
             <p class="section-label">Credits</p>
@@ -246,7 +248,7 @@
         </div>
 
         <div class="credits-stack">
-          <article class="credit-block">
+          <article class="credit-block interactive-card">
             <p class="credit-group">Project</p>
             <div class="credit-entry solo">
               <h3>
@@ -256,7 +258,7 @@
             </div>
           </article>
 
-          <article class="credit-block">
+          <article class="credit-block interactive-card">
             <p class="credit-group">Activation</p>
             <div class="credit-entry">
               <h3>Sonia Giudici</h3>
@@ -265,7 +267,7 @@
             </div>
           </article>
 
-          <article class="credit-block">
+          <article class="credit-block interactive-card">
             <p class="credit-group">Creative production</p>
 
             <div class="credit-entry">
@@ -281,7 +283,7 @@
             </div>
           </article>
 
-          <article class="credit-block">
+          <article class="credit-block interactive-card">
             <p class="credit-group">Sound</p>
 
             <div class="credit-entry">
@@ -303,7 +305,7 @@
             </div>
           </article>
 
-          <article class="credit-block">
+          <article class="credit-block interactive-card">
             <p class="credit-group">Additional contribution</p>
             <div class="credit-entry">
               <h3>Ivan Petralia</h3>
@@ -312,7 +314,7 @@
             </div>
           </article>
 
-          <article class="credit-block">
+          <article class="credit-block interactive-card">
             <p class="credit-group">Context</p>
 
             <div class="credit-entry">
@@ -330,8 +332,8 @@
         </div>
       </section>
 
-      <section class="section reveal">
-        <div class="quote-card">
+      <section class="section reveal reveal-delay-1">
+        <div class="quote-card interactive-card">
           <p class="quote-label">Working note</p>
           <p class="quote-text">
             Gold cube / Mediterranean field<br />
@@ -341,7 +343,7 @@
         </div>
       </section>
 
-      <section id="contact" class="section section-grid reveal">
+      <section id="contact" class="section section-grid reveal reveal-delay-1">
         <div class="section-head">
           <p class="section-label">Contact</p>
           <h2 class="section-title">Start a conversation.</h2>
@@ -354,17 +356,17 @@
           </p>
 
           <div class="contact-links">
-            <a class="contact-link" href="mailto:blucinelab@gmail.com">
+            <a class="contact-link interactive-card" href="mailto:blucinelab@gmail.com">
               <span class="contact-link-label">Email</span>
               <span class="contact-link-value">blucinelab@gmail.com</span>
             </a>
 
-            <a class="contact-link" href="https://www.instagram.com/blucinelab?igsh=MTMwbGpvdHMyaWo0Yw==" target="_blank" rel="noopener noreferrer">
+            <a class="contact-link interactive-card" href="https://www.instagram.com/blucinelab?igsh=MTMwbGpvdHMyaWo0Yw==" target="_blank" rel="noopener noreferrer">
               <span class="contact-link-label">Instagram</span>
               <span class="contact-link-value">@blucinelab</span>
             </a>
 
-            <a class="contact-link" href="https://blucinelab.it" target="_blank" rel="noopener noreferrer">
+            <a class="contact-link interactive-card" href="https://blucinelab.it" target="_blank" rel="noopener noreferrer">
               <span class="contact-link-label">Website</span>
               <span class="contact-link-value">blucinelab.it</span>
             </a>
