@@ -1,3 +1,5 @@
+document.documentElement.classList.add("js-enhanced");
+
 const menuToggle = document.querySelector(".menu-toggle");
 const siteNav = document.querySelector(".site-nav");
 const footerYear = document.getElementById("footerYear");
@@ -5,6 +7,9 @@ const statusWord = document.getElementById("statusWord");
 const statusBadge = document.getElementById("statusBadge");
 const reveals = document.querySelectorAll(".reveal");
 const bgWaves = document.querySelector(".bg-waves");
+const progressBar = document.getElementById("scrollProgressBar");
+const navLinks = document.querySelectorAll('.site-nav a[href^="#"]');
+const sections = [...document.querySelectorAll("main section[id]")];
 
 if (footerYear) {
   footerYear.textContent = new Date().getFullYear();
@@ -36,7 +41,6 @@ if (statusBadge && statusWord) {
   });
 }
 
-/* reveal sicuro: aggiunge solo classe, non nasconde nulla */
 if ("IntersectionObserver" in window) {
   const revealObserver = new IntersectionObserver(
     (entries) => {
@@ -49,7 +53,7 @@ if ("IntersectionObserver" in window) {
     },
     {
       threshold: 0.14,
-      rootMargin: "0px 0px -6% 0px"
+      rootMargin: "0px 0px -8% 0px"
     }
   );
 
@@ -58,10 +62,45 @@ if ("IntersectionObserver" in window) {
   reveals.forEach((el) => el.classList.add("is-visible"));
 }
 
-/* micro movimento onde */
-if (bgWaves) {
-  window.addEventListener("scroll", () => {
-    const y = window.scrollY * 0.08;
+function updateProgressAndWaves() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+
+  if (progressBar) {
+    progressBar.style.width = `${Math.min(progress, 100)}%`;
+  }
+
+  if (bgWaves) {
+    const y = scrollTop * 0.08;
     bgWaves.style.transform = `translateY(${y}px)`;
+  }
+}
+
+function updateActiveSection() {
+  if (!sections.length || !navLinks.length) return;
+
+  let currentId = "";
+
+  sections.forEach((section) => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= 140 && rect.bottom >= 140) {
+      currentId = section.id;
+    }
+  });
+
+  navLinks.forEach((link) => {
+    const isActive = link.getAttribute("href") === `#${currentId}`;
+    link.classList.toggle("is-active", isActive);
   });
 }
+
+window.addEventListener("scroll", () => {
+  updateProgressAndWaves();
+  updateActiveSection();
+}, { passive: true });
+
+window.addEventListener("load", () => {
+  updateProgressAndWaves();
+  updateActiveSection();
+});
