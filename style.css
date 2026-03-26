@@ -198,11 +198,15 @@ main {
 }
 
 .section {
-  padding: 44px 0;
+  padding: 40px 0;
+}
+
+.section + .section {
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .hero {
-  padding-top: 44px;
+  padding-top: 34px;
 }
 
 .eyebrow-row {
@@ -210,7 +214,7 @@ main {
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 .eyebrow,
@@ -245,26 +249,26 @@ main {
 }
 
 .hero-title {
-  margin: 0 0 16px;
-  max-width: 11ch;
-  font-size: clamp(2.7rem, 11vw, 5.8rem);
-  line-height: 0.96;
-  letter-spacing: -0.05em;
+  margin: 0 0 14px;
+  max-width: 14ch;
+  font-size: clamp(2rem, 7.2vw, 4.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
 }
 
 .hero-text {
   margin: 0;
-  max-width: 34rem;
+  max-width: 30rem;
   color: var(--text-soft);
-  font-size: 1rem;
-  line-height: 1.62;
+  font-size: 0.96rem;
+  line-height: 1.58;
 }
 
 .hero-actions {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: 28px;
+  margin-top: 24px;
 }
 
 .button {
@@ -305,10 +309,10 @@ main {
 
 .section-title {
   margin: 0;
-  font-size: clamp(1.55rem, 6vw, 2.8rem);
-  line-height: 1.02;
-  letter-spacing: -0.04em;
-  max-width: 14ch;
+  font-size: clamp(1.3rem, 4.6vw, 2.35rem);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  max-width: 16ch;
 }
 
 .section-body {
@@ -340,6 +344,13 @@ main {
   padding: 20px;
 }
 
+#project-note .activation-card {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.012)),
+    rgba(255, 255, 255, 0.008);
+  box-shadow: none;
+}
+
 .activation-copy {
   margin: 0 0 18px;
   font-size: 1rem;
@@ -355,6 +366,17 @@ main {
   border-radius: 14px;
   background: var(--panel);
   border: 1px solid rgba(255, 255, 255, 0.06);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+.metric:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.055);
 }
 
 .metric-label {
@@ -406,6 +428,13 @@ main {
   color: var(--accent);
   font-size: 0.92rem;
   letter-spacing: 0.01em;
+  transition: opacity 0.25s ease, color 0.25s ease;
+  opacity: 0.76;
+}
+
+.credit-entry a:hover {
+  opacity: 1;
+  color: var(--text);
 }
 
 .credit-entry.solo h3 {
@@ -436,12 +465,16 @@ main {
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.015);
   word-break: break-word;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
 }
 
 .contact-link:hover {
   border-color: var(--line-strong);
   background: rgba(255, 255, 255, 0.03);
+  transform: translateY(-2px);
 }
 
 .site-footer {
@@ -457,9 +490,10 @@ main {
   text-transform: uppercase;
 }
 
+/* SICURO: visibile di default */
 .reveal {
-  opacity: 0;
-  transform: translateY(18px);
+  opacity: 1;
+  transform: none;
   transition:
     opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
@@ -467,7 +501,7 @@ main {
 
 .reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 @media (min-width: 760px) {
@@ -502,8 +536,8 @@ main {
   }
 
   .hero {
-    padding-top: 74px;
-    min-height: 74vh;
+    padding-top: 52px;
+    min-height: 58vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -544,6 +578,6 @@ main {
 
 @media (min-width: 1100px) {
   .hero-title {
-    max-width: 12ch;
+    max-width: 15ch;
   }
 }
