@@ -63,7 +63,7 @@ function setupStatusBadge() {
     "framing",
     "editing",
     "staging",
-    "listening"
+    "listening",
   ];
 
   let index = 0;
