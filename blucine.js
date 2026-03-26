@@ -4,6 +4,7 @@ const footerYear = document.getElementById("footerYear");
 const statusWord = document.getElementById("statusWord");
 const statusBadge = document.getElementById("statusBadge");
 const reveals = document.querySelectorAll(".reveal");
+const bgWaves = document.querySelector(".bg-waves");
 
 if (footerYear) {
   footerYear.textContent = new Date().getFullYear();
@@ -35,6 +36,7 @@ if (statusBadge && statusWord) {
   });
 }
 
+/* reveal sicuro: aggiunge solo classe, non nasconde nulla */
 if ("IntersectionObserver" in window) {
   const revealObserver = new IntersectionObserver(
     (entries) => {
@@ -54,4 +56,12 @@ if ("IntersectionObserver" in window) {
   reveals.forEach((el) => revealObserver.observe(el));
 } else {
   reveals.forEach((el) => el.classList.add("is-visible"));
+}
+
+/* micro movimento onde */
+if (bgWaves) {
+  window.addEventListener("scroll", () => {
+    const y = window.scrollY * 0.08;
+    bgWaves.style.transform = `translateY(${y}px)`;
+  });
 }
