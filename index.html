@@ -2,82 +2,318 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BluCineLab — Cosmoprof 2026</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  />
+  <meta name="theme-color" content="#090909" />
+
+  <title>BluCineLab — Cosmoprof 2026 Installation / Cube System</title>
+  <meta
+    name="description"
+    content="Temporary project page for BluCineLab’s Cosmoprof 2026 installation: a golden cube within Mediterranean scenography, with internal projections of Marco Glaviano’s imagery and layered sound."
+  />
+  <meta
+    name="keywords"
+    content="BluCineLab, Cosmoprof 2026, installation, golden cube, Marco Glaviano, Mediterranean scenography, audiovisual production, immersive environment, sound design, exhibition system"
+  />
+
+  <meta property="og:title" content="BluCineLab — Cosmoprof 2026 Installation / Cube System" />
+  <meta
+    property="og:description"
+    content="A golden cube within Mediterranean scenography, with internal projections of Marco Glaviano’s imagery and layered sound."
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://blucinelab.it/" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
 
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-<div class="site-shell">
+  <div class="site-shell">
+    <div class="bg-noise" aria-hidden="true"></div>
 
-<header class="site-header">
-  <a href="#top" class="brand">BLUCINELAB</a>
-</header>
-
-<main id="top">
-
-<section class="hero reveal">
-  <span class="eyebrow">COSMOPROF 2026</span>
-
-  <h1 class="hero-title">
-    Spatial image systems for exhibition, cinema and live environments.
-  </h1>
-
-  <p class="hero-text">
-    BluCineLab develops visual structures where image, space, sound and perception are treated as one system.
-  </p>
-</section>
-
-<section class="section reveal" id="activation">
-  <h2>Cube system</h2>
-
-  <div class="activation-card">
-    <p>
-      A golden cube within Mediterranean scenography, with internal projections and layered sound.
-    </p>
-
-    <div class="metrics">
-      <div class="metric">Golden cube</div>
-      <div class="metric">Mediterranean set</div>
-      <div class="metric">Image / Sound</div>
+    <div class="bg-waves" aria-hidden="true">
+      <span class="wave wave-1"></span>
+      <span class="wave wave-2"></span>
+      <span class="wave wave-3"></span>
     </div>
+
+    <header class="site-header">
+      <a href="#top" class="brand" aria-label="BluCineLab home">BLUCINELAB</a>
+
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="site-nav"
+        aria-label="Toggle navigation"
+      >
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#activation">Activation</a>
+        <a href="#project-note">Project note</a>
+        <a href="#credits">Credits</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section reveal">
+        <div class="eyebrow-row">
+          <span class="eyebrow">COSMOPROF 2026 / TEMPORARY PROJECT PAGE</span>
+
+          <button class="status-badge" id="statusBadge" type="button" aria-label="Change status">
+            currently:
+            <strong id="statusWord">online</strong>
+          </button>
+        </div>
+
+        <h1 class="hero-title">
+          Spatial image systems for exhibition, cinema and live environments.
+        </h1>
+
+        <p class="hero-text">
+          BluCineLab develops visual structures where image, space, sound and perception
+          are treated as one system.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button button-primary" href="#activation">Current activation</a>
+          <a class="button button-secondary" href="#contact">Start a conversation</a>
+        </div>
+      </section>
+
+      <section id="about" class="section section-grid reveal">
+        <div class="section-head">
+          <p class="section-label">About</p>
+          <h2 class="section-title">Not an agency. A constructed visual structure.</h2>
+        </div>
+
+        <div class="section-body">
+          <p>
+            BluCineLab works across cinema, installations, immersive environments
+            and narrative systems.
+          </p>
+          <p>
+            Each project is approached as a built condition: concept, visual rhythm,
+            atmosphere, technical execution and perceptual effect.
+          </p>
+          <p>
+            The goal is not to decorate space, but to organize image, sound and matter
+            into a coherent experience.
+          </p>
+        </div>
+      </section>
+
+      <section id="activation" class="section reveal">
+        <div class="section-head">
+          <p class="section-label">Current activation</p>
+          <h2 class="section-title">Cosmoprof 2026 / Cube system</h2>
+        </div>
+
+        <div class="activation-card">
+          <p class="activation-copy">
+            A golden cube placed within a Mediterranean scenic environment, with internal
+            projections of Marco Glaviano’s imagery and a layered sound structure unfolding
+            between interior immersion and exterior perception.
+          </p>
+
+          <div class="activation-metrics">
+            <div class="metric">
+              <span class="metric-label">Format</span>
+              <strong class="metric-value">Immersive installation</strong>
+            </div>
+
+            <div class="metric">
+              <span class="metric-label">Spatial core</span>
+              <strong class="metric-value">Golden cube</strong>
+            </div>
+
+            <div class="metric">
+              <span class="metric-label">Environment</span>
+              <strong class="metric-value">Mediterranean scenography</strong>
+            </div>
+
+            <div class="metric">
+              <span class="metric-label">Image material</span>
+              <strong class="metric-value">Marco Glaviano projections</strong>
+            </div>
+
+            <div class="metric">
+              <span class="metric-label">Focus</span>
+              <strong class="metric-value">Image / Sound / Perception</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="project-note" class="section reveal">
+        <div class="section-head">
+          <p class="section-label">Project note</p>
+          <h2 class="section-title">Object, environment, material.</h2>
+        </div>
+
+        <div class="activation-card">
+          <div class="activation-metrics">
+            <div class="metric">
+              <span class="metric-label">Object</span>
+              <strong class="metric-value">Gold cube / projection chamber</strong>
+            </div>
+
+            <div class="metric">
+              <span class="metric-label">Environment</span>
+              <strong class="metric-value">Mediterranean scenic field</strong>
+            </div>
+
+            <div class="metric">
+              <span class="metric-label">Material</span>
+              <strong class="metric-value">Photography / sound / spatial contrast</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="credits" class="section reveal">
+        <div class="section-head">
+          <p class="section-label">Credits</p>
+          <h2 class="section-title">People, roles, structure.</h2>
+        </div>
+
+        <div class="credits-stack">
+          <article class="credit-block">
+            <p class="credit-group">Project</p>
+            <div class="credit-entry solo">
+              <h3>
+                <a href="https://blucinelab.it" target="_blank" rel="noopener noreferrer">BluCineLab</a>
+              </h3>
+              <p>Concept, direction, production</p>
+            </div>
+          </article>
+
+          <article class="credit-block">
+            <p class="credit-group">Activation</p>
+            <div class="credit-entry">
+              <h3>Sonia Giudici</h3>
+              <p>Project activation</p>
+              <a href="https://www.instagram.com/seliphant?igsh=MTR3YXd1NXN1Z2YzdQ==" target="_blank" rel="noopener noreferrer">Profile</a>
+            </div>
+          </article>
+
+          <article class="credit-block">
+            <p class="credit-group">Creative production</p>
+
+            <div class="credit-entry">
+              <h3>Anton Likht</h3>
+              <p>Direction, visual system</p>
+              <a href="https://www.instagram.com/anton_zip?igsh=MXE4eHhvajZmOXVlMg%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer">Profile</a>
+            </div>
+
+            <div class="credit-entry">
+              <h3>Federico Basagni</h3>
+              <p>Visual production, cube content</p>
+              <a href="https://www.instagram.com/basagni__/" target="_blank" rel="noopener noreferrer">Profile</a>
+            </div>
+          </article>
+
+          <article class="credit-block">
+            <p class="credit-group">Sound</p>
+
+            <div class="credit-entry">
+              <h3>Edoardo Rimoldi</h3>
+              <p>Internal sound (cube)</p>
+              <a href="https://www.instagram.com/rimol_dino?igsh=MTA5bWw4aDY1d2lpZg==" target="_blank" rel="noopener noreferrer">Profile</a>
+            </div>
+
+            <div class="credit-entry">
+              <h3>Odeon</h3>
+              <p>External ambient sound, collaborative composition</p>
+              <a href="https://www.instagram.com/odeon.mp3?igsh=Nmx2dzMzd2NvaWpi" target="_blank" rel="noopener noreferrer">Profile</a>
+            </div>
+
+            <div class="credit-entry">
+              <h3>Eugenio Distante</h3>
+              <p>External ambient sound, collaborative composition</p>
+              <a href="https://www.instagram.com/eugeniodistante?igsh=M215NzltMG5taWYy" target="_blank" rel="noopener noreferrer">Profile</a>
+            </div>
+          </article>
+
+          <article class="credit-block">
+            <p class="credit-group">Additional contribution</p>
+            <div class="credit-entry">
+              <h3>Ivan Petralia</h3>
+              <p>AI visual fragment</p>
+              <a href="https://www.instagram.com/_ivanpetralia_/" target="_blank" rel="noopener noreferrer">Profile</a>
+            </div>
+          </article>
+
+          <article class="credit-block">
+            <p class="credit-group">Context</p>
+
+            <div class="credit-entry">
+              <h3>Gaetano La Mantia</h3>
+              <p>Project collaboration</p>
+              <a href="https://www.instagram.com/gaelaboevent?igsh=Y3F1bjd6bXcyMXhs" target="_blank" rel="noopener noreferrer">Profile</a>
+            </div>
+
+            <div class="credit-entry">
+              <h3>Contemporary Concept</h3>
+              <p>Context and support</p>
+              <a href="https://www.instagram.com/contemporary_concept?igsh=YTF2bWppZnAxcnZ4" target="_blank" rel="noopener noreferrer">Profile</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <div class="quote-card">
+          <p class="quote-label">Working note</p>
+          <p class="quote-text">
+            Gold cube / Mediterranean field<br />
+            Internal projection / External atmosphere<br />
+            Image / Sound / Spatial perception
+          </p>
+        </div>
+      </section>
+
+      <section id="contact" class="section section-grid reveal">
+        <div class="section-head">
+          <p class="section-label">Contact</p>
+          <h2 class="section-title">Start a conversation.</h2>
+        </div>
+
+        <div class="section-body">
+          <p>
+            Collaborations, installations, audiovisual production, visual systems,
+            scenographic environments and cultural projects.
+          </p>
+
+          <div class="contact-links">
+            <a class="contact-link" href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a>
+            <a class="contact-link" href="https://www.instagram.com/blucinelab?igsh=MTMwbGpvdHMyaWo0Yw==" target="_blank" rel="noopener noreferrer">@blucinelab</a>
+            <a class="contact-link" href="https://blucinelab.it" target="_blank" rel="noopener noreferrer">blucinelab.it</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>BLUCINELAB</p>
+      <p>Cosmoprof 2026 — temporary project page</p>
+      <p id="footerYear"></p>
+    </footer>
   </div>
-</section>
 
-<section class="section reveal" id="credits">
-  <h2>Credits</h2>
-
-  <div class="credit">
-    <strong>BluCineLab</strong>
-  </div>
-
-  <div class="credit">
-    Anton Likht —
-    <a href="https://instagram.com/anton_zip" target="_blank">Profile</a>
-  </div>
-
-  <div class="credit">
-    Federico Basagni —
-    <a href="https://instagram.com/basagni__" target="_blank">Profile</a>
-  </div>
-
-  <div class="credit">
-    Ivan Petralia —
-    <a href="https://instagram.com/_ivanpetralia_" target="_blank">Profile</a>
-  </div>
-
-</section>
-
-<section class="section reveal" id="contact">
-  <h2>Contact</h2>
-  <a href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a>
-</section>
-
-</main>
-
-</div>
-
-<script src="script.js"></script>
+  <script src="blucine.js"></script>
 </body>
 </html>
