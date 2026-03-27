@@ -12,6 +12,7 @@ const navLinks = document.querySelectorAll('.site-nav a[href^="#"]');
 const sections = [...document.querySelectorAll("main section[id]")];
 const siteShell = document.getElementById("siteShell");
 const interactiveCards = document.querySelectorAll(".interactive-card");
+const heroStage = document.getElementById("heroStage");
 
 if (footerYear) {
   footerYear.textContent = new Date().getFullYear();
@@ -111,7 +112,6 @@ window.addEventListener("load", () => {
   updateActiveSection();
 });
 
-/* ambient light follows pointer */
 if (siteShell && window.matchMedia("(pointer:fine)").matches) {
   siteShell.addEventListener("pointermove", (e) => {
     const x = `${(e.clientX / window.innerWidth) * 100}%`;
@@ -121,7 +121,6 @@ if (siteShell && window.matchMedia("(pointer:fine)").matches) {
   });
 }
 
-/* 3D tilt cards */
 if (window.matchMedia("(pointer:fine)").matches) {
   interactiveCards.forEach((card) => {
     card.addEventListener("pointermove", (e) => {
@@ -142,5 +141,25 @@ if (window.matchMedia("(pointer:fine)").matches) {
       card.style.transform = "";
       card.classList.remove("is-tilting");
     });
+  });
+}
+
+if (heroStage && window.matchMedia("(pointer:fine)").matches) {
+  heroStage.addEventListener("pointermove", (e) => {
+    const rect = heroStage.getBoundingClientRect();
+    const px = ((e.clientX - rect.left) / rect.width) * 100;
+    const py = ((e.clientY - rect.top) / rect.height) * 100;
+    const rotateY = ((px - 50) / 50) * 3.5;
+    const rotateX = -((py - 50) / 50) * 3;
+
+    heroStage.style.setProperty("--px", `${px}%`);
+    heroStage.style.setProperty("--py", `${py}%`);
+    heroStage.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    heroStage.classList.add("is-tilting");
+  });
+
+  heroStage.addEventListener("pointerleave", () => {
+    heroStage.style.transform = "";
+    heroStage.classList.remove("is-tilting");
   });
 }
