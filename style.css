@@ -10,8 +10,10 @@
   --text-soft: rgba(244, 241, 234, 0.78);
   --text-dim: rgba(244, 241, 234, 0.46);
 
-  --accent: #c89266;
-  --accent-strong: #ddb18a;
+  --gold-1: #c89266;
+  --gold-2: #ddb18a;
+  --gold-3: #f3d2a5;
+  --gold-gradient: linear-gradient(120deg, #c89266, #ddb18a, #f3d2a5);
 
   --radius: 20px;
   --shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
@@ -125,7 +127,7 @@ button {
   display: block;
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  background: var(--gold-gradient);
   box-shadow: 0 0 18px rgba(200, 146, 102, 0.35);
 }
 
@@ -287,7 +289,7 @@ main {
 }
 
 .status-badge strong {
-  color: var(--accent);
+  color: var(--gold-1);
   font-weight: 700;
 }
 
@@ -315,7 +317,7 @@ main {
   width: 50%;
   height: 36%;
   transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(221,177,138,0.18), rgba(221,177,138,0.06) 45%, transparent 75%);
+  background: radial-gradient(circle, rgba(221,177,138,0.22), rgba(221,177,138,0.08) 45%, transparent 75%);
   filter: blur(18px);
   pointer-events: none;
 }
@@ -328,8 +330,10 @@ main {
   line-height: 0.88;
   letter-spacing: -0.09em;
   font-weight: 800;
-  color: var(--text);
   text-transform: uppercase;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   text-shadow:
     0 0 24px rgba(255,255,255,0.06),
     0 0 40px rgba(221,177,138,0.08);
@@ -386,8 +390,9 @@ main {
 }
 
 .button-primary {
-  background: var(--text);
-  color: var(--bg);
+  background: var(--gold-gradient);
+  color: #090909;
+  box-shadow: 0 6px 24px rgba(200,146,102,0.25);
 }
 
 .button-secondary {
@@ -403,12 +408,35 @@ main {
 .project-card,
 .contact-link,
 .metric {
+  position: relative;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
     rgba(255, 255, 255, 0.015);
   box-shadow: var(--shadow-soft);
+}
+
+.card-soft::after,
+.activation-card::after,
+.project-card::after,
+.credit-block::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid transparent;
+  background: linear-gradient(120deg, rgba(200,146,102,0.4), transparent 40%) border-box;
+  -webkit-mask:
+    linear-gradient(#000 0 0) padding-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) padding-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 .hero-mini-grid {
@@ -558,7 +586,7 @@ main {
   display: inline-flex;
   align-items: center;
   min-height: 32px;
-  color: var(--accent);
+  color: var(--gold-2);
   font-size: 0.88rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -593,7 +621,7 @@ main {
 
 .contact-link-value {
   display: block;
-  color: var(--text-soft);
+  color: var(--gold-2);
   line-height: 1.45;
 }
 
