@@ -1,5 +1,5 @@
 :root {
-  --bg: #030303;
+  --bg: #020202;
   --bg-soft: #0b0b0b;
   --panel: rgba(255, 255, 255, 0.022);
   --panel-strong: rgba(255, 255, 255, 0.04);
@@ -10,32 +10,29 @@
   --text-soft: rgba(243, 239, 230, 0.76);
   --text-dim: rgba(243, 239, 230, 0.38);
 
-  --gold-1: #4e3714;
-  --gold-2: #7a5925;
-  --gold-3: #b08a4f;
-  --gold-4: #eadfbc;
-  --gold-5: #f4edd6;
+  --gold-1: #4d3612;
+  --gold-2: #735321;
+  --gold-3: #a88043;
+  --gold-4: #d9c699;
+  --gold-5: #f4edd8;
 
   --gold-gradient: linear-gradient(
     118deg,
-    #4e3714 0%,
-    #7a5925 26%,
-    #b08a4f 42%,
-    #f4edd6 51%,
-    #b08a4f 64%,
-    #7a5925 78%,
-    #4e3714 100%
+    #4d3612 0%,
+    #735321 24%,
+    #a88043 40%,
+    #f4edd8 51%,
+    #a88043 63%,
+    #735321 78%,
+    #4d3612 100%
   );
 
-  --warm-glow: rgba(234, 223, 188, 0.08);
-  --warm-glow-soft: rgba(176, 138, 79, 0.05);
+  --shadow-xl: 0 38px 90px rgba(0, 0, 0, 0.46);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.32);
+  --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.2);
 
   --radius: 24px;
   --radius-sm: 16px;
-
-  --shadow-xl: 0 34px 80px rgba(0, 0, 0, 0.42);
-  --shadow-lg: 0 22px 54px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.2);
 
   --container: 1180px;
   --font: "Inter", sans-serif;
@@ -65,23 +62,23 @@ body {
   text-rendering: optimizeLegibility;
   position: relative;
   background:
-    radial-gradient(circle at 78% 8%, rgba(176,138,79,0.05), transparent 18%),
-    radial-gradient(circle at 15% 85%, rgba(255,255,255,0.012), transparent 18%),
-    radial-gradient(circle at 50% 0%, rgba(234,223,188,0.02), transparent 30%),
-    #030303;
+    radial-gradient(circle at 78% 8%, rgba(168,128,67,0.05), transparent 18%),
+    radial-gradient(circle at 12% 88%, rgba(255,255,255,0.012), transparent 18%),
+    radial-gradient(circle at 50% 0%, rgba(244,237,216,0.018), transparent 28%),
+    #020202;
 }
 
 body::after {
   content: "";
   position: fixed;
   inset: auto 0 0 0;
-  height: 19vh;
+  height: 18vh;
   pointer-events: none;
   background:
     linear-gradient(
       to top,
-      rgba(136, 100, 68, 0.075),
-      rgba(136, 100, 68, 0.018) 40%,
+      rgba(122, 90, 54, 0.07),
+      rgba(122, 90, 54, 0.014) 42%,
       transparent 100%
     );
   z-index: 0;
@@ -122,19 +119,19 @@ a {
 .ambient-light-a {
   background:
     radial-gradient(
-      520px circle at 50% 18%,
-      rgba(176, 138, 79, 0.065),
-      rgba(176, 138, 79, 0.014) 34%,
+      560px circle at 50% 18%,
+      rgba(168, 128, 67, 0.07),
+      rgba(168, 128, 67, 0.014) 34%,
       transparent 72%
     );
-  opacity: 0.5;
+  opacity: 0.52;
   animation: ambientPulseA 14s ease-in-out infinite;
 }
 
 .ambient-light-b {
   background:
     radial-gradient(
-      380px circle at 82% 10%,
+      420px circle at 84% 10%,
       rgba(255,255,255,0.018),
       transparent 62%
     );
@@ -150,7 +147,7 @@ a {
   background-size: 110px 110px;
   mask-image: linear-gradient(to bottom, rgba(0,0,0,0.16), transparent 76%);
   -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.16), transparent 76%);
-  opacity: 0.14;
+  opacity: 0.12;
 }
 
 .bg-glow-line {
@@ -159,11 +156,11 @@ a {
     linear-gradient(
       90deg,
       transparent 0%,
-      rgba(234,223,188,0.012) 48%,
+      rgba(244,237,216,0.012) 48%,
       transparent 100%
     );
-  opacity: 0.8;
-  transform: translateY(-30vh);
+  opacity: 0.78;
+  transform: translateY(-28vh);
 }
 
 .site-header,
@@ -183,9 +180,9 @@ main,
   align-items: flex-start;
   gap: 12px;
   padding: max(14px, env(safe-area-inset-top)) 16px 12px;
-  background: rgba(3, 3, 3, 0.8);
+  background: rgba(2, 2, 2, 0.8);
   border-bottom: 1px solid rgba(255,255,255,0.035);
-  backdrop-filter: blur(22px) saturate(120%);
+  backdrop-filter: blur(24px) saturate(120%);
 }
 
 .brand {
@@ -220,13 +217,13 @@ main,
 .site-nav a:hover,
 .site-nav a:active {
   background: rgba(255,255,255,0.022);
-  border-color: rgba(255,255,255,0.042);
+  border-color: rgba(255,255,255,0.04);
   color: var(--text);
   transform: translateY(-1px);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.025);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.022);
 }
 
-/* MAIN LAYOUT */
+/* MAIN */
 
 main {
   width: min(100%, var(--container));
@@ -235,16 +232,16 @@ main {
 }
 
 .section {
-  padding: 52px 0;
+  padding: 54px 0;
   position: relative;
   scroll-margin-top: 112px;
 }
 
 .section + .section {
-  border-top: 1px solid rgba(255,255,255,0.03);
+  border-top: 1px solid rgba(255,255,255,0.028);
 }
 
-/* TYPE */
+/* TYPO */
 
 .eyebrow,
 .section-label,
@@ -259,10 +256,19 @@ main {
   color: var(--text-dim);
 }
 
+.section-head {
+  display: grid;
+  gap: 10px;
+}
+
+.section-head-wide {
+  gap: 12px;
+}
+
 .section-title {
   margin: 0;
-  font-size: clamp(1.24rem, 6vw, 2.2rem);
-  line-height: 1;
+  font-size: clamp(1.24rem, 6vw, 2.25rem);
+  line-height: 0.98;
   letter-spacing: -0.055em;
   max-width: 15ch;
   font-weight: 600;
@@ -274,6 +280,11 @@ main {
   color: var(--text-dim);
   line-height: 1.52;
   font-size: 0.92rem;
+}
+
+.section-grid {
+  display: grid;
+  gap: 24px;
 }
 
 .section-body {
@@ -327,19 +338,19 @@ main {
 .hero-stage {
   position: relative;
   overflow: hidden;
-  max-width: 1040px;
+  max-width: 1080px;
   margin: 0 auto;
-  border: 1px solid rgba(255,255,255,0.05);
-  border-radius: 28px;
-  padding: 34px 18px 30px;
-  min-height: 210px;
+  border: 1px solid rgba(255,255,255,0.045);
+  border-radius: 30px;
+  padding: 38px 18px 32px;
+  min-height: 220px;
   text-align: center;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.003)),
+    linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.002)),
     rgba(255,255,255,0.008);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.03),
-    0 24px 60px rgba(0,0,0,0.28);
+    inset 0 1px 0 rgba(255,255,255,0.028),
+    0 30px 74px rgba(0,0,0,0.32);
 }
 
 .hero-stage::before,
@@ -350,15 +361,15 @@ main {
 }
 
 .hero-stage::before {
-  inset: 12px 12px auto 12px;
+  inset: 14px 14px auto 14px;
   height: 58%;
-  border: 1px solid rgba(138,102,48,0.12);
+  border: 1px solid rgba(122,89,37,0.13);
   border-radius: 20px;
   background:
     linear-gradient(
       135deg,
-      rgba(234,223,188,0.012) 0%,
-      rgba(138,102,48,0.028) 28%,
+      rgba(244,237,216,0.012) 0%,
+      rgba(122,89,37,0.03) 28%,
       transparent 72%
     );
   transform: perspective(1200px) rotateX(6deg);
@@ -369,12 +380,12 @@ main {
   right: 10%;
   bottom: 12px;
   height: 22%;
-  border-top: 1px solid rgba(138,102,48,0.11);
-  border-left: 1px solid rgba(138,102,48,0.04);
-  border-right: 1px solid rgba(138,102,48,0.04);
+  border-top: 1px solid rgba(122,89,37,0.12);
+  border-left: 1px solid rgba(122,89,37,0.04);
+  border-right: 1px solid rgba(122,89,37,0.04);
   border-radius: 0 0 18px 18px;
   background:
-    linear-gradient(180deg, rgba(138,102,48,0.02), transparent 80%);
+    linear-gradient(180deg, rgba(122,89,37,0.02), transparent 80%);
   transform: perspective(900px) rotateX(-56deg);
   opacity: 0.95;
 }
@@ -385,7 +396,7 @@ main {
   background:
     linear-gradient(
       180deg,
-      rgba(255,255,255,0.022),
+      rgba(255,255,255,0.024),
       transparent 24%
     );
   pointer-events: none;
@@ -394,16 +405,16 @@ main {
 .hero-stage-glow {
   position: absolute;
   left: 50%;
-  top: 46%;
-  width: 44%;
-  height: 22%;
+  top: 45%;
+  width: 48%;
+  height: 24%;
   transform: translate(-50%, -50%);
   background: radial-gradient(circle,
-    rgba(234,223,188,0.12),
-    rgba(234,223,188,0.024) 46%,
+    rgba(244,237,216,0.13),
+    rgba(244,237,216,0.024) 46%,
     transparent 76%
   );
-  filter: blur(14px);
+  filter: blur(16px);
   pointer-events: none;
   animation: heroGlowPulse 7s ease-in-out infinite;
 }
@@ -415,11 +426,11 @@ main {
     linear-gradient(
       102deg,
       transparent 0%,
-      rgba(255,255,255,0.03) 36%,
+      rgba(255,255,255,0.032) 36%,
       rgba(255,255,255,0.012) 46%,
       transparent 62%
     );
-  opacity: 0.32;
+  opacity: 0.34;
   mix-blend-mode: screen;
   pointer-events: none;
 }
@@ -431,7 +442,7 @@ main {
     linear-gradient(
       90deg,
       transparent 0%,
-      rgba(234,223,188,0.012) 48%,
+      rgba(244,237,216,0.012) 48%,
       transparent 100%
     );
   pointer-events: none;
@@ -444,9 +455,9 @@ main {
   display: block;
   width: 100%;
   margin: 0;
-  font-size: clamp(2.9rem, 13vw, 6.1rem);
-  line-height: 0.9;
-  letter-spacing: -0.072em;
+  font-size: clamp(3rem, 13vw, 6.4rem);
+  line-height: 0.88;
+  letter-spacing: -0.068em;
   font-weight: 800;
   text-transform: uppercase;
   white-space: nowrap;
@@ -458,24 +469,24 @@ main {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow:
-    0 0 8px rgba(234,223,188,0.03),
-    0 0 20px rgba(234,223,188,0.02);
+    0 0 10px rgba(244,237,216,0.028),
+    0 0 22px rgba(244,237,216,0.018);
 }
 
 .hero-subtitle {
   position: relative;
   z-index: 1;
-  margin: 14px auto 0;
-  max-width: 33rem;
+  margin: 16px auto 0;
+  max-width: 34rem;
   color: var(--text-soft);
-  font-size: 0.94rem;
+  font-size: 0.95rem;
   line-height: 1.48;
 }
 
 .hero-bottom {
   display: grid;
   gap: 18px;
-  margin-top: 18px;
+  margin-top: 20px;
 }
 
 .hero-bottom-main {
@@ -485,9 +496,9 @@ main {
 
 .hero-text {
   margin: 0;
-  max-width: 44rem;
+  max-width: 46rem;
   color: var(--text-soft);
-  font-size: 0.94rem;
+  font-size: 0.95rem;
   line-height: 1.62;
 }
 
@@ -515,17 +526,17 @@ main {
 
 .button:hover {
   transform: translateY(-1px);
-  filter: brightness(1.02);
+  filter: brightness(1.03);
 }
 
 .button-primary {
-  background: linear-gradient(115deg, #5e4319, #8a6630 48%, #b89459 100%);
+  background: linear-gradient(115deg, #4d3612, #735321 48%, #a88043 100%);
   color: #070707;
-  box-shadow: 0 6px 14px rgba(138,102,48,0.12);
+  box-shadow: 0 8px 18px rgba(122,89,37,0.14);
 }
 
 .button-secondary {
-  border: 1px solid rgba(138,102,48,0.24);
+  border: 1px solid rgba(122,89,37,0.24);
   color: var(--gold-3);
   background: transparent;
 }
@@ -553,7 +564,7 @@ main {
   inset: 0;
   border-radius: inherit;
   border: 1px solid transparent;
-  background: linear-gradient(120deg, rgba(138,102,48,0.13), transparent 58%) border-box;
+  background: linear-gradient(120deg, rgba(122,89,37,0.14), transparent 58%) border-box;
   -webkit-mask:
     linear-gradient(#000 0 0) padding-box,
     linear-gradient(#000 0 0);
@@ -563,7 +574,7 @@ main {
     linear-gradient(#000 0 0);
   mask-composite: exclude;
   pointer-events: none;
-  opacity: 0.9;
+  opacity: 0.92;
 }
 
 .panel:hover {
@@ -580,10 +591,8 @@ main {
 .panel-premium {
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.02),
-    0 20px 48px rgba(0,0,0,0.24);
+    0 24px 56px rgba(0,0,0,0.26);
 }
-
-/* MINI GRID */
 
 .hero-mini-grid {
   display: grid;
@@ -593,7 +602,7 @@ main {
 
 .hero-mini {
   padding: 15px 12px 14px;
-  min-height: 96px;
+  min-height: 98px;
 }
 
 .hero-mini-value {
@@ -602,29 +611,15 @@ main {
   line-height: 1.26;
 }
 
-/* GENERIC CONTENT */
-
-.section-grid {
-  display: grid;
-  gap: 24px;
-}
-
-.section-head {
-  display: grid;
-  gap: 10px;
-}
-
-.section-head-wide {
-  gap: 12px;
-}
+/* CONTENT SECTIONS */
 
 .activation-card {
-  padding: 22px;
+  padding: 24px;
 }
 
 .activation-copy {
-  margin: 0 0 18px;
-  font-size: 0.97rem;
+  margin: 0 0 20px;
+  font-size: 0.98rem;
   max-width: 58rem;
 }
 
@@ -671,7 +666,7 @@ main {
 /* CREDITS */
 
 .credits-editorial-section {
-  padding-top: 52px;
+  padding-top: 56px;
 }
 
 .credits-editorial {
@@ -714,7 +709,7 @@ main {
 }
 
 .credits-person-featured h3 {
-  font-size: 1.26rem;
+  font-size: 1.28rem;
 }
 
 .credits-mainline {
@@ -727,7 +722,7 @@ main {
 
 .credits-mainline h3 {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: 1.06rem;
   line-height: 1.15;
   letter-spacing: -0.02em;
   font-weight: 600;
@@ -754,8 +749,8 @@ main {
 
 .quote-text {
   margin: 10px 0 0;
-  font-size: clamp(1.08rem, 5vw, 1.8rem);
-  line-height: 1.2;
+  font-size: clamp(1.08rem, 5vw, 1.9rem);
+  line-height: 1.18;
   letter-spacing: -0.03em;
 }
 
@@ -806,8 +801,8 @@ main {
   }
 
   .hero-mark {
-    font-size: clamp(2.35rem, 12vw, 3.8rem);
-    letter-spacing: -0.055em;
+    font-size: clamp(2.35rem, 12vw, 3.9rem);
+    letter-spacing: -0.05em;
   }
 
   .brand {
@@ -855,23 +850,23 @@ main {
   }
 
   .hero-stage {
-    min-height: 270px;
-    padding: 54px 42px 46px;
-    border-radius: 28px;
+    min-height: 282px;
+    padding: 58px 44px 48px;
+    border-radius: 30px;
   }
 
   .hero-mark {
-    font-size: clamp(5.6rem, 10vw, 8.9rem);
-    letter-spacing: -0.064em;
+    font-size: clamp(5.8rem, 10vw, 9.1rem);
+    letter-spacing: -0.058em;
   }
 
   .hero-subtitle {
-    font-size: 0.98rem;
-    max-width: 36rem;
+    font-size: 0.99rem;
+    max-width: 38rem;
   }
 
   .hero-bottom {
-    gap: 20px;
+    gap: 22px;
   }
 
   .hero-bottom-main {
@@ -895,16 +890,16 @@ main {
   }
 
   .hero-mini {
-    min-height: 100px;
+    min-height: 102px;
   }
 
   .section {
-    padding: 60px 0;
+    padding: 62px 0;
   }
 
   .section-grid {
     grid-template-columns: 0.95fr 1.05fr;
-    gap: 42px;
+    gap: 44px;
     align-items: start;
   }
 
@@ -913,7 +908,7 @@ main {
   }
 
   .activation-card {
-    padding: 26px;
+    padding: 28px;
   }
 
   .activation-metrics {
@@ -925,14 +920,10 @@ main {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .credits-editorial {
-    padding: 6px 0;
-  }
-
   .credits-row {
     grid-template-columns: 220px minmax(0, 1fr);
-    gap: 28px;
-    padding: 26px 22px;
+    gap: 30px;
+    padding: 28px 22px;
     align-items: start;
   }
 
@@ -949,11 +940,11 @@ main {
   }
 
   .credits-person-featured h3 {
-    font-size: 1.34rem;
+    font-size: 1.36rem;
   }
 
   .quote-card {
-    padding: 26px 20px;
+    padding: 28px 20px;
   }
 
   .site-footer {
@@ -965,23 +956,23 @@ main {
 @media (min-width: 820px) and (max-width: 1180px) {
   .hero-stage {
     max-width: 100%;
-    min-height: 286px;
-    padding: 56px 44px 46px;
+    min-height: 296px;
+    padding: 60px 46px 48px;
   }
 
   .hero-mark {
-    font-size: clamp(6.1rem, 9.2vw, 8.6rem);
-    letter-spacing: -0.058em;
+    font-size: clamp(6.2rem, 9.1vw, 8.8rem);
+    letter-spacing: -0.052em;
   }
 
   .hero-subtitle {
-    max-width: 38rem;
+    max-width: 39rem;
     font-size: 1rem;
   }
 
   .section-grid {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 30px;
   }
 
   .section-head-wide {
@@ -1013,34 +1004,34 @@ main {
   }
 
   .hero {
-    min-height: 74vh;
+    min-height: 78vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
 
   .hero-stage {
-    min-height: 324px;
-    padding: 62px 52px 50px;
+    min-height: 344px;
+    padding: 68px 56px 54px;
   }
 
   .hero-mark {
-    font-size: clamp(7.8rem, 10vw, 11.8rem);
-    letter-spacing: -0.06em;
+    font-size: clamp(8.2rem, 10vw, 12.4rem);
+    letter-spacing: -0.055em;
   }
 
   .hero-subtitle {
     font-size: 1rem;
-    max-width: 38rem;
+    max-width: 40rem;
   }
 
   .hero-text {
-    max-width: 44rem;
-    font-size: 0.94rem;
+    max-width: 46rem;
+    font-size: 0.95rem;
   }
 
   .section {
-    padding: 68px 0;
+    padding: 72px 0;
   }
 
   .section-head-wide {
@@ -1054,7 +1045,7 @@ main {
   }
 
   .activation-card {
-    padding: 30px;
+    padding: 32px;
   }
 
   .activation-metrics {
@@ -1063,16 +1054,16 @@ main {
 
   .credits-row {
     grid-template-columns: 250px minmax(0, 1fr);
-    gap: 36px;
-    padding: 28px 26px;
+    gap: 38px;
+    padding: 30px 28px;
   }
 
   .credits-mainline h3 {
-    font-size: 1.12rem;
+    font-size: 1.14rem;
   }
 
   .credits-person-featured h3 {
-    font-size: 1.42rem;
+    font-size: 1.46rem;
   }
 
   .site-footer {
@@ -1081,5 +1072,55 @@ main {
     align-items: center;
     padding-left: 26px;
     padding-right: 26px;
+  }
+}
+
+/* MICRO MOTION */
+
+@keyframes ambientPulseA {
+  0%, 100% {
+    opacity: 0.42;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.56;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes ambientPulseB {
+  0%, 100% {
+    opacity: 0.26;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.38;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes heroGlowPulse {
+  0%, 100% {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+}
+
+@keyframes sheenDrift {
+  0% {
+    transform: translateX(-4%);
+    opacity: 0.12;
+  }
+  50% {
+    transform: translateX(4%);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateX(-4%);
+    opacity: 0.12;
   }
 }
