@@ -11,8 +11,6 @@ const progressBar = document.getElementById("scrollProgressBar");
 const navLinks = document.querySelectorAll('.site-nav a[href^="#"]');
 const sections = [...document.querySelectorAll("main section[id]")];
 const siteShell = document.getElementById("siteShell");
-const interactiveCards = document.querySelectorAll(".interactive-card");
-const heroStage = document.getElementById("heroStage");
 
 if (footerYear) {
   footerYear.textContent = new Date().getFullYear();
@@ -118,48 +116,5 @@ if (siteShell && window.matchMedia("(pointer:fine)").matches) {
     const y = `${(e.clientY / window.innerHeight) * 100}%`;
     document.documentElement.style.setProperty("--mx", x);
     document.documentElement.style.setProperty("--my", y);
-  });
-}
-
-if (window.matchMedia("(pointer:fine)").matches) {
-  interactiveCards.forEach((card) => {
-    card.addEventListener("pointermove", (e) => {
-      const rect = card.getBoundingClientRect();
-      const px = ((e.clientX - rect.left) / rect.width) * 100;
-      const py = ((e.clientY - rect.top) / rect.height) * 100;
-
-      const rotateY = ((px - 50) / 50) * 4.5;
-      const rotateX = -((py - 50) / 50) * 4.5;
-
-      card.style.setProperty("--px", `${px}%`);
-      card.style.setProperty("--py", `${py}%`);
-      card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-3px)`;
-      card.classList.add("is-tilting");
-    });
-
-    card.addEventListener("pointerleave", () => {
-      card.style.transform = "";
-      card.classList.remove("is-tilting");
-    });
-  });
-}
-
-if (heroStage && window.matchMedia("(pointer:fine)").matches) {
-  heroStage.addEventListener("pointermove", (e) => {
-    const rect = heroStage.getBoundingClientRect();
-    const px = ((e.clientX - rect.left) / rect.width) * 100;
-    const py = ((e.clientY - rect.top) / rect.height) * 100;
-    const rotateY = ((px - 50) / 50) * 3.5;
-    const rotateX = -((py - 50) / 50) * 3;
-
-    heroStage.style.setProperty("--px", `${px}%`);
-    heroStage.style.setProperty("--py", `${py}%`);
-    heroStage.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    heroStage.classList.add("is-tilting");
-  });
-
-  heroStage.addEventListener("pointerleave", () => {
-    heroStage.style.transform = "";
-    heroStage.classList.remove("is-tilting");
   });
 }
