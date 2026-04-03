@@ -10,6 +10,7 @@
     .filter(Boolean);
 
   const footerYear = document.getElementById("footerYear");
+  const videos = Array.from(document.querySelectorAll("video"));
 
   if (footerYear) {
     footerYear.textContent = String(new Date().getFullYear());
@@ -63,4 +64,27 @@
 
     sections.forEach((section) => observer.observe(section));
   }
+
+  videos.forEach((video) => {
+    const playVideo = () => {
+      const promise = video.play();
+      if (promise && typeof promise.catch === "function") {
+        promise.catch(() => {});
+      }
+    };
+
+    playVideo();
+
+    document.addEventListener(
+      "visibilitychange",
+      () => {
+        if (document.hidden) {
+          video.pause();
+        } else {
+          playVideo();
+        }
+      },
+      { passive: true }
+    );
+  });
 })();
