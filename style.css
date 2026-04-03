@@ -524,24 +524,34 @@ main {
   margin-top: 22px;
 }
 
+/* BLOCCO VIDEO CORRETTO */
 .hero-video-shell {
   position: relative;
   margin: 4px 0 0;
   border-radius: 22px;
   overflow: hidden;
   border: 1px solid rgba(244, 239, 231, 0.08);
-  min-height: 220px;
   background: #060606;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  aspect-ratio: 16 / 10;
+  min-height: 220px;
+  isolation: isolate;
 }
 
 .hero-video {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  min-height: 220px;
+  min-height: 0;
   object-fit: cover;
+  object-position: center center;
   opacity: 0.9;
   filter: saturate(0.92) contrast(1.02) brightness(0.8);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
 }
 
 .hero-video-overlay {
@@ -551,6 +561,7 @@ main {
     linear-gradient(180deg, rgba(5, 5, 5, 0.12), rgba(5, 5, 5, 0.48)),
     linear-gradient(90deg, rgba(216, 177, 122, 0.08), transparent 34%, rgba(73, 108, 167, 0.06));
   pointer-events: none;
+  z-index: 1;
 }
 
 .hero-video-caption {
@@ -979,13 +990,8 @@ main {
   }
 
   .hero-video-shell {
+    aspect-ratio: 4 / 5;
     min-height: 100%;
-    height: 100%;
-  }
-
-  .hero-video {
-    min-height: 100%;
-    height: 100%;
   }
 
   .hero-actions {
