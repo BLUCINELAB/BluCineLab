@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" translate="no">
+<html lang="en" translate="no" class="notranslate">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -7,8 +7,11 @@
   <meta name="google" content="notranslate">
   <meta name="author" content="BluCineLab">
   <meta name="format-detection" content="telephone=no">
+  <meta name="color-scheme" content="dark">
+  <meta name="robots" content="index, follow">
 
   <title>BluCineLab — Creative Direction, Moving Image & Spatial Narratives</title>
+
   <meta
     name="description"
     content="BluCineLab is an independent creative studio working across creative direction, moving image, spatial projects and visual narratives for brands, cultural institutions and special commissions."
@@ -28,6 +31,8 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://blucinelab.it/">
   <meta property="og:site_name" content="BluCineLab">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://blucinelab.it/Blucinelab-logo-bianco.png">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="BluCineLab — Creative Direction, Moving Image & Spatial Narratives">
@@ -35,6 +40,7 @@
     name="twitter:description"
     content="An independent creative studio working across image, concept, space and narrative systems."
   >
+  <meta name="twitter:image" content="https://blucinelab.it/Blucinelab-logo-bianco.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,6 +49,8 @@
     rel="stylesheet"
   >
 
+  <link rel="preload" as="image" href="Blucinelab-logo-bianco.png">
+  <link rel="preload" as="video" href="blucinelabvideo.mp4" type="video/mp4">
   <link rel="stylesheet" href="style.css">
 
   <script type="application/ld+json">
@@ -66,6 +74,7 @@
   }
   </script>
 </head>
+
 <body class="notranslate">
   <div class="site-shell">
     <div class="bg-noise" aria-hidden="true"></div>
@@ -82,6 +91,7 @@
           class="brand-logo"
           width="34"
           height="34"
+          decoding="async"
         >
         <span class="brand-word">BLUCINELAB</span>
       </a>
@@ -149,7 +159,11 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
+                disablepictureinpicture
+                disableremoteplayback
+                aria-hidden="true"
               >
                 <source src="blucinelabvideo.mp4" type="video/mp4">
               </video>
@@ -166,14 +180,17 @@
             <span class="metric-label">Field</span>
             <strong class="metric-value">Cinema · Brand · Culture</strong>
           </article>
+
           <article class="metric-card panel">
             <span class="metric-label">Approach</span>
             <strong class="metric-value">Direction before production</strong>
           </article>
+
           <article class="metric-card panel">
             <span class="metric-label">Formats</span>
             <strong class="metric-value">Film · Space · Identity systems</strong>
           </article>
+
           <article class="metric-card panel">
             <span class="metric-label">Structure</span>
             <strong class="metric-value">Core studio + selected collaborators</strong>
@@ -612,6 +629,7 @@
           class="footer-logo"
           width="28"
           height="28"
+          decoding="async"
         >
         <p class="footer-brand">BLUCINELAB</p>
       </div>
@@ -620,6 +638,6 @@
     </footer>
   </div>
 
-  <script src="blucine.js"></script>
+  <script src="blucine.js" defer></script>
 </body>
 </html>
