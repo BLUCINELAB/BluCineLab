@@ -86,7 +86,6 @@ select {
 .site-shell {
   position: relative;
   min-height: 100vh;
-  overflow: clip;
   isolation: isolate;
 }
 
@@ -221,6 +220,7 @@ main,
   top: calc(100% + 8px);
   left: 16px;
   right: 16px;
+  z-index: 100;
   display: grid;
   gap: 6px;
   padding: 10px;
@@ -269,7 +269,7 @@ main {
 
 .section {
   padding: 60px 0;
-  scroll-margin-top: 110px;
+  scroll-margin-top: 72px;
 }
 
 .section + .section {
@@ -282,7 +282,8 @@ main {
 .metric-label,
 .people-group-label,
 .contact-link-label,
-.project-tag {
+.project-tag,
+.clients-group-label {
   display: inline-block;
   font-size: 0.66rem;
   letter-spacing: 0.22em;
@@ -340,7 +341,8 @@ main {
 .hero-subtitle,
 .hero-text,
 .method-lead-sub,
-.method-lead-text {
+.method-lead-text,
+.clients-intro {
   color: var(--text-soft);
   line-height: 1.66;
   font-size: 0.96rem;
@@ -524,7 +526,6 @@ main {
   margin-top: 22px;
 }
 
-/* BLOCCO VIDEO CORRETTO */
 .hero-video-shell {
   position: relative;
   margin: 4px 0 0;
@@ -877,6 +878,118 @@ main {
   font-weight: 600;
 }
 
+.clients-intro {
+  margin: 0 0 28px;
+  max-width: 48rem;
+}
+
+.clients-groups {
+  display: grid;
+  gap: 14px;
+}
+
+.clients-group {
+  padding: 22px 18px;
+}
+
+.clients-group-head {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.clients-group-title {
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.logos-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.logo-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 96px;
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(244, 239, 231, 0.08);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.008)),
+    rgba(8, 8, 8, 0.55);
+  overflow: hidden;
+  transition:
+    transform 0.24s ease,
+    border-color 0.24s ease,
+    background 0.24s ease;
+}
+
+.logo-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(244, 239, 231, 0.14);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.012)),
+    rgba(10, 10, 10, 0.68);
+}
+
+.logo-card img {
+  width: 100%;
+  max-width: 150px;
+  max-height: 42px;
+  object-fit: contain;
+  object-position: center;
+  filter: grayscale(1) brightness(1.75) contrast(0.9);
+  opacity: 0.78;
+  transition: filter 0.28s ease, opacity 0.28s ease, transform 0.28s ease;
+}
+
+.logo-card:hover img {
+  filter: grayscale(0) brightness(1) contrast(1);
+  opacity: 1;
+  transform: scale(1.01);
+}
+
+.logo-card-invert img {
+  filter: invert(1) grayscale(1) brightness(1.35) contrast(0.92);
+}
+
+.logo-card-invert:hover img {
+  filter: invert(0) grayscale(0) brightness(1) contrast(1);
+}
+
+.logo-card-on-dark img {
+  filter: grayscale(1) brightness(1.15) contrast(0.95);
+}
+
+.logo-card-on-dark:hover img {
+  filter: grayscale(0) brightness(1) contrast(1);
+}
+
+.logo-card-on-light {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015)),
+    rgba(18, 18, 18, 0.72);
+}
+
+.logo-card-empty {
+  padding: 18px;
+}
+
+.logo-card-empty span {
+  display: block;
+  text-align: center;
+  color: var(--text-soft);
+  font-size: 0.86rem;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+}
+
 .contact-links {
   display: grid;
   gap: 10px;
@@ -929,6 +1042,24 @@ main {
 
 .site-footer p {
   margin: 0;
+}
+
+@media (max-width: 399px) {
+  .hero-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-title {
+    font-size: clamp(2.1rem, 14vw, 2.8rem);
+  }
+
+  .logos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .logo-card {
+    min-height: 90px;
+  }
 }
 
 @media (min-width: 760px) {
@@ -1017,7 +1148,6 @@ main {
   .section-kicker {
     text-align: right;
     max-width: none;
-    white-space: nowrap;
   }
 
   .about-panel {
@@ -1056,6 +1186,33 @@ main {
 
   .project-note {
     grid-column: 1 / -1;
+  }
+
+  .clients-groups {
+    gap: 16px;
+  }
+
+  .clients-group {
+    padding: 24px 22px;
+  }
+
+  .logos-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .logo-card {
+    min-height: 104px;
+    padding: 18px;
+  }
+
+  .logo-card img {
+    max-width: 170px;
+    max-height: 48px;
+  }
+
+  .section {
+    scroll-margin-top: 90px;
   }
 
   .site-footer {
@@ -1103,6 +1260,21 @@ main {
 
   .project-note {
     grid-column: span 1;
+  }
+
+  .logos-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .logo-card {
+    min-height: 112px;
+    padding: 20px;
+  }
+
+  .logo-card img {
+    max-width: 180px;
+    max-height: 52px;
   }
 
   .site-footer {
