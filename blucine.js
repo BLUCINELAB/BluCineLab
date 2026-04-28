@@ -1,265 +1,254 @@
-(() => {
-  "use strict";
+/* ─────────────────────────────────────────────────────────────
+   BLUCINELAB — BLUCINE.JS / CLEAN CINEMATIC PREMIUM CUT
+   Direction before execution.
+───────────────────────────────────────────────────────────── */
 
-  const doc  = document;
-  const html = doc.documentElement;
-  const body = doc.body;
+document.addEventListener("DOMContentLoaded", () => {
+  /* ─────────────────────────────────────────────────────────
+     DOM REFERENCES
+  ───────────────────────────────────────────────────────── */
+  const body = document.body;
+  const header = document.getElementById("site-header");
 
-  const siteHeader   = doc.getElementById("site-header");
-  const navToggle    = doc.querySelector(".nav-toggle");
-  const siteNav      = doc.getElementById("site-nav");
-  const navLinks     = Array.from(doc.querySelectorAll('.site-nav a[href^="#"]'));
-  const footerYear   = doc.getElementById("footerYear");
-  const heroVideo    = doc.querySelector(".hero-video");
-  const heroShell    = doc.querySelector(".hero-video-shell");
-  const revealEls    = Array.from(doc.querySelectorAll(".reveal"));
+  const navToggle = document.querySelector(".nav-toggle");
+  const siteNav = document.getElementById("site-nav");
+  const navLinks = document.querySelectorAll(".site-nav a");
 
-  const desktopMQ      = window.matchMedia("(min-width: 760px)");
-  const reduceMotionMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const heroVideo = document.querySelector(".hero-video");
 
-  let menuOpen = false;
-  let rafPending = false;
+  const revealItems = document.querySelectorAll(".reveal");
 
-  /* ── YEAR ─────────────────────────────────────────────────── */
-  function setFooterYear() {
-    if (footerYear) footerYear.textContent = String(new Date().getFullYear());
-  }
+  /* ─────────────────────────────────────────────────────────
+     MOBILE NAVIGATION
+  ───────────────────────────────────────────────────────── */
+  if (navToggle && siteNav) {
+    navToggle.addEventListener("click", () => {
+      const isOpen = siteNav.classList.toggle("is-open");
 
-  /* ── HEADER HEIGHT ────────────────────────────────────────── */
-  function headerHeight() {
-    return siteHeader ? siteHeader.offsetHeight : 0;
-  }
+      navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
 
-  /* ── NAV STATE ────────────────────────────────────────────── */
-  function setNavState(open) {
-    if (!navToggle || !siteNav) return;
-    menuOpen = Boolean(open);
-
-    navToggle.setAttribute("aria-expanded", String(menuOpen));
-    siteNav.classList.toggle("is-open", menuOpen);
-
-    if (desktopMQ.matches) {
-      html.style.overflow = "";
-      body.style.overflow = "";
-      siteNav.removeAttribute("aria-hidden");
-      return;
-    }
-
-    if (menuOpen) {
-      html.style.overflow = "hidden";
-      body.style.overflow = "hidden";
-      siteNav.setAttribute("aria-hidden", "false");
-    } else {
-      html.style.overflow = "";
-      body.style.overflow = "";
-      siteNav.setAttribute("aria-hidden", "true");
-    }
-  }
-
-  function closeNav() { setNavState(false); }
-  function toggleNav() { setNavState(!menuOpen); }
-
-  function initNav() {
-    if (!navToggle || !siteNav) return;
-
-    setNavState(false);
-
-    navToggle.addEventListener("click", toggleNav);
+      body.classList.toggle("nav-open", isOpen);
+    });
 
     navLinks.forEach((link) => {
       link.addEventListener("click", () => {
-        if (!desktopMQ.matches) closeNav();
+        siteNav.classList.remove("is-open");
+        navToggle.setAttribute("aria-expanded", "false");
+        body.classList.remove("nav-open");
       });
     });
 
-    doc.addEventListener("click", (e) => {
-      if (!menuOpen || desktopMQ.matches || !siteHeader) return;
-      if (!siteHeader.contains(e.target)) closeNav();
-    });
+    document.addEventListener("click", (event) => {
+      const clickedInsideNav = siteNav.contains(event.target);
+      const clickedToggle = navToggle.contains(event.target);
 
-    doc.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && menuOpen) {
-        closeNav();
-        navToggle.focus();
+      if (!clickedInsideNav && !clickedToggle) {
+        siteNav.classList.remove("is-open");
+        navToggle.setAttribute("aria-expanded", "false");
+        body.classList.remove("nav-open");
       }
     });
+  }
 
-    const onViewportChange = () => {
-      if (desktopMQ.matches) {
-        setNavState(false);
-        siteNav.removeAttribute("aria-hidden");
-      } else if (!menuOpen) {
-        siteNav.setAttribute("aria-hidden", "true");
-      }
-      requestScrollUpdate();
+  /* ─────────────────────────────────────────────────────────
+     HEADER SCROLL STATE
+  ───────────────────────────────────────────────────────── */
+  const updateHeaderState = () => {
+    if (!header) return;
+
+    if (window.scrollY > 24) {
+      header.classList.add("is-scrolled");
+    } else {
+      header.classList.remove("is-scrolled");
+    }
+  };
+
+  updateHeaderState();
+
+  window.addEventListener(
+    "scroll",
+    updateHeaderState,
+    { passive: true }
+  );
+
+  /* ─────────────────────────────────────────────────────────
+     HERO VIDEO SAFE FALLBACK
+     If no source or failed load → elegant visual shell only
+  ───────────────────────────────────────────────────────── */
+  if (heroVideo) {
+    const source = heroVideo.querySelector("source");
+
+    const disableVideo = () => {
+      heroVideo.classList.add("video-disabled");
+      heroVideo.pause();
+      heroVideo.removeAttribute("autoplay");
+      heroVideo.controls = false;
     };
 
-    addMQListener(desktopMQ, onViewportChange);
-    window.addEventListener("resize", onViewportChange, { passive: true });
-  }
-
-  /* ── SCROLL SPY ───────────────────────────────────────────── */
-  function setActiveLink(id) {
-    navLinks.forEach((link) => {
-      const href = link.getAttribute("href");
-      const active = href === `#${id}`;
-      link.classList.toggle("is-active", active);
-      link.setAttribute("aria-current", active ? "page" : "false");
-    });
-  }
-
-  function updateScroll() {
-    if (siteHeader) {
-      siteHeader.dataset.scrolled = window.scrollY > 12 ? "true" : "false";
+    if (!source || !source.getAttribute("src") || source.getAttribute("src").trim() === "") {
+      disableVideo();
     }
 
-    const sections = navLinks
-      .map((link) => {
-        const id = (link.getAttribute("href") || "").slice(1);
-        const el = id ? doc.getElementById(id) : null;
-        return el ? { id, el } : null;
-      })
-      .filter(Boolean);
+    heroVideo.addEventListener("error", disableVideo);
 
-    if (!sections.length) return;
-
-    const offset  = headerHeight() + 120;
-    let currentId = sections[0].id;
-
-    sections.forEach(({ id, el }) => {
-      if (window.scrollY >= el.offsetTop - offset) currentId = id;
+    heroVideo.addEventListener("loadeddata", () => {
+      heroVideo.classList.remove("video-disabled");
     });
 
-    const atBottom =
-      window.innerHeight + window.scrollY >= doc.documentElement.scrollHeight - 8;
-    if (atBottom) currentId = sections[sections.length - 1].id;
-
-    setActiveLink(currentId);
-  }
-
-  function requestScrollUpdate() {
-    if (rafPending) return;
-    rafPending = true;
-    window.requestAnimationFrame(() => {
-      updateScroll();
-      rafPending = false;
+    /* Optional subtle playback speed */
+    heroVideo.addEventListener("canplay", () => {
+      try {
+        heroVideo.playbackRate = 0.85;
+      } catch (e) {}
     });
   }
 
-  function initScrollSpy() {
-    updateScroll();
-    window.addEventListener("scroll", requestScrollUpdate, { passive: true });
-    window.addEventListener("resize", requestScrollUpdate, { passive: true });
-    window.addEventListener("orientationchange", requestScrollUpdate, { passive: true });
-    window.addEventListener("hashchange", () => {
-      window.requestAnimationFrame(updateScroll);
-    });
-  }
-
-  /* ── SCROLL REVEAL ────────────────────────────────────────── */
-  function initReveal() {
-    if (!revealEls.length) return;
-
-    if (reduceMotionMQ.matches) {
-      revealEls.forEach((el) => el.classList.add("is-visible"));
-      return;
-    }
-
-    if (!("IntersectionObserver" in window)) {
-      revealEls.forEach((el) => el.classList.add("is-visible"));
-      return;
-    }
-
-    const obs = new IntersectionObserver(
-      (entries) => {
+  /* ─────────────────────────────────────────────────────────
+     REVEAL SYSTEM
+     Elegant, subtle section entrances
+  ───────────────────────────────────────────────────────── */
+  if ("IntersectionObserver" in window && revealItems.length > 0) {
+    const revealObserver = new IntersectionObserver(
+      (entries, observer) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible");
-            obs.unobserve(entry.target);
+            observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px"
+      }
     );
 
-    revealEls.forEach((el) => obs.observe(el));
+    revealItems.forEach((item) => {
+      item.classList.add("reveal-init");
+      revealObserver.observe(item);
+    });
+  } else {
+    revealItems.forEach((item) => {
+      item.classList.add("is-visible");
+    });
   }
 
-  /* ── HERO VIDEO ───────────────────────────────────────────── */
-  function tryPlay(video) {
-    const p = video.play();
-    if (p && typeof p.catch === "function") p.catch(() => {});
+  /* ─────────────────────────────────────────────────────────
+     SMOOTH ANCHOR OFFSET
+     Better fixed-header navigation
+  ───────────────────────────────────────────────────────── */
+  navLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const href = link.getAttribute("href");
+
+      if (!href || !href.startsWith("#")) return;
+
+      const target = document.querySelector(href);
+
+      if (!target) return;
+
+      e.preventDefault();
+
+      const headerOffset = header ? header.offsetHeight + 18 : 90;
+
+      const targetPosition =
+        target.getBoundingClientRect().top +
+        window.pageYOffset -
+        headerOffset;
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth"
+      });
+    });
+  });
+
+  /* ─────────────────────────────────────────────────────────
+     ACTIVE SECTION HIGHLIGHT
+  ───────────────────────────────────────────────────────── */
+  const sections = document.querySelectorAll("main section[id]");
+
+  if ("IntersectionObserver" in window && sections.length > 0) {
+    const navObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute("id");
+
+            navLinks.forEach((link) => {
+              link.classList.toggle(
+                "is-active",
+                link.getAttribute("href") === `#${id}`
+              );
+            });
+          }
+        });
+      },
+      {
+        threshold: 0.35
+      }
+    );
+
+    sections.forEach((section) => navObserver.observe(section));
   }
 
-  function stopVideo() {
-    if (heroVideo) heroVideo.pause();
-  }
+  /* ─────────────────────────────────────────────────────────
+     REDUCED MOTION ACCESSIBILITY
+  ───────────────────────────────────────────────────────── */
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
 
-  function startVideo() {
-    if (!heroVideo || reduceMotionMQ.matches) return;
-    if (doc.visibilityState !== "visible") return;
-    tryPlay(heroVideo);
-  }
+  if (prefersReducedMotion.matches) {
+    document.documentElement.style.scrollBehavior = "auto";
 
-  function syncVideoMotion() {
-    if (!heroVideo) return;
-    if (reduceMotionMQ.matches) {
-      stopVideo();
-      try { heroVideo.currentTime = 0; } catch (_) {}
-    } else {
-      startVideo();
-    }
-  }
-
-  function initHeroVideo() {
-    if (!heroVideo || !heroShell) return;
-
-    heroVideo.muted = true;
-    heroVideo.playsInline = true;
-
-    syncVideoMotion();
-
-    if (!reduceMotionMQ.matches && "IntersectionObserver" in window) {
-      const obs = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => {
-            if (e.isIntersecting && e.intersectionRatio > 0.35) {
-              startVideo();
-            } else {
-              stopVideo();
-            }
-          });
-        },
-        { threshold: [0, 0.35, 0.7] }
-      );
-      obs.observe(heroShell);
-    }
-
-    doc.addEventListener("visibilitychange", () => {
-      doc.visibilityState === "visible" ? syncVideoMotion() : stopVideo();
+    revealItems.forEach((item) => {
+      item.classList.remove("reveal-init");
+      item.classList.add("is-visible");
     });
 
-    addMQListener(reduceMotionMQ, syncVideoMotion);
-  }
-
-  /* ── MQ LISTENER COMPAT ───────────────────────────────────── */
-  function addMQListener(mq, fn) {
-    if (!mq) return;
-    if (typeof mq.addEventListener === "function") {
-      mq.addEventListener("change", fn);
-    } else if (typeof mq.addListener === "function") {
-      mq.addListener(fn);
+    if (heroVideo) {
+      heroVideo.pause();
     }
   }
 
-  /* ── INIT ─────────────────────────────────────────────────── */
-  function init() {
-    setFooterYear();
-    initNav();
-    initScrollSpy();
-    initReveal();
-    initHeroVideo();
+  /* ─────────────────────────────────────────────────────────
+     KEYBOARD ESC CLOSE NAV
+  ───────────────────────────────────────────────────────── */
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && siteNav?.classList.contains("is-open")) {
+      siteNav.classList.remove("is-open");
+      navToggle?.setAttribute("aria-expanded", "false");
+      body.classList.remove("nav-open");
+    }
+  });
+
+  /* ─────────────────────────────────────────────────────────
+     PARALLAX MICRO-MOTION (DESKTOP ONLY)
+     Subtle environmental movement
+  ───────────────────────────────────────────────────────── */
+  const isDesktop = window.innerWidth > 1024;
+  const orbA = document.querySelector(".bg-orb-a");
+  const orbB = document.querySelector(".bg-orb-b");
+
+  if (isDesktop && orbA && orbB && !prefersReducedMotion.matches) {
+    window.addEventListener(
+      "mousemove",
+      (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 18;
+        const y = (e.clientY / window.innerHeight - 0.5) * 18;
+
+        orbA.style.transform = `translate(${x * -1}px, ${y * -1}px)`;
+        orbB.style.transform = `translate(${x}px, ${y}px)`;
+      },
+      { passive: true }
+    );
   }
 
-  init();
-})();
+  /* ─────────────────────────────────────────────────────────
+     PERFORMANCE / PAGE READY
+  ───────────────────────────────────────────────────────── */
+  window.requestAnimationFrame(() => {
+    body.classList.add("page-ready");
+  });
+});
