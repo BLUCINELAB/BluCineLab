@@ -1,57 +1,44 @@
 # BluCineLab
 
-BluCineLab is an independent creative production studio based in Bologna, working across Italy and Europe for photo, film, editorial and cultural projects.
+BluCineLab is an independent creative production studio based in Bologna, working across Italy and Europe for film, photography, fashion, culture, hospitality, music and sound.
 
-**Italy, made shootable.**
+**Direction before production.**
 
 [blucinelab.it](https://blucinelab.it)
 
-## Working modes
-
-1. **Creative Production** — concept, visual direction and end-to-end production.
-2. **Production Service** — locations, crew, equipment, permits coordination, travel, logistics and set support.
-3. **Hybrid Production** — shared creative leadership with reliable local execution.
-
 ## Core team
 
-**Anton Likht**
+**Anton Likht** — Creative and Production Director
 
-Director, cinematographer and producer. Leads visual direction, production design and image making from treatment to delivery.
+**Sonia Giudici** — Creative Producer and Photographer. Fashion and e-commerce photography, video, cultural production and event coordination.
 
-**Beatrice Visentin**
+**Beatrice Visentin** — Fashion, Styling and Creative Coordination
 
-Fashion designer, stylist and creative coordinator. Develops wardrobe, styling research and visual continuity across photo and moving image.
+**Michele Piccolo** — Music Producer and Creative Director
 
-**Sonia Giudici**
+**Federico Basagni** — Production Design and Visual Operations
 
-Creative producer and project developer. Connects artistic dialogue, production care and cultural context.
+The studio assembles additional crew around the geography, scale and technical needs of each brief.
 
-**Federico Basagni**
+## Working modes
 
-Visual production and field operations. Supports scenographic logic, technical coordination and on set execution.
+1. Creative direction and visual research
+2. Film and photography production
+3. Production service in Italy
+4. Fashion, styling and creative coordination
+5. Music production, sound design and sonic identity
+6. Post production and delivery
 
-The studio assembles additional crew around each brief.
+## Credit policy
 
-## Selected work policy
+Public work is presented with explicit roles and project status. Earlier credits are identified as selected work by the people who made them and are not represented as retroactive BluCineLab commissions. Sensitive or unreleased material is shared privately when relevant to a brief.
 
-Public work is presented with explicit roles and project status. Earlier credits are identified as selected work by the founders and are not represented as retroactive BluCineLab commissions. Sensitive or unreleased material is shared privately when relevant to a brief.
+## Site principles
 
-## Repository
-
-```text
-index.html      Site structure, content, metadata and structured data
-style.css       Editorial visual system and responsive layout
-blucine.js      Navigation, scroll states, progress and reveal interactions
-asset/          Optimized images, visual assets and favicon
-CNAME           Custom domain configuration
-robots.txt      Search indexing rules
-sitemap.xml     Search indexing map
-```
-
-The website is a dependency-light static build designed for GitHub Pages. It includes semantic HTML, responsive navigation, reduced motion support, keyboard-friendly controls, Open Graph metadata, canonical URLs and JSON-LD organization data.
+The site is a dependency-light static build for GitHub Pages. Images always retain their native proportions: no portfolio image uses a forced height or automatic cover crop. Content remains visible without JavaScript; the script only controls mobile navigation, the header state and the footer year.
 
 ## Contact
 
 [blucinelab@gmail.com](mailto:blucinelab@gmail.com)
 
-[Instagram](https://www.instagram.com/blucinelab)
+[Instagram](https://www.instagram.com/blucinelab/)
