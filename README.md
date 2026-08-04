@@ -1,128 +1,57 @@
 # BluCineLab
 
-BluCineLab is an independent creative studio based in Bologna working across moving image, spatial narratives, cultural production and visual systems.
+BluCineLab is an independent creative production studio based in Bologna, working across Italy and Europe for photo, film, editorial and cultural projects.
 
-The studio develops projects where image, sound, space, context and narrative structure need to become one coherent system.
+**Italy, made shootable.**
 
-Website:  
-https://blucinelab.it
+[blucinelab.it](https://blucinelab.it)
 
----
+## Working modes
 
-## Positioning
+1. **Creative Production** — concept, visual direction and end-to-end production.
+2. **Production Service** — locations, crew, equipment, permits coordination, travel, logistics and set support.
+3. **Hybrid Production** — shared creative leadership with reliable local execution.
 
-**Direction before production.**
+## Core team
 
-BluCineLab works with projects that need to be read before they are produced. The practice moves between film, commissioned audiovisual work, cultural production, installations, educational contexts, editorial image systems and identity/presence work.
+**Anton Likht**
 
-The method is simple: understand the invisible structure of a project, then choose the image system, format and production logic that can hold it.
+Director, cinematographer and producer. Leads visual direction, production design and image making from treatment to delivery.
 
----
+**Beatrice Visentin**
 
-## Fields of Practice
+Fashion designer, stylist and creative coordinator. Develops wardrobe, styling research and visual continuity across photo and moving image.
 
-• Creative Direction  
-• Moving Image  
-• Cultural Production  
-• Film Coordination  
-• Spatial Narratives  
-• Identity & Presence Systems  
-• Sound, Memory & Narrative Research
+**Sonia Giudici**
 
----
+Creative producer and project developer. Connects artistic dialogue, production care and cultural context.
 
-## Selected Cultural Coordinates
+**Federico Basagni**
 
-Members and collaborators connected to BluCineLab have worked across independent cinema, cultural programs, educational structures, exhibitions, editorial contexts and production environments connected to:
+Visual production and field operations. Supports scenographic logic, technical coordination and on set execution.
 
-• Cineteca di Bologna  
-• National Geographic contexts  
-• IED  
-• Blow Up Academy  
-• Contemporary Concept  
-• MAB UNESCO projects  
-• independent cinema  
-• editorial photography  
-• cultural and exhibition environments  
-• music, memory and sound-led narrative research
+The studio assembles additional crew around each brief.
 
-These references are treated as a quiet cultural archive and working coordinate system.
+## Selected work policy
 
----
+Public work is presented with explicit roles and project status. Earlier credits are identified as selected work by the founders and are not represented as retroactive BluCineLab commissions. Sensitive or unreleased material is shared privately when relevant to a brief.
 
-## Core Team
-
-Anton Likht  
-Direction · Cinematography · Visual systems  
-Works on image structure, cinematic atmosphere and visual coherence.
-
-Sonia Giudici  
-Creative production · Artistic dialogue · Project development  
-Develops projects through artistic dialogue, production care and relational intelligence.
-
-Federico Basagni  
-Visual production · Scenographic support · Operational coordination  
-Supports visual production, scenographic logic and field operations.
-
----
-
-## Project Partners & Collaborators
-
-Alessandro De Rosa  
-Music, memory and authorial narratives
-
-Edoardo Rimoldi  
-Sound Design
-
-Odeon  
-Sound & Composition
-
-Eugenio Distante  
-Sound & Composition
-
-Ivan Petralia  
-Visual Research
-
----
-
-## Repository Structure
+## Repository
 
 ```text
-index.html      Main website structure
-style.css       Cinematic visual system and responsive layout
-blucine.js      Navigation, scroll states, footer year and reveal interactions
-asset/          Images, visual assets and logos
+index.html      Site structure, content, metadata and structured data
+style.css       Editorial visual system and responsive layout
+blucine.js      Navigation, scroll states, progress and reveal interactions
+asset/          Optimized images, visual assets and favicon
 CNAME           Custom domain configuration
 robots.txt      Search indexing rules
 sitemap.xml     Search indexing map
 ```
 
----
-
-## Technical Notes
-
-The site is designed for GitHub Pages deployment.
-
-Preserved features:
-
-• semantic HTML  
-• responsive layout  
-• mobile navigation  
-• reveal interactions  
-• footer year script  
-• SEO metadata  
-• Open Graph metadata  
-• JSON-LD organization schema  
-• robots.txt and sitemap.xml
-
-Visual direction: cinematic editorial · minimal · dark · spatial · cultural archive · non-corporate
-
----
+The website is a dependency-light static build designed for GitHub Pages. It includes semantic HTML, responsive navigation, reduced motion support, keyboard-friendly controls, Open Graph metadata, canonical URLs and JSON-LD organization data.
 
 ## Contact
 
-Email  
-blucinelab@gmail.com
+[blucinelab@gmail.com](mailto:blucinelab@gmail.com)
 
-Instagram  
-https://www.instagram.com/blucinelab
+[Instagram](https://www.instagram.com/blucinelab)
