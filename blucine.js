@@ -9,6 +9,19 @@
 
   if (year) year.textContent = String(new Date().getFullYear());
 
+  const polaroidTarget = document.querySelector('img[src="asset/portfolio/anton-nov83.webp"]');
+  if (polaroidTarget) {
+    polaroidTarget.src = "asset/portfolio/recent-polaroid.webp";
+    polaroidTarget.alt = "Polaroid portrait of a red-haired woman against a reflective gold surface.";
+    polaroidTarget.width = 1483;
+    polaroidTarget.height = 1800;
+
+    const caption = polaroidTarget.closest("figure")?.querySelector("figcaption");
+    if (caption) {
+      caption.innerHTML = "<span>Polaroid study</span><span>Portrait / instant film</span>";
+    }
+  }
+
   const setNavigation = (open) => {
     if (!nav || !toggle) return;
     nav.dataset.open = String(open);
