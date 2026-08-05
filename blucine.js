@@ -22,6 +22,24 @@
     }
   }
 
+  const beatriceHeading = Array.from(document.querySelectorAll(".team-list h3"))
+    .find((heading) => heading.textContent.trim() === "Beatrice Visentin");
+
+  if (beatriceHeading) {
+    const article = beatriceHeading.closest("article");
+    const placeholder = article?.querySelector(':scope > span[aria-hidden="true"]');
+
+    if (article && placeholder) {
+      const link = document.createElement("a");
+      link.href = "https://www.instagram.com/beatrice_visentin_28/";
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.setAttribute("aria-label", "Beatrice Visentin on Instagram");
+      link.textContent = "↗";
+      placeholder.replaceWith(link);
+    }
+  }
+
   const setNavigation = (open) => {
     if (!nav || !toggle) return;
     nav.dataset.open = String(open);
