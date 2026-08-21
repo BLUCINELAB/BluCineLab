@@ -169,7 +169,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .section { padding: var(--section) var(--gutter); }
 .section--tight { padding-block: clamp(3rem, 6vw, 6rem); }
 .section--ink { background: var(--ink); color: var(--white); }
-.section--blue { background: var(--blue); color: var(--white); }
+.section--blue {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 238, 209, 0.92) 0, transparent 32%),
+    radial-gradient(circle at 82% 24%, rgba(210, 224, 255, 0.96) 0, transparent 37%),
+    radial-gradient(circle at 68% 86%, rgba(242, 205, 224, 0.88) 0, transparent 40%),
+    linear-gradient(135deg, #d7e0f4 0%, #eadbea 48%, #efd9bd 100%);
+  color: var(--ink);
+}
 .section--red { background: var(--red); color: var(--ink); }
 .section-rule { border-top: 1px solid var(--ink); }
 
@@ -297,7 +304,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
   text-transform: none;
 }
 
-.section--ink .caption, .section--blue .caption { color: rgba(255, 254, 249, 0.66); }
+.section--ink .caption { color: rgba(255, 254, 249, 0.66); }
+.section--blue .caption { color: rgba(17, 17, 17, 0.58); }
 .proof-image { width: 100%; background: var(--paper-2); }
 
 .work-list {
