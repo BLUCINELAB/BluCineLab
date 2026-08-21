@@ -1,44 +1,45 @@
-# BluCineLab
+# BluCineLab — 2026 redesign
 
-BluCineLab is an independent creative production studio based in Bologna, working across Italy and Europe for film, photography, fashion, culture, hospitality, music and sound.
+Editorial, image-led static website for BluCineLab, an independent creative and production studio based in Bologna.
 
 **Direction before production.**
 
-[blucinelab.it](https://blucinelab.it)
+## Architecture
 
-## Core team
+- Home
+- Selected work and six project pages
+- Image practice
+- People and Sonia Giudici profile
+- Services
+- Studio
 
-**Anton Likht** — Creative and Production Director
+## Core studio
 
-**Sonia Giudici** — Creative Producer and Photographer. Fashion and e-commerce photography, video, cultural production and event coordination.
+- **Anton Likht** — creative and visual direction, direction, cinematography, photography and production
+- **Sonia Giudici** — photography, creative production and artist practice
 
-**Beatrice Visentin** — Fashion, Styling and Creative Coordination
-
-**Michele Piccolo** — Music Producer and Creative Director
-
-**Federico Basagni** — Production Design and Visual Operations
-
-The studio assembles additional crew around the geography, scale and technical needs of each brief.
-
-## Working modes
-
-1. Creative direction and visual research
-2. Film and photography production
-3. Production service in Italy
-4. Fashion, styling and creative coordination
-5. Music production, sound design and sonic identity
-6. Post production and delivery
+The closest collaborators are listed separately, in this order: Michele Piccolo, Beatrice Visentin and Federico Basagni. A wider production network is assembled project by project.
 
 ## Credit policy
 
-Public work is presented with explicit roles and project status. Earlier credits are identified as selected work by the people who made them and are not represented as retroactive BluCineLab commissions. Sensitive or unreleased material is shared privately when relevant to a brief.
+Every project is labelled as one of:
 
-## Site principles
+1. BluCineLab production or commission
+2. Selected work by a studio member
+3. Development concept
 
-The site is a dependency-light static build for GitHub Pages. Images always retain their native proportions: no portfolio image uses a forced height or automatic cover crop. Content remains visible without JavaScript; the script only controls mobile navigation, the header state and the footer year.
+Earlier credits are not retroactively presented as studio commissions. Employers and individual professional experience are not presented as BluCineLab clients. Development material is not presented as delivered work.
+
+## Build principles
+
+The site is a dependency-free static build for GitHub Pages. Content and navigation work without JavaScript; the small script only updates the footer year and improves external-link labelling. Images preserve their native aspect ratio and use AVIF/WebP responsive variants where available.
+
+The typographic system uses self-hosted Instrument Sans Variable and Instrument Serif under the SIL Open Font License. License files are stored beside the font files in `asset/fonts/`.
+
+## Local preview
+
+Serve the repository root with any static HTTP server. Root-relative asset paths require an HTTP preview rather than opening the HTML files directly.
 
 ## Contact
 
-[blucinelab@gmail.com](mailto:blucinelab@gmail.com)
-
-[Instagram](https://www.instagram.com/blucinelab/)
+[blucinelab@gmail.com](mailto:blucinelab@gmail.com) · [Instagram](https://www.instagram.com/blucinelab/)
