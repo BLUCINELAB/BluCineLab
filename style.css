@@ -450,8 +450,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   align-self: start;
   justify-self: end;
   color: inherit;
-  font: 650 0.72rem/1 var(--mono);
-  letter-spacing: 0.045em;
+  font-size: 1.35rem;
   text-decoration: none;
 }
 .team-network-note {
