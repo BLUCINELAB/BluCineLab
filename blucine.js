@@ -10,7 +10,7 @@ for (const link of document.querySelectorAll('a[target="_blank"]')) {
 }
 
 // Keep the primary enquiry route consistent across the static site while
-// preserving direct email links as a secondary fallback.
+// preserving direct email links as a secondary fallback when JavaScript is off.
 for (const link of document.querySelectorAll(".header-contact")) {
   link.setAttribute("href", "/start-project/");
 }
@@ -22,24 +22,28 @@ if (enquiryForm) {
     const value = (name) => String(data.get(name) || "").trim();
     const type = value("project-type") || "Project";
     const organisation = value("organisation");
-    const lines = [
+    const detailLines = [
       `Name: ${value("name")}`,
       `Email: ${value("email")}`,
       organisation ? `Organisation: ${organisation}` : "",
       `Project type: ${type}`,
       value("location-dates") ? `Location / timing: ${value("location-dates")}` : "",
       value("budget") ? `Budget: ${value("budget")}` : "",
-      value("reference") ? `Brief / reference link: ${value("reference")}` : "",
+      value("reference") ? `Brief / reference link: ${value("reference")}` : ""
+    ].filter(Boolean);
+
+    const body = [
+      ...detailLines,
       "",
       "Project / problem:",
       value("brief"),
       "",
       `Sent from: ${window.location.href}`
-    ].filter(Boolean);
+    ].join("\n");
 
     return {
       subject: `Project enquiry — ${type}${organisation ? ` — ${organisation}` : ""}`,
-      body: lines.join("\n")
+      body
     };
   };
 
@@ -51,14 +55,22 @@ if (enquiryForm) {
   });
 
   const copyButton = enquiryForm.querySelector("[data-copy-enquiry]");
-  if (copyButton && navigator.clipboard) {
-    copyButton.addEventListener("click", async () => {
-      if (!enquiryForm.reportValidity()) return;
-      const enquiry = buildEnquiry();
-      await navigator.clipboard.writeText(`${enquiry.subject}\n\n${enquiry.body}`);
-      const original = copyButton.textContent;
-      copyButton.textContent = "Brief copied";
-      window.setTimeout(() => { copyButton.textContent = original; }, 1800);
-    });
+  if (copyButton) {
+    if (!navigator.clipboard?.writeText) {
+      copyButton.hidden = true;
+    } else {
+      copyButton.addEventListener("click", async () => {
+        if (!enquiryForm.reportValidity()) return;
+        const enquiry = buildEnquiry();
+        const original = copyButton.textContent;
+        try {
+          await navigator.clipboard.writeText(`${enquiry.subject}\n\n${enquiry.body}`);
+          copyButton.textContent = "Brief copied";
+        } catch {
+          copyButton.textContent = "Copy unavailable";
+        }
+        window.setTimeout(() => { copyButton.textContent = original; }, 1800);
+      });
+    }
   }
 }
