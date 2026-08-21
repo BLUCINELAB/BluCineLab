@@ -37,20 +37,16 @@ if (practiceStrip) {
     figures[2].before(afterimage);
 
     const media = afterimage.querySelector(".afterimage-media");
-    const parts = [1, 2, 3].map((part) =>
-      fetch(`/asset/portfolio/anton-afterimage-polaroid-480.b64.${part}.txt`, { cache: "force-cache" })
-        .then((response) => {
-          if (!response.ok) throw new Error(`Afterimage part ${part} failed`);
-          return response.text();
-        })
-    );
-
-    Promise.all(parts)
-      .then((chunks) => {
+    fetch("/asset/portfolio/anton-afterimage-polaroid-valid.b64.txt", { cache: "no-cache" })
+      .then((response) => {
+        if (!response.ok) throw new Error("Afterimage source failed");
+        return response.text();
+      })
+      .then((encoded) => {
         const image = document.createElement("img");
-        image.src = `data:image/webp;base64,${chunks.join("").replace(/\s+/g, "")}`;
-        image.width = 480;
-        image.height = 583;
+        image.src = `data:image/webp;base64,${encoded.replace(/\s+/g, "")}`;
+        image.width = 420;
+        image.height = 510;
         image.loading = "lazy";
         image.decoding = "async";
         image.alt = "Warm-toned Polaroid portrait of a red-haired woman in white against a glowing textured background.";
