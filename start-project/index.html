@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Start a Project — BluCineLab</title>
+  <meta name="description" content="Start a project with BluCineLab. Share the brief, timing, location and what is already decided; the studio will help define the right scope and production structure.">
+  <link rel="canonical" href="https://blucinelab.it/start-project/">
+  <meta name="theme-color" content="#df4b2f">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BluCineLab">
+  <meta property="og:title" content="Start a Project — BluCineLab">
+  <meta property="og:description" content="A brief can be rough. The responsibility cannot.">
+  <meta property="og:url" content="https://blucinelab.it/start-project/">
+  <meta property="og:image" content="https://blucinelab.it/asset/portfolio/production-set.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/asset/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .enquiry-wrap{display:grid;grid-template-columns:minmax(0,5fr) minmax(18rem,4fr);gap:clamp(2rem,7vw,8rem);align-items:start}
+    .enquiry-form{display:grid;gap:1.25rem}
+    .enquiry-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+    .enquiry-field{display:grid;gap:.45rem}
+    .enquiry-field--wide{grid-column:1/-1}
+    .enquiry-field label{font:650 .72rem/1.2 var(--mono);letter-spacing:.045em;text-transform:uppercase}
+    .enquiry-field input,.enquiry-field select,.enquiry-field textarea{width:100%;padding:.9rem 0;border:0;border-bottom:1px solid currentColor;border-radius:0;background:transparent;color:inherit;font:inherit;outline:none}
+    .enquiry-field textarea{min-height:10rem;resize:vertical}
+    .enquiry-field input:focus,.enquiry-field select:focus,.enquiry-field textarea:focus{border-bottom-width:3px}
+    .enquiry-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1rem}
+    .enquiry-button{appearance:none;padding:.9rem 1.1rem;border:1px solid var(--ink);background:var(--ink);color:var(--white);font:700 .78rem/1 var(--mono);letter-spacing:.04em;text-transform:uppercase;cursor:pointer}
+    .enquiry-button--secondary{background:transparent;color:var(--ink)}
+    .enquiry-note{max-width:38ch;color:var(--muted);font-size:.9rem}
+    .enquiry-aside{position:sticky;top:7rem;padding-top:1rem;border-top:1px solid currentColor}
+    .enquiry-aside h2{margin:1.5rem 0 .8rem;font:400 clamp(2rem,4vw,4.4rem)/.95 var(--serif);letter-spacing:-.04em}
+    .enquiry-aside p{max-width:34ch}
+    @media(max-width:800px){.enquiry-wrap,.enquiry-grid{grid-template-columns:1fr}.enquiry-aside{position:static}.enquiry-field--wide{grid-column:auto}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+    <a class="wordmark" href="/">BluCineLab <small>Bologna / Italy</small></a>
+    <nav class="main-nav" aria-label="Primary navigation"><a href="/work/">Work</a><a href="/image-practice/">Image practice</a><a href="/people/">People</a><a href="/services/">Services</a><a href="/studio/">Studio</a></nav>
+    <a class="header-contact" href="/start-project/" aria-current="page">Start a project ↗</a>
+  </header>
+  <main id="content" class="page-shell">
+    <section class="page-hero section--red">
+      <p class="eyebrow">Project enquiry · Direct to the studio</p>
+      <h1 class="page-title page-title--wide">A brief can be rough. The responsibility <em>cannot.</em></h1>
+      <div class="page-hero__meta"><p>Film<br>Photography<br>Creative direction</p><p>Culture<br>Fashion<br>Sound / space</p><p>Production support<br>in Italy</p></div>
+    </section>
+    <section class="section">
+      <div class="enquiry-wrap">
+        <form class="enquiry-form" data-enquiry-form>
+          <div class="enquiry-grid">
+            <div class="enquiry-field"><label for="name">Name *</label><input id="name" name="name" autocomplete="name" required></div>
+            <div class="enquiry-field"><label for="email">Email *</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+            <div class="enquiry-field"><label for="organisation">Organisation</label><input id="organisation" name="organisation" autocomplete="organization"></div>
+            <div class="enquiry-field"><label for="project-type">Project type *</label><select id="project-type" name="project-type" required><option value="">Choose one</option><option>Film / moving image</option><option>Photography</option><option>Creative / visual direction</option><option>Cultural production</option><option>Production in Italy</option><option>Fashion / styling</option><option>Music / sound</option><option>Other</option></select></div>
+            <div class="enquiry-field"><label for="location-dates">Location / timing</label><input id="location-dates" name="location-dates" placeholder="Bologna · October / dates TBD"></div>
+            <div class="enquiry-field"><label for="budget">Budget</label><select id="budget" name="budget"><option value="">Still open / prefer not to say</option><option>Under €5k</option><option>€5k–€15k</option><option>€15k–€50k</option><option>€50k+</option></select></div>
+            <div class="enquiry-field enquiry-field--wide"><label for="reference">Brief / reference link</label><input id="reference" name="reference" type="url" inputmode="url" placeholder="https://"></div>
+            <div class="enquiry-field enquiry-field--wide"><label for="brief">What are you trying to make or solve? *</label><textarea id="brief" name="brief" required placeholder="Tell us what the project needs to do, what is already decided and where the uncertainty is."></textarea></div>
+          </div>
+          <div class="enquiry-actions"><button class="enquiry-button" type="submit">Prepare email ↗</button><button class="enquiry-button enquiry-button--secondary" type="button" data-copy-enquiry>Copy brief</button></div>
+          <p class="enquiry-note">This page does not upload or store your brief. “Prepare email” opens your mail app with the information above already structured. Prefer writing directly? <a href="mailto:blucinelab@gmail.com">blucinelab@gmail.com</a>.</p>
+          <noscript><p class="status-note">JavaScript is disabled. Please email your brief directly to blucinelab@gmail.com.</p></noscript>
+        </form>
+        <aside class="enquiry-aside">
+          <p class="eyebrow">Useful in the first message</p>
+          <h2>Enough context to make the next decision.</h2>
+          <p>Share the objective, where the work will live, approximate timing and what is already decided. If format or budget is still open, say so.</p>
+          <p>For production enquiries in Italy, include city or region, dates, any crew already attached and the type of local support you need.</p>
+          <p><a class="link-arrow" href="/production-in-italy/">Production support in Italy</a></p>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="footer-grid"><p class="footer-title">Direction before production.</p><nav class="footer-nav" aria-label="Footer navigation"><a href="/work/">Work</a><a href="/image-practice/">Image practice</a><a href="/people/">People</a><a href="/services/">Services</a><a href="/studio/">Studio</a></nav><nav class="footer-nav" aria-label="Social links"><a href="mailto:blucinelab@gmail.com">Email</a><a href="https://www.instagram.com/blucinelab/" target="_blank" rel="noopener">Instagram ↗</a></nav></div><div class="footer-bottom"><span>BluCineLab · Bologna, Italy</span><span>© <span data-current-year>2026</span> · All work credited to its author</span></div></footer>
+  <script src="/blucine.js" defer></script>
+</body>
+</html>
