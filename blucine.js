@@ -31,10 +31,35 @@ if (practiceStrip) {
     const afterimage = document.createElement("figure");
     afterimage.className = "image-figure practice-composition__afterimage";
     afterimage.innerHTML = `
-      <img src="/asset/portfolio/anton-afterimage-polaroid-1200.webp" width="1200" height="1456" loading="lazy" decoding="async" alt="Warm-toned Polaroid portrait of a red-haired woman in white against a glowing textured background.">
+      <div class="afterimage-media" aria-busy="true"></div>
       <figcaption class="caption"><span>Afterimage — Anton Likht</span><span>Polaroid / 2026</span></figcaption>
     `;
     figures[2].before(afterimage);
+
+    const media = afterimage.querySelector(".afterimage-media");
+    const parts = [1, 2, 3].map((part) =>
+      fetch(`/asset/portfolio/anton-afterimage-polaroid-480.b64.${part}.txt`, { cache: "force-cache" })
+        .then((response) => {
+          if (!response.ok) throw new Error(`Afterimage part ${part} failed`);
+          return response.text();
+        })
+    );
+
+    Promise.all(parts)
+      .then((chunks) => {
+        const image = document.createElement("img");
+        image.src = `data:image/webp;base64,${chunks.join("").replace(/\s+/g, "")}`;
+        image.width = 480;
+        image.height = 583;
+        image.loading = "lazy";
+        image.decoding = "async";
+        image.alt = "Warm-toned Polaroid portrait of a red-haired woman in white against a glowing textured background.";
+        media.replaceWith(image);
+      })
+      .catch(() => {
+        media.removeAttribute("aria-busy");
+        media.classList.add("afterimage-media--error");
+      });
   }
 }
 
