@@ -446,7 +446,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .team-index__row--core h3 { font-size: clamp(3rem, 6.2vw, 7.3rem); }
 .team-index__role strong { display: block; font-size: clamp(1.05rem, 1.45vw, 1.45rem); line-height: 1.1; }
 .team-index__role p { max-width: 35ch; margin: 0.65rem 0 0; color: var(--muted); }
-.team-index__link { align-self: start; justify-self: end; color: inherit; font-size: 1.35rem; text-decoration: none; }
+.team-index__link {
+  align-self: start;
+  justify-self: end;
+  color: inherit;
+  font: 650 0.72rem/1 var(--mono);
+  letter-spacing: 0.045em;
+  text-decoration: none;
+}
 .team-network-note {
   display: grid;
   grid-template-columns: 2fr 1fr;
