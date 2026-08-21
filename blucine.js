@@ -9,6 +9,35 @@ for (const link of document.querySelectorAll('a[target="_blank"]')) {
   }
 }
 
+// Home image-practice composition: keep the static three-image fallback intact,
+// then progressively enhance it into an authored four-image sequence.
+const practiceTitle = document.querySelector("#practice-title");
+const practiceSection = practiceTitle?.closest(".section");
+const practiceStrip = practiceSection?.querySelector(".proof-strip");
+if (practiceStrip) {
+  const figures = Array.from(practiceStrip.querySelectorAll(":scope > figure"));
+  if (figures.length === 3) {
+    const stylesheet = document.createElement("link");
+    stylesheet.rel = "stylesheet";
+    stylesheet.href = "/home-image-practice.css";
+    document.head.append(stylesheet);
+
+    practiceStrip.classList.remove("proof-strip");
+    practiceStrip.classList.add("practice-composition");
+    figures[0].classList.add("practice-composition__body");
+    figures[1].classList.add("practice-composition__material");
+    figures[2].classList.add("practice-composition__night");
+
+    const afterimage = document.createElement("figure");
+    afterimage.className = "image-figure practice-composition__afterimage";
+    afterimage.innerHTML = `
+      <img src="/asset/portfolio/anton-afterimage-polaroid-1200.webp" width="1200" height="1456" loading="lazy" decoding="async" alt="Warm-toned Polaroid portrait of a red-haired woman in white against a glowing textured background.">
+      <figcaption class="caption"><span>Afterimage — Anton Likht</span><span>Polaroid / 2026</span></figcaption>
+    `;
+    figures[2].before(afterimage);
+  }
+}
+
 // Keep the primary enquiry route consistent across the static site while
 // preserving direct email links as a secondary fallback when JavaScript is off.
 for (const link of document.querySelectorAll(".header-contact")) {
