@@ -92,3 +92,17 @@ if (enquiryForm) {
     }
   }
 }
+
+// Start the muted practice loop only when visible. Keep playback user-controllable
+// and do not autoplay for visitors who prefer reduced motion.
+if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  for (const video of document.querySelectorAll("[data-practice-motion]")) {
+    const observer = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      video.muted = true;
+      video.play().catch(() => {});
+      observer.disconnect();
+    }, { threshold: 0.35 });
+    observer.observe(video);
+  }
+}

@@ -82,3 +82,28 @@
     text-align: right;
   }
 }
+
+/* Three complementary image scales in the second editorial sequence. */
+.practice-composition__motion {
+  grid-column: 5 / span 3;
+  grid-row: 2;
+  margin-top: clamp(1rem, 4vw, 4rem) !important;
+}
+.practice-composition__motion video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 480 / 854;
+  object-fit: contain;
+  background: #e2e7e9;
+}
+@media (min-width: 721px) {
+  .practice-composition__afterimage { grid-column: 1 / span 3; }
+  .practice-composition__night { grid-column: 9 / -1; }
+}
+@media (max-width: 720px) {
+  .practice-composition__motion {
+    width: 76%;
+    margin: 4.5rem 0 0 auto !important;
+  }
+}
