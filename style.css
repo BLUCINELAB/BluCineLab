@@ -692,3 +692,37 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .project-grid { gap: 3rem var(--gutter); margin-top: 2rem; }
   .project-card:nth-child(even) { width: 100%; margin: 0; }
 }
+
+/* Motion studies share the same aspect and caption grammar as still images. */
+#practice-title, #secondo-corpo { scroll-margin-top: 6rem; }
+.motion-study video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 480 / 854;
+  object-fit: contain;
+  background: #e2e7e9;
+}
+.motion-study .caption { gap: .6rem; align-items: flex-start; }
+.motion-study .caption span:last-child { text-align: right; }
+.motion-toggle {
+  display: inline-block;
+  border: 0;
+  padding: 4px 0 4px 5px;
+  font: inherit;
+  color: inherit;
+  border-bottom: 1px solid currentColor;
+  background: transparent;
+  cursor: pointer;
+}
+.motion-toggle[hidden] { display: none; }
+.motion-toggle:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
+.proof-strip--motion { grid-template-columns: 1.1fr .8fr 1fr; }
+.proof-strip--motion > .motion-study { margin-top: clamp(2rem, 5vw, 5rem); }
+.practice-night-pair { display: grid; gap: var(--gutter); margin-top: clamp(4rem, 9vw, 9rem); }
+.proof-strip--motion .practice-night-pair figure { margin: 0; }
+@media (max-width: 720px) {
+  .proof-strip--motion { display: flex; flex-direction: column; }
+  .proof-strip--motion > .motion-study { width: 78%; margin: 4rem 0 0 auto; }
+  .practice-night-pair { width: 100%; margin-top: 3rem; gap: 2rem; }
+}

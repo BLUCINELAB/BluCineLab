@@ -93,10 +93,33 @@ if (enquiryForm) {
   }
 }
 
-// Start the muted practice loop only when visible. Keep playback user-controllable
-// and do not autoplay for visitors who prefer reduced motion.
-if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  for (const video of document.querySelectorAll("[data-practice-motion]")) {
+// Use native controls without JavaScript; enhance to a discreet, accessible
+// play/pause button when the motion study is available.
+for (const video of document.querySelectorAll("[data-practice-motion]")) {
+  const button = video.closest(".motion-study")?.querySelector(".motion-toggle");
+  if (button) {
+    const update = () => {
+      button.textContent = video.paused ? "Play" : "Pause";
+      button.setAttribute("aria-label", (video.paused ? "Play" : "Pause") + " Secondo corpo");
+    };
+    video.addEventListener("play", update);
+    video.addEventListener("pause", update);
+    video.addEventListener("error", update);
+    button.addEventListener("click", () => {
+      if (video.paused) {
+        video.muted = true;
+        video.play().catch(update);
+      } else {
+        video.pause();
+      }
+    });
+    video.controls = false;
+    button.hidden = false;
+    update();
+  }
+  // Muted inline playback begins only when the study is on screen.
+  // The static poster and manual control remain for reduced-motion visitors.
+  if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     const observer = new IntersectionObserver((entries) => {
       if (!entries.some((entry) => entry.isIntersecting)) return;
       video.muted = true;
