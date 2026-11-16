@@ -671,3 +671,24 @@ button, a { -webkit-tap-highlight-color: transparent; }
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Lightweight navigation and film previews; preserve the editorial layout. */
+.hero-work-link { display: inline-block; margin-top: 1.2rem; }
+.video-preview, .video-player { display: block; width: 100%; aspect-ratio: 16/9; border: 0; background: #11110f; }
+.video-preview { position: relative; overflow: hidden; color: white; text-decoration: none; }
+.video-preview img { width: 100%; height: 100%; object-fit: contain; }
+.video-preview__play { position: absolute; inset: 0; display: grid; place-items: center; }
+.video-preview__play span { background: #11110f; color: white; padding: 0.9rem 1.4rem; border: 1px solid white; border-radius: 2rem; font: 650 0.8rem/1 var(--mono); }
+.video-preview:hover .video-preview__play span { background: var(--blue); }
+.project-card__media .caption { padding: 0.5rem 0.75rem; }
+.project-card, .work-row > * { min-width: 0; }
+.project-card h2, .work-row h3 { overflow-wrap: anywhere; }
+@media (max-width:720px) {
+  body::before { display: none; }
+  .site-header { background: var(--paper); backdrop-filter: none; gap: 0.4rem 0.65rem; }
+  .main-nav { flex-wrap: wrap; overflow: visible; gap: 0 0.85rem; padding-top: 0; }
+  .main-nav a { display: inline-flex; min-height: 2.4rem; align-items: center; }
+  .main-nav a::after { bottom: 0.2rem; }
+  .project-grid { gap: 3rem var(--gutter); margin-top: 2rem; }
+  .project-card:nth-child(even) { width: 100%; margin: 0; }
+}

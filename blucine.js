@@ -9,54 +9,22 @@ for (const link of document.querySelectorAll('a[target="_blank"]')) {
   }
 }
 
-// Home image-practice composition: keep the static three-image fallback intact,
-// then progressively enhance it into an authored four-image sequence.
-const practiceTitle = document.querySelector("#practice-title");
-const practiceSection = practiceTitle?.closest(".section");
-const practiceStrip = practiceSection?.querySelector(".proof-strip");
-if (practiceStrip) {
-  const figures = Array.from(practiceStrip.querySelectorAll(":scope > figure"));
-  if (figures.length === 3) {
-    const stylesheet = document.createElement("link");
-    stylesheet.rel = "stylesheet";
-    stylesheet.href = "/home-image-practice.css";
-    document.head.append(stylesheet);
-
-    practiceStrip.classList.remove("proof-strip");
-    practiceStrip.classList.add("practice-composition");
-    figures[0].classList.add("practice-composition__body");
-    figures[1].classList.add("practice-composition__material");
-    figures[2].classList.add("practice-composition__night");
-
-    const afterimage = document.createElement("figure");
-    afterimage.className = "image-figure practice-composition__afterimage";
-    afterimage.innerHTML = `
-      <div class="afterimage-media" aria-busy="true"></div>
-      <figcaption class="caption"><span>Afterimage — Anton Likht</span><span>Polaroid / 2026</span></figcaption>
-    `;
-    figures[2].before(afterimage);
-
-    const media = afterimage.querySelector(".afterimage-media");
-    fetch("/asset/portfolio/anton-afterimage-polaroid-valid.b64.txt", { cache: "no-cache" })
-      .then((response) => {
-        if (!response.ok) throw new Error("Afterimage source failed");
-        return response.text();
-      })
-      .then((encoded) => {
-        const image = document.createElement("img");
-        image.src = `data:image/webp;base64,${encoded.replace(/\s+/g, "")}`;
-        image.width = 420;
-        image.height = 510;
-        image.loading = "lazy";
-        image.decoding = "async";
-        image.alt = "Warm-toned Polaroid portrait of a red-haired woman in white against a glowing textured background.";
-        media.replaceWith(image);
-      })
-      .catch(() => {
-        media.removeAttribute("aria-busy");
-        media.classList.add("afterimage-media--error");
-      });
-  }
+// Load the third-party video player only when the visitor chooses to play.
+for (const preview of document.querySelectorAll("[data-video-id]")) {
+  preview.addEventListener("click", (event) => {
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    const id = preview.dataset.videoId;
+    if (!/^[A-Za-z0-9_-]{11}$/.test(id)) return;
+    event.preventDefault();
+    const player = document.createElement("iframe");
+    player.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1";
+    player.title = preview.dataset.videoTitle || "Video player";
+    player.className = "video-player";
+    player.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    player.allowFullscreen = true;
+    preview.replaceWith(player);
+    player.focus();
+  });
 }
 
 // Keep the primary enquiry route consistent across the static site while
